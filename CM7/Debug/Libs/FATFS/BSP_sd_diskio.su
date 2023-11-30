@@ -1,0 +1,6 @@
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.c:44:16:SD_CheckStatus	16	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.c:54:9:SD_initialize	16	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.c:60:9:SD_status	16	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.c:65:9:SD_read	24	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.c:73:9:SD_write	24	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.c:82:9:SD_ioctl	24	static

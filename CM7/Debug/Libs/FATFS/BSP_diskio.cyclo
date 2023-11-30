@@ -1,0 +1,6 @@
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_diskio.c:24:9:disk_status	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_diskio.c:32:9:disk_initialize	2
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_diskio.c:44:9:disk_read	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_diskio.c:54:9:disk_write	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_diskio.c:64:9:disk_ioctl	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_diskio.c:71:14:get_fattime	1

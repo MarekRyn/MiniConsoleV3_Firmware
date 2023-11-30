@@ -1,0 +1,5 @@
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.c:17:9:BSP_Audio_Init	2
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.c:35:9:BSP_Audio_Transmit	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.c:41:9:BSP_Audio_Pause	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.c:45:9:BSP_Audio_Resume	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.c:49:6:SPI3_IRQHandler	1

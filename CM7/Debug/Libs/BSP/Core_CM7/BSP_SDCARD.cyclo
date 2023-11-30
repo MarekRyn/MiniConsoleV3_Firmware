@@ -1,0 +1,6 @@
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDCARD.c:18:9:BSP_SDCARD_Init	2
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDCARD.c:23:9:BSP_SDCARD_ReadBlocks	3
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDCARD.c:30:9:BSP_SDCARD_WriteBlocks	3
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDCARD.c:37:10:BSP_SDCARD_GetBlockNo	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDCARD.c:42:10:BSP_SDCARD_GetBlockSize	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDCARD.c:47:9:BSP_SDCARD_GetCardState	2

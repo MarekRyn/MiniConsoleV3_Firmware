@@ -1,0 +1,11 @@
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:25:6:SPI3_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:30:6:CM7_SEV_IRQHandler	4	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:35:6:_AudioCallbackTC	24	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:42:6:_AudioCallbackHT	24	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:49:6:_AudioCallbackTE	16	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:57:9:BSP_Audio_Init	24	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:80:9:BSP_Audio_Task	4	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:88:9:BSP_Audio_Transmit	16	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:94:9:BSP_Audio_Start	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:102:9:BSP_Audio_Pause	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM4/BSP_Audio.c:106:9:BSP_Audio_Resume	8	static

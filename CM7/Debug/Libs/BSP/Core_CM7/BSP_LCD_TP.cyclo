@@ -1,0 +1,4 @@
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:18:9:BSP_LCD_TP_Init	5
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:43:9:BSP_LCD_TP_Reset	2
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:57:6:BSP_LCD_TP_INTHandler	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:64:6:I2C1_EV_IRQHandler	2

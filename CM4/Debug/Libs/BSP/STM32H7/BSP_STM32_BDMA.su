@@ -1,0 +1,12 @@
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:22:9:BSP_BDMA_Init	32	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:48:9:BSP_BDMA_CtxLink	40	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:82:9:BSP_BDMA_StartIT	32	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:122:6:BDMA_Stream_IRQHandler	32	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:167:6:BDMA_Channel0_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:170:6:BDMA_Channel1_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:171:6:BDMA_Channel2_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:172:6:BDMA_Channel3_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:173:6:BDMA_Channel4_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:174:6:BDMA_Channel5_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:175:6:BDMA_Channel6_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_BDMA.c:176:6:BDMA_Channel7_IRQHandler	8	static

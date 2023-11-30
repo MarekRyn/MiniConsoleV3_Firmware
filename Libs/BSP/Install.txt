@@ -1,0 +1,35 @@
+In main project folder:
+	1. Copy BSP files
+	2. Copy FATFS library
+	3. Copy TinyUSB library
+
+In Subproject CM7:
+	1. Link folders:
+	- BSP as BSP
+	- FATFS as FATFS
+	- TinyUSB/tinyusb/src as TinyUSB
+	
+	2. Add followng folders to include path:
+	- BSP/Components
+	- BSP/Libs
+	- BSP/STM32H7
+	- BSP/Core_CM7
+	- FATFS
+	- TinyUSB
+	
+	3. Exclude following folder from project:
+	- BSP/Core_CM4
+	
+In Subproject CM4:
+	1. Link folders:
+	- BSP as BSP
+	
+	2. Add followng folders to include path:
+	- BSP/Components
+	- BSP/Libs
+	- BSP/STM32H7
+	- BSP/Core_CM4
+	
+	3. Exclude following folder from project:
+	- BSP/Core_CM7
+	

@@ -1,0 +1,5 @@
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_ff_gen_drv.c:17:9:FATFS_LinkDriverEx	2
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_ff_gen_drv.c:37:9:FATFS_LinkDriver	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_ff_gen_drv.c:42:9:FATFS_UnLinkDriverEx	3
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_ff_gen_drv.c:60:9:FATFS_UnLinkDriver	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_ff_gen_drv.c:65:9:FATFS_GetAttachedDriversNbr	1

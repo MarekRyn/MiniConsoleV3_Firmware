@@ -1,0 +1,5 @@
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_DMA2D.c:14:9:BSP_STM32_DMA2D_FillBuff	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_DMA2D.c:34:9:BSP_STM32_DMA2D_CopyBuf	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_DMA2D.c:57:9:BSP_STM32_DMA2D_CopyBufJPEG	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_DMA2D.c:81:9:BSP_STM32_DMA2D_CopyBufBlend	1
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_DMA2D.c:112:9:BSP_STM32_DMA2D_IRQHandler	7

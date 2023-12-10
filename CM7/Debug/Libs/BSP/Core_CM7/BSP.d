@@ -3,7 +3,6 @@ Libs/BSP/Core_CM7/BSP.o: \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h7xx.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h747xx.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/core_cm7.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_version.h \
@@ -11,6 +10,8 @@ Libs/BSP/Core_CM7/BSP.o: \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_gcc.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/mpu_armv7.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/system_stm32h7xx.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h7xx.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h747xx.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_PWR.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h \
@@ -83,11 +84,11 @@ Libs/BSP/Core_CM7/BSP.o: \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/MAX98357A.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Data.h
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Data.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h7xx.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h747xx.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/core_cm7.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_version.h:
@@ -95,6 +96,8 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_compiler.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_gcc.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/mpu_armv7.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/system_stm32h7xx.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h7xx.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h747xx.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_PWR.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h:
@@ -168,3 +171,4 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/MAX98357A.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Data.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h:

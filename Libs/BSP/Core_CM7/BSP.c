@@ -138,4 +138,3 @@ void BSP_Error_Handler(void) {
   while (1) {}
 
 }
-

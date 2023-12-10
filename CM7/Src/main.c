@@ -17,17 +17,49 @@
  */
 
 #include "main.h"
+#include "graph2d.h"
 
 int main(void)
 {
 
 	if (BSP_BOARD_Init_CM7()) BSP_Error_Handler();
 
-	BSP_LCD_Init(&BSP_hlcd, LCD_COLOR_MODE_ARGB8888, LCD_BUFFER_MODE_DOUBLE, LCD_LAYER_NO_ONE, C_RED, NULL);
+	BSP_LCD_Init(&BSP_hlcd, LCD_COLOR_MODE_ARGB8888, LCD_BUFFER_MODE_DOUBLE, LCD_LAYER_NO_ONE, C_BLACK, NULL);
+
+	// If "Menu_Button" pressed during startup than console switches into USB MSC mode (active until RESET)
+	if (BSP_hinputs.buttons.btn_MENU > 0) {
+		BSP_USB_Init_MSC();
+		while (1) BSP_USB_Task();
+	}
 
 	// Initialize Backlight
 	BSP_LCD_InitBackLight(&BSP_hlcd, 10);
 	BSP_LCD_SetBackLight(&BSP_hlcd, 80, 25);
+
+	// Load resources
+	ResCtx_TypeDef resctx = {0};
+	BSP_Res_Init(&resctx, 0xC0000000, 48 * 1024 * 1024);
+	BSP_Res_Load(&resctx, "/_/wallpaper01.jpg", 0);
+
+	G2D_DecodeJPEG(&BSP_hlcd, BSP_Res_GetAddr(&resctx, 0), BSP_Res_GetSize(&resctx, 0));
+	G2D_DrawLastJPEG(&BSP_hlcd, 0, 0, 0);
+
+	//G2D_FillFrame(&BSP_hlcd, 0, BSP_LCD_Color(C_RED, 255));
+
+	G2D_DrawIconBlend(&BSP_hlcd, 0, (uint32_t)ICON_128_IMU, 10, 10, BSP_LCD_Color(C_WHITE, 200));
+
+	G2D_TextBlend(&BSP_hlcd, 0, 0, 180, FONT_36_verdana, "MiniConsole Test Text", BSP_LCD_Color(C_WHITE, 255));
+
+	G2D_DrawFillRoundRectBlend(&BSP_hlcd, 0, 20, 300, 200, 60, 10, BSP_LCD_Color(C_RED, 200));
+	G2D_DrawRoundRect(&BSP_hlcd, 0, 20, 300, 200, 60, 10, BSP_LCD_Color(C_WHITE, 255));
+
+	G2D_DrawFillRectBlend(&BSP_hlcd, 0, 200, 20, 100, 100, BSP_LCD_Color(C_GREEN, 100));
+
+	G2D_DrawFillCircleBlend(&BSP_hlcd, 0, 400, 100, 80, BSP_LCD_Color(C_DARKGRAY, 200));
+	G2D_DrawCircle(&BSP_hlcd, 0, 400, 100, 80, BSP_LCD_Color(C_WHITE, 255));
+
+	BSP_LCD_FrameReady(&BSP_hlcd, 0);
+
 
     /* Loop forever */
 	for(;;);

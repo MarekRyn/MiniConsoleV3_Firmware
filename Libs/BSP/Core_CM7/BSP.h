@@ -16,6 +16,12 @@
 extern "C" {
 #endif
 
+// Global configuration
+#define STM32H747xx
+#define CORE_CM7
+//#define DEBUG
+//#define FULL_ASSERT
+
 
 // Includes
 #include "BSP_STM32.h"
@@ -32,6 +38,7 @@ extern "C" {
 #include "BSP_Serial.h"
 
 #include "BSP_Data.h"
+#include "BSP_Fonts.h"
 
 
 uint8_t BSP_BOARD_Init_CM7();

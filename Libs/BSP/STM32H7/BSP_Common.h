@@ -20,15 +20,17 @@ extern "C" {
 }
 #endif
 
-
 // Includes
 #include <stddef.h>
 #include <math.h>
 #include <stdint.h>
 #include <string.h>
+#include <stm32h747xx.h>
 #include <stm32h7xx.h>
 
+
 // Compatibility with some ST Libs
+#define SMT32H7
 #define HSE_VALUE	25000000
 #define HSI_VALUE	64000000
 #define LSE_VALUE	32768

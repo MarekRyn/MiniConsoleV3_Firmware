@@ -7,6 +7,7 @@
 "./Libs/BSP/Core_CM7/BSP.o"
 "./Libs/BSP/Core_CM7/BSP_Audio.o"
 "./Libs/BSP/Core_CM7/BSP_Data.o"
+"./Libs/BSP/Core_CM7/BSP_Fonts.o"
 "./Libs/BSP/Core_CM7/BSP_IMU.o"
 "./Libs/BSP/Core_CM7/BSP_Inputs.o"
 "./Libs/BSP/Core_CM7/BSP_LCD.o"

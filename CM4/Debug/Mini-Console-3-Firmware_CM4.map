@@ -164,7 +164,7 @@ Discarded input sections
                 0x0000000000000000       0x68 ./Libs/BSP/Components/IS25LP128F.o
  .debug_rnglists
                 0x0000000000000000       0x4e ./Libs/BSP/Components/IS25LP128F.o
- .debug_macro   0x0000000000000000      0x2b2 ./Libs/BSP/Components/IS25LP128F.o
+ .debug_macro   0x0000000000000000      0x2b6 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Components/IS25LP128F.o
@@ -190,7 +190,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Components/IS25LP128F.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Components/IS25LP128F.o
@@ -198,8 +197,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Components/IS25LP128F.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Components/IS25LP128F.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Components/IS25LP128F.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Components/IS25LP128F.o
@@ -212,7 +212,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Components/IS25LP128F.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Components/IS25LP128F.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Components/IS25LP128F.o
@@ -220,7 +220,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/Components/IS25LP128F.o
  .debug_macro   0x0000000000000000      0x271 ./Libs/BSP/Components/IS25LP128F.o
  .debug_line    0x0000000000000000      0xca4 ./Libs/BSP/Components/IS25LP128F.o
- .debug_str     0x0000000000000000   0x11c085 ./Libs/BSP/Components/IS25LP128F.o
+ .debug_str     0x0000000000000000   0x11c146 ./Libs/BSP/Components/IS25LP128F.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/Components/IS25LP128F.o
  .debug_frame   0x0000000000000000      0x17c ./Libs/BSP/Components/IS25LP128F.o
  .ARM.attributes
@@ -292,7 +292,7 @@ Discarded input sections
                 0x0000000000000000       0x28 ./Libs/BSP/Components/IS42S32160F.o
  .debug_rnglists
                 0x0000000000000000       0x1a ./Libs/BSP/Components/IS42S32160F.o
- .debug_macro   0x0000000000000000      0x2b8 ./Libs/BSP/Components/IS42S32160F.o
+ .debug_macro   0x0000000000000000      0x2bc ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Components/IS42S32160F.o
@@ -318,7 +318,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Components/IS42S32160F.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Components/IS42S32160F.o
@@ -326,8 +325,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Components/IS42S32160F.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Components/IS42S32160F.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Components/IS42S32160F.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Components/IS42S32160F.o
@@ -340,7 +340,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Components/IS42S32160F.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Components/IS42S32160F.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Components/IS42S32160F.o
@@ -348,7 +348,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/Components/IS42S32160F.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Components/IS42S32160F.o
  .debug_line    0x0000000000000000      0x9ee ./Libs/BSP/Components/IS42S32160F.o
- .debug_str     0x0000000000000000   0x11b962 ./Libs/BSP/Components/IS42S32160F.o
+ .debug_str     0x0000000000000000   0x11ba23 ./Libs/BSP/Components/IS42S32160F.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/Components/IS42S32160F.o
  .debug_frame   0x0000000000000000       0x60 ./Libs/BSP/Components/IS42S32160F.o
  .ARM.attributes
@@ -437,7 +437,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Components/MAX98357A.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Components/MAX98357A.o
@@ -445,8 +444,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Components/MAX98357A.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Components/MAX98357A.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Components/MAX98357A.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Components/MAX98357A.o
@@ -459,7 +459,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Components/MAX98357A.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Components/MAX98357A.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Components/MAX98357A.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Components/MAX98357A.o
@@ -549,13 +549,13 @@ Discarded input sections
                 0x0000000000000000       0x40 ./Libs/BSP/Components/MPU6050.o
  .text.BSP_DRV_IMU_Parse
                 0x0000000000000000      0x3e0 ./Libs/BSP/Components/MPU6050.o
- .debug_info    0x0000000000000000      0x5cf ./Libs/BSP/Components/MPU6050.o
+ .debug_info    0x0000000000000000      0x5d0 ./Libs/BSP/Components/MPU6050.o
  .debug_abbrev  0x0000000000000000      0x1d2 ./Libs/BSP/Components/MPU6050.o
  .debug_aranges
                 0x0000000000000000       0x30 ./Libs/BSP/Components/MPU6050.o
  .debug_rnglists
                 0x0000000000000000       0x21 ./Libs/BSP/Components/MPU6050.o
- .debug_macro   0x0000000000000000      0x2bc ./Libs/BSP/Components/MPU6050.o
+ .debug_macro   0x0000000000000000      0x2c0 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x5b ./Libs/BSP/Components/MPU6050.o
@@ -581,7 +581,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Components/MPU6050.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Components/MPU6050.o
@@ -589,8 +588,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Components/MPU6050.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Components/MPU6050.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Components/MPU6050.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Components/MPU6050.o
@@ -603,7 +603,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Components/MPU6050.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Components/MPU6050.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Components/MPU6050.o
@@ -611,7 +611,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/Components/MPU6050.o
  .debug_macro   0x0000000000000000       0x58 ./Libs/BSP/Components/MPU6050.o
  .debug_line    0x0000000000000000      0xb57 ./Libs/BSP/Components/MPU6050.o
- .debug_str     0x0000000000000000   0x11b8e9 ./Libs/BSP/Components/MPU6050.o
+ .debug_str     0x0000000000000000   0x11b9aa ./Libs/BSP/Components/MPU6050.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/Components/MPU6050.o
  .debug_frame   0x0000000000000000       0x88 ./Libs/BSP/Components/MPU6050.o
  .ARM.attributes
@@ -683,7 +683,7 @@ Discarded input sections
                 0x0000000000000000       0x28 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_rnglists
                 0x0000000000000000       0x29 ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_macro   0x0000000000000000      0x2b2 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_macro   0x0000000000000000      0x2b6 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Components/RVT50AQTNWC00.o
@@ -709,7 +709,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Components/RVT50AQTNWC00.o
@@ -717,8 +716,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Components/RVT50AQTNWC00.o
@@ -731,7 +731,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Components/RVT50AQTNWC00.o
@@ -739,7 +739,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x148 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_line    0x0000000000000000      0xd09 ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_str     0x0000000000000000   0x11be40 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_str     0x0000000000000000   0x11bf01 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_frame   0x0000000000000000       0x64 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .ARM.attributes
@@ -829,7 +829,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Core_CM4/BSP.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Core_CM4/BSP.o
@@ -837,8 +836,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Core_CM4/BSP.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Core_CM4/BSP.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Core_CM4/BSP.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Core_CM4/BSP.o
@@ -851,7 +851,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Core_CM4/BSP.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Core_CM4/BSP.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Core_CM4/BSP.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Core_CM4/BSP.o
@@ -951,7 +951,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Core_CM4/BSP_Audio.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Core_CM4/BSP_Audio.o
@@ -959,8 +958,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Core_CM4/BSP_Audio.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Core_CM4/BSP_Audio.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Core_CM4/BSP_Audio.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Core_CM4/BSP_Audio.o
@@ -973,7 +973,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Core_CM4/BSP_Audio.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Core_CM4/BSP_Audio.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Core_CM4/BSP_Audio.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Core_CM4/BSP_Audio.o
@@ -1046,7 +1046,7 @@ Discarded input sections
  .debug_abbrev  0x0000000000000000       0x78 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_aranges
                 0x0000000000000000       0x18 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
- .debug_macro   0x0000000000000000      0x2ad ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
+ .debug_macro   0x0000000000000000      0x2b1 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
@@ -1072,7 +1072,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
@@ -1080,8 +1079,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
@@ -1094,14 +1094,14 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .debug_line    0x0000000000000000      0x89e ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
- .debug_str     0x0000000000000000   0x11b5cf ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
+ .debug_str     0x0000000000000000   0x11b690 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
  .ARM.attributes
                 0x0000000000000000       0x34 ./Libs/BSP/Core_CM4/BSP_Audio_Tables.o
@@ -1186,7 +1186,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Core_CM4/BSP_STM32.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Core_CM4/BSP_STM32.o
@@ -1194,8 +1193,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Core_CM4/BSP_STM32.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Core_CM4/BSP_STM32.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Core_CM4/BSP_STM32.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Core_CM4/BSP_STM32.o
@@ -1208,7 +1208,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Core_CM4/BSP_STM32.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Core_CM4/BSP_STM32.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Core_CM4/BSP_STM32.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Core_CM4/BSP_STM32.o
@@ -1312,7 +1312,7 @@ Discarded input sections
                 0x0000000000000000       0x28 ./Libs/BSP/Libs/kalman.o
  .debug_rnglists
                 0x0000000000000000       0x1a ./Libs/BSP/Libs/kalman.o
- .debug_macro   0x0000000000000000      0x2ad ./Libs/BSP/Libs/kalman.o
+ .debug_macro   0x0000000000000000      0x2b1 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Libs/kalman.o
@@ -1338,7 +1338,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/Libs/kalman.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/Libs/kalman.o
@@ -1346,8 +1345,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/Libs/kalman.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/Libs/kalman.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/Libs/kalman.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/Libs/kalman.o
@@ -1360,14 +1360,14 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/Libs/kalman.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/Libs/kalman.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Libs/kalman.o
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/Libs/kalman.o
  .debug_line    0x0000000000000000      0x9e7 ./Libs/BSP/Libs/kalman.o
- .debug_str     0x0000000000000000   0x11b61d ./Libs/BSP/Libs/kalman.o
+ .debug_str     0x0000000000000000   0x11b6de ./Libs/BSP/Libs/kalman.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/Libs/kalman.o
  .debug_frame   0x0000000000000000       0x5c ./Libs/BSP/Libs/kalman.o
  .ARM.attributes
@@ -1414,7 +1414,7 @@ Discarded input sections
  .debug_abbrev  0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_aranges
                 0x0000000000000000       0x18 ./Libs/BSP/STM32H7/BSP_Common.o
- .debug_macro   0x0000000000000000      0x1bb ./Libs/BSP/STM32H7/BSP_Common.o
+ .debug_macro   0x0000000000000000      0x1bf ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_Common.o
@@ -1440,7 +1440,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_Common.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_Common.o
@@ -1448,10 +1447,11 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_Common.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_Common.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_Common.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_Common.o
  .debug_line    0x0000000000000000      0x6a8 ./Libs/BSP/STM32H7/BSP_Common.o
- .debug_str     0x0000000000000000   0x10c160 ./Libs/BSP/STM32H7/BSP_Common.o
+ .debug_str     0x0000000000000000   0x10c169 ./Libs/BSP/STM32H7/BSP_Common.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_Common.o
  .ARM.attributes
                 0x0000000000000000       0x34 ./Libs/BSP/STM32H7/BSP_Common.o
@@ -1523,7 +1523,7 @@ Discarded input sections
                 0x0000000000000000       0x30 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_rnglists
                 0x0000000000000000       0x21 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
- .debug_macro   0x0000000000000000      0x2b6 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
+ .debug_macro   0x0000000000000000      0x2ba ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
@@ -1549,7 +1549,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
@@ -1557,8 +1556,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000      0x1a8 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
@@ -1570,7 +1570,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
@@ -1578,7 +1578,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_macro   0x0000000000000000      0x420 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_line    0x0000000000000000      0xa13 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
- .debug_str     0x0000000000000000   0x11b853 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
+ .debug_str     0x0000000000000000   0x11b914 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .debug_frame   0x0000000000000000       0x80 ./Libs/BSP/STM32H7/BSP_STM32_ADC.o
  .ARM.attributes
@@ -1670,7 +1670,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
@@ -1678,8 +1677,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
@@ -1691,7 +1691,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
@@ -1761,7 +1761,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
@@ -1769,8 +1768,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
@@ -1858,7 +1858,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
@@ -1866,8 +1865,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000      0x1a8 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
@@ -1879,7 +1879,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
@@ -1927,6 +1927,8 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .text.BSP_STM32_DMA2D_FillBuff
                 0x0000000000000000       0x8e ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+ .text.BSP_STM32_DMA2D_FillBuffBlend
+                0x0000000000000000       0xe4 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .text.BSP_STM32_DMA2D_CopyBuf
                 0x0000000000000000       0xb4 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .text.BSP_STM32_DMA2D_CopyBufJPEG
@@ -1935,13 +1937,13 @@ Discarded input sections
                 0x0000000000000000       0xec ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .text.BSP_STM32_DMA2D_IRQHandler
                 0x0000000000000000       0xa0 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
- .debug_info    0x0000000000000000      0x4f2 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+ .debug_info    0x0000000000000000      0x5af ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_abbrev  0x0000000000000000      0x113 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_aranges
-                0x0000000000000000       0x40 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+                0x0000000000000000       0x48 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_rnglists
-                0x0000000000000000       0x30 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
- .debug_macro   0x0000000000000000      0x1ca ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+                0x0000000000000000       0x37 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+ .debug_macro   0x0000000000000000      0x1ce ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
@@ -1967,7 +1969,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
@@ -1975,13 +1976,14 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
- .debug_line    0x0000000000000000      0x80b ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
- .debug_str     0x0000000000000000   0x10c55c ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+ .debug_line    0x0000000000000000      0x846 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+ .debug_str     0x0000000000000000   0x10c583 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
- .debug_frame   0x0000000000000000       0xd8 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+ .debug_frame   0x0000000000000000      0x100 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .ARM.attributes
                 0x0000000000000000       0x34 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
@@ -2027,7 +2029,7 @@ Discarded input sections
  .debug_abbrev  0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_aranges
                 0x0000000000000000       0x18 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
- .debug_macro   0x0000000000000000      0x1ca ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
+ .debug_macro   0x0000000000000000      0x1ce ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
@@ -2053,7 +2055,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
@@ -2061,11 +2062,12 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_macro   0x0000000000000000      0x10c ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .debug_line    0x0000000000000000      0x6be ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
- .debug_str     0x0000000000000000   0x10c880 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
+ .debug_str     0x0000000000000000   0x10c889 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
  .ARM.attributes
                 0x0000000000000000       0x34 ./Libs/BSP/STM32H7/BSP_STM32_FMC.o
@@ -2137,7 +2139,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
@@ -2145,8 +2146,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
@@ -2222,7 +2224,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
@@ -2230,8 +2231,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
@@ -2312,7 +2314,7 @@ Discarded input sections
                 0x0000000000000000       0x60 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_rnglists
                 0x0000000000000000       0x49 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
- .debug_macro   0x0000000000000000      0x2c4 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
+ .debug_macro   0x0000000000000000      0x2c8 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
@@ -2338,7 +2340,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
@@ -2346,8 +2347,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000      0x1a8 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
@@ -2358,7 +2360,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
@@ -2367,7 +2369,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x420 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_macro   0x0000000000000000       0x52 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_line    0x0000000000000000      0xd1f ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
- .debug_str     0x0000000000000000   0x11b8a9 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
+ .debug_str     0x0000000000000000   0x11b96a ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .debug_frame   0x0000000000000000      0x164 ./Libs/BSP/STM32H7/BSP_STM32_I2C.o
  .ARM.attributes
@@ -2465,7 +2467,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
@@ -2473,8 +2474,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000      0x1a8 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
@@ -2485,7 +2487,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x52 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
@@ -2554,7 +2556,7 @@ Discarded input sections
                 0x0000000000000000       0x58 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_rnglists
                 0x0000000000000000       0x3f ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
- .debug_macro   0x0000000000000000      0x1ca ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
+ .debug_macro   0x0000000000000000      0x1ce ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
@@ -2580,7 +2582,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
@@ -2588,11 +2589,12 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_macro   0x0000000000000000       0x5e ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_line    0x0000000000000000      0x917 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
- .debug_str     0x0000000000000000   0x10c68c ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
+ .debug_str     0x0000000000000000   0x10c695 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .debug_frame   0x0000000000000000      0x14c ./Libs/BSP/STM32H7/BSP_STM32_JPEG.o
  .ARM.attributes
@@ -2662,7 +2664,7 @@ Discarded input sections
                 0x0000000000000000       0x68 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_rnglists
                 0x0000000000000000       0x4d ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
- .debug_macro   0x0000000000000000      0x1ca ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
+ .debug_macro   0x0000000000000000      0x1ce ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
@@ -2688,7 +2690,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
@@ -2696,11 +2697,12 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_line    0x0000000000000000      0xa3a ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
- .debug_str     0x0000000000000000   0x10cc17 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
+ .debug_str     0x0000000000000000   0x10cc20 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .debug_frame   0x0000000000000000      0x1a0 ./Libs/BSP/STM32H7/BSP_STM32_LTDC.o
  .ARM.attributes
@@ -2753,7 +2755,7 @@ Discarded input sections
                 0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_rnglists
                 0x0000000000000000       0x19 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
- .debug_macro   0x0000000000000000      0x1c5 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
+ .debug_macro   0x0000000000000000      0x1c9 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
@@ -2779,7 +2781,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
@@ -2787,10 +2788,11 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_line    0x0000000000000000      0x6f2 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
- .debug_str     0x0000000000000000   0x10c235 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
+ .debug_str     0x0000000000000000   0x10c23e ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .debug_frame   0x0000000000000000       0x50 ./Libs/BSP/STM32H7/BSP_STM32_PCD.o
  .ARM.attributes
@@ -2884,7 +2886,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
@@ -2892,8 +2893,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000      0x420 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000      0x1a8 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
@@ -2905,7 +2907,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
@@ -3007,7 +3009,7 @@ Discarded input sections
                 0x0000000000000000       0x98 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_rnglists
                 0x0000000000000000       0x72 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
- .debug_macro   0x0000000000000000      0x2ad ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
+ .debug_macro   0x0000000000000000      0x2b1 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
@@ -3033,7 +3035,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
@@ -3041,8 +3042,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
@@ -3054,7 +3056,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x52 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
@@ -3062,7 +3064,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_macro   0x0000000000000000      0x178 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_line    0x0000000000000000      0xc6d ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
- .debug_str     0x0000000000000000   0x11b937 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
+ .debug_str     0x0000000000000000   0x11b9f8 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .debug_frame   0x0000000000000000      0x268 ./Libs/BSP/STM32H7/BSP_STM32_QUADSPI.o
  .ARM.attributes
@@ -3188,7 +3190,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
@@ -3196,8 +3197,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
@@ -3304,7 +3306,7 @@ Discarded input sections
                 0x0000000000000000       0x80 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_rnglists
                 0x0000000000000000       0x5f ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
- .debug_macro   0x0000000000000000      0x2ad ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
+ .debug_macro   0x0000000000000000      0x2b1 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
@@ -3330,7 +3332,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
@@ -3338,8 +3339,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
@@ -3352,14 +3354,14 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_macro   0x0000000000000000       0x8e ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_line    0x0000000000000000      0xc7d ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
- .debug_str     0x0000000000000000   0x11b8a5 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
+ .debug_str     0x0000000000000000   0x11b966 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .debug_frame   0x0000000000000000      0x1f8 ./Libs/BSP/STM32H7/BSP_STM32_RTC.o
  .ARM.attributes
@@ -3448,7 +3450,7 @@ Discarded input sections
                 0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_rnglists
                 0x0000000000000000       0x59 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
- .debug_macro   0x0000000000000000      0x2a7 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
+ .debug_macro   0x0000000000000000      0x2ab ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
@@ -3474,7 +3476,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
@@ -3482,8 +3483,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
@@ -3496,14 +3498,14 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
- .debug_macro   0x0000000000000000      0x608 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_line    0x0000000000000000     0x137c ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
- .debug_str     0x0000000000000000   0x11bf2f ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
+ .debug_str     0x0000000000000000   0x11bff0 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .debug_frame   0x0000000000000000      0x1a4 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC.o
  .ARM.attributes
@@ -3651,7 +3653,7 @@ Discarded input sections
                 0x0000000000000000      0x1a0 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_rnglists
                 0x0000000000000000      0x138 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
- .debug_macro   0x0000000000000000      0x1cb ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
+ .debug_macro   0x0000000000000000      0x1cf ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
@@ -3677,7 +3679,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
@@ -3685,11 +3686,12 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_macro   0x0000000000000000      0x827 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_line    0x0000000000000000      0xfb6 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
- .debug_str     0x0000000000000000   0x110aa8 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
+ .debug_str     0x0000000000000000   0x110ab1 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .debug_frame   0x0000000000000000      0x740 ./Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.o
  .ARM.attributes
@@ -3751,7 +3753,7 @@ Discarded input sections
                 0x0000000000000000       0x48 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_rnglists
                 0x0000000000000000       0x33 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
- .debug_macro   0x0000000000000000      0x1ca ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
+ .debug_macro   0x0000000000000000      0x1ce ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
@@ -3777,7 +3779,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
@@ -3785,11 +3786,12 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_line    0x0000000000000000      0x885 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
- .debug_str     0x0000000000000000   0x10c36c ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
+ .debug_str     0x0000000000000000   0x10c375 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .debug_frame   0x0000000000000000      0x100 ./Libs/BSP/STM32H7/BSP_STM32_TIM.o
  .ARM.attributes
@@ -3853,7 +3855,7 @@ Discarded input sections
                 0x0000000000000000       0x48 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_rnglists
                 0x0000000000000000       0x33 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
- .debug_macro   0x0000000000000000      0x1ca ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x1ce ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
@@ -3879,7 +3881,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0x35 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0x20 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
- .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0x3b ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
@@ -3887,11 +3888,12 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000      0x11f ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000    0x2c717 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_UART.o
- .debug_macro   0x0000000000000000       0xb9 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000      0x136 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_line    0x0000000000000000      0x8a5 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
- .debug_str     0x0000000000000000   0x10ccb0 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_str     0x0000000000000000   0x10ccb9 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_frame   0x0000000000000000       0xf0 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .ARM.attributes
@@ -4046,7 +4048,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x16 ./Src/main.o
  .debug_macro   0x0000000000000000       0x35 ./Src/main.o
  .debug_macro   0x0000000000000000       0x20 ./Src/main.o
- .debug_macro   0x0000000000000000       0x28 ./Src/main.o
  .debug_macro   0x0000000000000000       0x3b ./Src/main.o
  .debug_macro   0x0000000000000000       0x1c ./Src/main.o
  .debug_macro   0x0000000000000000       0x22 ./Src/main.o
@@ -4054,8 +4055,9 @@ Discarded input sections
  .debug_macro   0x0000000000000000     0x1011 ./Src/main.o
  .debug_macro   0x0000000000000000      0x11f ./Src/main.o
  .debug_macro   0x0000000000000000    0x2c717 ./Src/main.o
+ .debug_macro   0x0000000000000000       0x28 ./Src/main.o
  .debug_macro   0x0000000000000000       0x6d ./Src/main.o
- .debug_macro   0x0000000000000000       0xb9 ./Src/main.o
+ .debug_macro   0x0000000000000000       0xbf ./Src/main.o
  .debug_macro   0x0000000000000000       0x7c ./Src/main.o
  .debug_macro   0x0000000000000000      0x426 ./Src/main.o
  .debug_macro   0x0000000000000000       0xca ./Src/main.o
@@ -4068,7 +4070,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x130 ./Src/main.o
  .debug_macro   0x0000000000000000       0x82 ./Src/main.o
  .debug_macro   0x0000000000000000      0x17e ./Src/main.o
- .debug_macro   0x0000000000000000      0x608 ./Src/main.o
+ .debug_macro   0x0000000000000000      0x60f ./Src/main.o
  .debug_macro   0x0000000000000000       0x94 ./Src/main.o
  .debug_macro   0x0000000000000000      0x82d ./Src/main.o
  .debug_macro   0x0000000000000000       0x70 ./Src/main.o
@@ -5358,35 +5360,35 @@ LOAD C:/ST/STM32CubeIDE_1.11.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_rnglists
                 0x000000000000042e       0x19 ./Startup/startup_stm32h747bgtx.o
 
-.debug_macro    0x0000000000000000     0x345b
- .debug_macro   0x0000000000000000      0x2b2 ./Libs/BSP/Components/MAX98357A.o
- .debug_macro   0x00000000000002b2       0x10 ./Libs/BSP/Components/MAX98357A.o
- .debug_macro   0x00000000000002c2      0x2d7 ./Libs/BSP/Core_CM4/BSP.o
- .debug_macro   0x0000000000000599       0x16 ./Libs/BSP/Core_CM4/BSP.o
- .debug_macro   0x00000000000005af       0x16 ./Libs/BSP/Core_CM4/BSP.o
- .debug_macro   0x00000000000005c5       0x2e ./Libs/BSP/Core_CM4/BSP.o
- .debug_macro   0x00000000000005f3       0x82 ./Libs/BSP/Core_CM4/BSP.o
- .debug_macro   0x0000000000000675      0x2ce ./Libs/BSP/Core_CM4/BSP_Audio.o
- .debug_macro   0x0000000000000943      0x2a3 ./Libs/BSP/Core_CM4/BSP_STM32.o
- .debug_macro   0x0000000000000be6       0xe7 ./Libs/BSP/Libs/hxcmod.o
- .debug_macro   0x0000000000000ccd      0x2ad ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
- .debug_macro   0x0000000000000f7a      0x1a2 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
- .debug_macro   0x000000000000111c      0x1ca ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
- .debug_macro   0x00000000000012e6      0x1c9 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
- .debug_macro   0x00000000000014af      0x2ad ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
- .debug_macro   0x000000000000175c      0x1dc ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
- .debug_macro   0x0000000000001938      0x46a ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
- .debug_macro   0x0000000000001da2      0x1c5 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
- .debug_macro   0x0000000000001f67      0x2b7 ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
- .debug_macro   0x000000000000221e      0x12a ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
- .debug_macro   0x0000000000002348      0x2ad ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
- .debug_macro   0x00000000000025f5      0x2ad ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
- .debug_macro   0x00000000000028a2      0x602 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
- .debug_macro   0x0000000000002ea4      0x190 ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
- .debug_macro   0x0000000000003034       0x8e ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
- .debug_macro   0x00000000000030c2       0x51 ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
- .debug_macro   0x0000000000003113       0x61 ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
- .debug_macro   0x0000000000003174      0x2e7 ./Src/main.o
+.debug_macro    0x0000000000000000     0x3496
+ .debug_macro   0x0000000000000000      0x2b6 ./Libs/BSP/Components/MAX98357A.o
+ .debug_macro   0x00000000000002b6       0x10 ./Libs/BSP/Components/MAX98357A.o
+ .debug_macro   0x00000000000002c6      0x2db ./Libs/BSP/Core_CM4/BSP.o
+ .debug_macro   0x00000000000005a1       0x16 ./Libs/BSP/Core_CM4/BSP.o
+ .debug_macro   0x00000000000005b7       0x16 ./Libs/BSP/Core_CM4/BSP.o
+ .debug_macro   0x00000000000005cd       0x2e ./Libs/BSP/Core_CM4/BSP.o
+ .debug_macro   0x00000000000005fb       0x82 ./Libs/BSP/Core_CM4/BSP.o
+ .debug_macro   0x000000000000067d      0x2d2 ./Libs/BSP/Core_CM4/BSP_Audio.o
+ .debug_macro   0x000000000000094f      0x2a7 ./Libs/BSP/Core_CM4/BSP_STM32.o
+ .debug_macro   0x0000000000000bf6       0xe7 ./Libs/BSP/Libs/hxcmod.o
+ .debug_macro   0x0000000000000cdd      0x2b1 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
+ .debug_macro   0x0000000000000f8e      0x1a2 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
+ .debug_macro   0x0000000000001130      0x1ce ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
+ .debug_macro   0x00000000000012fe      0x1c9 ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
+ .debug_macro   0x00000000000014c7      0x2b1 ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
+ .debug_macro   0x0000000000001778      0x1e0 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
+ .debug_macro   0x0000000000001958      0x46a ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
+ .debug_macro   0x0000000000001dc2      0x1c9 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
+ .debug_macro   0x0000000000001f8b      0x2bb ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
+ .debug_macro   0x0000000000002246      0x12a ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
+ .debug_macro   0x0000000000002370      0x2b1 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
+ .debug_macro   0x0000000000002621      0x2b1 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
+ .debug_macro   0x00000000000028d2      0x609 ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
+ .debug_macro   0x0000000000002edb      0x190 ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
+ .debug_macro   0x000000000000306b       0x8e ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
+ .debug_macro   0x00000000000030f9       0x51 ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
+ .debug_macro   0x000000000000314a       0x61 ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
+ .debug_macro   0x00000000000031ab      0x2eb ./Src/main.o
 
 .debug_line     0x0000000000000000     0xaaf6
  .debug_line    0x0000000000000000      0x902 ./Libs/BSP/Components/MAX98357A.o
@@ -5406,38 +5408,38 @@ LOAD C:/ST/STM32CubeIDE_1.11.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_line    0x000000000000a0c2      0x9ba ./Src/main.o
  .debug_line    0x000000000000aa7c       0x7a ./Startup/startup_stm32h747bgtx.o
 
-.debug_str      0x0000000000000000   0x11e45c
- .debug_str     0x0000000000000000   0x11b2d5 ./Libs/BSP/Components/MAX98357A.o
-                                     0x11b665 (size before relaxing)
- .debug_str     0x000000000011b2d5      0x437 ./Libs/BSP/Core_CM4/BSP.o
-                                     0x11b9b5 (size before relaxing)
- .debug_str     0x000000000011b70c      0x7cf ./Libs/BSP/Core_CM4/BSP_Audio.o
-                                     0x11c0d8 (size before relaxing)
- .debug_str     0x000000000011bedb      0xcbb ./Libs/BSP/Core_CM4/BSP_STM32.o
-                                     0x11c3a1 (size before relaxing)
- .debug_str     0x000000000011cb96      0x58a ./Libs/BSP/Libs/hxcmod.o
+.debug_str      0x0000000000000000   0x11e51d
+ .debug_str     0x0000000000000000   0x11b396 ./Libs/BSP/Components/MAX98357A.o
+                                     0x11b726 (size before relaxing)
+ .debug_str     0x000000000011b396      0x437 ./Libs/BSP/Core_CM4/BSP.o
+                                     0x11ba76 (size before relaxing)
+ .debug_str     0x000000000011b7cd      0x7cf ./Libs/BSP/Core_CM4/BSP_Audio.o
+                                     0x11c199 (size before relaxing)
+ .debug_str     0x000000000011bf9c      0xcbb ./Libs/BSP/Core_CM4/BSP_STM32.o
+                                     0x11c462 (size before relaxing)
+ .debug_str     0x000000000011cc57      0x58a ./Libs/BSP/Libs/hxcmod.o
                                        0x39b0 (size before relaxing)
- .debug_str     0x000000000011d120      0x267 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
-                                     0x11b89e (size before relaxing)
- .debug_str     0x000000000011d387      0x15b ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
-                                     0x10d8f3 (size before relaxing)
- .debug_str     0x000000000011d4e2      0x27e ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
-                                     0x11b9bb (size before relaxing)
- .debug_str     0x000000000011d760      0x259 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
-                                     0x10dbe5 (size before relaxing)
- .debug_str     0x000000000011d9b9      0x199 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
-                                     0x10c2fc (size before relaxing)
- .debug_str     0x000000000011db52      0x12c ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
-                                     0x11bab9 (size before relaxing)
- .debug_str     0x000000000011dc7e      0x176 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
-                                     0x11b7d3 (size before relaxing)
- .debug_str     0x000000000011ddf4      0x4ef ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
-                                     0x11bd06 (size before relaxing)
- .debug_str     0x000000000011e2e3      0x11b ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
+ .debug_str     0x000000000011d1e1      0x267 ./Libs/BSP/STM32H7/BSP_STM32_BDMA.o
+                                     0x11b95f (size before relaxing)
+ .debug_str     0x000000000011d448      0x15b ./Libs/BSP/STM32H7/BSP_STM32_CORE.o
+                                     0x10d8fc (size before relaxing)
+ .debug_str     0x000000000011d5a3      0x27e ./Libs/BSP/STM32H7/BSP_STM32_DMA.o
+                                     0x11ba7c (size before relaxing)
+ .debug_str     0x000000000011d821      0x259 ./Libs/BSP/STM32H7/BSP_STM32_GPIO.o
+                                     0x10dbee (size before relaxing)
+ .debug_str     0x000000000011da7a      0x199 ./Libs/BSP/STM32H7/BSP_STM32_HSEM.o
+                                     0x10c305 (size before relaxing)
+ .debug_str     0x000000000011dc13      0x12c ./Libs/BSP/STM32H7/BSP_STM32_I2S.o
+                                     0x11bb7a (size before relaxing)
+ .debug_str     0x000000000011dd3f      0x176 ./Libs/BSP/STM32H7/BSP_STM32_PWR.o
+                                     0x11b894 (size before relaxing)
+ .debug_str     0x000000000011deb5      0x4ef ./Libs/BSP/STM32H7/BSP_STM32_RCC.o
+                                     0x11bdc7 (size before relaxing)
+ .debug_str     0x000000000011e3a4      0x11b ./Libs/ST/system_stm32h7xx_dualcore_boot_cm4_cm7.o
                                      0x10c10c (size before relaxing)
- .debug_str     0x000000000011e3fe       0x2f ./Src/main.o
-                                     0x11bbf7 (size before relaxing)
- .debug_str     0x000000000011e42d       0x2f ./Startup/startup_stm32h747bgtx.o
+ .debug_str     0x000000000011e4bf       0x2f ./Src/main.o
+                                     0x11bcb8 (size before relaxing)
+ .debug_str     0x000000000011e4ee       0x2f ./Startup/startup_stm32h747bgtx.o
                                          0x63 (size before relaxing)
 
 .debug_frame    0x0000000000000000     0x13f4

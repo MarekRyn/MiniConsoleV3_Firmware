@@ -106,8 +106,10 @@ extern uint32_t (*BSP_LCD_Color)(uint32_t color, uint8_t alpha); // Calculating 
 extern uint32_t (*BSP_LCD_Alpha)(uint32_t color, uint8_t alpha); // Updating alpha channel in pre-calculated color value
 extern void (*BSP_LCD_DMA2D_Wait)();
 extern void (*BSP_LCD_UpdatePixel)(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value);
+extern void (*BSP_LCD_UpdatePixelBlend)(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value);
 extern uint32_t (*BSP_LCD_GetPixel)(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x, int16_t y);
 extern void (*BSP_LCD_FillBuf)(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
+extern void (*BSP_LCD_FillBufBlend)(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
 extern void (*BSP_LCD_CopyBuf)(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height);
 extern void (*BSP_LCD_CopyBufBlend)(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha);
 extern void (*BSP_LCD_CopyBufJPEG)(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_dest, uint16_t y_dest);

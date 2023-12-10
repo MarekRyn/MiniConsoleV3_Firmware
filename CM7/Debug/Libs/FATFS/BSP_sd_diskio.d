@@ -9,7 +9,6 @@ Libs/FATFS/BSP_sd_diskio.o: \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDCARD.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h7xx.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h747xx.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/core_cm7.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_version.h \
@@ -17,6 +16,8 @@ Libs/FATFS/BSP_sd_diskio.o: \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_gcc.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/mpu_armv7.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/system_stm32h7xx.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h7xx.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h747xx.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_PWR.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h \
@@ -51,7 +52,6 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_diskio.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDCARD.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h7xx.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h747xx.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/core_cm7.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_version.h:
@@ -59,6 +59,8 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_compiler.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/cmsis_gcc.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/CMSIS/mpu_armv7.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/system_stm32h7xx.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h7xx.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h747xx.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_PWR.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h:

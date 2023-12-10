@@ -2,13 +2,15 @@
  * MiniConsole V3 - Board Support Package - Graph 2D Library
  *
  * Author: Marek Ryn
- * Version: 0.3b
+ * Version: 0.4b
  *
  * Changelog:
  *
  * - 0.1b	- Development version
  * - 0.2b 	- Added hardware JPEG decoding
  * - 0.3b	- Added ARGB1555 and ARGB4444 modes
+ * - 0.4b   - Added RoundRect and FillRoundRect
+ * 			- Added DrawIconBlend and TextBlend
  *******************************************************************/
 
 #ifdef CORE_CM7
@@ -21,7 +23,7 @@
 #define MAX(A, B)	((A) > (B) ? (A) : (B))
 
 
-inline static uint8_t _charw(uint8_t *font, uint8_t ch) {
+inline static uint8_t _charw(const uint8_t *font, uint8_t ch) {
 	// This function only returns character width
 
 	uint16_t *adr0;								// Start address of encoded character
@@ -44,7 +46,7 @@ inline static uint8_t _charw(uint8_t *font, uint8_t ch) {
 }
 
 
-inline static uint8_t _char(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, int16_t y, uint8_t *font, uint8_t ch, uint32_t *text_clut) {
+inline static uint8_t _char(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, int16_t y, const uint8_t *font, uint8_t ch, uint32_t *text_clut) {
 	// Function rendering character on screen
 	uint16_t *adr0;								// Start address of encoded character
 	uint16_t *adr1;								// End address of encoded character
@@ -97,6 +99,59 @@ inline static uint8_t _char(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, i
 }
 
 
+inline static uint8_t _charblend(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, int16_t y, const uint8_t *font, uint8_t ch, uint32_t *text_clut) {
+	// Function rendering character on screen
+	uint16_t *adr0;								// Start address of encoded character
+	uint16_t *adr1;								// End address of encoded character
+	uint8_t swidth = *(font + 1);			   	// Width of space (empty character)
+
+	// Testing if character is outside allowable range
+	if ((ch < 33) || (ch > 126)) return swidth;
+
+	// Looking for character in index
+	uint16_t a = (ch - 33) * 2;
+	adr0 = (uint16_t*)(font + a + 2);
+	adr1 = (uint16_t*)(font + a + 4);
+
+	// Testing if character is outside defined subset
+	if (*adr0 == *adr1) return swidth;
+
+	// Reading width of given character
+	uint8_t width = *(font + *adr0);
+
+	// Decoding and drawing character
+	uint8_t m;
+	int16_t fx = 0;
+	int16_t fy = 0;
+	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
+	uint32_t offset = lcd->Layers[layer].Frames[eframe];
+
+
+	for (uint16_t j = *adr0 + 1; j < *adr1; j++) {
+		m = *(font + j);
+		switch (m >> 6) {
+		case 0: // 0% color
+		case 3:	// 100% color
+			for (uint8_t i = 0; i < (m & 0x3F); i++) {
+				BSP_LCD_UpdatePixelBlend(lcd, offset, x+fx, y+fy, text_clut[m >> 6]);
+				fx++;
+				if (fx==width) { fx = 0; fy++; }
+			}
+			break;
+		case 1: // 33% color
+		case 2: // 66% color
+			for (int8_t i = 6; i >= 0; i-=2) {
+				BSP_LCD_UpdatePixelBlend(lcd, offset, x+fx, y+fy, text_clut[(m >> i) & 0x03]);
+				fx++;
+				if (fx==width) { fx = 0; fy++; }
+			}
+			break;
+		}
+	}
+	return width;
+}
+
+
 uint32_t static _getbufpixel_ARGB8888(uint32_t offset, int16_t width, int16_t x, int16_t y) {
 	uint32_t addr = offset;
 	addr += (x + y * width) << 2;
@@ -116,10 +171,10 @@ uint32_t static _getbufpixel_ARGB4444(uint32_t offset, int16_t width, int16_t x,
 }
 
 uint32_t static _getbufpixel_RGB888(uint32_t offset, int16_t width, int16_t x, int16_t y) {
-	uint32_t addr = offset;
-	addr += (x + y * width) * 3;
-	if (addr & 1) return *(uint8_t *)(addr++) | (*(uint16_t *)(addr) << 8);
-	return *(uint16_t *)(addr++) | (*(uint8_t *)(addr) << 16);
+	uint32_t addr0 = offset + (x + y * width) * 3;
+	uint32_t addr1 = addr0 + 1;
+	if (addr0 & 1) return *(uint8_t *)(addr0) | (*(uint16_t *)(addr1) << 8);
+	return *(uint16_t *)(addr0) | (*(uint8_t *)(addr1) << 16);
 }
 
 uint32_t static _getbufpixel_AL88(uint32_t offset, int16_t width, int16_t x, int16_t y) {
@@ -193,7 +248,6 @@ void G2D_DrawPixel(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, 
 	BSP_LCD_UpdatePixel(lcd, offset, x, y, color);
 }
 
-
 void G2D_DrawHLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, int16_t length, uint32_t color) {
 	if (length == 0) return;
 	if (length < 0) {x -= length + 1; length = -length;}
@@ -206,6 +260,21 @@ void G2D_DrawHLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, 
 	uint16_t l = x1 - x0;
 	uint16_t lo = LCD_WIDTH - l;
 	BSP_LCD_FillBuf(lcd, layer, x0, y, l, 1, lo, color);
+}
+
+
+void G2D_DrawHLineBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, int16_t length, uint32_t color) {
+	if (length == 0) return;
+	if (length < 0) {x -= length + 1; length = -length;}
+	if (y < 1) return;
+	if (y >= LCD_HEIGHT) return;
+	if ((x + length) < 1) return;
+	if (x >= LCD_WIDTH) return;
+	uint16_t x0 = MAX(0, x);
+	uint16_t x1 = MIN(LCD_WIDTH, x + length);
+	uint16_t l = x1 - x0;
+	uint16_t lo = LCD_WIDTH - l;
+	BSP_LCD_FillBufBlend(lcd, layer, x0, y, l, 1, lo, color);
 }
 
 
@@ -222,6 +291,22 @@ void G2D_DrawVLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, 
 	if (l == 0) return;
 	uint16_t lo = LCD_WIDTH - 1;
 	BSP_LCD_FillBuf(lcd, layer, x, y0, 1, l, lo, color);
+}
+
+
+void G2D_DrawVLineBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, int16_t length, uint32_t color) {
+	if (length == 0) return;
+	if (length < 0) {y -= length + 1; length = -length;}
+	if (x < 1) return;
+	if (x >= LCD_WIDTH) return;
+	if ((y + length) < 1) return;
+	if (y >= LCD_HEIGHT) return;
+	uint16_t y0 = MAX(0, y);
+	uint16_t y1 = MIN(LCD_HEIGHT, y + length);
+	uint16_t l = y1 - y0;
+	if (l == 0) return;
+	uint16_t lo = LCD_WIDTH - 1;
+	BSP_LCD_FillBufBlend(lcd, layer, x, y0, 1, l, lo, color);
 }
 
 
@@ -315,6 +400,17 @@ void G2D_DrawFillRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t 
 	BSP_LCD_FillBuf(lcd, layer, x1, y1, w, h, ol, color);
 }
 
+void G2D_DrawFillRectBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
+	uint16_t x1 = MAX(0, x);
+	uint16_t y1 = MAX(0, y);
+	uint16_t x2 = MIN(LCD_WIDTH - 1, (x + width));
+	uint16_t y2 = MIN(LCD_HEIGHT - 1, (y + height));
+	uint16_t w = x2 - x1;
+	uint16_t h = y2 - y1;
+	uint16_t ol = LCD_WIDTH - w;
+
+	BSP_LCD_FillBufBlend(lcd, layer, x1, y1, w, h, ol, color);
+}
 
 void G2D_DrawCircle(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t r, uint32_t color) {
 	int32_t d;			/* Decision Variable */
@@ -381,7 +477,183 @@ void G2D_DrawFillCircle(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_
 }
 
 
-uint16_t G2D_Text(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint8_t *font, char *str, uint32_t color, uint32_t bgcolor) {
+void G2D_DrawFillCircleBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t r, uint32_t color) {
+	int32_t  d;    	/* Decision Variable */
+	int32_t  curx;	/* Current X Value */
+	int32_t  cury;	/* Current Y Value */
+
+	d = 3 - (r << 1);
+	curx = 0;
+	cury = r;
+
+	while (curx <= cury) {
+		if(cury > 0) {
+			G2D_DrawHLineBlend(lcd, layer, x - cury, y + curx, 2 * cury + 1, color);
+			G2D_DrawHLineBlend(lcd, layer, x - cury, y - curx, 2 * cury + 1, color);
+		}
+
+		if(curx > 0) {
+			G2D_DrawHLineBlend(lcd, layer, x - curx, y - cury, 2 * curx + 1, color);
+			G2D_DrawHLineBlend(lcd, layer, x - curx, y + cury, 2 * curx + 1, color);
+		}
+		if (d < 0) {
+			d += (curx << 2) + 6;
+		} else {
+			d += ((curx - cury) << 2) + 10;
+			cury--;
+		}
+		curx++;
+	}
+}
+
+
+void G2D_DrawRoundRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t radius, uint32_t color) {
+	int32_t  d;    	/* Decision Variable */
+	int32_t  curx;	/* Current X Value */
+	int32_t  cury;	/* Current Y Value */
+
+	uint16_t radius2 = radius << 1;
+
+	if (height < radius2) return;
+	if (width < radius2) return;
+
+	d = 3 - radius2;
+	curx = 0;
+	cury = radius;
+
+	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
+	uint32_t offset = lcd->Layers[layer].Frames[eframe];
+	int16_t x0 = x + radius;
+	int16_t y0 = y + radius;
+	int16_t x1 = x + width - radius;
+	int16_t y1 = y + height - radius;
+
+	// Drawing H lines
+	if (width > radius2) {
+		G2D_DrawHLine(lcd, layer, x0, y, width - radius2, color);
+		G2D_DrawHLine(lcd, layer, x0, y + height, width - radius2, color);
+	}
+	// Drawing V lines
+	if (height > radius2) {
+		G2D_DrawVLine(lcd, layer, x, y0, height - radius2, color);
+		G2D_DrawVLine(lcd, layer, x + width, y0, height - radius2, color);
+	}
+
+	BSP_LCD_DMA2D_Wait();
+
+	// Drawing round corners
+	while (curx <= cury) {
+		BSP_LCD_UpdatePixel(lcd, offset, (x0 - curx), (y0 - cury), color);
+		BSP_LCD_UpdatePixel(lcd, offset, (x0 - cury), (y0 - curx), color);
+		BSP_LCD_UpdatePixel(lcd, offset, (x1 + curx), (y0 - cury), color);
+		BSP_LCD_UpdatePixel(lcd, offset, (x1 + cury), (y0 - curx), color);
+		BSP_LCD_UpdatePixel(lcd, offset, (x0 - curx), (y1 + cury), color);
+		BSP_LCD_UpdatePixel(lcd, offset, (x0 - cury), (y1 + curx), color);
+		BSP_LCD_UpdatePixel(lcd, offset, (x1 + cury), (y1 + curx), color);
+		BSP_LCD_UpdatePixel(lcd, offset, (x1 + curx), (y1 + cury), color);
+		if (d < 0) {
+			d += (curx << 2) + 6;
+		} else {
+			d += ((curx - cury) << 2) + 10;
+			cury--;
+		}
+		curx++;
+	}
+
+}
+
+
+void G2D_DrawFillRoundRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t radius, uint32_t color) {
+	int32_t  d;    	/* Decision Variable */
+	int32_t  curx;	/* Current X Value */
+	int32_t  cury;	/* Current Y Value */
+
+	uint16_t radius2 = radius << 1;
+
+	if (height < radius2) return;
+	if (width < radius2) return;
+
+	d = 3 - radius2;
+	curx = 0;
+	cury = radius;
+
+	int16_t x0 = x + radius;
+	int16_t y0 = y + radius;
+	int16_t y1 = y + height - radius;
+	uint16_t wr = width - radius2;
+
+	// Drawing middle filled area
+	G2D_DrawFillRect(lcd, layer, x, y0 + 1, width, height - radius2 - 1, color);
+
+	// Drawing round parts (top and bottom)
+	while (curx <= cury) {
+		if(cury > 0) {
+			G2D_DrawHLine(lcd, layer, x0 - cury, y1 + curx, 2 * cury + wr, color);
+			G2D_DrawHLine(lcd, layer, x0 - cury, y0 - curx, 2 * cury + wr, color);
+		}
+
+		if(curx > 0) {
+			G2D_DrawHLine(lcd, layer, x0 - curx, y0 - cury, 2 * curx + wr, color);
+			G2D_DrawHLine(lcd, layer, x0 - curx, y1 + cury, 2 * curx + wr, color);
+		}
+		if (d < 0) {
+			d += (curx << 2) + 6;
+		} else {
+			d += ((curx - cury) << 2) + 10;
+			cury--;
+		}
+		curx++;
+	}
+
+}
+
+
+void G2D_DrawFillRoundRectBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t radius, uint32_t color) {
+	int32_t  d;    	/* Decision Variable */
+	int32_t  curx;	/* Current X Value */
+	int32_t  cury;	/* Current Y Value */
+
+	uint16_t radius2 = radius << 1;
+
+	if (height < radius2) return;
+	if (width < radius2) return;
+
+	d = 3 - radius2;
+	curx = 0;
+	cury = radius;
+
+	int16_t x0 = x + radius;
+	int16_t y0 = y + radius;
+	int16_t y1 = y + height - radius;
+	uint16_t wr = width - radius2;
+
+	// Drawing middle filled area
+	G2D_DrawFillRectBlend(lcd, layer, x, y0 + 1, width, height - radius2 - 1, color);
+
+	// Drawing round parts (top and bottom)
+	while (curx <= cury) {
+		if(cury > 0) {
+			G2D_DrawHLineBlend(lcd, layer, x0 - cury, y1 + curx, 2 * cury + wr, color);
+			G2D_DrawHLineBlend(lcd, layer, x0 - cury, y0 - curx, 2 * cury + wr, color);
+		}
+
+		if(curx > 0) {
+			G2D_DrawHLineBlend(lcd, layer, x0 - curx, y0 - cury, 2 * curx + wr, color);
+			G2D_DrawHLineBlend(lcd, layer, x0 - curx, y1 + cury, 2 * curx + wr, color);
+		}
+		if (d < 0) {
+			d += (curx << 2) + 6;
+		} else {
+			d += ((curx - cury) << 2) + 10;
+			cury--;
+		}
+		curx++;
+	}
+
+}
+
+
+uint16_t G2D_Text(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color, uint32_t bgcolor) {
 	// Calculating color array for anty-aliasing
 	uint32_t text_clut[4];
 	uint32_t a1, a2, r1, r2, b1, b2, g1, g2;
@@ -465,6 +737,78 @@ uint16_t G2D_Text(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, u
 
 		// Character rendering
 		_char(lcd, layer, x, y, font, *str, text_clut);
+
+	}
+	return x + w;
+}
+
+
+uint16_t G2D_TextBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color) {
+	// Calculating color array for anty-aliasing
+	uint32_t text_clut[4];
+	uint32_t a1 = 0;
+
+	switch (lcd->config_.colormode) {
+	case LCD_COLOR_MODE_ARGB8888:
+		a1 = (color & 0xFF000000) >> 24;
+		text_clut[0] = 0;
+		text_clut[1] = (((a1 * 85) >> 8) << 24) | (color & 0x00FFFFFF);
+		text_clut[2] = (((a1 * 171) >> 8) << 24) | (color & 0x00FFFFFF);
+		text_clut[3] = color;
+		break;
+	case LCD_COLOR_MODE_ARGB1555:
+		text_clut[0] = 0;
+		text_clut[1] = 0;
+		text_clut[2] = color;
+		text_clut[3] = color;
+		break;
+	case LCD_COLOR_MODE_ARGB4444:
+		a1 = (color & 0xF000) >> 12;
+
+		text_clut[0] = 0;
+		text_clut[1] = (((a1 * 85) >> 8) << 12) | (color & 0x0FFF);
+		text_clut[2] = (((a1 * 171) >> 8) << 12) | (color & 0x0FFF);
+		text_clut[3] = color;
+		break;
+
+	case LCD_COLOR_MODE_RGB888:
+		text_clut[0] = 0;
+		text_clut[1] = (85 << 24) | (color & 0x00FFFFFF);
+		text_clut[2] = (171 << 24) | (color & 0x00FFFFFF);
+		text_clut[3] = (255 << 24) | (color & 0x00FFFFFF);
+		break;
+
+	case LCD_COLOR_MODE_AL88:
+	case LCD_COLOR_MODE_L8:
+		// No anty-aliasing in AL and L modes
+		text_clut[0] = 0;
+		text_clut[1] = 0;
+		text_clut[2] = color;
+		text_clut[3] = color;
+		break;
+	}
+
+
+	uint8_t h = *(font);	// Font height
+	uint8_t w = 0;			// Character width
+	uint8_t flag = 0;		// Flag -> character pointer not to beupdated in first loop
+
+	// Waiting for DMA2D to stop
+	BSP_LCD_DMA2D_Wait();
+
+	while (*str > 0) {
+		x += w;
+		if (flag) str += 1;
+		flag = 1;
+
+		// Getting character width
+		w = _charw(font, *str);
+
+		// Is character within screen area?
+		if (((x + w) < 0) || (x >= LCD_WIDTH) || ((y + h) < 0) || (y >= LCD_HEIGHT)) continue; // No rendering
+
+		// Character rendering
+		_charblend(lcd, layer, x, y, font, *str, text_clut);
 
 	}
 	return x + w;
@@ -720,6 +1064,99 @@ void G2D_DrawIconC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, i
 	x -= width >> 1;
 	y -= height >> 1;
 	G2D_DrawIcon(lcd, layer, iconsource, x, y, color, bgcolor);
+}
+
+
+void G2D_DrawIconBlend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, int16_t x, int16_t y, uint32_t color) {
+	// Calculating color array for anty-aliasing
+	uint32_t icon_clut[4];
+	uint32_t a1 = 0;
+
+	switch (lcd->config_.colormode) {
+	case LCD_COLOR_MODE_ARGB8888:
+		a1 = (color & 0xFF000000) >> 24;
+		icon_clut[0] = 0;
+		icon_clut[1] = (((a1 * 85) >> 8) << 24) | (color & 0x00FFFFFF);
+		icon_clut[2] = (((a1 * 171) >> 8) << 24) | (color & 0x00FFFFFF);
+		icon_clut[3] = color;
+		break;
+	case LCD_COLOR_MODE_ARGB1555:
+		icon_clut[0] = 0;
+		icon_clut[1] = 0;
+		icon_clut[2] = color;
+		icon_clut[3] = color;
+		break;
+	case LCD_COLOR_MODE_ARGB4444:
+		a1 = (color & 0xF000) >> 12;
+
+		icon_clut[0] = 0;
+		icon_clut[1] = (((a1 * 85) >> 8) << 12) | (color & 0x0FFF);
+		icon_clut[2] = (((a1 * 171) >> 8) << 12) | (color & 0x0FFF);
+		icon_clut[3] = color;
+		break;
+
+	case LCD_COLOR_MODE_RGB888:
+		icon_clut[0] = 0;
+		icon_clut[1] = (85 << 24) | (color & 0x00FFFFFF);
+		icon_clut[2] = (171 << 24) | (color & 0x00FFFFFF);
+		icon_clut[3] = (255 << 24) | (color & 0x00FFFFFF);
+		break;
+
+	case LCD_COLOR_MODE_AL88:
+	case LCD_COLOR_MODE_L8:
+		// No anty-aliasing in AL and L modes
+		icon_clut[0] = 0;
+		icon_clut[1] = 0;
+		icon_clut[2] = color;
+		icon_clut[3] = color;
+		break;
+	}
+
+	// Calculating destination address
+	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
+	uint32_t faddr = lcd->Layers[layer].Frames[eframe];
+
+	// Decoding compressed icon data
+	uint8_t *pdata;
+	pdata = (uint8_t *)iconsource;
+
+	uint16_t width = *(uint16_t *)(pdata++);
+	pdata++;
+	uint16_t height = *(uint16_t *)(pdata++);
+	pdata++;
+	int16_t xx = x;
+	int16_t yy = y;
+
+	// Waiting for DMA2D to stop
+	BSP_LCD_DMA2D_Wait();
+
+	while (yy < (y+height)) {
+		uint8_t j = *(pdata++);
+		uint8_t m = j >> 6;
+		uint8_t r = j & 0x3F;
+		for (uint32_t z = 0; z<r; z++) {
+			BSP_LCD_UpdatePixelBlend(lcd, faddr, xx, yy, icon_clut[m]);
+			xx++;
+			if (xx == (x+width)) {
+				xx = x;
+				yy++;
+			}
+		}
+	}
+}
+
+
+void G2D_DrawIconBlendC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, int16_t x, int16_t y, uint32_t color) {
+	// Decoding width and height
+	uint8_t *pdata;
+	pdata = (uint8_t *)iconsource;
+	uint16_t width = *(uint16_t *)(pdata++);
+	pdata++;
+	uint16_t height = *(uint16_t *)(pdata++);
+
+	x -= width >> 1;
+	y -= height >> 1;
+	G2D_DrawIconBlend(lcd, layer, iconsource, x, y, color);
 }
 
 

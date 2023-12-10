@@ -291,6 +291,9 @@ uint8_t BSP_STM32_Init_PeriphClocks(void) {
 
     if (BSP_STM32_RTC_Init(RTC, 127, 255)) return BSP_ERROR;
 
+    // Starting Backup RAM
+    // __BSP_RCC_BKPRAM_CLK_ENABLE();
+
 	// Enable SYSCFG Clock
 	__BSP_RCC_SYSCFG_CLK_ENABLE();
 
@@ -335,9 +338,9 @@ uint8_t BSP_STM32_Init_PeriphClocks(void) {
     if (BSP_STM32_RCC_CLKConfig_I2C4()) return BSP_ERROR;
     __BSP_RCC_I2C4_CLK_ENABLE();
 
-    // Starting peripherials clocks - I2S3
-//    if (BSP_STM32_RCC_CLKConfig_I2S3()) return BSP_ERROR;
-//    __BSP_RCC_I2S3_CLK_ENABLE();
+    // Starting peripherials clocks - I2S3 <<<<<<<<<< Started in CM4 Project
+    //    if (BSP_STM32_RCC_CLKConfig_I2S3()) return BSP_ERROR;
+    //    __BSP_RCC_I2S3_CLK_ENABLE();
 
     // Starting peripherals clocks - QSPI
     if (BSP_STM32_RCC_CLKConfig_QSPI()) return BSP_ERROR;

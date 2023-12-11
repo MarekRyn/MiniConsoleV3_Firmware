@@ -2,13 +2,16 @@
  * MiniConsole V3 - Board Support Package - Graph 2D Library
  *
  * Author: Marek Ryn
- * Version: 0.3b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
  * - 0.2b 	- Added hardware JPEG decoding
  * - 0.3b	- Added ARGB1555 and ARGB4444 modes
+ * - 0.4b   - Added RoundRect and FillRoundRect
+ * 			- Added DrawIconBlend and TextBlend
+ * - 1.0	- Major refactoring
  *******************************************************************/
 
 #ifndef INC_GRAPH2D_H_
@@ -68,7 +71,7 @@ void G2D_DrawJPEG(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
 void G2D_DrawJPEGC(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
 void G2D_DrawLastJPEG(int16_t x, int16_t y);
 void G2D_DrawLastJPEGC(int16_t x, int16_t y);
-void G2D_DecodeJPEG(LCD_HandleTypeDef *lcd, uint32_t jpeg_addr, uint32_t jpeg_size);
+void G2D_DecodeJPEG(uint32_t jpeg_addr, uint32_t jpeg_size);
 
 void G2D_DrawTile(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);
 void G2D_DrawTileC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);

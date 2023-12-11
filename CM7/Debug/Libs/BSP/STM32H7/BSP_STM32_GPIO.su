@@ -1,4 +1,4 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:21:9:BSP_STM32_GPIO_Init	40	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:128:10:BSP_STM32_GPIO_ReadPin	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:132:9:BSP_STM32_GPIO_WritePin	24	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:137:9:BSP_STM32_GPIO_TogglePin	24	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:21:9:BSP_STM32_GPIO_Init	64	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:128:10:BSP_STM32_GPIO_ReadPin	0	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:132:9:BSP_STM32_GPIO_WritePin	0	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:137:9:BSP_STM32_GPIO_TogglePin	0	static

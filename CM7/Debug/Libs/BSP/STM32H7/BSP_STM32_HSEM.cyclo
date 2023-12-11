@@ -1,5 +1,5 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:14:9:BSP_STM32_HSEM_Take	4
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:28:9:BSP_STM32_HSEM_FastTake	3
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:14:9:BSP_STM32_HSEM_Take	3
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:28:9:BSP_STM32_HSEM_FastTake	2
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:38:9:BSP_STM32_HSEM_IsSemTaken	2
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:47:9:BSP_STM32_HSEM_Release	3
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:57:9:BSP_STM32_HSEM_FastRelease	2

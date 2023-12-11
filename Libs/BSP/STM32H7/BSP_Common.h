@@ -162,44 +162,6 @@ typedef struct _TxRxContext {
 } TxRxContext_TypeDef;
 
 
-// BSP structures - LCD
-
-typedef struct _LCD_PRIV {
-	__IO uint32_t		l_timestamp[2];
-	__IO uint32_t		dma2d_state;
-	__IO int32_t		bklt_value;
-	__IO int32_t		bklt_setting;
-	__IO int32_t		bklt_dimspeed;
-} LCD_PRIV;
-
-typedef struct _LCD_CONFIG {
-	uint32_t	framesize;
-	uint32_t	framebuffersize;
-	uint8_t		colormode;
-	uint8_t		buffermode;
-	uint32_t	bgcolor;
-	uint8_t		bytesperpixel;
-} LCD_CONFIG;
-
-typedef struct _LCD_LAYER {
-	__IO uint32_t		Frames[3];
-	__IO uint8_t		Frame_IDLE;		// Idling frame
-	__IO uint8_t		Frame_EDIT; 	// Frame currently under edit
-	__IO uint8_t		Frame_READY;	// Frame rendered and ready to display
-	__IO uint8_t		Frame_ACTIVE;	// Frame currently displayed on screen
-	__IO uint8_t		Frame_NOUSE;	// Not in use frame
-	__IO uint8_t		Frame_PREV;		// Previously rendered frame
-} LCD_LAYER;
-
-
-typedef struct _LCD {
-	LCD_PRIV		priv_;
-	LCD_CONFIG		config_;
-	LCD_LAYER		Layers[2];
-	uint32_t		frametime[2];
-	uint32_t		JPEGBuf;
-} LCD_HandleTypeDef;
-
 // BSP structures - LCD Touch Panel
 
 typedef struct _LCD_TP_DATA {

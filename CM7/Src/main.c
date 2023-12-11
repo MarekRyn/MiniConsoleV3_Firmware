@@ -41,7 +41,7 @@ int main(void)
 	BSP_Res_Init(&resctx, 0xC0000000, 48 * 1024 * 1024);
 	BSP_Res_Load(&resctx, "/_/wallpaper01.jpg", 0);
 
-	G2D_DecodeJPEG(&BSP_hlcd, BSP_Res_GetAddr(&resctx, 0), BSP_Res_GetSize(&resctx, 0));
+	G2D_DecodeJPEG(BSP_Res_GetAddr(&resctx, 0), BSP_Res_GetSize(&resctx, 0));
 	G2D_DrawLastJPEG(0, 0);
 
 	//G2D_FillFrame(&BSP_hlcd, 0, BSP_LCD_Color(C_RED, 255));

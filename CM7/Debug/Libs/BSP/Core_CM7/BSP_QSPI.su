@@ -1,7 +1,7 @@
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:14:9:BSP_QSPI_Init	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:22:9:BSP_QSPI_WriteBuf	24	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:29:9:BSP_QSPI_ReadBuf	24	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:22:9:BSP_QSPI_WriteBuf	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:29:9:BSP_QSPI_ReadBuf	8	static
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:36:9:BSP_QSPI_ChipErase	8	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:43:9:BSP_QSPI_SectorErase	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:50:9:BSP_QSPI_ReadUID	16	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:43:9:BSP_QSPI_SectorErase	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:50:9:BSP_QSPI_ReadUID	8	static
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.c:58:9:BSP_QSPI_MemMappedEnable	8	static

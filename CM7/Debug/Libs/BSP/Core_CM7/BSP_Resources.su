@@ -1,4 +1,4 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.c:14:9:BSP_Res_Init	32	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.c:45:9:BSP_Res_Load	4232	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.c:88:10:BSP_Res_GetAddr	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.c:92:10:BSP_Res_GetSize	16	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.c:14:9:BSP_Res_Init	16	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.c:45:9:BSP_Res_Load	4224	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.c:88:10:BSP_Res_GetAddr	0	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.c:92:10:BSP_Res_GetSize	0	static

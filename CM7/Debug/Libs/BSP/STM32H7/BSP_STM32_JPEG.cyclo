@@ -1,7 +1,5 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_JPEG.c:16:16:_JPEG_DecInit	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_JPEG.c:65:16:_JPEG_DecProcess	22
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_JPEG.c:140:9:BSP_STM32_JPEG_Init	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_JPEG.c:164:9:BSP_STM32_JPEG_Decode	2
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_JPEG.c:164:9:BSP_STM32_JPEG_Decode	19
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_JPEG.c:174:10:BSP_STM32_JPEG_GetWidth	1
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_JPEG.c:180:10:BSP_STM32_JPEG_GetHeight	1
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_JPEG.c:186:10:BSP_STM32_JPEG_GetCSS	1

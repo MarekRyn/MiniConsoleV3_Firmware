@@ -1,3 +1,3 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_ADC.c:18:9:BSP_ADC_Init	40	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_ADC.c:92:9:BSP_ADC_ConfigChannel	40	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_ADC.c:119:9:BSP_ADC_StartDMA	24	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_ADC.c:18:9:BSP_ADC_Init	24	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_ADC.c:92:9:BSP_ADC_ConfigChannel	16	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_ADC.c:119:9:BSP_ADC_StartDMA	8	static

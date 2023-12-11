@@ -2,13 +2,14 @@
  * MiniConsole V3 - Board Support Package - LCD
  *
  * Author: Marek Ryn
- * Version: 0.3b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
  * - 0.2b 	- Added hardware JPEG decoding
  * - 0.3b	- Added ARGB1555 and ARGB4444 modes
+ * - 1.0	- Major refactoring.
  *******************************************************************/
 
 #ifndef INC_BSP_LCD_H_
@@ -80,9 +81,6 @@ extern "C" {
 
 #define LCD_JPEGBUF_SIZE			2*1024*1024	// 2MB is sufficient buffer for JPEG image of size 800x480 at CSS 4:4:4
 
-
-extern LCD_HandleTypeDef BSP_hlcd;
-
 // Pre-defined LUT color palettes
 extern const uint32_t C_LUT_COLOR[256];
 extern const uint32_t C_LUT_GRAY[256];
@@ -99,6 +97,8 @@ uint8_t BSP_LCD_GetBackLight(void);
 void BSP_LCD_DecodeJPEG(uint32_t jpeg_addr, uint32_t jpeg_size);
 uint32_t BSP_LCD_GetEditFrameAddr(void);
 uint32_t BSP_LCD_GetPrevFrameAddr(void);
+uint32_t BSP_LCD_GetColorMode(void);
+uint8_t	BSP_LCD_GetBytesPerPixel(void);
 
 // Functions for overloading (content depends on color mode)
 extern uint32_t (*BSP_LCD_Color)(uint32_t color, uint8_t alpha); // Calculating color value and include alpha in modes with alpha channel

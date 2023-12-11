@@ -1,13 +1,6 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:14:16:_RTC_ByteToBcd	2
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:29:16:_RTC_BcdToByte	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:37:16:_RTC_WaitForSynchro	3
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:52:13:_RTC_WriteEnable	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:59:13:_RTC_WriteDisable	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:65:16:_RTC_EnterInitMode	4
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:85:16:_RTC_ExitInitMode	3
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:105:9:BSP_STM32_RTC_Init	4
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:145:9:BSP_STM32_RTC_SetTime	6
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:178:9:BSP_STM32_RTC_SetDate	13
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:105:9:BSP_STM32_RTC_Init	8
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:145:9:BSP_STM32_RTC_SetTime	21
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:178:9:BSP_STM32_RTC_SetDate	35
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:234:9:BSP_STM32_RTC_GetTime	1
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:250:9:BSP_STM32_RTC_GetDate	1
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:267:9:BSP_STM32_RTC_SetBackupReg	2

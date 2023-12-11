@@ -32,12 +32,22 @@ uint8_t BSP_STM32_DMA2D_FillBuff(DMA2D_TypeDef * hdma2d, uint32_t colormode, uin
 
 
 uint8_t BSP_STM32_DMA2D_FillBuffBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t dest_addr, uint32_t color, uint8_t alpha) {
+	// Recalculating color for ARGB4444 and ARGB1555
+	switch (colormode) {
+	case DMA2D_ARGB4444:
+		color = ((color & 0x0F00) << 12) | ((color & 0x00F0) << 8) | ((color & 0x000F) << 4);
+		break;
+	case DMA2D_ARGB1555:
+		color = ((color & 0x7C00) << 9) | ((color & 0x03E0) << 6) | ((color & 0x001F) << 3);
+		break;
+	}
+
 	// Configuring DMA2D
 	MODIFY_REG(hdma2d->CR, DMA2D_CR_MODE, DMA2D_M2M_BLEND_FG);
 	MODIFY_REG(hdma2d->OPFCCR, DMA2D_OPFCCR_CM, colormode);
 	MODIFY_REG(hdma2d->OOR, DMA2D_OOR_LO, offsetline);
 
-	uint32_t regValue1 = colormode | (DMA2D_COMBINE_ALPHA << DMA2D_FGPFCCR_AM_Pos) | (alpha << DMA2D_FGPFCCR_ALPHA_Pos);
+	uint32_t regValue1 = colormode | (DMA2D_REPLACE_ALPHA << DMA2D_FGPFCCR_AM_Pos) | (alpha << DMA2D_FGPFCCR_ALPHA_Pos);
 	uint32_t regMask1  = (DMA2D_FGPFCCR_CM | DMA2D_FGPFCCR_AM | DMA2D_FGPFCCR_ALPHA);
 	MODIFY_REG(hdma2d->FGPFCCR, regMask1, regValue1);
 	WRITE_REG(hdma2d->FGCOLR, color);

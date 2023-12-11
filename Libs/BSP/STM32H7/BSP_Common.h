@@ -176,7 +176,6 @@ typedef struct _LCD_CONFIG {
 	uint32_t	framesize;
 	uint32_t	framebuffersize;
 	uint8_t		colormode;
-	uint8_t		layerno;
 	uint8_t		buffermode;
 	uint32_t	bgcolor;
 	uint8_t		bytesperpixel;

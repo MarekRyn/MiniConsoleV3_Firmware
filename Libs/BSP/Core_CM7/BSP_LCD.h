@@ -41,9 +41,6 @@ extern "C" {
 #define LCD_BUFFER_MODE_DOUBLE		2
 #define LCD_BUFFER_MODE_TRIPLE		3
 
-#define LCD_LAYER_NO_ONE			1
-#define LCD_LAYER_NO_TWO			2
-
 // Color Definitions - Valid only for ARGB and RGB modes
 #define C_BLUE          0x0000FF
 #define C_GREEN         0x00FF00
@@ -91,28 +88,30 @@ extern const uint32_t C_LUT_COLOR[256];
 extern const uint32_t C_LUT_GRAY[256];
 
 // Functions
-void BSP_LCD_Init(LCD_HandleTypeDef *lcd, uint8_t color_mode, uint8_t buffer_mode, uint8_t layer_no, uint32_t bgcolor, uint32_t *clut);
-void BSP_LCD_FrameReady(LCD_HandleTypeDef *lcd, uint8_t layer);
-uint8_t BSP_LCD_GetEditPermission(LCD_HandleTypeDef *lcd);
-void BSP_LCD_SetLayerAlpha(LCD_HandleTypeDef *lcd, uint8_t layer, uint8_t alpha);
-uint8_t BSP_LCD_GetLayerAlpha(LCD_HandleTypeDef *lcd, uint8_t layer);
-void BSP_LCD_InitBackLight(LCD_HandleTypeDef *lcd, uint8_t value);
-void BSP_LCD_SetBackLight(LCD_HandleTypeDef *lcd, uint8_t value, uint8_t dimspeed);
-uint8_t LCD_GetBackLight(LCD_HandleTypeDef *lcd);
-void BSP_LCD_DecodeJPEG(LCD_HandleTypeDef *lcd, uint32_t jpeg_addr, uint32_t jpeg_size);
+void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uint32_t *clut);
+void BSP_LCD_FrameReady(void);
+uint8_t BSP_LCD_GetEditPermission(void);
+void BSP_LCD_SetLayerAlpha(uint8_t alpha);
+uint8_t BSP_LCD_GetLayerAlpha(void);
+void BSP_LCD_InitBackLight(uint8_t value);
+void BSP_LCD_SetBackLight(uint8_t value, uint8_t dimspeed);
+uint8_t BSP_LCD_GetBackLight(void);
+void BSP_LCD_DecodeJPEG(uint32_t jpeg_addr, uint32_t jpeg_size);
+uint32_t BSP_LCD_GetEditFrameAddr(void);
+uint32_t BSP_LCD_GetPrevFrameAddr(void);
 
 // Functions for overloading (content depends on color mode)
 extern uint32_t (*BSP_LCD_Color)(uint32_t color, uint8_t alpha); // Calculating color value and include alpha in modes with alpha channel
 extern uint32_t (*BSP_LCD_Alpha)(uint32_t color, uint8_t alpha); // Updating alpha channel in pre-calculated color value
-extern void (*BSP_LCD_DMA2D_Wait)();
-extern void (*BSP_LCD_UpdatePixel)(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value);
-extern void (*BSP_LCD_UpdatePixelBlend)(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value);
-extern uint32_t (*BSP_LCD_GetPixel)(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x, int16_t y);
-extern void (*BSP_LCD_FillBuf)(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
-extern void (*BSP_LCD_FillBufBlend)(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
-extern void (*BSP_LCD_CopyBuf)(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height);
-extern void (*BSP_LCD_CopyBufBlend)(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha);
-extern void (*BSP_LCD_CopyBufJPEG)(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_dest, uint16_t y_dest);
+extern void (*BSP_LCD_DMA2D_Wait)(void);
+extern void (*BSP_LCD_UpdatePixel)(uint32_t offset, int16_t x, int16_t y, uint32_t value);
+extern void (*BSP_LCD_UpdatePixelBlend)(uint32_t offset, int16_t x, int16_t y, uint32_t value);
+extern uint32_t (*BSP_LCD_GetPixel)(uint32_t offset,  int16_t x, int16_t y);
+extern void (*BSP_LCD_FillBuf)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
+extern void (*BSP_LCD_FillBufBlend)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
+extern void (*BSP_LCD_CopyBuf)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height);
+extern void (*BSP_LCD_CopyBufBlend)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha);
+extern void (*BSP_LCD_CopyBufJPEG)(uint16_t x_dest, uint16_t y_dest);
 
 
 #ifdef __cplusplus

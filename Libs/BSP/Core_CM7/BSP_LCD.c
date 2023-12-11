@@ -22,15 +22,15 @@ LCD_HandleTypeDef BSP_hlcd = {0};
 
 uint32_t (*BSP_LCD_Color)(uint32_t color, uint8_t alpha); // Calculating color value and include alpha in modes with alpha channel
 uint32_t (*BSP_LCD_Alpha)(uint32_t color, uint8_t alpha); // Updating alpha channel in pre-calculated color value
-void (*BSP_LCD_DMA2D_Wait)();
-void (*BSP_LCD_UpdatePixel)(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value);
-void (*BSP_LCD_UpdatePixelBlend)(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value);
-uint32_t (*BSP_LCD_GetPixel)(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x, int16_t y);
-void (*BSP_LCD_FillBuf)(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
-void (*BSP_LCD_FillBufBlend)(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
-void (*BSP_LCD_CopyBuf)(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height);
-void (*BSP_LCD_CopyBufBlend)(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha);
-void (*BSP_LCD_CopyBufJPEG)(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_dest, uint16_t y_dest);
+void (*BSP_LCD_DMA2D_Wait)(void);
+void (*BSP_LCD_UpdatePixel)(uint32_t offset, int16_t x, int16_t y, uint32_t value);
+void (*BSP_LCD_UpdatePixelBlend)(uint32_t offset, int16_t x, int16_t y, uint32_t value);
+uint32_t (*BSP_LCD_GetPixel)(uint32_t offset,  int16_t x, int16_t y);
+void (*BSP_LCD_FillBuf)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
+void (*BSP_LCD_FillBufBlend)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
+void (*BSP_LCD_CopyBuf)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height);
+void (*BSP_LCD_CopyBufBlend)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha);
+void (*BSP_LCD_CopyBufJPEG)(uint16_t x_dest, uint16_t y_dest);
 
 /******************************************************************************
  * Private functions
@@ -79,13 +79,13 @@ static uint32_t _ARGB8888_alpha(uint32_t color, uint8_t alpha) {
 }
 
 
-static void _ARGB8888_dma2dwait() {
+static void _ARGB8888_dma2dwait(void) {
 	// Status: Function Completed
 	while (BSP_hlcd.priv_.dma2d_state == LCD_DMA2D_BUSY) {};
 }
 
 
-static void _ARGB8888_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _ARGB8888_updatepixel(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -97,7 +97,7 @@ static void _ARGB8888_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16
 }
 
 
-static void _ARGB8888_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _ARGB8888_updatepixelblend(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -127,7 +127,7 @@ static void _ARGB8888_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, 
 	*addr = value;
 }
 
-static uint32_t _ARGB8888_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x, int16_t y) {
+static uint32_t _ARGB8888_getpixel(uint32_t offset,  int16_t x, int16_t y) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return 0x00000000;
 	if (x < 0) return 0x00000000;
@@ -139,10 +139,10 @@ static uint32_t _ARGB8888_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int
 }
 
 
-static void _ARGB8888_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+static void _ARGB8888_fillbuf(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x + y * LCD_WIDTH) << 2);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x + y * LCD_WIDTH) << 2);
 
 	_ARGB8888_dma2dwait();
 
@@ -153,10 +153,10 @@ static void _ARGB8888_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x,
 }
 
 
-static void _ARGB8888_fillbufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+static void _ARGB8888_fillbufblend(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x + y * LCD_WIDTH) << 2);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x + y * LCD_WIDTH) << 2);
 	uint8_t alpha  = color >> 24;
 
 	_ARGB8888_dma2dwait();
@@ -168,10 +168,10 @@ static void _ARGB8888_fillbufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint16
 }
 
 
-static void _ARGB8888_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
+static void _ARGB8888_copybuf(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 2);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 2);
 
 	_ARGB8888_dma2dwait();
 
@@ -182,10 +182,10 @@ static void _ARGB8888_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sr
 }
 
 
-static void _ARGB8888_copybufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
+static void _ARGB8888_copybufblend(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 2);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 2);
 
 	_ARGB8888_dma2dwait();
 
@@ -196,9 +196,9 @@ static void _ARGB8888_copybufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32
 }
 
 
-static void _ARGB8888_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_dest, uint16_t y_dest) {
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 2);
+static void _ARGB8888_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 2);
 	uint32_t chroma = 0;
 
 	if (BSP_STM32_JPEG_GetColorSpace(JPEG) != JPEG_YCBCR_COLORSPACE) return;
@@ -230,7 +230,7 @@ static void _ARGB8888_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_
 	// Starting DMA2D color space conversion and copy to frame buffer.
 	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_BUSY;
 
-	BSP_STM32_DMA2D_CopyBufJPEG(DMA2D, DMA2D_ARGB8888, BSP_STM32_JPEG_GetWidth(JPEG), BSP_STM32_JPEG_GetHeight(JPEG), offsline_src, lcd->JPEGBuf, offsline_dest, dest_addr, chroma);
+	BSP_STM32_DMA2D_CopyBufJPEG(DMA2D, DMA2D_ARGB8888, BSP_STM32_JPEG_GetWidth(JPEG), BSP_STM32_JPEG_GetHeight(JPEG), offsline_src, BSP_hlcd.JPEGBuf, offsline_dest, dest_addr, chroma);
 }
 
 /* ARGB1555 ------------------------------------------------------------------*/
@@ -253,13 +253,13 @@ static uint32_t _ARGB1555_alpha(uint32_t color, uint8_t alpha) {
 }
 
 
-static void _ARGB1555_dma2dwait() {
+static void _ARGB1555_dma2dwait(void) {
 	// Status: Function Completed
 	while (BSP_hlcd.priv_.dma2d_state == LCD_DMA2D_BUSY) {};
 }
 
 
-static void _ARGB1555_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _ARGB1555_updatepixel(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -271,7 +271,7 @@ static void _ARGB1555_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16
 }
 
 
-static void _ARGB1555_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _ARGB1555_updatepixelblend(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -287,7 +287,7 @@ static void _ARGB1555_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, 
 }
 
 
-static uint32_t _ARGB1555_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x, int16_t y) {
+static uint32_t _ARGB1555_getpixel(uint32_t offset,  int16_t x, int16_t y) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return 0x00000000;
 	if (x < 0) return 0x00000000;
@@ -299,10 +299,10 @@ static uint32_t _ARGB1555_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int
 }
 
 
-static void _ARGB1555_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+static void _ARGB1555_fillbuf(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x + y * LCD_WIDTH) << 1);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x + y * LCD_WIDTH) << 1);
 
 	_ARGB1555_dma2dwait();
 
@@ -313,10 +313,25 @@ static void _ARGB1555_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x,
 }
 
 
-static void _ARGB1555_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
+static void _ARGB1555_fillbufblend(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x + y * LCD_WIDTH) << 1);
+	uint8_t alpha  = ((color & 0x8000) >> 15)?255:0;
+
+	_ARGB1555_dma2dwait();
+
+	// Starting DMA2D
+	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_BUSY;
+
+	BSP_STM32_DMA2D_FillBuffBlend(DMA2D, DMA2D_ARGB1555, width, height, offsetline, dest_addr, color, alpha);
+}
+
+
+static void _ARGB1555_copybuf(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
+	// Status: Function Completed
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
 
 	_ARGB1555_dma2dwait();
 
@@ -327,10 +342,10 @@ static void _ARGB1555_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sr
 }
 
 
-static void _ARGB1555_copybufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
+static void _ARGB1555_copybufblend(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
 
 	_ARGB1555_dma2dwait();
 
@@ -341,9 +356,9 @@ static void _ARGB1555_copybufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32
 }
 
 
-static void _ARGB1555_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_dest, uint16_t y_dest) {
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
+static void _ARGB1555_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
 	uint32_t chroma = 0;
 
 	if (BSP_STM32_JPEG_GetColorSpace(JPEG) != JPEG_YCBCR_COLORSPACE) return;
@@ -375,7 +390,7 @@ static void _ARGB1555_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_
 	// Starting DMA2D color space conversion and copy to frame buffer.
 	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_BUSY;
 
-	BSP_STM32_DMA2D_CopyBufJPEG(DMA2D, DMA2D_ARGB1555, BSP_STM32_JPEG_GetWidth(JPEG), BSP_STM32_JPEG_GetHeight(JPEG), offsline_src, lcd->JPEGBuf, offsline_dest, dest_addr, chroma);
+	BSP_STM32_DMA2D_CopyBufJPEG(DMA2D, DMA2D_ARGB1555, BSP_STM32_JPEG_GetWidth(JPEG), BSP_STM32_JPEG_GetHeight(JPEG), offsline_src, BSP_hlcd.JPEGBuf, offsline_dest, dest_addr, chroma);
 }
 
 
@@ -383,11 +398,12 @@ static void _ARGB1555_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_
 
 static uint32_t _ARGB4444_color(uint32_t color, uint8_t alpha) {
 	// Status: Function Completed
-	uint32_t r = ((color & 0x000000FF) >> 4 ) << 0;
+	uint32_t b = ((color & 0x000000FF) >> 4 ) << 0;
 	uint32_t g = ((color & 0x0000FF00) >> 12) << 4;
-	uint32_t b = ((color & 0x00FF0000) >> 20) << 8;
+	uint32_t r = ((color & 0x00FF0000) >> 20) << 8;
 	uint32_t a = ((uint32_t)alpha >> 4) << 12;
-	return r | g | b | a;
+	uint32_t c = r | g | b | a;
+	return c;
 }
 
 
@@ -399,13 +415,13 @@ static uint32_t _ARGB4444_alpha(uint32_t color, uint8_t alpha) {
 }
 
 
-static void _ARGB4444_dma2dwait() {
+static void _ARGB4444_dma2dwait(void) {
 	// Status: Function Completed
 	while (BSP_hlcd.priv_.dma2d_state == LCD_DMA2D_BUSY) {};
 }
 
 
-static void _ARGB4444_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _ARGB4444_updatepixel(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -417,7 +433,7 @@ static void _ARGB4444_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16
 }
 
 
-static void _ARGB4444_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _ARGB4444_updatepixelblend(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -448,7 +464,7 @@ static void _ARGB4444_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, 
 }
 
 
-static uint32_t _ARGB4444_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x, int16_t y) {
+static uint32_t _ARGB4444_getpixel(uint32_t offset,  int16_t x, int16_t y) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return 0x00000000;
 	if (x < 0) return 0x00000000;
@@ -460,10 +476,10 @@ static uint32_t _ARGB4444_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int
 }
 
 
-static void _ARGB4444_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+static void _ARGB4444_fillbuf(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x + y * LCD_WIDTH) << 1);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x + y * LCD_WIDTH) << 1);
 
 	_ARGB4444_dma2dwait();
 
@@ -474,10 +490,25 @@ static void _ARGB4444_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x,
 }
 
 
-static void _ARGB4444_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
+static void _ARGB4444_fillbufblend(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x + y * LCD_WIDTH) << 1);
+	uint8_t alpha  = ((color & 0xF000) >> 12) << 4;
+
+	_ARGB4444_dma2dwait();
+
+	// Starting DMA2D
+	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_BUSY;
+
+	BSP_STM32_DMA2D_FillBuffBlend(DMA2D, DMA2D_ARGB4444, width, height, offsetline, dest_addr, color, alpha);
+}
+
+
+static void _ARGB4444_copybuf(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
+	// Status: Function Completed
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
 
 	_ARGB4444_dma2dwait();
 
@@ -488,10 +519,10 @@ static void _ARGB4444_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sr
 }
 
 
-static void _ARGB4444_copybufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
+static void _ARGB4444_copybufblend(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
 
 	_ARGB4444_dma2dwait();
 
@@ -502,9 +533,9 @@ static void _ARGB4444_copybufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32
 }
 
 
-static void _ARGB4444_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_dest, uint16_t y_dest) {
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
+static void _ARGB4444_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) << 1);
 	uint32_t chroma = 0;
 
 	if (BSP_STM32_JPEG_GetColorSpace(JPEG) != JPEG_YCBCR_COLORSPACE) return;
@@ -536,7 +567,7 @@ static void _ARGB4444_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_
 	// Starting DMA2D color space conversion and copy to frame buffer.
 	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_BUSY;
 
-	BSP_STM32_DMA2D_CopyBufJPEG(DMA2D, DMA2D_ARGB4444, BSP_STM32_JPEG_GetWidth(JPEG), BSP_STM32_JPEG_GetHeight(JPEG), offsline_src, lcd->JPEGBuf, offsline_dest, dest_addr, chroma);
+	BSP_STM32_DMA2D_CopyBufJPEG(DMA2D, DMA2D_ARGB4444, BSP_STM32_JPEG_GetWidth(JPEG), BSP_STM32_JPEG_GetHeight(JPEG), offsline_src, BSP_hlcd.JPEGBuf, offsline_dest, dest_addr, chroma);
 }
 
 
@@ -545,25 +576,23 @@ static void _ARGB4444_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_
 
 static uint32_t _RGB888_color(uint32_t color, uint8_t alpha) {
 	// Status: Function Completed
-	// alpha is ignored
-	return color;
+	return (color & 0x00FFFFFF) | ((uint32_t)alpha << 24);
 }
 
 
 static uint32_t _RGB888_alpha(uint32_t color, uint8_t alpha) {
 	// Status: Function Completed
-	// alpha is ignored
-	return color;
+	return (color & 0x00FFFFFF) | ((uint32_t)alpha << 24);
 }
 
 
-static void _RGB888_dma2dwait() {
+static void _RGB888_dma2dwait(void) {
 	// Status: Function Completed
 	while (BSP_hlcd.priv_.dma2d_state == LCD_DMA2D_BUSY) {};
 }
 
 
-static void _RGB888_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _RGB888_updatepixel(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -579,7 +608,7 @@ static void _RGB888_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t
 }
 
 
-static void _RGB888_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _RGB888_updatepixelblend(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -595,15 +624,15 @@ static void _RGB888_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, in
 	uint8_t * addr_b = addr_g + 1;
 
 	uint32_t a1n = 255 - a1;
-	uint32_t r1 = (value << 8) >> 24;
-	uint32_t g1 = (value << 16) >> 24;
-	uint32_t b1 = (value << 24) >> 24;
+	uint32_t r1 = (value & 0x00FF0000) >> 16;
+	uint32_t g1 = (value & 0x0000FF00) >> 8;
+	uint32_t b1 = (value & 0x000000FF) >> 0;
 	*addr_r = ((a1 * r1) + (a1n * (*addr_r))) >> 8;
 	*addr_g = ((a1 * g1) + (a1n * (*addr_g))) >> 8;
 	*addr_b = ((a1 * b1) + (a1n * (*addr_b))) >> 8;
 }
 
-static uint32_t _RGB888_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x, int16_t y) {
+static uint32_t _RGB888_getpixel(uint32_t offset,  int16_t x, int16_t y) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return 0x00000000;
 	if (x < 0) return 0x00000000;
@@ -617,10 +646,10 @@ static uint32_t _RGB888_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int16
 }
 
 
-static void _RGB888_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+static void _RGB888_fillbuf(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + (x + y * LCD_WIDTH) * 3;
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + (x + y * LCD_WIDTH) * 3;
 
 	_RGB888_dma2dwait();
 
@@ -631,10 +660,25 @@ static void _RGB888_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, u
 }
 
 
-static void _RGB888_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
+static void _RGB888_fillbufblend(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) * 3);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + (x + y * LCD_WIDTH) * 3;
+	uint8_t alpha  = color >> 24;
+
+	_RGB888_dma2dwait();
+
+	// Starting DMA2D
+	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_BUSY;
+
+	BSP_STM32_DMA2D_FillBuffBlend(DMA2D, DMA2D_RGB888, width, height, offsetline, dest_addr, color, alpha);
+}
+
+
+static void _RGB888_copybuf(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
+	// Status: Function Completed
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) * 3);
 
 	_RGB888_dma2dwait();
 
@@ -645,17 +689,23 @@ static void _RGB888_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_
 }
 
 
-static void _RGB888_copybufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
+static void _RGB888_copybufblend(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
 	// Status: Function Completed
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) * 3);
 
-	// Blending not available in modes without ALPHA channel
-	_RGB888_copybuf(lcd, layer, src_addr, offsline_src, x_dest, y_dest, offsline_dest, width, height);
+	_RGB888_dma2dwait();
+
+	// Starting DMA2D
+	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_BUSY;
+
+	BSP_STM32_DMA2D_CopyBufBlend(DMA2D, DMA2D_RGB888, width, height, offsline_src, src_addr, offsline_dest, dest_addr, alpha);
 }
 
 
-static void _RGB888_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_dest, uint16_t y_dest) {
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) * 3);
+static void _RGB888_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH) * 3);
 	uint32_t chroma = 0;
 
 	if (BSP_STM32_JPEG_GetColorSpace(JPEG) != JPEG_YCBCR_COLORSPACE) return;
@@ -687,7 +737,7 @@ static void _RGB888_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t 
 	// Starting DMA2D color space conversion and copy to frame buffer.
 	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_BUSY;
 
-	BSP_STM32_DMA2D_CopyBufJPEG(DMA2D, DMA2D_RGB888, BSP_STM32_JPEG_GetWidth(JPEG), BSP_STM32_JPEG_GetHeight(JPEG), offsline_src, lcd->JPEGBuf, offsline_dest, dest_addr, chroma);
+	BSP_STM32_DMA2D_CopyBufJPEG(DMA2D, DMA2D_RGB888, BSP_STM32_JPEG_GetWidth(JPEG), BSP_STM32_JPEG_GetHeight(JPEG), offsline_src, BSP_hlcd.JPEGBuf, offsline_dest, dest_addr, chroma);
 }
 
 
@@ -717,13 +767,13 @@ static uint32_t _AL88_alpha(uint32_t color, uint8_t alpha) {
 }
 
 
-static void _AL88_dma2dwait() {
+static void _AL88_dma2dwait(void) {
 	// Status: Function Completed
 	while (BSP_hlcd.priv_.dma2d_state == LCD_DMA2D_BUSY) {};
 }
 
 
-static void _AL88_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _AL88_updatepixel(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -735,7 +785,7 @@ static void _AL88_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x
 }
 
 
-static void _AL88_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _AL88_updatepixelblend(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -749,7 +799,7 @@ static void _AL88_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, int1
 }
 
 
-static uint32_t _AL88_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x, int16_t y) {
+static uint32_t _AL88_getpixel(uint32_t offset,  int16_t x, int16_t y) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return 0x00000000;
 	if (x < 0) return 0x00000000;
@@ -761,11 +811,11 @@ static uint32_t _AL88_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t
 }
 
 
-static void _AL88_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+static void _AL88_fillbuf(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
 
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + ((x + y * LCD_WIDTH) << 1);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + ((x + y * LCD_WIDTH) << 1);
 
 	_AL88_dma2dwait();
 
@@ -778,11 +828,17 @@ static void _AL88_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uin
 }
 
 
-static void _AL88_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
+static void _AL88_fillbufblend(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+	// Function not available in color modes with CLUT tables
+	_AL88_fillbuf(x, y, width, height, offsetline, color);
+}
+
+
+static void _AL88_copybuf(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
 	// Status: Function Completed
 
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint16_t *dest_addr = (uint16_t *)lcd->Layers[layer].Frames[eframe] + (x_dest + y_dest * LCD_WIDTH);
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	uint16_t *dest_addr = (uint16_t *)BSP_hlcd.Layers[0].Frames[eframe] + (x_dest + y_dest * LCD_WIDTH);
 
 	_AL88_dma2dwait();
 
@@ -794,19 +850,19 @@ static void _AL88_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_ad
 }
 
 
-static void _AL88_copybufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
+static void _AL88_copybufblend(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
 	// Status: Function Completed
 	// Effective and fast blending is not possible with CLUT mode
-	_AL88_copybuf(lcd, layer, src_addr, offsline_src, x_dest, y_dest, offsline_dest, width, height);
+	_AL88_copybuf(src_addr, offsline_src, x_dest, y_dest, offsline_dest, width, height);
 }
 
 
-static void _AL88_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_dest, uint16_t y_dest) {
+static void _AL88_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
 	// Function not available in AL color mode. Instead area is filled with black color.
 	uint32_t width = BSP_STM32_JPEG_GetWidth(JPEG);
 	uint32_t height = BSP_STM32_JPEG_GetHeight(JPEG);
 
-	_AL88_fillbuf(lcd, layer, x_dest, y_dest, width, height, LCD_WIDTH - width, BSP_LCD_Color(C_BLACK, 255));
+	_AL88_fillbuf(x_dest, y_dest, width, height, LCD_WIDTH - width, BSP_LCD_Color(C_BLACK, 255));
 }
 
 /* L8 ------------------------------------------------------------------------*/
@@ -839,13 +895,13 @@ static uint32_t _L8_alpha(uint32_t color, uint8_t alpha) {
 }
 
 
-static void _L8_dma2dwait() {
+static void _L8_dma2dwait(void) {
 	// Status: Function Completed
 	while (BSP_hlcd.priv_.dma2d_state == LCD_DMA2D_BUSY) {};
 }
 
 
-static void _L8_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _L8_updatepixel(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -857,7 +913,7 @@ static void _L8_updatepixel(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, 
 }
 
 
-static void _L8_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, int16_t x, int16_t y, uint32_t value) {
+static void _L8_updatepixelblend(uint32_t offset, int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
@@ -871,7 +927,7 @@ static void _L8_updatepixelblend(LCD_HandleTypeDef *lcd, uint32_t offset, int16_
 }
 
 
-static uint32_t _L8_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x, int16_t y) {
+static uint32_t _L8_getpixel(uint32_t offset,  int16_t x, int16_t y) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return 0x00000000;
 	if (x < 0) return 0x00000000;
@@ -883,12 +939,12 @@ static uint32_t _L8_getpixel(LCD_HandleTypeDef *lcd, uint32_t offset,  int16_t x
 }
 
 
-static void _L8_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+static void _L8_fillbuf(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
 	// Status: Function Completed
 
 	// Because DMA2D cannot handle 8bit formats, below workaround was required
 
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
 
 	// Finding x0 and x1 so it will be within filled area and are divided by 4 (required by DMA2D in 32bit mode)
 	uint16_t x0 = x & 0xFFFC;
@@ -905,12 +961,12 @@ static void _L8_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint1
 
 	for (uint32_t yy=y; yy<(y+height); yy++) {
 		for (uint32_t xx=x; xx<MIN(x0, x+width); xx++) {
-			addr = (uint8_t *)(lcd->Layers[layer].Frames[eframe]) + (xx + yy*LCD_WIDTH);
+			addr = (uint8_t *)(BSP_hlcd.Layers[0].Frames[eframe]) + (xx + yy*LCD_WIDTH);
 			*addr = *color8;
 		}
 		if (x1<x0) continue;
 		for (uint32_t xx=x1; xx<(x+width); xx++) {
-			addr = (uint8_t *)(lcd->Layers[layer].Frames[eframe]) + (xx + yy*LCD_WIDTH);
+			addr = (uint8_t *)(BSP_hlcd.Layers[0].Frames[eframe]) + (xx + yy*LCD_WIDTH);
 			*addr = *color8;
 		}
 	}
@@ -925,7 +981,7 @@ static void _L8_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint1
 	uint16_t ol = offsetline + width - w;
 
 	// Setting destination address for DMA2D
-	uint32_t dest_addr = lcd->Layers[layer].Frames[eframe] + (x0 + y * LCD_WIDTH);
+	uint32_t dest_addr = BSP_hlcd.Layers[0].Frames[eframe] + (x0 + y * LCD_WIDTH);
 
 	// Starting DMA2D
 	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_BUSY;
@@ -933,13 +989,19 @@ static void _L8_fillbuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x, uint1
 }
 
 
-static void _L8_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
+static void _L8_fillbufblend(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+	// Function not available in color modes with CLUT tables
+	_L8_fillbuf(x, y, width, height, offsetline, color);
+}
+
+
+static void _L8_copybuf(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height) {
 
 	// Because DMA2D cannot handle 8bit formats, below workaround was required
 
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
 
-	uint8_t *d_addr = (uint8_t *)lcd->Layers[layer].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH));
+	uint8_t *d_addr = (uint8_t *)BSP_hlcd.Layers[0].Frames[eframe] + ((x_dest + y_dest * LCD_WIDTH));
 	uint8_t *s_addr = (uint8_t *)src_addr;
 	uint32_t size = 0;
 
@@ -987,19 +1049,19 @@ static void _L8_copybuf(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr
 }
 
 
-static void _L8_copybufblend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
+static void _L8_copybufblend(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha) {
 	// Status: Function Completed
 	// Effective and fast blending is not possible with CLUT mode
-	_L8_copybuf(lcd, layer, src_addr, offsline_src, x_dest, y_dest, offsline_dest, width, height);
+	_L8_copybuf(src_addr, offsline_src, x_dest, y_dest, offsline_dest, width, height);
 }
 
 
-static void _L8_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_dest, uint16_t y_dest) {
+static void _L8_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
 	// Function not available in AL color mode. Instead area is filled with black color.
 	uint32_t width = BSP_STM32_JPEG_GetWidth(JPEG);
 	uint32_t height = BSP_STM32_JPEG_GetHeight(JPEG);
 
-	_L8_fillbuf(lcd, layer, x_dest, y_dest, width, height, LCD_WIDTH - width, BSP_LCD_Color(C_BLACK, 255));
+	_L8_fillbuf(x_dest, y_dest, width, height, LCD_WIDTH - width, BSP_LCD_Color(C_BLACK, 255));
 }
 
 
@@ -1007,90 +1069,40 @@ static void _L8_copybufJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint16_t x_de
  * Config functions for various modes
  ******************************************************************************/
 
-static void _config_triplebuf(LCD_HandleTypeDef *lcd) {
+static void _config_triplebuf(void) {
 	// Setting up layer 0 for 3 buffers
-	lcd->Layers[0].Frame_IDLE = 2;
-	lcd->Layers[0].Frame_EDIT = 1;
-	lcd->Layers[0].Frame_READY = 255;
-	lcd->Layers[0].Frame_ACTIVE = 0;
-	lcd->Layers[0].Frame_NOUSE = 255;
-	lcd->Layers[0].Frame_PREV = 0;
-	lcd->Layers[0].Frames[0] = LCD_FRAMEBUFFER_END_ADDR - 1 * lcd->config_.framesize;
-	lcd->Layers[0].Frames[1] = LCD_FRAMEBUFFER_END_ADDR - 2 * lcd->config_.framesize;
-	lcd->Layers[0].Frames[2] = LCD_FRAMEBUFFER_END_ADDR - 3 * lcd->config_.framesize;
-	lcd->JPEGBuf = LCD_FRAMEBUFFER_END_ADDR - (3 * lcd->config_.framesize) - LCD_JPEGBUF_SIZE;
-
-	if (lcd->config_.layerno == LCD_LAYER_NO_ONE) {
-		// Setting up layer 1 as idle
-		lcd->Layers[1].Frame_IDLE = 0;
-		lcd->Layers[1].Frame_EDIT = 0;
-		lcd->Layers[1].Frame_READY = 0;
-		lcd->Layers[1].Frame_ACTIVE = 0;
-		lcd->Layers[1].Frame_NOUSE = 0;
-		lcd->Layers[1].Frame_PREV = 0;
-		lcd->Layers[1].Frames[0] = 0;
-		lcd->Layers[1].Frames[1] = 0;
-		lcd->Layers[1].Frames[2] = 0;
-	} else {
-		// Setting up layer 1 for 3 buffers
-		lcd->Layers[1].Frame_IDLE = 2;
-		lcd->Layers[1].Frame_EDIT = 1;
-		lcd->Layers[1].Frame_READY = 255;
-		lcd->Layers[1].Frame_ACTIVE = 0;
-		lcd->Layers[1].Frame_NOUSE = 255;
-		lcd->Layers[1].Frame_PREV = 0;
-		lcd->Layers[1].Frames[0] = LCD_FRAMEBUFFER_END_ADDR - 4 * lcd->config_.framesize;
-		lcd->Layers[1].Frames[1] = LCD_FRAMEBUFFER_END_ADDR - 5 * lcd->config_.framesize;
-		lcd->Layers[1].Frames[2] = LCD_FRAMEBUFFER_END_ADDR - 6 * lcd->config_.framesize;
-		lcd->JPEGBuf = LCD_FRAMEBUFFER_END_ADDR - (6 * lcd->config_.framesize) - LCD_JPEGBUF_SIZE;
-	}
+	BSP_hlcd.Layers[0].Frame_IDLE = 2;
+	BSP_hlcd.Layers[0].Frame_EDIT = 1;
+	BSP_hlcd.Layers[0].Frame_READY = 255;
+	BSP_hlcd.Layers[0].Frame_ACTIVE = 0;
+	BSP_hlcd.Layers[0].Frame_NOUSE = 255;
+	BSP_hlcd.Layers[0].Frame_PREV = 0;
+	BSP_hlcd.Layers[0].Frames[0] = LCD_FRAMEBUFFER_END_ADDR - 1 * BSP_hlcd.config_.framesize;
+	BSP_hlcd.Layers[0].Frames[1] = LCD_FRAMEBUFFER_END_ADDR - 2 * BSP_hlcd.config_.framesize;
+	BSP_hlcd.Layers[0].Frames[2] = LCD_FRAMEBUFFER_END_ADDR - 3 * BSP_hlcd.config_.framesize;
+	BSP_hlcd.JPEGBuf = LCD_FRAMEBUFFER_END_ADDR - (3 * BSP_hlcd.config_.framesize) - LCD_JPEGBUF_SIZE;
 }
 
 
-static void _config_doublebuf(LCD_HandleTypeDef *lcd) {
+static void _config_doublebuf(void) {
 	// Setting up layer 0 for 2 buffers
-	lcd->Layers[0].Frame_IDLE = 255;
-	lcd->Layers[0].Frame_EDIT = 1;
-	lcd->Layers[0].Frame_READY = 255;
-	lcd->Layers[0].Frame_ACTIVE = 0;
-	lcd->Layers[0].Frame_NOUSE = 2;
-	lcd->Layers[0].Frame_PREV = 0;
-	lcd->Layers[0].Frames[0] = LCD_FRAMEBUFFER_END_ADDR - 1 * lcd->config_.framesize;
-	lcd->Layers[0].Frames[1] = LCD_FRAMEBUFFER_END_ADDR - 2 * lcd->config_.framesize;
-	lcd->Layers[0].Frames[2] = 0;
-	lcd->JPEGBuf = LCD_FRAMEBUFFER_END_ADDR - (2 * lcd->config_.framesize) - LCD_JPEGBUF_SIZE;
-
-	if (lcd->config_.layerno == LCD_LAYER_NO_ONE) {
-		// Setting up layer 1 as idle
-		lcd->Layers[1].Frame_IDLE = 0;
-		lcd->Layers[1].Frame_EDIT = 0;
-		lcd->Layers[1].Frame_READY = 0;
-		lcd->Layers[1].Frame_ACTIVE = 0;
-		lcd->Layers[1].Frame_NOUSE = 0;
-		lcd->Layers[1].Frame_PREV = 0;
-		lcd->Layers[1].Frames[0] = 0;
-		lcd->Layers[1].Frames[1] = 0;
-		lcd->Layers[1].Frames[2] = 0;
-	} else {
-		// Setting up layer 1 for 2 buffers
-		lcd->Layers[1].Frame_IDLE = 255;
-		lcd->Layers[1].Frame_EDIT = 1;
-		lcd->Layers[1].Frame_READY = 255;
-		lcd->Layers[1].Frame_ACTIVE = 0;
-		lcd->Layers[1].Frame_NOUSE = 2;
-		lcd->Layers[1].Frame_PREV = 0;
-		lcd->Layers[1].Frames[0] = LCD_FRAMEBUFFER_END_ADDR - 3 * lcd->config_.framesize;
-		lcd->Layers[1].Frames[1] = LCD_FRAMEBUFFER_END_ADDR - 4 * lcd->config_.framesize;
-		lcd->Layers[1].Frames[2] = 0;
-		lcd->JPEGBuf = LCD_FRAMEBUFFER_END_ADDR - (4 * lcd->config_.framesize) - LCD_JPEGBUF_SIZE;
-	}
+	BSP_hlcd.Layers[0].Frame_IDLE = 255;
+	BSP_hlcd.Layers[0].Frame_EDIT = 1;
+	BSP_hlcd.Layers[0].Frame_READY = 255;
+	BSP_hlcd.Layers[0].Frame_ACTIVE = 0;
+	BSP_hlcd.Layers[0].Frame_NOUSE = 2;
+	BSP_hlcd.Layers[0].Frame_PREV = 0;
+	BSP_hlcd.Layers[0].Frames[0] = LCD_FRAMEBUFFER_END_ADDR - 1 * BSP_hlcd.config_.framesize;
+	BSP_hlcd.Layers[0].Frames[1] = LCD_FRAMEBUFFER_END_ADDR - 2 * BSP_hlcd.config_.framesize;
+	BSP_hlcd.Layers[0].Frames[2] = 0;
+	BSP_hlcd.JPEGBuf = LCD_FRAMEBUFFER_END_ADDR - (2 * BSP_hlcd.config_.framesize) - LCD_JPEGBUF_SIZE;
 }
 
 
-static void _ARGB8888_config(LCD_HandleTypeDef *lcd) {
-	lcd->config_.bytesperpixel = 4;
-	lcd->config_.framesize *=4;
-	lcd->config_.framebuffersize = lcd->config_.framesize * lcd->config_.buffermode * lcd->config_.layerno;
+static void _ARGB8888_config(void) {
+	BSP_hlcd.config_.bytesperpixel = 4;
+	BSP_hlcd.config_.framesize *=4;
+	BSP_hlcd.config_.framebuffersize = BSP_hlcd.config_.framesize * BSP_hlcd.config_.buffermode;
 
 	// Updating function pointers
 	BSP_LCD_Color = _ARGB8888_color;
@@ -1106,18 +1118,18 @@ static void _ARGB8888_config(LCD_HandleTypeDef *lcd) {
 	BSP_LCD_CopyBufJPEG = _ARGB8888_copybufJPEG;
 }
 
-static void _ARGB8888_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer) {
+static void _ARGB8888_config_layer(void) {
 
 	// Configure Layer
 	BSP_STM32_LTDC_ConfigLayer(
 			LTDC,
-			layer,
+			0,
 			255,
 			0,
 			0x00000000,
 			LTDC_BLENDING_FACTOR1_PAxCA,
 			LTDC_BLENDING_FACTOR2_PAxCA,
-			lcd->Layers[layer].Frames[0],
+			BSP_hlcd.Layers[0].Frames[0],
 			LCD_HEIGHT, LCD_WIDTH,
 			LTDC_PIXEL_FORMAT_ARGB8888,
 			0,
@@ -1127,10 +1139,10 @@ static void _ARGB8888_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer) {
 
 }
 
-static void _ARGB1555_config(LCD_HandleTypeDef *lcd) {
-	lcd->config_.bytesperpixel = 2;
-	lcd->config_.framesize *=2;
-	lcd->config_.framebuffersize = lcd->config_.framesize * lcd->config_.buffermode * lcd->config_.layerno;
+static void _ARGB1555_config(void) {
+	BSP_hlcd.config_.bytesperpixel = 2;
+	BSP_hlcd.config_.framesize *=2;
+	BSP_hlcd.config_.framebuffersize = BSP_hlcd.config_.framesize * BSP_hlcd.config_.buffermode;
 
 	// Updating function pointers
 	BSP_LCD_Color = _ARGB1555_color;
@@ -1140,23 +1152,24 @@ static void _ARGB1555_config(LCD_HandleTypeDef *lcd) {
 	BSP_LCD_UpdatePixelBlend = _ARGB1555_updatepixelblend;
 	BSP_LCD_GetPixel = _ARGB1555_getpixel;
 	BSP_LCD_FillBuf = _ARGB1555_fillbuf;
+	BSP_LCD_FillBufBlend = _ARGB1555_fillbufblend;
 	BSP_LCD_CopyBuf = _ARGB1555_copybuf;
 	BSP_LCD_CopyBufBlend = _ARGB1555_copybufblend;
 	BSP_LCD_CopyBufJPEG = _ARGB1555_copybufJPEG;
 }
 
-static void _ARGB1555_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer) {
+static void _ARGB1555_config_layer(void) {
 
 	// Configure Layer
 	BSP_STM32_LTDC_ConfigLayer(
 			LTDC,
-			layer,
+			0,
 			255,
 			0,
 			0x00000000,
 			LTDC_BLENDING_FACTOR1_PAxCA,
 			LTDC_BLENDING_FACTOR2_PAxCA,
-			lcd->Layers[layer].Frames[0],
+			BSP_hlcd.Layers[0].Frames[0],
 			LCD_HEIGHT, LCD_WIDTH,
 			LTDC_PIXEL_FORMAT_ARGB1555,
 			0,
@@ -1167,10 +1180,10 @@ static void _ARGB1555_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer) {
 }
 
 
-static void _ARGB4444_config(LCD_HandleTypeDef *lcd) {
-	lcd->config_.bytesperpixel = 2;
-	lcd->config_.framesize *=2;
-	lcd->config_.framebuffersize = lcd->config_.framesize * lcd->config_.buffermode * lcd->config_.layerno;
+static void _ARGB4444_config(void) {
+	BSP_hlcd.config_.bytesperpixel = 2;
+	BSP_hlcd.config_.framesize *=2;
+	BSP_hlcd.config_.framebuffersize = BSP_hlcd.config_.framesize * BSP_hlcd.config_.buffermode;
 
 	// Updating function pointers
 	BSP_LCD_Color = _ARGB4444_color;
@@ -1180,23 +1193,24 @@ static void _ARGB4444_config(LCD_HandleTypeDef *lcd) {
 	BSP_LCD_UpdatePixelBlend = _ARGB4444_updatepixelblend;
 	BSP_LCD_GetPixel = _ARGB4444_getpixel;
 	BSP_LCD_FillBuf = _ARGB4444_fillbuf;
+	BSP_LCD_FillBufBlend = _ARGB4444_fillbufblend;
 	BSP_LCD_CopyBuf = _ARGB4444_copybuf;
 	BSP_LCD_CopyBufBlend = _ARGB4444_copybufblend;
 	BSP_LCD_CopyBufJPEG = _ARGB4444_copybufJPEG;
 }
 
-static void _ARGB4444_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer) {
+static void _ARGB4444_config_layer(void) {
 
 	// Configure Layer
 	BSP_STM32_LTDC_ConfigLayer(
 			LTDC,
-			layer,
+			0,
 			255,
 			0,
 			0x00000000,
 			LTDC_BLENDING_FACTOR1_PAxCA,
 			LTDC_BLENDING_FACTOR2_PAxCA,
-			lcd->Layers[layer].Frames[0],
+			BSP_hlcd.Layers[0].Frames[0],
 			LCD_HEIGHT, LCD_WIDTH,
 			LTDC_PIXEL_FORMAT_ARGB4444,
 			0,
@@ -1206,10 +1220,10 @@ static void _ARGB4444_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer) {
 
 }
 
-static void _RGB888_config(LCD_HandleTypeDef *lcd) {
-	lcd->config_.bytesperpixel = 3;
-	lcd->config_.framesize *=3;
-	lcd->config_.framebuffersize = lcd->config_.framesize * lcd->config_.buffermode * lcd->config_.layerno;
+static void _RGB888_config(void) {
+	BSP_hlcd.config_.bytesperpixel = 3;
+	BSP_hlcd.config_.framesize *=3;
+	BSP_hlcd.config_.framebuffersize = BSP_hlcd.config_.framesize * BSP_hlcd.config_.buffermode;
 
 	// Updating function pointers
 	BSP_LCD_Color = _RGB888_color;
@@ -1219,23 +1233,24 @@ static void _RGB888_config(LCD_HandleTypeDef *lcd) {
 	BSP_LCD_UpdatePixelBlend = _RGB888_updatepixelblend;
 	BSP_LCD_GetPixel = _RGB888_getpixel;
 	BSP_LCD_FillBuf = _RGB888_fillbuf;
+	BSP_LCD_FillBufBlend = _RGB888_fillbufblend;
 	BSP_LCD_CopyBuf = _RGB888_copybuf;
 	BSP_LCD_CopyBufBlend = _RGB888_copybufblend;
 	BSP_LCD_CopyBufJPEG = _RGB888_copybufJPEG;
 }
 
-static void _RGB888_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer) {
+static void _RGB888_config_layer(void) {
 
 	// Configure Layer
 	BSP_STM32_LTDC_ConfigLayer(
 			LTDC,
-			layer,
+			0,
 			255,
 			0,
 			0x00000000,
 			LTDC_BLENDING_FACTOR1_CA,
 			LTDC_BLENDING_FACTOR2_CA,
-			lcd->Layers[layer].Frames[0],
+			BSP_hlcd.Layers[0].Frames[0],
 			LCD_HEIGHT,
 			LCD_WIDTH,
 			LTDC_PIXEL_FORMAT_RGB888,
@@ -1245,13 +1260,13 @@ static void _RGB888_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer) {
 			LCD_HEIGHT);
 
 	// Configure color keying so 0x00000000 is transparent
-	BSP_STM32_LTDC_SetTransparentColor(LTDC, layer, 0x00000000);
+	BSP_STM32_LTDC_SetTransparentColor(LTDC, 0, 0x00000000);
 }
 
-static void _AL88_config(LCD_HandleTypeDef *lcd) {
-	lcd->config_.bytesperpixel = 2;
-	lcd->config_.framesize *=2;
-	lcd->config_.framebuffersize = lcd->config_.framesize * lcd->config_.buffermode * lcd->config_.layerno;
+static void _AL88_config(void) {
+	BSP_hlcd.config_.bytesperpixel = 2;
+	BSP_hlcd.config_.framesize *=2;
+	BSP_hlcd.config_.framebuffersize = BSP_hlcd.config_.framesize * BSP_hlcd.config_.buffermode;
 
 	// Updating function pointers
 	BSP_LCD_Color = _AL88_color;
@@ -1261,23 +1276,24 @@ static void _AL88_config(LCD_HandleTypeDef *lcd) {
 	BSP_LCD_UpdatePixelBlend = _AL88_updatepixelblend;
 	BSP_LCD_GetPixel = _AL88_getpixel;
 	BSP_LCD_FillBuf = _AL88_fillbuf;
+	BSP_LCD_FillBufBlend = _AL88_fillbufblend;
 	BSP_LCD_CopyBuf = _AL88_copybuf;
 	BSP_LCD_CopyBufBlend = _AL88_copybufblend;
 	BSP_LCD_CopyBufJPEG = _AL88_copybufJPEG;
 }
 
-static void _AL88_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t *clut) {
+static void _AL88_config_layer(uint32_t *clut) {
 
 	// Configure Layer
 	BSP_STM32_LTDC_ConfigLayer(
 			LTDC,
-			layer,
+			0,
 			255,
 			0,
 			0x00000000,
 			LTDC_BLENDING_FACTOR1_PAxCA,
 			LTDC_BLENDING_FACTOR2_PAxCA,
-			lcd->Layers[layer].Frames[0],
+			BSP_hlcd.Layers[0].Frames[0],
 			LCD_HEIGHT,
 			LCD_WIDTH,
 			LTDC_PIXEL_FORMAT_AL88,
@@ -1286,13 +1302,13 @@ static void _AL88_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t *
 			0,
 			LCD_HEIGHT);
 
-	BSP_STM32_LTDC_ConfigCLUT(LTDC, layer, clut);
+	BSP_STM32_LTDC_ConfigCLUT(LTDC, 0, clut);
 }
 
-static void _L8_config(LCD_HandleTypeDef *lcd) {
-	lcd->config_.bytesperpixel = 1;
-	lcd->config_.framesize *=1;
-	lcd->config_.framebuffersize = lcd->config_.framesize * lcd->config_.buffermode * lcd->config_.layerno;
+static void _L8_config(void) {
+	BSP_hlcd.config_.bytesperpixel = 1;
+	BSP_hlcd.config_.framesize *=1;
+	BSP_hlcd.config_.framebuffersize = BSP_hlcd.config_.framesize * BSP_hlcd.config_.buffermode;
 
 	// Updating function pointers
 	BSP_LCD_Color = _L8_color;
@@ -1302,23 +1318,24 @@ static void _L8_config(LCD_HandleTypeDef *lcd) {
 	BSP_LCD_UpdatePixelBlend = _L8_updatepixelblend;
 	BSP_LCD_GetPixel = _L8_getpixel;
 	BSP_LCD_FillBuf = _L8_fillbuf;
+	BSP_LCD_FillBufBlend = _L8_fillbufblend;
 	BSP_LCD_CopyBuf = _L8_copybuf;
 	BSP_LCD_CopyBufBlend = _L8_copybufblend;
 	BSP_LCD_CopyBufJPEG = _L8_copybufJPEG;
 }
 
-static void _L8_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t *clut) {
+static void _L8_config_layer(uint32_t *clut) {
 
 	// Configure Layer
 	BSP_STM32_LTDC_ConfigLayer(
 			LTDC,
-			layer,
+			0,
 			255,
 			0,
 			0x00000000,
 			LTDC_BLENDING_FACTOR1_CA,
 			LTDC_BLENDING_FACTOR2_CA,
-			lcd->Layers[layer].Frames[0],
+			BSP_hlcd.Layers[0].Frames[0],
 			LCD_HEIGHT,
 			LCD_WIDTH,
 			LTDC_PIXEL_FORMAT_L8,
@@ -1327,7 +1344,7 @@ static void _L8_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t *cl
 			0,
 			LCD_HEIGHT);
 
-	BSP_STM32_LTDC_ConfigCLUT(LTDC, layer, clut);
+	BSP_STM32_LTDC_ConfigCLUT(LTDC, 0, clut);
 
 }
 
@@ -1337,53 +1354,52 @@ static void _L8_config_layer(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t *cl
  ******************************************************************************/
 
 
-void BSP_LCD_Init(LCD_HandleTypeDef *lcd, uint8_t color_mode, uint8_t buffer_mode, uint8_t layer_no, uint32_t bgcolor, uint32_t *clut) {
+void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uint32_t *clut) {
 	// CLUT parameter is ignored in ARGB and RGB modes
 
 	// Setting up config variables
-	lcd->frametime[0] = 0;
-	lcd->frametime[1] = 0;
-	lcd->priv_.dma2d_state = LCD_DMA2D_READY;
-	lcd->priv_.l_timestamp[0] = 0;
-	lcd->priv_.l_timestamp[1] = 0;
-	lcd->config_.colormode = color_mode;
-	lcd->config_.buffermode = buffer_mode;
-	lcd->config_.layerno = layer_no;
-	lcd->config_.bgcolor = bgcolor;
-	lcd->config_.framesize = LCD_WIDTH * LCD_HEIGHT;
+	BSP_hlcd.frametime[0] = 0;
+	BSP_hlcd.frametime[1] = 0;
+	BSP_hlcd.priv_.dma2d_state = LCD_DMA2D_READY;
+	BSP_hlcd.priv_.l_timestamp[0] = 0;
+	BSP_hlcd.priv_.l_timestamp[1] = 0;
+	BSP_hlcd.config_.colormode = color_mode;
+	BSP_hlcd.config_.buffermode = buffer_mode;
+	BSP_hlcd.config_.bgcolor = bgcolor;
+	BSP_hlcd.config_.framesize = LCD_WIDTH * LCD_HEIGHT;
 
 	// Configuring color mode
-	switch (lcd->config_.colormode) {
+	switch (BSP_hlcd.config_.colormode) {
 	case LCD_COLOR_MODE_ARGB8888:
-		_ARGB8888_config(lcd);
+		_ARGB8888_config();
 		break;
 	case LCD_COLOR_MODE_ARGB1555:
-		_ARGB1555_config(lcd);
+		_ARGB1555_config();
 		break;
 	case LCD_COLOR_MODE_ARGB4444:
-		_ARGB4444_config(lcd);
+		_ARGB4444_config();
 		break;
 	case LCD_COLOR_MODE_RGB888:
-		_RGB888_config(lcd);
+		_RGB888_config();
 		break;
 	case LCD_COLOR_MODE_AL88:
-		_AL88_config(lcd);
+		_AL88_config();
 		break;
 	case LCD_COLOR_MODE_L8:
-		_L8_config(lcd);
+		_L8_config();
 		break;
 	}
 
 	// Clearing memory for frame buffer
-	memset((void *)(LCD_FRAMEBUFFER_END_ADDR - lcd->config_.framebuffersize - LCD_JPEGBUF_SIZE),0x00, (lcd->config_.framebuffersize + LCD_JPEGBUF_SIZE));
+	memset((void *)(LCD_FRAMEBUFFER_END_ADDR - BSP_hlcd.config_.framebuffersize - LCD_JPEGBUF_SIZE),0x00, (BSP_hlcd.config_.framebuffersize + LCD_JPEGBUF_SIZE));
 
 	// Configuring frame buffer parameters
-	switch (lcd->config_.buffermode) {
+	switch (BSP_hlcd.config_.buffermode) {
 	case LCD_BUFFER_MODE_TRIPLE:
-		_config_triplebuf(lcd);
+		_config_triplebuf();
 		break;
 	case LCD_BUFFER_MODE_DOUBLE:
-		_config_doublebuf(lcd);
+		_config_doublebuf();
 		break;
 	}
 
@@ -1396,76 +1412,68 @@ void BSP_LCD_Init(LCD_HandleTypeDef *lcd, uint8_t color_mode, uint8_t buffer_mod
 
 	// Disabling both layers
 	BSP_STM32_LTDC_DisableLayer(LTDC, 0);
-	BSP_STM32_LTDC_DisableLayer(LTDC, 1);
 
 	// Configuring LTDC Layers
-	switch (lcd->config_.colormode) {
+	switch (BSP_hlcd.config_.colormode) {
 	case LCD_COLOR_MODE_ARGB8888:
-		_ARGB8888_config_layer(lcd, 0);
-		if (lcd->config_.layerno == LCD_LAYER_NO_TWO) _ARGB8888_config_layer(lcd, 1);
+		_ARGB8888_config_layer();
 		break;
 	case LCD_COLOR_MODE_ARGB1555:
-		_ARGB1555_config_layer(lcd, 0);
-		if (lcd->config_.layerno == LCD_LAYER_NO_TWO) _ARGB1555_config_layer(lcd, 1);
+		_ARGB1555_config_layer();
 		break;
 	case LCD_COLOR_MODE_ARGB4444:
-		_ARGB4444_config_layer(lcd, 0);
-		if (lcd->config_.layerno == LCD_LAYER_NO_TWO) _ARGB4444_config_layer(lcd, 1);
+		_ARGB4444_config_layer();
 		break;
 	case LCD_COLOR_MODE_RGB888:
-		_RGB888_config_layer(lcd, 0);
-		if (lcd->config_.layerno == LCD_LAYER_NO_TWO) _RGB888_config_layer(lcd, 1);
+		_RGB888_config_layer();
 		break;
 	case LCD_COLOR_MODE_AL88:
-		_AL88_config_layer(lcd, 0, clut);
-		if (lcd->config_.layerno == LCD_LAYER_NO_TWO) _AL88_config_layer(lcd, 1, clut);
+		_AL88_config_layer(clut);
 		break;
 	case LCD_COLOR_MODE_L8:
-		_L8_config_layer(lcd, 0, clut);
-		if (lcd->config_.layerno == LCD_LAYER_NO_TWO) _L8_config_layer(lcd, 1, clut);
+		_L8_config_layer(clut);
 		break;
 	}
 
 	// Enabling required layers
 	BSP_STM32_LTDC_EnableLayer(LTDC, 0);
-	if (lcd->config_.layerno == LCD_LAYER_NO_TWO) BSP_STM32_LTDC_EnableLayer(LTDC, 1);
 
 	// Programming LTDC line interrupt
 	BSP_STM32_LTDC_SetLineInt(LTDC, (uint32_t)LCD_HEIGHT);
 }
 
 
-void BSP_LCD_FrameReady(LCD_HandleTypeDef *lcd, uint8_t layer) {
+void BSP_LCD_FrameReady(void) {
 	// Marking EDIT frame as READY for display
 	// Marking previous READY frame (if exists) as EDIT, else IDLE becoming EDIT
 
-	// Waiting for andy DMA2D in progress
+	// Waiting for any DMA2D in progress
 	BSP_LCD_DMA2D_Wait();
 
-	uint8_t t = lcd->Layers[layer].Frame_READY;
-	lcd->Layers[layer].Frame_READY = lcd->Layers[layer].Frame_EDIT;
-	lcd->Layers[layer].Frame_PREV = lcd->Layers[layer].Frame_EDIT;
-	if (t<255) lcd->Layers[layer].Frame_EDIT = t;
+	uint8_t t = BSP_hlcd.Layers[0].Frame_READY;
+	BSP_hlcd.Layers[0].Frame_READY = BSP_hlcd.Layers[0].Frame_EDIT;
+	BSP_hlcd.Layers[0].Frame_PREV = BSP_hlcd.Layers[0].Frame_EDIT;
+	if (t<255) BSP_hlcd.Layers[0].Frame_EDIT = t;
 		else {
-			lcd->Layers[layer].Frame_EDIT = lcd->Layers[layer].Frame_IDLE;
-			lcd->Layers[layer].Frame_IDLE = t;
+			BSP_hlcd.Layers[0].Frame_EDIT = BSP_hlcd.Layers[0].Frame_IDLE;
+			BSP_hlcd.Layers[0].Frame_IDLE = t;
 		}
 
 	// Calculating frame time [ms]. FPS = 1000 / frametime.
 	uint32_t timestamp = BSP_GetTick();
-	uint32_t dt = timestamp - lcd->priv_.l_timestamp[layer];
-	lcd->priv_.l_timestamp[layer] = timestamp;
-	lcd->frametime[layer] = (lcd->frametime[layer] * 768 + (dt << 8)) >> 10; // Moving average
+	uint32_t dt = timestamp - BSP_hlcd.priv_.l_timestamp[0];
+	BSP_hlcd.priv_.l_timestamp[0] = timestamp;
+	BSP_hlcd.frametime[0] = (BSP_hlcd.frametime[0] * 768 + (dt << 8)) >> 10; // Moving average
 }
 
-uint8_t BSP_LCD_GetEditPermission(LCD_HandleTypeDef *lcd) {
+uint8_t BSP_LCD_GetEditPermission(void) {
 	// Returns True when engine is ready for generating next frame (used for double frame buffer / not applicable for triple buffering)
-	return ((lcd->Layers[0].Frame_EDIT<255) && (lcd->Layers[1].Frame_EDIT<255));
+	return (BSP_hlcd.Layers[0].Frame_EDIT<255);
 }
 
-void BSP_LCD_SetLayerAlpha(LCD_HandleTypeDef *lcd, uint8_t layer, uint8_t alpha) {
+void BSP_LCD_SetLayerAlpha(uint8_t alpha) {
 	// Setting transparency of layer
-	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)LTDC) + 0x84U + (0x80U*(layer)));
+	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)LTDC) + 0x84U + (0x80U*(0)));
 	// Specifies the constant alpha value
 	l->CACR &= ~(LTDC_LxCACR_CONSTA);
 	l->CACR = (uint32_t)alpha;
@@ -1474,23 +1482,23 @@ void BSP_LCD_SetLayerAlpha(LCD_HandleTypeDef *lcd, uint8_t layer, uint8_t alpha)
 }
 
 
-uint8_t BSP_LCD_GetLayerAlpha(LCD_HandleTypeDef *lcd, uint8_t layer) {
+uint8_t BSP_LCD_GetLayerAlpha(void) {
 	// Returns layer's transparency
-	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)LTDC) + 0x84U + (0x80U*(layer)));
+	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)LTDC) + 0x84U + (0x80U*(0)));
 	return (uint8_t)(l->CACR & LTDC_LxCACR_CONSTA);
 }
 
 
-void BSP_LCD_InitBackLight(LCD_HandleTypeDef *lcd, uint8_t value) {
+void BSP_LCD_InitBackLight(uint8_t value) {
 	// PWM Timer - base configration
 	// Option 1: PWM Frequency = 200MHz Input clock / Prescaler (7+1) / Reload value (999+1) = 25kHz
 	// Option 2: PWM Frequency = 240MHz Input clock / Prescaler (7+1) / Reload value (999+1) = 30kHz
 
-	lcd->priv_.bklt_setting = (int32_t)value << 6;
-	lcd->priv_.bklt_value = lcd->priv_.bklt_setting;
-	lcd->priv_.bklt_dimspeed = 0;
+	BSP_hlcd.priv_.bklt_setting = (int32_t)value << 6;
+	BSP_hlcd.priv_.bklt_value = BSP_hlcd.priv_.bklt_setting;
+	BSP_hlcd.priv_.bklt_dimspeed = 0;
 
-	uint32_t val = (((uint32_t)(lcd->priv_.bklt_value >> 6) * (LCD_BKL_MAX_PWM - LCD_BKL_MIN_PWM)) / 100) + LCD_BKL_MIN_PWM;
+	uint32_t val = (((uint32_t)(BSP_hlcd.priv_.bklt_value >> 6) * (LCD_BKL_MAX_PWM - LCD_BKL_MIN_PWM)) / 100) + LCD_BKL_MIN_PWM;
 
 	BSP_STM32_TIM_Init(LCD_BKL_TIM, TIM_CLOCKDIVISION_DIV1, 7, 999);
 	BSP_STM32_TIM_ConfigChannel(LCD_BKL_TIM, 3, 0b110, val);
@@ -1498,16 +1506,16 @@ void BSP_LCD_InitBackLight(LCD_HandleTypeDef *lcd, uint8_t value) {
 }
 
 
-void BSP_LCD_SetBackLight(LCD_HandleTypeDef *lcd, uint8_t value, uint8_t dimspeed) {
+void BSP_LCD_SetBackLight(uint8_t value, uint8_t dimspeed) {
 	// Sets backlight value 0 - 100%
 
-	lcd->priv_.bklt_setting = (int32_t)value << 6;
-	lcd->priv_.bklt_dimspeed = (int32_t)dimspeed;
+	BSP_hlcd.priv_.bklt_setting = (int32_t)value << 6;
+	BSP_hlcd.priv_.bklt_dimspeed = (int32_t)dimspeed;
 
 }
 
 
-uint8_t LCD_GetBackLight(LCD_HandleTypeDef *lcd) {
+uint8_t BSP_LCD_GetBackLight(void) {
 	// Returns backlight value 0 - 100%
 
 	uint32_t val = BSP_STM32_TIM_GetChannelValue(LCD_BKL_TIM, 3);
@@ -1518,11 +1526,22 @@ uint8_t LCD_GetBackLight(LCD_HandleTypeDef *lcd) {
 }
 
 
-void BSP_LCD_DecodeJPEG(LCD_HandleTypeDef *lcd, uint32_t jpeg_addr, uint32_t jpeg_size) {
+void BSP_LCD_DecodeJPEG(uint32_t jpeg_addr, uint32_t jpeg_size) {
 	// Decode JPEG into intermediate buffer (organized in YCbCr MCU blocks)
-	BSP_STM32_JPEG_Decode(JPEG, jpeg_addr, jpeg_size, lcd->JPEGBuf, LCD_JPEGBUF_SIZE);
+	BSP_STM32_JPEG_Decode(JPEG, jpeg_addr, jpeg_size, BSP_hlcd.JPEGBuf, LCD_JPEGBUF_SIZE);
 }
 
+
+uint32_t BSP_LCD_GetEditFrameAddr(void) {
+	uint8_t eframe = BSP_hlcd.Layers[0].Frame_EDIT;
+	return BSP_hlcd.Layers[0].Frames[eframe];
+}
+
+
+uint32_t BSP_LCD_GetPrevFrameAddr(void) {
+	uint8_t pframe = BSP_hlcd.Layers[0].Frame_PREV;
+	return BSP_hlcd.Layers[0].Frames[pframe];
+}
 
 /******************************************************************************
  * Callback for blanking interval. Updating display buffer.
@@ -1553,28 +1572,28 @@ void LTDC_IRQHandler(void)
 		switch (BSP_hlcd.config_.buffermode) {
 		case LCD_BUFFER_MODE_TRIPLE:
 
-			for (uint8_t l=0;l<BSP_hlcd.config_.layerno; l++) if (BSP_hlcd.Layers[l].Frame_READY < 255) {
-				uint8_t t = BSP_hlcd.Layers[l].Frame_ACTIVE;
-				BSP_hlcd.Layers[l].Frame_ACTIVE = BSP_hlcd.Layers[l].Frame_READY;
-				BSP_hlcd.Layers[l].Frame_IDLE = t;
-				BSP_hlcd.Layers[l].Frame_READY = 255;
+			if (BSP_hlcd.Layers[0].Frame_READY < 255) {
+				uint8_t t = BSP_hlcd.Layers[0].Frame_ACTIVE;
+				BSP_hlcd.Layers[0].Frame_ACTIVE = BSP_hlcd.Layers[0].Frame_READY;
+				BSP_hlcd.Layers[0].Frame_IDLE = t;
+				BSP_hlcd.Layers[0].Frame_READY = 255;
 
 				// Updating Framebuffer address
-				BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC, l, BSP_hlcd.Layers[l].Frames[BSP_hlcd.Layers[l].Frame_ACTIVE]);
+				BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC, 0, BSP_hlcd.Layers[0].Frames[BSP_hlcd.Layers[0].Frame_ACTIVE]);
 
 			}
 			return;
 
 		case LCD_BUFFER_MODE_DOUBLE:
 
-			for (uint8_t l=0;l<BSP_hlcd.config_.layerno; l++) if (BSP_hlcd.Layers[l].Frame_READY < 255) {
-				uint8_t t = BSP_hlcd.Layers[l].Frame_ACTIVE;
-				BSP_hlcd.Layers[l].Frame_ACTIVE = BSP_hlcd.Layers[l].Frame_READY;
-				BSP_hlcd.Layers[l].Frame_EDIT = t;
-				BSP_hlcd.Layers[l].Frame_READY = 255;
+			if (BSP_hlcd.Layers[0].Frame_READY < 255) {
+				uint8_t t = BSP_hlcd.Layers[0].Frame_ACTIVE;
+				BSP_hlcd.Layers[0].Frame_ACTIVE = BSP_hlcd.Layers[0].Frame_READY;
+				BSP_hlcd.Layers[0].Frame_EDIT = t;
+				BSP_hlcd.Layers[0].Frame_READY = 255;
 
 				// Updating Framebuffer address
-				BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC, l, BSP_hlcd.Layers[l].Frames[BSP_hlcd.Layers[l].Frame_ACTIVE]);
+				BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC, 0, BSP_hlcd.Layers[0].Frames[BSP_hlcd.Layers[0].Frame_ACTIVE]);
 
 			}
 			return;

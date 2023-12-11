@@ -46,7 +46,7 @@ inline static uint8_t _charw(const uint8_t *font, uint8_t ch) {
 }
 
 
-inline static uint8_t _char(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, int16_t y, const uint8_t *font, uint8_t ch, uint32_t *text_clut) {
+inline static uint8_t _char(int16_t x, int16_t y, const uint8_t *font, uint8_t ch, uint32_t *text_clut) {
 	// Function rendering character on screen
 	uint16_t *adr0;								// Start address of encoded character
 	uint16_t *adr1;								// End address of encoded character
@@ -70,8 +70,7 @@ inline static uint8_t _char(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, i
 	uint8_t m;
 	int16_t fx = 0;
 	int16_t fy = 0;
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t offset = lcd->Layers[layer].Frames[eframe];
+	uint32_t offset = BSP_LCD_GetEditFrameAddr();
 
 
 	for (uint16_t j = *adr0 + 1; j < *adr1; j++) {
@@ -80,7 +79,7 @@ inline static uint8_t _char(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, i
 		case 0: // 0% color
 		case 3:	// 100% color
 			for (uint8_t i = 0; i < (m & 0x3F); i++) {
-				BSP_LCD_UpdatePixel(lcd, offset, x+fx, y+fy, text_clut[m >> 6]);
+				BSP_LCD_UpdatePixel(offset, x+fx, y+fy, text_clut[m >> 6]);
 				fx++;
 				if (fx==width) { fx = 0; fy++; }
 			}
@@ -88,7 +87,7 @@ inline static uint8_t _char(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, i
 		case 1: // 33% color
 		case 2: // 66% color
 			for (int8_t i = 6; i >= 0; i-=2) {
-				BSP_LCD_UpdatePixel(lcd, offset, x+fx, y+fy, text_clut[(m >> i) & 0x03]);
+				BSP_LCD_UpdatePixel(offset, x+fx, y+fy, text_clut[(m >> i) & 0x03]);
 				fx++;
 				if (fx==width) { fx = 0; fy++; }
 			}
@@ -99,7 +98,7 @@ inline static uint8_t _char(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, i
 }
 
 
-inline static uint8_t _charblend(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t x, int16_t y, const uint8_t *font, uint8_t ch, uint32_t *text_clut) {
+inline static uint8_t _charblend( int16_t x, int16_t y, const uint8_t *font, uint8_t ch, uint32_t *text_clut) {
 	// Function rendering character on screen
 	uint16_t *adr0;								// Start address of encoded character
 	uint16_t *adr1;								// End address of encoded character
@@ -123,8 +122,7 @@ inline static uint8_t _charblend(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t
 	uint8_t m;
 	int16_t fx = 0;
 	int16_t fy = 0;
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t offset = lcd->Layers[layer].Frames[eframe];
+	uint32_t offset = BSP_LCD_GetEditFrameAddr();
 
 
 	for (uint16_t j = *adr0 + 1; j < *adr1; j++) {
@@ -133,7 +131,7 @@ inline static uint8_t _charblend(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t
 		case 0: // 0% color
 		case 3:	// 100% color
 			for (uint8_t i = 0; i < (m & 0x3F); i++) {
-				BSP_LCD_UpdatePixelBlend(lcd, offset, x+fx, y+fy, text_clut[m >> 6]);
+				BSP_LCD_UpdatePixelBlend(offset, x+fx, y+fy, text_clut[m >> 6]);
 				fx++;
 				if (fx==width) { fx = 0; fy++; }
 			}
@@ -141,7 +139,7 @@ inline static uint8_t _charblend(LCD_HandleTypeDef *lcd, uint8_t layer,  int16_t
 		case 1: // 33% color
 		case 2: // 66% color
 			for (int8_t i = 6; i >= 0; i-=2) {
-				BSP_LCD_UpdatePixelBlend(lcd, offset, x+fx, y+fy, text_clut[(m >> i) & 0x03]);
+				BSP_LCD_UpdatePixelBlend(offset, x+fx, y+fy, text_clut[(m >> i) & 0x03]);
 				fx++;
 				if (fx==width) { fx = 0; fy++; }
 			}
@@ -189,25 +187,24 @@ uint32_t static _getbufpixel_L8(uint32_t offset, int16_t width, int16_t x, int16
 	return *(uint8_t *)addr;
 }
 
-void G2D_ClearFrame(LCD_HandleTypeDef *lcd, uint8_t layer) {
-	BSP_LCD_FillBuf(lcd, layer, 0, 0, LCD_WIDTH, LCD_HEIGHT, 0, 0x00000000);
+void G2D_ClearFrame(void) {
+	BSP_LCD_FillBuf(0, 0, LCD_WIDTH, LCD_HEIGHT, 0, 0x00000000);
 }
 
 
-void G2D_FillFrame(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t color) {
-	BSP_LCD_FillBuf(lcd, layer, 0, 0, LCD_WIDTH, LCD_HEIGHT, 0, color);
+void G2D_FillFrame(uint32_t color) {
+	BSP_LCD_FillBuf(0, 0, LCD_WIDTH, LCD_HEIGHT, 0, color);
 }
 
 
-void G2D_CopyPrevFrame(LCD_HandleTypeDef *lcd, uint8_t layer) {
+void G2D_CopyPrevFrame(void) {
 
-	uint8_t pframe = lcd->Layers[layer].Frame_PREV;
-	uint32_t src_addr = lcd->Layers[layer].Frames[pframe];
+	uint32_t src_addr = BSP_LCD_GetPrevFrameAddr();
 
-	BSP_LCD_CopyBuf(lcd, layer, src_addr, 0, 0, 0, 0, LCD_WIDTH, LCD_HEIGHT);
+	BSP_LCD_CopyBuf(src_addr, 0, 0, 0, 0, LCD_WIDTH, LCD_HEIGHT);
 }
 
-void G2D_CopyScrollPrevFrame(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t dx, int16_t dy) {
+void G2D_CopyScrollPrevFrame(int16_t dx, int16_t dy) {
 	int16_t x0 = MAX(0, -dx);
 	int16_t y0 = MAX(0, -dy);
 	int16_t	x1 = MIN(LCD_WIDTH, LCD_WIDTH - dx);
@@ -218,37 +215,21 @@ void G2D_CopyScrollPrevFrame(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t dx, 
 	int16_t h = y1 - y0;
 	int16_t offset = LCD_WIDTH - w;
 
-	uint8_t pframe = lcd->Layers[layer].Frame_PREV;
-	uint32_t src_addr = lcd->Layers[layer].Frames[pframe] + ((x0 + y0 * LCD_WIDTH) * lcd->config_.bytesperpixel);
+	uint32_t src_addr = BSP_LCD_GetPrevFrameAddr() + ((x0 + y0 * LCD_WIDTH) * BSP_hlcd.config_.bytesperpixel);
 
-	BSP_LCD_CopyBuf(lcd, layer, src_addr, offset, x2, y2, offset, w, h);
+	BSP_LCD_CopyBuf(src_addr, offset, x2, y2, offset, w, h);
 }
 
 
-void G2D_CopyLayer0to1(LCD_HandleTypeDef *lcd) {
-	uint8_t pframe = lcd->Layers[0].Frame_PREV;
-	uint32_t src_addr = lcd->Layers[0].Frames[pframe];
-	BSP_LCD_CopyBuf(lcd, 1, src_addr, 0, 0, 0, 0, LCD_WIDTH, LCD_HEIGHT);
-}
+void G2D_DrawPixel(int16_t x, int16_t y, uint32_t color) {
 
-
-void G2D_CopyLayer1to0(LCD_HandleTypeDef *lcd) {
-	uint8_t pframe = lcd->Layers[1].Frame_PREV;
-	uint32_t src_addr = lcd->Layers[1].Frames[pframe];
-	BSP_LCD_CopyBuf(lcd, 0, src_addr, 0, 0, 0, 0, LCD_WIDTH, LCD_HEIGHT);
-}
-
-
-void G2D_DrawPixel(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint32_t color) {
-
-	uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-	uint32_t offset = lcd->Layers[layer].Frames[eframe];
+	uint32_t offset = BSP_LCD_GetEditFrameAddr();
 
 	BSP_LCD_DMA2D_Wait();
-	BSP_LCD_UpdatePixel(lcd, offset, x, y, color);
+	BSP_LCD_UpdatePixel(offset, x, y, color);
 }
 
-void G2D_DrawHLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, int16_t length, uint32_t color) {
+void G2D_DrawHLine(int16_t x, int16_t y, int16_t length, uint32_t color) {
 	if (length == 0) return;
 	if (length < 0) {x -= length + 1; length = -length;}
 	if (y < 1) return;
@@ -259,11 +240,11 @@ void G2D_DrawHLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, 
 	uint16_t x1 = MIN(LCD_WIDTH, x + length);
 	uint16_t l = x1 - x0;
 	uint16_t lo = LCD_WIDTH - l;
-	BSP_LCD_FillBuf(lcd, layer, x0, y, l, 1, lo, color);
+	BSP_LCD_FillBuf(x0, y, l, 1, lo, color);
 }
 
 
-void G2D_DrawHLineBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, int16_t length, uint32_t color) {
+void G2D_DrawHLineBlend(int16_t x, int16_t y, int16_t length, uint32_t color) {
 	if (length == 0) return;
 	if (length < 0) {x -= length + 1; length = -length;}
 	if (y < 1) return;
@@ -274,11 +255,11 @@ void G2D_DrawHLineBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_
 	uint16_t x1 = MIN(LCD_WIDTH, x + length);
 	uint16_t l = x1 - x0;
 	uint16_t lo = LCD_WIDTH - l;
-	BSP_LCD_FillBufBlend(lcd, layer, x0, y, l, 1, lo, color);
+	BSP_LCD_FillBufBlend(x0, y, l, 1, lo, color);
 }
 
 
-void G2D_DrawVLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, int16_t length, uint32_t color) {
+void G2D_DrawVLine(int16_t x, int16_t y, int16_t length, uint32_t color) {
 	if (length == 0) return;
 	if (length < 0) {y -= length + 1; length = -length;}
 	if (x < 1) return;
@@ -290,11 +271,11 @@ void G2D_DrawVLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, 
 	uint16_t l = y1 - y0;
 	if (l == 0) return;
 	uint16_t lo = LCD_WIDTH - 1;
-	BSP_LCD_FillBuf(lcd, layer, x, y0, 1, l, lo, color);
+	BSP_LCD_FillBuf(x, y0, 1, l, lo, color);
 }
 
 
-void G2D_DrawVLineBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, int16_t length, uint32_t color) {
+void G2D_DrawVLineBlend(int16_t x, int16_t y, int16_t length, uint32_t color) {
 	if (length == 0) return;
 	if (length < 0) {y -= length + 1; length = -length;}
 	if (x < 1) return;
@@ -306,11 +287,11 @@ void G2D_DrawVLineBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_
 	uint16_t l = y1 - y0;
 	if (l == 0) return;
 	uint16_t lo = LCD_WIDTH - 1;
-	BSP_LCD_FillBufBlend(lcd, layer, x, y0, 1, l, lo, color);
+	BSP_LCD_FillBufBlend(x, y0, 1, l, lo, color);
 }
 
 
-void G2D_DrawLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t X1, int16_t Y1, int16_t X2, int16_t Y2, uint32_t color) {
+void G2D_DrawLine(int16_t X1, int16_t Y1, int16_t X2, int16_t Y2, uint32_t color) {
   int16_t dx = 0;
   int16_t dy = 0;
   int16_t x = 0;
@@ -352,13 +333,12 @@ void G2D_DrawLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t X1, int16_t Y1,
     numpixels = dy;         									/* There are more y-values than x-values */
   }
 
-  uint8_t eframe = lcd->Layers[layer].Frame_EDIT;
-  uint32_t offset = lcd->Layers[layer].Frames[eframe];
+  uint32_t offset = BSP_LCD_GetEditFrameAddr();
 
   BSP_LCD_DMA2D_Wait();
 
   for (curpixel = 0; curpixel <= numpixels; curpixel++) {
-	BSP_LCD_UpdatePixel(lcd, offset, x, y, color);					   	/* Draw the current pixel */
+	BSP_LCD_UpdatePixel(offset, x, y, color);				   	/* Draw the current pixel */
     num += numadd;                            					/* Increase the numerator by the top of the fraction */
     if (num >= den) {                         					/* Check if numerator >= denominator */
       num -= den;                             					/* Calculate the new numerator value */
@@ -371,7 +351,7 @@ void G2D_DrawLine(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t X1, int16_t Y1,
 }
 
 
-void G2D_DrawRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
+void G2D_DrawRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
 	int16_t xx = x + width - 1;
 	int16_t yy = y + height - 1;
 	uint16_t x1 = MAX(0, x);
@@ -381,14 +361,14 @@ void G2D_DrawRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, u
 	uint16_t w = x2 - x1 + 2;
 	uint16_t h = y2 - y1 + 2;
 
-	G2D_DrawHLine(lcd, layer, x1, y, w, color);
-	G2D_DrawHLine(lcd, layer, x1, yy, w, color);
-	G2D_DrawVLine(lcd, layer, x, y1, h, color);
-	G2D_DrawVLine(lcd, layer, xx, y1, h, color);
+	G2D_DrawHLine(x1, y, w, color);
+	G2D_DrawHLine(x1, yy, w, color);
+	G2D_DrawVLine(x, y1, h, color);
+	G2D_DrawVLine(xx, y1, h, color);
 }
 
 
-void G2D_DrawFillRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
+void G2D_DrawFillRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
 	uint16_t x1 = MAX(0, x);
 	uint16_t y1 = MAX(0, y);
 	uint16_t x2 = MIN(LCD_WIDTH - 1, (x + width));
@@ -397,10 +377,10 @@ void G2D_DrawFillRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t 
 	uint16_t h = y2 - y1;
 	uint16_t ol = LCD_WIDTH - w;
 
-	BSP_LCD_FillBuf(lcd, layer, x1, y1, w, h, ol, color);
+	BSP_LCD_FillBuf(x1, y1, w, h, ol, color);
 }
 
-void G2D_DrawFillRectBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
+void G2D_DrawFillRectBlend(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
 	uint16_t x1 = MAX(0, x);
 	uint16_t y1 = MAX(0, y);
 	uint16_t x2 = MIN(LCD_WIDTH - 1, (x + width));
@@ -409,10 +389,10 @@ void G2D_DrawFillRectBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int
 	uint16_t h = y2 - y1;
 	uint16_t ol = LCD_WIDTH - w;
 
-	BSP_LCD_FillBufBlend(lcd, layer, x1, y1, w, h, ol, color);
+	BSP_LCD_FillBufBlend(x1, y1, w, h, ol, color);
 }
 
-void G2D_DrawCircle(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t r, uint32_t color) {
+void G2D_DrawCircle(int16_t x, int16_t y, uint16_t r, uint32_t color) {
 	int32_t d;			/* Decision Variable */
 	int32_t curx;		/* Current X Value */
 	int32_t cury;		/* Current Y Value */
@@ -427,14 +407,14 @@ void G2D_DrawCircle(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y,
 	BSP_LCD_DMA2D_Wait();
 
 	while (curx <= cury) {
-		BSP_LCD_UpdatePixel(lcd, offset, (x + curx), (y - cury), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x - curx), (y - cury), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x + cury), (y - curx), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x - cury), (y - curx), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x + curx), (y + cury), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x - curx), (y + cury), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x + cury), (y + curx), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x - cury), (y + curx), color);
+		BSP_LCD_UpdatePixel(offset, (x + curx), (y - cury), color);
+		BSP_LCD_UpdatePixel(offset, (x - curx), (y - cury), color);
+		BSP_LCD_UpdatePixel(offset, (x + cury), (y - curx), color);
+		BSP_LCD_UpdatePixel(offset, (x - cury), (y - curx), color);
+		BSP_LCD_UpdatePixel(offset, (x + curx), (y + cury), color);
+		BSP_LCD_UpdatePixel(offset, (x - curx), (y + cury), color);
+		BSP_LCD_UpdatePixel(offset, (x + cury), (y + curx), color);
+		BSP_LCD_UpdatePixel(offset, (x - cury), (y + curx), color);
 
 		if (d < 0) {
 			d += (curx << 2) + 6;
@@ -447,7 +427,7 @@ void G2D_DrawCircle(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y,
 }
 
 
-void G2D_DrawFillCircle(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t r, uint32_t color) {
+void G2D_DrawFillCircle(int16_t x, int16_t y, uint16_t r, uint32_t color) {
 	int32_t  d;    	/* Decision Variable */
 	int32_t  curx;	/* Current X Value */
 	int32_t  cury;	/* Current Y Value */
@@ -477,7 +457,7 @@ void G2D_DrawFillCircle(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_
 }
 
 
-void G2D_DrawFillCircleBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t r, uint32_t color) {
+void G2D_DrawFillCircleBlend(int16_t x, int16_t y, uint16_t r, uint32_t color) {
 	int32_t  d;    	/* Decision Variable */
 	int32_t  curx;	/* Current X Value */
 	int32_t  cury;	/* Current Y Value */
@@ -507,7 +487,7 @@ void G2D_DrawFillCircleBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, i
 }
 
 
-void G2D_DrawRoundRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t radius, uint32_t color) {
+void G2D_DrawRoundRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t radius, uint32_t color) {
 	int32_t  d;    	/* Decision Variable */
 	int32_t  curx;	/* Current X Value */
 	int32_t  cury;	/* Current Y Value */
@@ -543,14 +523,14 @@ void G2D_DrawRoundRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t
 
 	// Drawing round corners
 	while (curx <= cury) {
-		BSP_LCD_UpdatePixel(lcd, offset, (x0 - curx), (y0 - cury), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x0 - cury), (y0 - curx), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x1 + curx), (y0 - cury), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x1 + cury), (y0 - curx), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x0 - curx), (y1 + cury), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x0 - cury), (y1 + curx), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x1 + cury), (y1 + curx), color);
-		BSP_LCD_UpdatePixel(lcd, offset, (x1 + curx), (y1 + cury), color);
+		BSP_LCD_UpdatePixel(offset, (x0 - curx), (y0 - cury), color);
+		BSP_LCD_UpdatePixel(offset, (x0 - cury), (y0 - curx), color);
+		BSP_LCD_UpdatePixel(offset, (x1 + curx), (y0 - cury), color);
+		BSP_LCD_UpdatePixel(offset, (x1 + cury), (y0 - curx), color);
+		BSP_LCD_UpdatePixel(offset, (x0 - curx), (y1 + cury), color);
+		BSP_LCD_UpdatePixel(offset, (x0 - cury), (y1 + curx), color);
+		BSP_LCD_UpdatePixel(offset, (x1 + cury), (y1 + curx), color);
+		BSP_LCD_UpdatePixel(offset, (x1 + curx), (y1 + cury), color);
 		if (d < 0) {
 			d += (curx << 2) + 6;
 		} else {
@@ -563,7 +543,7 @@ void G2D_DrawRoundRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t
 }
 
 
-void G2D_DrawFillRoundRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t radius, uint32_t color) {
+void G2D_DrawFillRoundRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t radius, uint32_t color) {
 	int32_t  d;    	/* Decision Variable */
 	int32_t  curx;	/* Current X Value */
 	int32_t  cury;	/* Current Y Value */
@@ -608,7 +588,7 @@ void G2D_DrawFillRoundRect(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int
 }
 
 
-void G2D_DrawFillRoundRectBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t radius, uint32_t color) {
+void G2D_DrawFillRoundRectBlend(int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t radius, uint32_t color) {
 	int32_t  d;    	/* Decision Variable */
 	int32_t  curx;	/* Current X Value */
 	int32_t  cury;	/* Current Y Value */
@@ -653,7 +633,7 @@ void G2D_DrawFillRoundRectBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x
 }
 
 
-uint16_t G2D_Text(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color, uint32_t bgcolor) {
+uint16_t G2D_Text(int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color, uint32_t bgcolor) {
 	// Calculating color array for anty-aliasing
 	uint32_t text_clut[4];
 	uint32_t a1, a2, r1, r2, b1, b2, g1, g2;
@@ -743,13 +723,14 @@ uint16_t G2D_Text(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, c
 }
 
 
-uint16_t G2D_TextBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color) {
+uint16_t G2D_TextBlend(int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color) {
 	// Calculating color array for anty-aliasing
 	uint32_t text_clut[4];
 	uint32_t a1 = 0;
 
 	switch (lcd->config_.colormode) {
 	case LCD_COLOR_MODE_ARGB8888:
+	case LCD_COLOR_MODE_RGB888:
 		a1 = (color & 0xFF000000) >> 24;
 		text_clut[0] = 0;
 		text_clut[1] = (((a1 * 85) >> 8) << 24) | (color & 0x00FFFFFF);
@@ -771,12 +752,12 @@ uint16_t G2D_TextBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t
 		text_clut[3] = color;
 		break;
 
-	case LCD_COLOR_MODE_RGB888:
-		text_clut[0] = 0;
-		text_clut[1] = (85 << 24) | (color & 0x00FFFFFF);
-		text_clut[2] = (171 << 24) | (color & 0x00FFFFFF);
-		text_clut[3] = (255 << 24) | (color & 0x00FFFFFF);
-		break;
+//	case LCD_COLOR_MODE_RGB888:
+//		text_clut[0] = 0;
+//		text_clut[1] = (85 << 24) | (color & 0x00FFFFFF);
+//		text_clut[2] = (171 << 24) | (color & 0x00FFFFFF);
+//		text_clut[3] = (255 << 24) | (color & 0x00FFFFFF);
+//		break;
 
 	case LCD_COLOR_MODE_AL88:
 	case LCD_COLOR_MODE_L8:
@@ -815,7 +796,7 @@ uint16_t G2D_TextBlend(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t
 }
 
 
-void G2D_DrawBitmapBlend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha) {
+void G2D_DrawBitmapBlend(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha) {
 	// Checking if bitmap is on the screen
 	if (((x + width) < 1) || (x >= LCD_WIDTH) || ((y + height) < 1) || (y >= LCD_HEIGHT)) return;
 
@@ -835,16 +816,16 @@ void G2D_DrawBitmapBlend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sourced
 
 	// Sending rendered bitmap to screen
 	uint32_t src_addr = sourcedata + ((sx + sy * width) * lcd->config_.bytesperpixel);
-	BSP_LCD_CopyBufBlend(lcd, layer, src_addr, oscr, xx0, yy0, odest, ww, hh, alpha);
+	BSP_LCD_CopyBufBlend(src_addr, oscr, xx0, yy0, odest, ww, hh, alpha);
 }
 
-void G2D_DrawBitmapBlendC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha) {
+void G2D_DrawBitmapBlendC(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha) {
 	x -= width >> 1;
 	y -= height >> 1;
 	G2D_DrawBitmapBlend(lcd, layer, sourcedata, x, y, width, height, alpha);
 }
 
-void G2D_DrawBitmap(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height) {
+void G2D_DrawBitmap(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height) {
 	// Checking if bitmap is on the screen
 	if (((x + width) < 1) || (x >= LCD_WIDTH) || ((y + height) < 1) || (y >= LCD_HEIGHT)) return;
 
@@ -864,18 +845,18 @@ void G2D_DrawBitmap(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sourcedata, 
 
 	// Sending rendered bitmap to screen
 	uint32_t src_addr = sourcedata + ((sx + sy * width) * lcd->config_.bytesperpixel);
-	BSP_LCD_CopyBuf(lcd, layer, src_addr, oscr, xx0, yy0, odest, ww, hh);
+	BSP_LCD_CopyBuf(src_addr, oscr, xx0, yy0, odest, ww, hh);
 }
 
 
-void G2D_DrawBitmapC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height) {
+void G2D_DrawBitmapC(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height) {
 	x -= width >> 1;
 	y -= height >> 1;
 	G2D_DrawBitmap(lcd, layer, sourcedata, x, y, width, height);
 }
 
 
-void G2D_DrawBitmapRotate(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, float angle) {
+void G2D_DrawBitmapRotate(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, float angle) {
 
 	// Checking if bitmap is within screen area
 	if (((x + width) < 1) || (x >= LCD_WIDTH)) return;
@@ -937,7 +918,7 @@ void G2D_DrawBitmapRotate(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t source
 			// By casting to uint32_t we can check if variable is within range <0,limit) with only one comparison.
 			if (((uint32_t)cxx < width) && ((uint32_t)cyy < height)) {
 				uint32_t c = _getbufpixel(sourcedata, width, cxx, cyy);
-				BSP_LCD_UpdatePixel(lcd, faddr, ix, iy, c);
+				BSP_LCD_UpdatePixel(faddr, ix, iy, c);
 			}
 			cx += cos_a;
 			cxx = cx >> 16;
@@ -952,14 +933,14 @@ void G2D_DrawBitmapRotate(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t source
 }
 
 
-void G2D_DrawBitmapRotateC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, float angle) {
+void G2D_DrawBitmapRotateC(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, float angle) {
 	x -= width >> 1;
 	y -= height >> 1;
 	G2D_DrawBitmapRotate(lcd, layer, sourcedata, x, y, width, height, angle);
 }
 
 
-void G2D_DrawIcon(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor) {
+void G2D_DrawIcon(uint32_t iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor) {
 	// Calculating color array for anty-aliasing
 	uint32_t icon_clut[4];
 	uint32_t a1, a2, r1, r2, b1, b2, g1, g2;
@@ -1042,7 +1023,7 @@ void G2D_DrawIcon(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, in
 		uint8_t m = j >> 6;
 		uint8_t r = j & 0x3F;
 		for (uint32_t z = 0; z<r; z++) {
-			BSP_LCD_UpdatePixel(lcd, faddr, xx, yy, icon_clut[m]);
+			BSP_LCD_UpdatePixel(faddr, xx, yy, icon_clut[m]);
 			xx++;
 			if (xx == (x+width)) {
 				xx = x;
@@ -1053,7 +1034,7 @@ void G2D_DrawIcon(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, in
 }
 
 
-void G2D_DrawIconC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor) {
+void G2D_DrawIconC(uint32_t iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor) {
 	// Decoding width and height
 	uint8_t *pdata;
 	pdata = (uint8_t *)iconsource;
@@ -1067,13 +1048,14 @@ void G2D_DrawIconC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, i
 }
 
 
-void G2D_DrawIconBlend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, int16_t x, int16_t y, uint32_t color) {
+void G2D_DrawIconBlend(uint32_t iconsource, int16_t x, int16_t y, uint32_t color) {
 	// Calculating color array for anty-aliasing
 	uint32_t icon_clut[4];
 	uint32_t a1 = 0;
 
 	switch (lcd->config_.colormode) {
 	case LCD_COLOR_MODE_ARGB8888:
+	case LCD_COLOR_MODE_RGB888:
 		a1 = (color & 0xFF000000) >> 24;
 		icon_clut[0] = 0;
 		icon_clut[1] = (((a1 * 85) >> 8) << 24) | (color & 0x00FFFFFF);
@@ -1088,18 +1070,10 @@ void G2D_DrawIconBlend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsourc
 		break;
 	case LCD_COLOR_MODE_ARGB4444:
 		a1 = (color & 0xF000) >> 12;
-
 		icon_clut[0] = 0;
 		icon_clut[1] = (((a1 * 85) >> 8) << 12) | (color & 0x0FFF);
 		icon_clut[2] = (((a1 * 171) >> 8) << 12) | (color & 0x0FFF);
 		icon_clut[3] = color;
-		break;
-
-	case LCD_COLOR_MODE_RGB888:
-		icon_clut[0] = 0;
-		icon_clut[1] = (85 << 24) | (color & 0x00FFFFFF);
-		icon_clut[2] = (171 << 24) | (color & 0x00FFFFFF);
-		icon_clut[3] = (255 << 24) | (color & 0x00FFFFFF);
 		break;
 
 	case LCD_COLOR_MODE_AL88:
@@ -1135,7 +1109,7 @@ void G2D_DrawIconBlend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsourc
 		uint8_t m = j >> 6;
 		uint8_t r = j & 0x3F;
 		for (uint32_t z = 0; z<r; z++) {
-			BSP_LCD_UpdatePixelBlend(lcd, faddr, xx, yy, icon_clut[m]);
+			BSP_LCD_UpdatePixelBlend(faddr, xx, yy, icon_clut[m]);
 			xx++;
 			if (xx == (x+width)) {
 				xx = x;
@@ -1146,7 +1120,7 @@ void G2D_DrawIconBlend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsourc
 }
 
 
-void G2D_DrawIconBlendC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsource, int16_t x, int16_t y, uint32_t color) {
+void G2D_DrawIconBlendC(uint32_t iconsource, int16_t x, int16_t y, uint32_t color) {
 	// Decoding width and height
 	uint8_t *pdata;
 	pdata = (uint8_t *)iconsource;
@@ -1160,46 +1134,46 @@ void G2D_DrawIconBlendC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t iconsour
 }
 
 
-void G2D_DrawJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y) {
+void G2D_DrawJPEG(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y) {
 	// TODO: Checking if JPEG is within borders of screen
 
-	BSP_LCD_DecodeJPEG(lcd, jpeg_addr, jpeg_size);
-	BSP_LCD_CopyBufJPEG(lcd, layer, (uint16_t)x, (uint16_t)y);
+	BSP_LCD_DecodeJPEG(jpeg_addr, jpeg_size);
+	BSP_LCD_CopyBufJPEG((uint16_t)x, (uint16_t)y);
 }
 
-void G2D_DrawJPEGC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y) {
+void G2D_DrawJPEGC(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y) {
 	// TODO: Checking if JPEG is within borders of screen
 
-	BSP_LCD_DecodeJPEG(lcd, jpeg_addr, jpeg_size);
+	BSP_LCD_DecodeJPEG(jpeg_addr, jpeg_size);
 
 	x -= BSP_STM32_JPEG_GetWidth(JPEG) >> 1;
 	y -= BSP_STM32_JPEG_GetHeight(JPEG) >> 1;
 
-	BSP_LCD_CopyBufJPEG(lcd, layer, (uint16_t)x, (uint16_t)y);
+	BSP_LCD_CopyBufJPEG((uint16_t)x, (uint16_t)y);
 }
 
-void G2D_DrawLastJPEG(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y) {
+void G2D_DrawLastJPEG(int16_t x, int16_t y) {
 	// TODO: Checking if JPEG is within borders of screen
-	BSP_LCD_CopyBufJPEG(lcd, layer, (uint16_t)x, (uint16_t)y);
+	BSP_LCD_CopyBufJPEG((uint16_t)x, (uint16_t)y);
 }
 
-void G2D_DrawLastJPEGC(LCD_HandleTypeDef *lcd, uint8_t layer, int16_t x, int16_t y) {
+void G2D_DrawLastJPEGC(int16_t x, int16_t y) {
 	// TODO: Checking if JPEG is within borders of screen
 
 	x -= BSP_STM32_JPEG_GetWidth(JPEG) >> 1;
 	y -= BSP_STM32_JPEG_GetHeight(JPEG) >> 1;
 
-	BSP_LCD_CopyBufJPEG(lcd, layer, (uint16_t)x, (uint16_t)y);
+	BSP_LCD_CopyBufJPEG((uint16_t)x, (uint16_t)y);
 }
 
 
 void G2D_DecodeJPEG(LCD_HandleTypeDef *lcd, uint32_t jpeg_addr, uint32_t jpeg_size) {
 
-	BSP_LCD_DecodeJPEG(lcd, jpeg_addr, jpeg_size);
+	BSP_LCD_DecodeJPEG(jpeg_addr, jpeg_size);
 
 }
 
-void G2D_DrawTile(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y) {
+void G2D_DrawTile(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y) {
 	// Checking if tile is on the screen
 	if ((int32_t)(x + tile_width) < 1) return;
 	if (x >= LCD_WIDTH) return;
@@ -1222,18 +1196,18 @@ void G2D_DrawTile(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t tileset_addr, 
 
 	// Sending rendered tile to screen
 	uint32_t src_addr = tileset_addr + ((sx + sy * (tile_width * tileset_cols)) * lcd->config_.bytesperpixel);
-	BSP_LCD_CopyBuf(lcd, layer, src_addr, oscr, xx0, yy0, odest, ww, hh);
+	BSP_LCD_CopyBuf(src_addr, oscr, xx0, yy0, odest, ww, hh);
 
 }
 
-void G2D_DrawTileC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y) {
+void G2D_DrawTileC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y) {
 	x -= tile_width >> 1;
 	y -= tile_height >> 1;
 
 	G2D_DrawTile(lcd, layer, tileset_addr, tileset_cols, tile_width, tile_height, tile_col, tile_row, x, y);
 }
 
-void G2D_DrawTileBlend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y) {
+void G2D_DrawTileBlend(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y) {
 	// Checking if tile is on the screen
 	if ((int32_t)(x + tile_width) < 1) return;
 	if (x >= LCD_WIDTH) return;
@@ -1256,11 +1230,11 @@ void G2D_DrawTileBlend(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t tileset_a
 
 	// Sending rendered tile to screen
 	uint32_t src_addr = tileset_addr + ((sx + sy * (tile_width * tileset_cols)) * lcd->config_.bytesperpixel);
-	BSP_LCD_CopyBufBlend(lcd, layer, src_addr, oscr, xx0, yy0, odest, ww, hh, 255);
+	BSP_LCD_CopyBufBlend(src_addr, oscr, xx0, yy0, odest, ww, hh, 255);
 
 }
 
-void G2D_DrawTileBlendC(LCD_HandleTypeDef *lcd, uint8_t layer, uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y) {
+void G2D_DrawTileBlendC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y) {
 	x -= tile_width >> 1;
 	y -= tile_height >> 1;
 

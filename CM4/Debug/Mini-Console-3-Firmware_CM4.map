@@ -549,7 +549,7 @@ Discarded input sections
                 0x0000000000000000       0x40 ./Libs/BSP/Components/MPU6050.o
  .text.BSP_DRV_IMU_Parse
                 0x0000000000000000      0x3e0 ./Libs/BSP/Components/MPU6050.o
- .debug_info    0x0000000000000000      0x5d0 ./Libs/BSP/Components/MPU6050.o
+ .debug_info    0x0000000000000000      0x5cf ./Libs/BSP/Components/MPU6050.o
  .debug_abbrev  0x0000000000000000      0x1d2 ./Libs/BSP/Components/MPU6050.o
  .debug_aranges
                 0x0000000000000000       0x30 ./Libs/BSP/Components/MPU6050.o
@@ -1928,7 +1928,7 @@ Discarded input sections
  .text.BSP_STM32_DMA2D_FillBuff
                 0x0000000000000000       0x8e ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .text.BSP_STM32_DMA2D_FillBuffBlend
-                0x0000000000000000       0xe4 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+                0x0000000000000000      0x12c ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .text.BSP_STM32_DMA2D_CopyBuf
                 0x0000000000000000       0xb4 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .text.BSP_STM32_DMA2D_CopyBufJPEG
@@ -1980,7 +1980,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
- .debug_line    0x0000000000000000      0x846 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
+ .debug_line    0x0000000000000000      0x86e ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_str     0x0000000000000000   0x10c583 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o
  .debug_frame   0x0000000000000000      0x100 ./Libs/BSP/STM32H7/BSP_STM32_DMA2D.o

@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 #include "BSP_STM32.h"
-#include "../Components/MAX98357A.h"
+#include "MAX98357A.h"
 
 
 uint8_t BSP_Audio_Init();

@@ -13,6 +13,7 @@
 #define STM32H7_BSP_STM32_UART_H_
 
 #include "BSP_Common.h"
+#include "BSP_STM32.h"
 
 
 #define USART_CR1_FIELDS  				((uint32_t)(USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE | USART_CR1_OVER8 | USART_CR1_FIFOEN)) // UART or USART CR1 fields of parameters set by UART_SetConfig API

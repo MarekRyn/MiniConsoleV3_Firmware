@@ -38,7 +38,7 @@ Libs/BSP/Libs/graph2d.o: \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_PCD.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/RVT50AQTNWC00.h
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/RVT50AQTNWC00.h
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Libs/graph2d.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/ST/stm32h747xx.h:
@@ -77,4 +77,4 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_UART.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_PCD.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/RVT50AQTNWC00.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/RVT50AQTNWC00.h:

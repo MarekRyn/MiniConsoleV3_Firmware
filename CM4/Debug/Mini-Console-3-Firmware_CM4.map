@@ -677,12 +677,14 @@ Discarded input sections
                 0x0000000000000000       0x16 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .text.BSP_DRV_LCD_TP_Parse
                 0x0000000000000000      0x748 ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_info    0x0000000000000000      0x41e ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_abbrev  0x0000000000000000      0x179 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .text.BSP_DRV_LCD_TP_Reset
+                0x0000000000000000       0x30 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_info    0x0000000000000000      0x4ea ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_abbrev  0x0000000000000000      0x1d6 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_aranges
-                0x0000000000000000       0x28 ./Libs/BSP/Components/RVT50AQTNWC00.o
+                0x0000000000000000       0x30 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_rnglists
-                0x0000000000000000       0x29 ./Libs/BSP/Components/RVT50AQTNWC00.o
+                0x0000000000000000       0x2f ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x2b6 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/Components/RVT50AQTNWC00.o
@@ -737,11 +739,11 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_macro   0x0000000000000000      0x148 ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_line    0x0000000000000000      0xd09 ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_str     0x0000000000000000   0x11bf01 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_macro   0x0000000000000000      0x160 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_line    0x0000000000000000      0xd24 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_str     0x0000000000000000   0x11bf93 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_frame   0x0000000000000000       0x64 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_frame   0x0000000000000000       0x80 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .ARM.attributes
                 0x0000000000000000       0x34 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .group         0x0000000000000000        0xc ./Libs/BSP/Core_CM4/BSP.o
@@ -3831,6 +3833,23 @@ Discarded input sections
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .group         0x0000000000000000        0xc ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .text          0x0000000000000000        0x0 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .data          0x0000000000000000        0x0 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .bss           0x0000000000000000        0x0 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
@@ -3847,14 +3866,14 @@ Discarded input sections
  .text.BSP_STM32_UART_Transmit_IT
                 0x0000000000000000       0x40 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .text.BSP_STM32_UART_IRQHandler
-                0x0000000000000000      0x124 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
- .debug_info    0x0000000000000000      0x564 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
- .debug_abbrev  0x0000000000000000      0x1a8 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+                0x0000000000000000      0x122 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_info    0x0000000000000000      0x55e ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_abbrev  0x0000000000000000      0x18f ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_aranges
                 0x0000000000000000       0x48 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_rnglists
                 0x0000000000000000       0x33 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
- .debug_macro   0x0000000000000000      0x1ce ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x2b1 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000      0xaae ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000      0x174 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0x22 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
@@ -3890,9 +3909,26 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x28 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0x6d ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000       0xbf ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0x7c ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x426 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0xca ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x1a8 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x1cf ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0x76 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x112 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x470 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0x52 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x130 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0x82 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x17e ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x60f ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0x94 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000      0x82d ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0x70 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_macro   0x0000000000000000       0x1c ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_macro   0x0000000000000000      0x136 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
- .debug_line    0x0000000000000000      0x8a5 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
- .debug_str     0x0000000000000000   0x10ccb9 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_line    0x0000000000000000      0xa6b ./Libs/BSP/STM32H7/BSP_STM32_UART.o
+ .debug_str     0x0000000000000000   0x11b900 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .debug_frame   0x0000000000000000       0xf0 ./Libs/BSP/STM32H7/BSP_STM32_UART.o
  .ARM.attributes

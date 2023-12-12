@@ -9,3 +9,7 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.c:121:6:DebugMon
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.c:125:6:PendSV_Handler	0	static
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.c:129:6:SysTick_Handler	0	static
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.c:135:6:BSP_Error_Handler	0	static,ignoring_inline_asm
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.c:149:13:EXTI13_IRQHandler	0	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.c:154:13:EXTI11_IRQHandler	0	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.c:159:6:EXTI15_10_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.c:175:6:EXTI9_5_IRQHandler	8	static

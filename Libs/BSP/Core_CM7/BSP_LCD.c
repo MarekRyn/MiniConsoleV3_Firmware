@@ -1589,8 +1589,12 @@ uint8_t	BSP_LCD_GetBytesPerPixel(void) {
 	return BSP_hlcd.config.bytesperpixel;
 }
 
+uint32_t BSP_LCD_GetFrameTime(void) {
+	return BSP_hlcd.frametime;
+}
+
 /******************************************************************************
- * Callback for blanking interval. Updating display buffer.
+ * IRQ handlers
  ******************************************************************************/
 
 // INT Handler for LTDC controller

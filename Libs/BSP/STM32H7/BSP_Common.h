@@ -162,49 +162,6 @@ typedef struct _TxRxContext {
 } TxRxContext_TypeDef;
 
 
-// BSP structures - LCD Touch Panel
-
-typedef struct _LCD_TP_DATA {
-	uint16_t	x;
-	uint16_t	y;
-	uint8_t		status;
-	uint8_t		pstatus;
-	uint8_t		id;
-} TP_DATA;
-
-typedef struct _LCD_TP_AREA {
-	int16_t		x;
-	int16_t		y;
-	uint16_t	w;
-	uint16_t	h;
-	uint8_t		active;
-} TP_AREA;
-
-typedef struct _LCD_TP_GEST {
-	uint8_t		area;
-	uint32_t	gest;
-	uint16_t	start_x;
-	uint16_t	start_y;
-	uint32_t	start_t;
-	uint16_t	stop_x;
-	uint16_t	stop_y;
-	uint32_t	stop_t;
-	int16_t		delta_x;
-	int16_t		delta_y;
-	uint32_t	delta_t;
-	float		speed_x;
-	float		speed_y;
-} TP_GEST;
-
-typedef struct _LCD_TP {
-	uint8_t		raw_data[31];
-	uint8_t		touch_count;
-	TP_DATA		touch_data[5];
-	TP_AREA		touch_areas[16];
-	TP_GEST		gest_data;
-} LCD_TP_HandleTypeDef;
-
-
 // BSP structures - IMU IC
 
 typedef struct _IMU_DATA {

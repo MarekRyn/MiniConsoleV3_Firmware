@@ -37,7 +37,7 @@ Libs/BSP/Core_CM7/BSP_QSPI.o: \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_TIM.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_UART.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_PCD.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/IS25LP128F.h
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/IS25LP128F.h
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_Common.h:
@@ -75,4 +75,4 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_SDMMC_ll.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_TIM.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_UART.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_PCD.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/IS25LP128F.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/IS25LP128F.h:

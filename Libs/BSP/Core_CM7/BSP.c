@@ -138,3 +138,45 @@ void BSP_Error_Handler(void) {
   while (1) {}
 
 }
+
+/*******************************************************************
+* INT HANDLERS FOR GPIO GROUP EXTIS shared between subsystems
+ *******************************************************************/
+
+// INT Handlers for Touch Panel, MPU6050
+
+
+__weak void EXTI13_IRQHandler(void) {
+	return;
+}
+
+
+__weak void EXTI11_IRQHandler(void) {
+	return;
+}
+
+
+void EXTI15_10_IRQHandler(void) {
+	if (EXTI->PR1 & GPIO_PIN_13) {
+		EXTI->PR1 |= ~(GPIO_PIN_13);
+		// Call to Touch Panel INT handler
+		EXTI13_IRQHandler();
+	}
+
+	if (EXTI->PR1 & GPIO_PIN_11) {
+		EXTI->PR1 |= ~(GPIO_PIN_11);
+		// Call to IMU INT handler
+		EXTI11_IRQHandler();
+	}
+}
+
+// INT Handler for BLE Module
+
+void EXTI9_5_IRQHandler(void)
+{
+	if (EXTI->PR1 & GPIO_PIN_6) {
+		EXTI->PR1 |= ~(GPIO_PIN_6);
+		// Call to BLE module INT handler
+		BSP_BLE_INTHandler();
+	}
+}

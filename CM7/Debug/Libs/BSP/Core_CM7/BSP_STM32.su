@@ -7,5 +7,3 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:713:9:BS
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:729:6:BSP_IncTick	0	static
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:735:10:BSP_GetTick	0	static
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:740:6:BSP_Delay	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:759:6:EXTI15_10_IRQHandler	8	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:775:6:EXTI9_5_IRQHandler	8	static

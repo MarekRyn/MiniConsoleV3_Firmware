@@ -62,15 +62,15 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_IMU.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/MPU6050.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/../Libs/kalman.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/MPU6050.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/../Libs/kalman.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/RVT50AQTNWC00.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/RVT50AQTNWC00.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDRAM.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/IS42S32160F.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/IS25LP128F.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/IS25LP128F.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Inputs.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_fatfs.h \
@@ -81,7 +81,7 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_diskio.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/MAX98357A.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/MAX98357A.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Data.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h \
@@ -151,15 +151,15 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/cdc/cdc.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_IMU.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/MPU6050.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/../Libs/kalman.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/MPU6050.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/../Libs/kalman.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/RVT50AQTNWC00.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/RVT50AQTNWC00.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_SDRAM.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/IS42S32160F.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_QSPI.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/IS25LP128F.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/IS25LP128F.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Inputs.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Resources.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_fatfs.h:
@@ -170,7 +170,7 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_ff_gen_drv.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_diskio.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/../Components/MAX98357A.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/MAX98357A.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Data.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h:

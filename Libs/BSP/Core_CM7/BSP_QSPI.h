@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 #include "BSP_STM32.h"
-#include "../Components/IS25LP128F.h"
+#include "IS25LP128F.h"
 
 #define BSP_QSPI				QUADSPI				// STM32 QSPI peripheral address
 #define BSP_QSPI_PRESCALER		2					// Clock = 240MHz / (_2_ + 1) = 80 MHz

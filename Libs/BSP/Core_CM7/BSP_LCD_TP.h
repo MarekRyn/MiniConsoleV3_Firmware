@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - LCD Touch Panel
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Added support for areas
  *******************************************************************/
 
 #ifndef BSP_LCD_TP_H_
@@ -17,21 +18,21 @@ extern "C" {
 #endif
 
 #include "BSP_STM32.h"
-#include "../Components/RVT50AQTNWC00.h"	// LCD Screen driver - model RVT50AQTNWC00
+#include "RVT50AQTNWC00.h"	// LCD Screen driver - model RVT50AQTNWC00
 
 
 #define BSP_LCD_TP_RST_PORT		GPIOG
 #define BSP_LCD_TP_RST_PIN		GPIO_PIN_14
 
-
 extern BUF_RAM	LCD_TP_HandleTypeDef 	BSP_hlcdtp;
-extern 			TxRxContext_TypeDef		BSP_hlcdtp_ctx;
 
+uint8_t BSP_LCD_TP_Init(void);
+uint8_t BSP_LCD_TP_Reset(void);
+uint8_t BSP_LCD_TP_RegisterArea(uint8_t areaid, uint16_t x, uint16_t y, uint16_t width, uint16_t height, void* callback);
+uint8_t BSP_LCD_TP_RemoveArea(uint8_t areaid);
+uint8_t BSP_CLD_TP_RemoveAreaRange(uint8_t aid_start, uint8_t aid_stop);
+uint8_t BSP_LCD_TP_RemoveAllAreas(void);
 
-uint8_t BSP_LCD_TP_Init();
-uint8_t BSP_LCD_TP_Reset();
-
-void BSP_LCD_TP_INTHandler();
 
 #ifdef __cplusplus
 }

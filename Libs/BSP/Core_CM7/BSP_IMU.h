@@ -17,16 +17,15 @@ extern "C" {
 #endif
 
 #include "BSP_STM32.h"
-#include "../Components/MPU6050.h"	// IMU IC driver - model MPU6050
+#include "MPU6050.h"	// IMU IC driver - model MPU6050
 
 extern BUF_RAM	IMU_HandleTypeDef		BSP_himu;
 extern 			TxRxContext_TypeDef		BSP_himu_ctx;
 
 
-uint8_t BSP_IMU_Init();
-uint8_t	BSP_IMU_Calibrate();
-uint8_t BSP_IMU_Reset();
-void BSP_IMU_INTHandler();
+uint8_t BSP_IMU_Init(void);
+uint8_t	BSP_IMU_Calibrate(void);
+uint8_t BSP_IMU_Reset(void);
 
 #ifdef __cplusplus
 }

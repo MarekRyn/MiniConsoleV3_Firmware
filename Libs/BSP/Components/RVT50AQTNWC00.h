@@ -2,11 +2,12 @@
  * MiniConsole V3 - Driver - RVT50AQTNWC00 - LCD Screen
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Refactoring + bugs correction
  *******************************************************************/
 
 
@@ -17,11 +18,11 @@
 extern "C" {
 #endif
 
-
 // Includes
 
 #include "BSP_Common.h"
 #include "BSP_STM32.h"
+
 
 // Driver constants
 #define LCD_TP_GEST_NONE			0x00
@@ -48,7 +49,7 @@ extern "C" {
 #define LCD_V_FRONT_PORCH			77																			// Vertical Front Porch
 
 
-// For clock 16MHz:
+// For clock 15MHz:
 // Total width x Total height = (800 + 26 + 20 + 16) * (480 + 3 + 20 + 77) = 862 x 580 = 499960
 // Refresh Rate = 15000000 / 499960 = 30.002 Hz
 
@@ -104,9 +105,59 @@ extern "C" {
 #define LCD_TP_REG_TOUCH_05_YH		0x1D					// Event flag and 4 major bits of touch Y coordinate
 #define LCD_TP_REG_TOUCH_05_YL		0x1E					// 8 minor bits of Y coordinate
 
+#define LCD_TP_RESET_PIN			GPIO_PIN_14
+#define LCD_TP_RESET_PORT			GPIOG
+#define LCD_TP_AREA_NO				32
+#define LCD_TP_DATA_NO				5
+
+// BSP structures - LCD Touch Panel
+
+typedef struct {
+	uint16_t	x;
+	uint16_t	y;
+	uint8_t		status;
+	uint8_t		pstatus;
+	uint8_t		id;
+} TP_DATA;
+
+typedef struct {
+	int16_t		x;
+	int16_t		y;
+	uint16_t	w;
+	uint16_t	h;
+	void *		callback;
+	uint8_t		active;
+} TP_AREA;
+
+typedef struct {
+	uint8_t		area;
+	uint32_t	gest;
+	uint16_t	start_x;
+	uint16_t	start_y;
+	uint32_t	start_t;
+	uint16_t	stop_x;
+	uint16_t	stop_y;
+	uint32_t	stop_t;
+	int16_t		delta_x;
+	int16_t		delta_y;
+	uint32_t	delta_t;
+	float		speed_x;
+	float		speed_y;
+} TP_GEST;
+
+typedef struct {
+	uint8_t		raw_data[LCD_TP_REG_TOTAL_LENGTH];
+	uint8_t		touch_count;
+	TP_DATA		touch_data[LCD_TP_DATA_NO];
+	TP_AREA		touch_areas[LCD_TP_AREA_NO];
+	TP_GEST		gest_data;
+} LCD_TP_HandleTypeDef;
+
+
 
 uint8_t BSP_DRV_LCD_TP_Init(I2C_TypeDef *hi2c);
 void BSP_DRV_LCD_TP_Parse(LCD_TP_HandleTypeDef *hlcdtp);
+void BSP_DRV_LCD_TP_Reset(void);
 
 #ifdef __cplusplus
 }

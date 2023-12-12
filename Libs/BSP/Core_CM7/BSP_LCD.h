@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 #include "BSP_STM32.h"
-#include "../Components/RVT50AQTNWC00.h"	// LCD Screen driver - model RVT50AQTNWC00
+#include "RVT50AQTNWC00.h"	// LCD Screen driver - model RVT50AQTNWC00
 
 
 // Backlight PWM configuration
@@ -99,6 +99,7 @@ uint32_t BSP_LCD_GetEditFrameAddr(void);
 uint32_t BSP_LCD_GetPrevFrameAddr(void);
 uint32_t BSP_LCD_GetColorMode(void);
 uint8_t	BSP_LCD_GetBytesPerPixel(void);
+uint32_t BSP_LCD_GetFrameTime(void);
 
 // Functions for overloading (content depends on color mode)
 extern uint32_t (*BSP_LCD_Color)(uint32_t color, uint8_t alpha); // Calculating color value and include alpha in modes with alpha channel

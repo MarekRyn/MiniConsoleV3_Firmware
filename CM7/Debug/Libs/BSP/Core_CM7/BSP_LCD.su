@@ -77,5 +77,6 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.c:1573:10:BS
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.c:1579:10:BSP_LCD_GetPrevFrameAddr	0	static
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.c:1584:10:BSP_LCD_GetColorMode	0	static
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.c:1588:9:BSP_LCD_GetBytesPerPixel	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.c:1597:6:LTDC_IRQHandler	8	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.c:1654:6:DMA2D_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.c:1592:10:BSP_LCD_GetFrameTime	0	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.c:1601:6:LTDC_IRQHandler	8	static
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.c:1658:6:DMA2D_IRQHandler	8	static

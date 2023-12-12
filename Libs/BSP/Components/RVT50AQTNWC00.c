@@ -2,11 +2,12 @@
  * MiniConsole V3 - Driver - RVT50AQTNWC00 - LCD Screen
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Refactoring + bugs correction
  *******************************************************************/
 
 #include "RVT50AQTNWC00.h"
@@ -83,7 +84,7 @@ void BSP_DRV_LCD_TP_Parse(LCD_TP_HandleTypeDef *hlcdtp) {
 
 					// Checking active area;
 					hlcdtp->gest_data.area = 255;
-					for (uint8_t i=0;i<16;i++) {
+					for (uint8_t i=0;i<LCD_TP_AREA_NO;i++) {
 						if (hlcdtp->touch_areas[i].active == 0) continue;
 						if (hlcdtp->gest_data.start_x < hlcdtp->touch_areas[i].x) continue;
 						if (hlcdtp->gest_data.start_x > (hlcdtp->touch_areas[i].x + hlcdtp->touch_areas[i].w)) continue;
@@ -123,7 +124,7 @@ void BSP_DRV_LCD_TP_Parse(LCD_TP_HandleTypeDef *hlcdtp) {
 
 					// Checking active area;
 					hlcdtp->gest_data.area = 255;
-					for (uint8_t i=0;i<16;i++) {
+					for (uint8_t i=0;i<LCD_TP_AREA_NO;i++) {
 						if (hlcdtp->touch_areas[i].active == 0) continue;
 						if (hlcdtp->gest_data.start_x < hlcdtp->touch_areas[i].x) continue;
 						if (hlcdtp->gest_data.start_x > (hlcdtp->touch_areas[i].x + hlcdtp->touch_areas[i].w)) continue;
@@ -145,4 +146,12 @@ void BSP_DRV_LCD_TP_Parse(LCD_TP_HandleTypeDef *hlcdtp) {
 		default:
 			hlcdtp->gest_data.gest = LCD_TP_GEST_NONE;
 		}
+}
+
+
+void BSP_DRV_LCD_TP_Reset(void) {
+	BSP_STM32_GPIO_WritePin(LCD_TP_RESET_PORT, LCD_TP_RESET_PIN, GPIO_PIN_RESET);
+	BSP_Delay(5);
+	BSP_STM32_GPIO_WritePin(LCD_TP_RESET_PORT, LCD_TP_RESET_PIN, GPIO_PIN_SET);
+	BSP_Delay(5);
 }

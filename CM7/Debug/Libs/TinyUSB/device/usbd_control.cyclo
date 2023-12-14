@@ -1,6 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/device/usbd_control.c:74:6:tud_control_status	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/device/usbd_control.c:106:6:tud_control_xfer	10
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/device/usbd_control.c:143:6:usbd_control_reset	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/device/usbd_control.c:149:6:usbd_control_set_complete_callback	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/device/usbd_control.c:155:6:usbd_control_set_request	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/device/usbd_control.c:166:6:usbd_control_xfer_cb	18

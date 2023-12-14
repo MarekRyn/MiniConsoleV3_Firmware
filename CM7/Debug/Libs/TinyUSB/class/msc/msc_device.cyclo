@@ -1,9 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.c:828:13:proc_read10_cmd.constprop	9
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.c:866:13:proc_write10_cmd.constprop	8
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.c:158:9:rdwr10_validate_cmd	7
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.c:231:6:tud_msc_set_sense	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.c:251:6:mscd_init	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.c:256:6:mscd_reset	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.c:262:10:mscd_open	10
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.c:301:6:mscd_control_xfer_cb	25
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/TinyUSB/class/msc/msc_device.c:386:6:mscd_xfer_cb	97

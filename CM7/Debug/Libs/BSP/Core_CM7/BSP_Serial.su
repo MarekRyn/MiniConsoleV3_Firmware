@@ -1,5 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.c:19:5:__io_putchar	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.c:26:9:BSP_Serial_Init	32	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.c:41:9:BSP_Serial_Transmit	8	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.c:47:9:BSP_Serial_Transmit_IT	8	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.c:53:6:USART2_IRQHandler	0	static

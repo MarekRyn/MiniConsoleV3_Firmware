@@ -1,4 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_SDMMC.c:422:10:BSP_STM32_SDMMC_GetCardState	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_SDMMC.c:436:9:BSP_STM32_SDMMC_Init	54
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_SDMMC.c:517:9:BSP_STM32_SDMMC_ReadBlocks	14
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_SDMMC.c:605:9:BSP_STM32_SDMMC_WriteBlocks	14

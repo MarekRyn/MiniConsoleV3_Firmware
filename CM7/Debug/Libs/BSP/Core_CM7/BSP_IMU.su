@@ -1,5 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_IMU.c:17:9:BSP_IMU_Init	24	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_IMU.c:35:9:BSP_IMU_Calibrate	8	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_IMU.c:41:9:BSP_IMU_Reset	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_IMU.c:49:6:EXTI11_IRQHandler	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_IMU.c:54:6:I2C4_EV_IRQHandler	8	static

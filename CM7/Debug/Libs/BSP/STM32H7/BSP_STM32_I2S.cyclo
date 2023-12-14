@@ -1,8 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2S.c:14:9:BSP_STM32_I2S_Init	5
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2S.c:82:9:BSP_STM32_I2S_RegisterCallbacks	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2S.c:90:9:BSP_STM32_I2S_TransmitIT	3
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2S.c:116:9:BSP_STM32_I2S_TransmitDMA	4
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2S.c:150:9:BSP_STM32_I2S_Pause	4
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2S.c:175:9:BSP_STM32_I2S_Resume	3
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2S.c:197:9:BSP_STM32_I2S_Stop	3
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2S.c:229:9:BSP_STM32_I2S_IRQHandler	8

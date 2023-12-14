@@ -1,6 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_TIM.c:20:9:BSP_STM32_TIM_Init	32	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_TIM.c:65:9:BSP_STM32_TIM_ConfigChannel	24	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_TIM.c:111:9:BSP_STM32_TIM_Start	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_TIM.c:116:9:BSP_STM32_TIM_Stop	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_TIM.c:121:9:BSP_STM32_TIM_SetChannelValue	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_TIM.c:134:10:BSP_STM32_TIM_GetChannelValue	16	static

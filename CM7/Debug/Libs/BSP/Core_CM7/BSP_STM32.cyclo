@@ -1,9 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:19:9:BSP_STM32_MPU_Init	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:228:9:BSP_STM32_Init_SysClocks	3
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:277:9:BSP_STM32_Init_PeriphClocks	11
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:375:9:BSP_STM32_Init_NVIC	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:465:9:BSP_STM32_Init_GPIO	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:713:9:BSP_TickInit	4
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:729:6:BSP_IncTick	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:735:10:BSP_GetTick	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.c:740:6:BSP_Delay	2

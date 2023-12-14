@@ -1,4 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:21:9:BSP_STM32_GPIO_Init	22
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:128:10:BSP_STM32_GPIO_ReadPin	2
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:132:9:BSP_STM32_GPIO_WritePin	2
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_GPIO.c:137:9:BSP_STM32_GPIO_TogglePin	1

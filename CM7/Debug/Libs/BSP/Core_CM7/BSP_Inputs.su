@@ -1,3 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Inputs.c:17:9:BSP_Inputs_Init	40	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Inputs.c:48:9:BSP_Inputs_ParseData	8	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Inputs.c:110:6:TIM2_IRQHandler	0	static

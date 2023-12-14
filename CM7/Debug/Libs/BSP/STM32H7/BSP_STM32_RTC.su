@@ -1,6 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:105:9:BSP_STM32_RTC_Init	24	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:145:9:BSP_STM32_RTC_SetTime	24	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:178:9:BSP_STM32_RTC_SetDate	48	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:234:9:BSP_STM32_RTC_GetTime	12	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:250:9:BSP_STM32_RTC_GetDate	8	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_RTC.c:267:9:BSP_STM32_RTC_SetBackupReg	4	static

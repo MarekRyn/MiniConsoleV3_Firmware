@@ -1,8 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:14:9:BSP_STM32_HSEM_Take	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:28:9:BSP_STM32_HSEM_FastTake	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:38:9:BSP_STM32_HSEM_IsSemTaken	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:47:9:BSP_STM32_HSEM_Release	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:57:9:BSP_STM32_HSEM_FastRelease	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:66:9:BSP_STM32_HSEM_ActivateNotification	4	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:74:9:BSP_STM32_HSEM_DeactivateNotification	4	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_HSEM.c:82:9:BSP_STM32_HSEM_ClearFlag	4	static

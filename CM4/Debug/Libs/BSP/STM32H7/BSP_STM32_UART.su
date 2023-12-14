@@ -1,6 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_UART.c:16:13:_UART_DMA_Callback_TC	4	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_UART.c:22:9:BSP_STM32_UART_Init	40	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_UART.c:61:9:BSP_STM32_UART_StartListen	32	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_UART.c:85:9:BSP_STM32_UART_Transmit	32	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_UART.c:105:9:BSP_STM32_UART_Transmit_IT	32	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_UART.c:121:9:BSP_STM32_UART_IRQHandler	24	static

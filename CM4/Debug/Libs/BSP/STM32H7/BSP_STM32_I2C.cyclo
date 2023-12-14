@@ -1,9 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2C.c:20:9:_I2C_MemReadIT	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2C.c:48:9:_I2C_MemReadDMA	3
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2C.c:87:9:_I2C_IRQHandler_IT	11
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2C.c:148:9:_I2C_IRQHandler_DMA	9
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2C.c:204:9:BSP_STM32_I2C_Init	1
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2C.c:236:9:BSP_STM32_I2C_IsDeviceReady	12
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2C.c:302:9:BSP_STM32_I2C_RegWrite	9
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2C.c:337:9:BSP_STM32_I2C_MemRead	3
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/STM32H7/BSP_STM32_I2C.c:349:9:BSP_STM32_I2C_IRQHandler	3

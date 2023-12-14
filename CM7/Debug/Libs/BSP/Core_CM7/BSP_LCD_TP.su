@@ -1,8 +1,0 @@
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:20:9:BSP_LCD_TP_Init	24	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:46:9:BSP_LCD_TP_Reset	8	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:60:9:BSP_LCD_TP_RegisterArea	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:74:9:BSP_LCD_TP_RemoveArea	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:84:9:BSP_CLD_TP_RemoveAreaRange	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:99:9:BSP_LCD_TP_RemoveAllAreas	0	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:111:6:EXTI13_IRQHandler	16	static
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD_TP.c:118:6:I2C1_EV_IRQHandler	8	static

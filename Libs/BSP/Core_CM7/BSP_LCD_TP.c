@@ -108,7 +108,7 @@ uint8_t BSP_LCD_TP_RemoveAllAreas(void) {
 
 // ************ IRQ Handlers ***************
 
-void EXTI13_IRQHandler(void) {
+void EXTI13_IRQHandler(void) {		// Overriding weak handler created in BSP.c
 	if (!active_flag) return;
 	// New data available in touch panel, start receiving by I2C
 	BSP_STM32_I2C_MemRead(I2C1, &BSP_hlcdtp_ctx, LCD_TP_I2C_ADDR << 1, 0, BSP_hlcdtp.raw_data, LCD_TP_REG_TOTAL_LENGTH);
@@ -117,12 +117,20 @@ void EXTI13_IRQHandler(void) {
 
 void I2C1_EV_IRQHandler(void) {
 	if (!active_flag) return;
+
 	// Receiving from I2C completed.
 	if (BSP_STM32_I2C_IRQHandler(I2C1, &BSP_hlcdtp_ctx) == BSP_OK) {
 		// Parsing data from touch panel
 		BSP_DRV_LCD_TP_Parse(&BSP_hlcdtp);
+
 		// Calling callback for active touch area (if defined)
-		if (BSP_hlcdtp.touch_areas[BSP_hlcdtp.gest_data.area].callback != NULL) ((void(*)())BSP_hlcdtp.touch_areas[BSP_hlcdtp.gest_data.area].callback)();
+		if (BSP_hlcdtp.gest_data.area >= LCD_TP_AREA_NO) return;
+		if (BSP_hlcdtp.gest_data.gest == LCD_TP_GEST_NONE) return;
+		if (BSP_hlcdtp.touch_areas[BSP_hlcdtp.gest_data.area].callback == NULL) return;
+
+		void (* pCallback)(void) = BSP_hlcdtp.touch_areas[BSP_hlcdtp.gest_data.area].callback;
+		pCallback();
+
 	}
 }
 

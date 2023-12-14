@@ -54,6 +54,7 @@ void G2D_DrawFillRoundRectBlend(int16_t x, int16_t y, uint16_t width, uint16_t h
 
 uint16_t G2D_Text(int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color, uint32_t bgcolor);
 uint16_t G2D_TextBlend(int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color);
+uint8_t G2D_GetTextHeight(const uint8_t *font);
 
 void G2D_DrawBitmapBlend(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha);
 void G2D_DrawBitmapBlendC(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha);
@@ -66,6 +67,8 @@ void G2D_DrawIcon(uint32_t iconsource, int16_t x, int16_t y, uint32_t color, uin
 void G2D_DrawIconC(uint32_t iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor);
 void G2D_DrawIconBlend(uint32_t iconsource, int16_t x, int16_t y, uint32_t color);
 void G2D_DrawIconBlendC(uint32_t iconsource, int16_t x, int16_t y, uint32_t color);
+uint16_t G2D_GetIconHeight(uint32_t iconsource);
+uint16_t G2D_GetIconWidth(uint32_t iconsource);
 
 void G2D_DrawJPEG(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
 void G2D_DrawJPEGC(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);

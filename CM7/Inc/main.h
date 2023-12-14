@@ -1,14 +1,20 @@
-/*
- * main.h
+/*******************************************************************
+ * MiniConsole V3 - Firmware
  *
- *  Created on: Nov 28, 2023
- *      Author: marek
- */
+ * Author: Marek Ryn
+ * Version: 0.1b
+ *
+ * Changelog:
+ *
+ * - 0.1b	- Development version
+ *******************************************************************/
 
 #ifndef MAIN_H_
 #define MAIN_H_
 
 #include "BSP.h"
+#include "graph2d.h"
+#include "gui.h"
 
 
 #endif /* MAIN_H_ */

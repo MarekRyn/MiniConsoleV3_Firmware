@@ -84,7 +84,7 @@ Libs/BSP/Core_CM7/BSP.o: \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/MAX98357A.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Data.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Icons.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h:
@@ -170,5 +170,5 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/MAX98357A.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Data.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Icons.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h:

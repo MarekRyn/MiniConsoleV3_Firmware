@@ -83,10 +83,15 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/MAX98357A.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Data.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Icons.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h \
  C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Libs/graph2d.h \
- C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.h
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.h \
+ ../Inc/gui.h \
+ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h \
+ ../Inc/common.h ../Inc/page_main.h ../Inc/common.h ../Inc/page_inputs.h \
+ ../Inc/page_imu.h ../Inc/page_audio.h ../Inc/page_screen.h \
+ ../Inc/page_bt.h
 ../Inc/main.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_STM32.h:
@@ -172,7 +177,17 @@ C:/Projects/STM32/Mini-Console-3-Firmware/Libs/FATFS/BSP_sd_diskio.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Audio.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Components/MAX98357A.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Serial.h:
-C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Data.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Icons.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Libs/graph2d.h:
 C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_LCD.h:
+../Inc/gui.h:
+C:/Projects/STM32/Mini-Console-3-Firmware/Libs/BSP/Core_CM7/BSP_Fonts.h:
+../Inc/common.h:
+../Inc/page_main.h:
+../Inc/common.h:
+../Inc/page_inputs.h:
+../Inc/page_imu.h:
+../Inc/page_audio.h:
+../Inc/page_screen.h:
+../Inc/page_bt.h:

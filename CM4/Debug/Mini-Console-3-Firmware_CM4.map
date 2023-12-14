@@ -676,11 +676,11 @@ Discarded input sections
  .text.BSP_DRV_LCD_TP_Init
                 0x0000000000000000       0x16 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .text.BSP_DRV_LCD_TP_Parse
-                0x0000000000000000      0x748 ./Libs/BSP/Components/RVT50AQTNWC00.o
+                0x0000000000000000      0x6d4 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .text.BSP_DRV_LCD_TP_Reset
                 0x0000000000000000       0x30 ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_info    0x0000000000000000      0x4ea ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_abbrev  0x0000000000000000      0x1d6 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_info    0x0000000000000000      0x4f8 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_abbrev  0x0000000000000000      0x1dd ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_aranges
                 0x0000000000000000       0x30 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_rnglists
@@ -741,7 +741,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x13c ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_macro   0x0000000000000000      0x160 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_line    0x0000000000000000      0xd24 ./Libs/BSP/Components/RVT50AQTNWC00.o
- .debug_str     0x0000000000000000   0x11bf93 ./Libs/BSP/Components/RVT50AQTNWC00.o
+ .debug_str     0x0000000000000000   0x11bf9c ./Libs/BSP/Components/RVT50AQTNWC00.o
  .comment       0x0000000000000000       0x44 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .debug_frame   0x0000000000000000       0x80 ./Libs/BSP/Components/RVT50AQTNWC00.o
  .ARM.attributes

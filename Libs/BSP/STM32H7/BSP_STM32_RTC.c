@@ -280,3 +280,12 @@ uint8_t BSP_STM32_RTC_SetBackupReg(RTC_TypeDef * hrtc, uint8_t reg, uint32_t val
 
 	return BSP_OK;
 }
+
+
+uint32_t BSP_STM32_RTC_GetBackupReg(RTC_TypeDef * hrtc, uint8_t reg) {
+
+	if (reg > 31) return 0;
+	uint32_t * bkreg = (uint32_t *)(&hrtc->BKP0R) + reg;
+	return *bkreg;
+
+}

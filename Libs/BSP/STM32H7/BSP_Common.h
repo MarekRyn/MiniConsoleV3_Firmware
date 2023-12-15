@@ -199,46 +199,6 @@ typedef struct _IMU {
 } IMU_HandleTypeDef;
 
 
-// BSP structures - Inputs (Buttons and Joystick)
-
-typedef struct _INPUTS_JOY_CAL {
-	uint16_t		x_centre_min;
-	uint16_t		x_centre_max;
-	uint16_t		y_centre_min;
-	uint16_t		y_centre_max;
-	uint16_t		x_min;
-	uint16_t		x_max;
-	uint16_t		y_min;
-	uint16_t		y_max;
-} INPUTS_JOY_CAL;
-
-typedef struct _INPUTS_JOY {
-	int16_t			joy_X;		// range from -512 to +512 (0 means center)
-	int16_t			joy_Y;		// range from -512 to +512 (0 means center)
-} INPUTS_JOY;
-
-typedef struct _INPUTS_BTNS {
-	uint8_t			btn_A;
-	uint8_t			btn_B;
-	uint8_t			btn_C;
-	uint8_t			btn_D;
-	uint8_t			btn_X_U;
-	uint8_t			btn_X_D;
-	uint8_t			btn_X_L;
-	uint8_t			btn_X_R;
-	uint8_t			btn_JOY;
-	uint8_t			btn_MENU;
-	uint8_t			btn_PWR;
-} INPUTS_BTNS;
-
-typedef struct _INPUTS {
-	uint16_t		raw_data_joy[2];
-	INPUTS_JOY_CAL	joy_cal;
-	INPUTS_JOY		joy;
-	INPUTS_BTNS		buttons;
-} INPUTS_HandleTypeDef;
-
-
 // BSP structures - Serial connection (USART2)
 
 #define SERIAL_BUF_SIZE		256

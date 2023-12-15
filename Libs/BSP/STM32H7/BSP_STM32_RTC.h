@@ -57,5 +57,6 @@ uint8_t BSP_STM32_RTC_GetTime(RTC_TypeDef * hrtc, uint8_t * phour, uint8_t * pmi
 uint8_t BSP_STM32_RTC_GetDate(RTC_TypeDef * hrtc, uint16_t * pyear, uint8_t * pmonth, uint8_t * pday, uint8_t * pweekday);
 
 uint8_t BSP_STM32_RTC_SetBackupReg(RTC_TypeDef * hrtc, uint8_t reg, uint32_t value);
+uint32_t BSP_STM32_RTC_GetBackupReg(RTC_TypeDef * hrtc, uint8_t reg);
 
 #endif /* STM32H7_BSP_STM32_RTC_H_ */

@@ -31,18 +31,18 @@ static void _Inputs_Calibration(void) {
 		BSP_hinputs.joy_cal.y_center_min = 0xFFFF;
 		break;
 	case 2:
-		// Calibrating maximum value of joy axes
-		if (BSP_hinputs.raw_data_joy[1] < BSP_hinputs.joy_cal.x_min) BSP_hinputs.joy_cal.x_min = BSP_hinputs.raw_data_joy[1];
-		if (BSP_hinputs.raw_data_joy[1] > BSP_hinputs.joy_cal.x_max) BSP_hinputs.joy_cal.x_max = BSP_hinputs.raw_data_joy[1];
-		if (BSP_hinputs.raw_data_joy[0] < BSP_hinputs.joy_cal.y_min) BSP_hinputs.joy_cal.y_min = BSP_hinputs.raw_data_joy[0];
-		if (BSP_hinputs.raw_data_joy[0] > BSP_hinputs.joy_cal.y_max) BSP_hinputs.joy_cal.y_max = BSP_hinputs.raw_data_joy[0];
-		break;
-	case 3:
 		// Calibrating dead zone
 		if (BSP_hinputs.raw_data_joy[1] < BSP_hinputs.joy_cal.x_center_min) BSP_hinputs.joy_cal.x_center_min = BSP_hinputs.raw_data_joy[1];
 		if (BSP_hinputs.raw_data_joy[1] > BSP_hinputs.joy_cal.x_center_max) BSP_hinputs.joy_cal.x_center_max = BSP_hinputs.raw_data_joy[1];
 		if (BSP_hinputs.raw_data_joy[0] < BSP_hinputs.joy_cal.y_center_min) BSP_hinputs.joy_cal.y_center_min = BSP_hinputs.raw_data_joy[0];
 		if (BSP_hinputs.raw_data_joy[0] > BSP_hinputs.joy_cal.y_center_max) BSP_hinputs.joy_cal.y_center_max = BSP_hinputs.raw_data_joy[0];
+		break;
+	case 3:
+		// Calibrating maximum value of joy axes
+		if (BSP_hinputs.raw_data_joy[1] < BSP_hinputs.joy_cal.x_min) BSP_hinputs.joy_cal.x_min = BSP_hinputs.raw_data_joy[1];
+		if (BSP_hinputs.raw_data_joy[1] > BSP_hinputs.joy_cal.x_max) BSP_hinputs.joy_cal.x_max = BSP_hinputs.raw_data_joy[1];
+		if (BSP_hinputs.raw_data_joy[0] < BSP_hinputs.joy_cal.y_min) BSP_hinputs.joy_cal.y_min = BSP_hinputs.raw_data_joy[0];
+		if (BSP_hinputs.raw_data_joy[0] > BSP_hinputs.joy_cal.y_max) BSP_hinputs.joy_cal.y_max = BSP_hinputs.raw_data_joy[0];
 		break;
 	case 4:
 		// Do nothing

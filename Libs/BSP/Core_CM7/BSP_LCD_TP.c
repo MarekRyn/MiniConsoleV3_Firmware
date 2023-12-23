@@ -81,7 +81,7 @@ uint8_t BSP_LCD_TP_RemoveArea(uint8_t areaid) {
 }
 
 
-uint8_t BSP_CLD_TP_RemoveAreaRange(uint8_t aid_start, uint8_t aid_stop) {
+uint8_t BSP_LCD_TP_RemoveAreaRange(uint8_t aid_start, uint8_t aid_stop) {
 	if (aid_start >= LCD_TP_AREA_NO) return BSP_ERROR;
 	if (aid_stop >= LCD_TP_AREA_NO) return BSP_ERROR;
 	if (aid_start > aid_stop) return BSP_ERROR;

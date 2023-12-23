@@ -33,7 +33,7 @@ int main(void)
 	state0 = STATE0_INITIATED;
 
 
-	BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_DOUBLE, C_BLACK, NULL);
+	BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_TRIPLE, C_BLACK, NULL);
 
 	// If "Menu_Button" pressed during startup than console switches into USB MSC mode (active until RESET)
 	if (BSP_hinputs.buttons.btn_MENU > 0) {

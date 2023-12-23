@@ -38,7 +38,7 @@ static void _Inputs_Calibration(void) {
 		if (BSP_hinputs.raw_data_joy[0] > BSP_hinputs.joy_cal.y_center_max) BSP_hinputs.joy_cal.y_center_max = BSP_hinputs.raw_data_joy[0];
 		break;
 	case 3:
-		// Calibrating maximum value of joy axes
+		// Calibrating maximum range of joy axes
 		if (BSP_hinputs.raw_data_joy[1] < BSP_hinputs.joy_cal.x_min) BSP_hinputs.joy_cal.x_min = BSP_hinputs.raw_data_joy[1];
 		if (BSP_hinputs.raw_data_joy[1] > BSP_hinputs.joy_cal.x_max) BSP_hinputs.joy_cal.x_max = BSP_hinputs.raw_data_joy[1];
 		if (BSP_hinputs.raw_data_joy[0] < BSP_hinputs.joy_cal.y_min) BSP_hinputs.joy_cal.y_min = BSP_hinputs.raw_data_joy[0];
@@ -112,6 +112,8 @@ uint8_t BSP_Inputs_LoadCalData(void) {
 
 uint8_t BSP_Inputs_SaveCalData(void) {
 
+	BSP_hinputs.mode = 4;
+
 	uint32_t x_max = BSP_hinputs.joy_cal.x_max;
 	uint32_t x_min = BSP_hinputs.joy_cal.x_min;
 	uint32_t y_max = BSP_hinputs.joy_cal.y_max;
@@ -144,6 +146,8 @@ uint8_t BSP_Inputs_SaveCalData(void) {
 	BSP_STM32_RTC_SetBackupReg(RTC, 1, reg1);
 	BSP_STM32_RTC_SetBackupReg(RTC, 2, reg2);
 	BSP_STM32_RTC_SetBackupReg(RTC, 3, reg3);
+
+	BSP_hinputs.mode = 0;
 
 	return BSP_OK;
 }
@@ -257,15 +261,18 @@ uint8_t BSP_Inputs_CalibrateJoyInit(void) {
 	return BSP_OK;
 }
 
-uint8_t BSP_Inputs_CalibrateJoyMax(void) {
+
+uint8_t BSP_Inputs_CalibrateJoyDeadZone(void) {
 	BSP_hinputs.mode = 2;
 	return BSP_OK;
 }
 
-uint8_t BSP_Inputs_CalibrateJoyDeadZone(void) {
+
+uint8_t BSP_Inputs_CalibrateJoyRange(void) {
 	BSP_hinputs.mode = 3;
 	return BSP_OK;
 }
+
 
 uint8_t BSP_Inputs_CancelCallibration(void) {
 	BSP_hinputs.mode = 4;

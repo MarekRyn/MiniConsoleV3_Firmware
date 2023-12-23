@@ -659,9 +659,9 @@ static void _RGB888_updatepixelblend(uint32_t offset, int16_t x, int16_t y, uint
 	if (a1 == 0) return;
 
 	uint32_t addr = offset + ((x + y * LCD_WIDTH) * 3);
-	uint8_t * addr_r = (uint8_t *)addr;
-	uint8_t * addr_g = addr_r + 1;
-	uint8_t * addr_b = addr_g + 1;
+	uint8_t * addr_b = (uint8_t *)addr;
+	uint8_t * addr_g = addr_b + 1;
+	uint8_t * addr_r = addr_g + 1;
 
 	uint32_t a1n = 255 - a1;
 	uint32_t r1 = (value & 0x00FF0000) >> 16;

@@ -66,6 +66,11 @@ uint8_t BSP_Inputs_LoadCalData(void);
 uint8_t BSP_Inputs_SaveCalData(void);
 uint8_t BSP_Inputs_Init(void);
 uint8_t BSP_Inputs_ParseData(void);
+uint8_t BSP_Inputs_CalibrateJoyInit(void);
+uint8_t BSP_Inputs_CalibrateJoyDeadZone(void);
+uint8_t BSP_Inputs_CalibrateJoyRange(void);
+uint8_t BSP_Inputs_CancelCallibration(void);
+
 
 #ifdef __cplusplus
 }

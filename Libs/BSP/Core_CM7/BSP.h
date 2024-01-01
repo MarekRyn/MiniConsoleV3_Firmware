@@ -32,6 +32,7 @@ extern "C" {
 
 #include "BSP_Icons.h"
 #include "BSP_Fonts.h"
+#include "BSP_Wallpaper.h"
 
 
 uint8_t BSP_BOARD_Init_CM7();

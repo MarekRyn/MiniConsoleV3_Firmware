@@ -14,6 +14,26 @@
 BUF_RAM	IMU_HandleTypeDef		BSP_himu = {0};
 		TxRxContext_TypeDef		BSP_himu_ctx = {0};
 
+uint8_t BSP_IMU_LoadCalData(void) {
+	BSP_himu.cal.c_ox = BSP_STM32_RTC_GetBackupReg(RTC, 4);
+	BSP_himu.cal.c_oy = BSP_STM32_RTC_GetBackupReg(RTC, 5);
+	BSP_himu.cal.c_oz = BSP_STM32_RTC_GetBackupReg(RTC, 6);
+	BSP_himu.cal.c_x = BSP_STM32_RTC_GetBackupReg(RTC, 7);
+	BSP_himu.cal.c_y = BSP_STM32_RTC_GetBackupReg(RTC, 8);
+	BSP_himu.cal.c_z = BSP_STM32_RTC_GetBackupReg(RTC, 9);
+	return BSP_OK;
+}
+
+uint8_t BSP_IMU_SaveCalData(void) {
+	BSP_STM32_RTC_SetBackupReg(RTC, 4, BSP_himu.cal.c_ox);
+	BSP_STM32_RTC_SetBackupReg(RTC, 5, BSP_himu.cal.c_oy);
+	BSP_STM32_RTC_SetBackupReg(RTC, 6, BSP_himu.cal.c_oz);
+	BSP_STM32_RTC_SetBackupReg(RTC, 7, BSP_himu.cal.c_x);
+	BSP_STM32_RTC_SetBackupReg(RTC, 8, BSP_himu.cal.c_y);
+	BSP_STM32_RTC_SetBackupReg(RTC, 9, BSP_himu.cal.c_z);
+	return BSP_OK;
+}
+
 uint8_t BSP_IMU_Init(void) {
 	// Configuring I2C interface
 	if (BSP_STM32_I2C_Init(I2C4)) return BSP_ERROR;
@@ -27,6 +47,9 @@ uint8_t BSP_IMU_Init(void) {
 
 	// Initialization of IMU IC
 	if (BSP_DRV_IMU_Init(&BSP_himu, I2C4)) return BSP_ERROR;
+
+	// Load calibration data
+	BSP_IMU_LoadCalData();
 
 	return BSP_OK;
 }

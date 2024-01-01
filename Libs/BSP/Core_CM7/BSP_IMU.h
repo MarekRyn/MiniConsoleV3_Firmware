@@ -23,6 +23,8 @@ extern BUF_RAM	IMU_HandleTypeDef		BSP_himu;
 extern 			TxRxContext_TypeDef		BSP_himu_ctx;
 
 
+uint8_t BSP_IMU_LoadCalData(void);
+uint8_t BSP_IMU_SaveCalData(void);
 uint8_t BSP_IMU_Init(void);
 uint8_t	BSP_IMU_Calibrate(void);
 uint8_t BSP_IMU_Reset(void);

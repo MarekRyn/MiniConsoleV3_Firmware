@@ -15,7 +15,7 @@
 
 #define HSEM_ID_0 (0U) // HW semaphore 0
 
-uint8_t BSP_BOARD_Init_CM7() {
+uint8_t BSP_BOARD_Init_0(void) {
 	uint32_t timeout;
 
 	// Config MPU
@@ -46,6 +46,23 @@ uint8_t BSP_BOARD_Init_CM7() {
 	while(((RCC->CR & RCC_CR_D2CKRDY) == RESET) && (timeout-- > 0));
 	if ( timeout < 0 ) return BSP_ERROR;
 
+	// Enable SYSCFG Clock
+	__BSP_RCC_SYSCFG_CLK_ENABLE();
+
+	// Initializing GPIOB i GPIOG clocks
+	__BSP_RCC_GPIOB_CLK_ENABLE();
+	__BSP_RCC_GPIOG_CLK_ENABLE();
+
+	// Initialization PWR pins (for PWR_BUTTON and PWR_HOLD)
+    BSP_STM32_GPIO_WritePin(GPIOG, GPIO_PIN_9, GPIO_PIN_SET);
+    BSP_STM32_GPIO_Init(GPIOB, GPIO_PIN_5, GPIO_MODE_INPUT, GPIO_NOPULL, 0, 0);
+    BSP_STM32_GPIO_Init(GPIOG, GPIO_PIN_9, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_SPEED_FREQ_LOW, 0);
+
+	return BSP_OK;
+}
+
+
+uint8_t BSP_BOARD_Init_1(void) {
 	// STM32 Initialization - Peripheral Clocks
 	if (BSP_STM32_Init_PeriphClocks()) return BSP_ERROR;
 
@@ -77,7 +94,7 @@ uint8_t BSP_BOARD_Init_CM7() {
 	if (BSP_Serial_Init()) return BSP_ERROR;
 
 	// Audio Initialization
-//	if (BSP_Audio_Init()) return BSP_ERROR;
+	//	if (BSP_Audio_Init()) return BSP_ERROR;
 
 	return BSP_OK;
 }

@@ -21,7 +21,7 @@ static GUI_Button_TypeDef		button03;
 static GUI_ProgressBar_TypeDef 	pbar00;
 
 
-void button00_callback(void) {
+static void button00_callback(void) {
 	if (BSP_hlcdtp.gest_data.gest != LCD_TP_GEST_CLICK_DOWN) return;
 	button00.state = GUI_STATE_ACTIVE;
 	button01.state = GUI_STATE_ENABLED;
@@ -31,7 +31,7 @@ void button00_callback(void) {
 	imu_state = 0;
 }
 
-void button01_callback(void) {
+static void button01_callback(void) {
 	if (BSP_hlcdtp.gest_data.gest != LCD_TP_GEST_CLICK_DOWN) return;
 	button00.state = GUI_STATE_ENABLED;
 	button01.state = GUI_STATE_ACTIVE;
@@ -41,7 +41,7 @@ void button01_callback(void) {
 	imu_state = 1;
 }
 
-void button02_callback(void) {
+static void button02_callback(void) {
 	if (BSP_hlcdtp.gest_data.gest != LCD_TP_GEST_CLICK_DOWN) return;
 	button00.state = GUI_STATE_ENABLED;
 	button01.state = GUI_STATE_ENABLED;
@@ -51,7 +51,7 @@ void button02_callback(void) {
 	imu_state = 2;
 }
 
-void button03_callback(void) {
+static void button03_callback(void) {
 	if (BSP_hlcdtp.gest_data.gest != LCD_TP_GEST_CLICK_DOWN) return;
 
 	switch (cal_state) {
@@ -72,6 +72,9 @@ void button03_callback(void) {
 uint8_t page_init_imu(void) {
 
 	BSP_LCD_TP_RemoveAreaRange(10, LCD_TP_AREA_NO - 1);
+
+	imu_state = 0;
+	cal_state = 0;
 
 	// Panel00 - Main Area
 	panel00.x_pos = 220;

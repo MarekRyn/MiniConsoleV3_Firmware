@@ -29,13 +29,15 @@ extern "C" {
 #include "BSP_Resources.h"
 #include "BSP_Audio.h"
 #include "BSP_Serial.h"
+#include "BSP_PWR.h"
 
 #include "BSP_Icons.h"
 #include "BSP_Fonts.h"
 #include "BSP_Wallpaper.h"
 
 
-uint8_t BSP_BOARD_Init_CM7();
+uint8_t BSP_BOARD_Init_0(void);
+uint8_t BSP_BOARD_Init_1(void);
 void BSP_Error_Handler(void);
 
 

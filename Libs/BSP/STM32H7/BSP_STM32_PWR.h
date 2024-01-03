@@ -47,6 +47,7 @@ uint8_t BSP_STM32_PWR_WaitForVOSRDY(void);
 uint8_t BSP_STM32_PWR_EnableBkUpAccess(void);
 uint8_t BSP_STM32_PWR_ClearPendingEvent(void);
 uint8_t BSP_STM32_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry, uint32_t Domain);
+uint8_t BSP_STM32_PWR_Restart(void);
 
 
 

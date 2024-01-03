@@ -9,15 +9,18 @@
 #define COMMON_H_
 
 enum ENUM_State0{
-	STATE0_PWR_UP,			// After powering up
-	STATE0_PWR_CONFIRMED,	// PWR button hold minimum 2 seconds
-	STATE0_RESTARTED,		// After restarting
-	STATE0_FAULT_RECOVERY,	// After restarting due to hard fault
-	STATE0_INITIATED,		// Board and all peripherals initiated
-	STATE0_BOOTLOADER,		// Menu button hold during start-up, entering bootloader
-	STATE0_APPLICATION,		// Entering application lodaed into QSPI flash
-	STATE0_RESTARTING,		// Restart requested
-	STATE0_PWR_DOWN			// Power down requested
+	STATE0_PWR_UP,				// After powering up
+	STATE0_PWR_CONFIRMED,		// PWR button hold minimum 2 seconds
+	STATE0_RESTARTED,			// After restarting
+	STATE0_FAULT_RECOVERY,		// After restarting due to hard fault
+	STATE0_INITIATED,			// Board and all peripherals initiated
+	STATE0_BOOTLOADER_INIT,		// Menu button hold during start-up, entering bootloader
+	STATE0_BOOTLOADER_MAIN,		// Bootloader menu
+	STATE0_APPLICATION_INIT,	// Entering application lodaed into QSPI flash
+	STATE0_APPLICATION_MAIN,	// Application
+	STATE0_RESTARTING,			// Restart requested
+	STATE0_PWR_DOWN,			// Power down requested
+	STATE0_FAULT				// Fault
 };
 
 enum ENUM_State1{

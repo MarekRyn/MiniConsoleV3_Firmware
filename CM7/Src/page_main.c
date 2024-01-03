@@ -139,7 +139,7 @@ static void button06_callback(void){
 		button07.state = GUI_STATE_ENABLED;
 		button08.state = GUI_STATE_ENABLED;
 		state1 = STATE1_DATETIME;
-		//page_init_datetime();
+		page_init_clock();
 		break;
 	}
 }
@@ -157,7 +157,7 @@ static void button07_callback(void){
 		button07.state = GUI_STATE_ACTIVE;
 		button08.state = GUI_STATE_ENABLED;
 		state1 = STATE1_POWER;
-		//page_init_power();
+		page_init_pwr();
 		break;
 	}
 }

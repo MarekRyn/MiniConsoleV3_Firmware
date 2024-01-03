@@ -53,6 +53,8 @@ uint8_t page_init_inputs(void) {
 
 	BSP_LCD_TP_RemoveAreaRange(10, LCD_TP_AREA_NO - 1);
 
+	cal_state = 0;
+
 	// Panel00 - Main Area
 	panel00.x_pos = 220;
 	panel00.y_pos = 10;

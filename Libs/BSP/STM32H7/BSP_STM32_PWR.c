@@ -208,3 +208,9 @@ uint8_t BSP_STM32_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry, uint3
 
 	return BSP_OK;
 }
+
+
+uint8_t BSP_STM32_PWR_Restart(void) {
+	NVIC_SystemReset();
+	return BSP_OK;
+}

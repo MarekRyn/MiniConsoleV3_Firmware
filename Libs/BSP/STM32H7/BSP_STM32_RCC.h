@@ -316,5 +316,6 @@ uint8_t BSP_STM32_RCC_ConfigPLL1(uint32_t pllstate, uint32_t pllsource, uint32_t
 uint8_t BSP_STM32_RCC_ConfigPLL3(uint32_t pllrge, uint32_t pllvcosel, uint32_t m, uint32_t n, uint32_t p, uint32_t q, uint32_t r, uint32_t frac);
 uint8_t BSP_STM32_RCC_ClockConfig(uint32_t clocktype, uint32_t SYSSource, uint32_t SYSDiv, uint32_t AHBDiv, uint32_t APB1Div, uint32_t APB2Div, uint32_t APB3Div, uint32_t APB4Div, uint32_t flatency);
 uint32_t BSP_STM32_RCC_GetSysClockFreq(void);
+uint8_t BSP_STM32_RCC_WasSystemRestareted(void);
 
 #endif /* STM32H7_BSP_STM32_RCC_H_ */

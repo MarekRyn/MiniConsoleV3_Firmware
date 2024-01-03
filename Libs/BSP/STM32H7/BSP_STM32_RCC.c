@@ -718,3 +718,10 @@ uint32_t BSP_STM32_RCC_GetSysClockFreq(void) {
     return sysclockfreq;
 }
 
+
+uint8_t BSP_STM32_RCC_WasSystemRestareted(void) {
+	uint32_t res = 0;
+	res |= (RCC->RSR & RCC_RSR_SFT1RSTF); // System reset from CM7 flag
+	res |= (RCC->RSR & RCC_RSR_SFT2RSTF); // System reset from CM4 flag
+	return (res)?1:0;
+}

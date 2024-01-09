@@ -100,13 +100,13 @@ uint8_t BSP_ADC_ConfigChannel(ADC_TypeDef * hadc, uint32_t channel, uint32_t seq
 
 	// Set ADC group regular sequence: channel on the selected scan sequence rank
 	uint8_t sqr_shift = (sequence % 5) * 6;
-	uint32_t * sqr_reg = &hadc->SQR1;
+	uint32_t * sqr_reg = (uint32_t *)&hadc->SQR1;
 	sqr_reg += (sequence / 5);
 	*sqr_reg |= (channel << sqr_shift);
 
 	// Set sampling time of the selected ADC channel
 	uint8_t smpr_shift = (channel % 10) * 3;
-	uint32_t * smpr_reg = &hadc->SMPR1;
+	uint32_t * smpr_reg = (uint32_t *)&hadc->SMPR1;
 	smpr_reg += (channel / 10);
 	*smpr_reg |= (ADC_SAMPLINGTIME_64CYCLES_5 << smpr_shift);
 

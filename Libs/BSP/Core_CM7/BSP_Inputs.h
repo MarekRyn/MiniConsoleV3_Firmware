@@ -8,6 +8,7 @@
  *
  * - 0.1b	- Development version
  * - 1.0	- Added calibration functions
+ * - 1.1	- Shortcuts for control of backlight, volume and pwr off
  *******************************************************************/
 
 #ifndef BSP_INPUTS_H_
@@ -18,6 +19,8 @@ extern "C" {
 #endif
 
 #include "BSP_STM32.h"
+#include "BSP_LCD.h"
+#include "BSP_PWR.h"
 
 // BSP structures - Inputs (Buttons and Joystick)
 

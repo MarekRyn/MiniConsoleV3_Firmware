@@ -65,6 +65,8 @@ void Bootloader_Task(void) {
 int main(void)
 {
 
+	ResCtx_TypeDef resctx;
+
 	// Starting up of MiniConsole;
 	state0 = (BSP_STM32_RCC_WasSystemRestareted()) ? STATE0_RESTARTED : STATE0_PWR_UP;
 
@@ -131,6 +133,11 @@ int main(void)
 			break;
 
 		case STATE0_BOOTLOADER_INIT:
+
+			BSP_Res_Init(&resctx, 0xC0000000, 10*1024*1024);
+			BSP_Res_Load(&resctx, "idol.mp3", 0);
+			BSP_Res_Load(&resctx, "song02.mod",1);
+
 			state0 = STATE0_BOOTLOADER_MAIN;
 			state1 = STATE1_APPS;
 			G2D_DecodeJPEG((uint32_t)WP_00, sizeof(WP_00));

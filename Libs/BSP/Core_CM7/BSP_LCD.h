@@ -2,7 +2,7 @@
  * MiniConsole V3 - Board Support Package - LCD
  *
  * Author: Marek Ryn
- * Version: 1.0
+ * Version: 1.1
  *
  * Changelog:
  *
@@ -10,6 +10,7 @@
  * - 0.2b 	- Added hardware JPEG decoding
  * - 0.3b	- Added ARGB1555 and ARGB4444 modes
  * - 1.0	- Major refactoring.
+ * - 1.1	- Support for OSD menu
  *******************************************************************/
 
 #ifndef INC_BSP_LCD_H_
@@ -41,6 +42,10 @@ extern "C" {
 
 #define LCD_BUFFER_MODE_DOUBLE		2
 #define LCD_BUFFER_MODE_TRIPLE		3
+
+// OSD options
+#define LCD_OSD_HEIGHT					64
+
 
 // Color Definitions - Valid only for ARGB and RGB modes
 #define C_BLUE          0x0000FF
@@ -89,8 +94,8 @@ extern const uint32_t C_LUT_GRAY[256];
 void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uint32_t *clut);
 void BSP_LCD_FrameReady(void);
 uint8_t BSP_LCD_GetEditPermission(void);
-void BSP_LCD_SetLayerAlpha(uint8_t alpha);
-uint8_t BSP_LCD_GetLayerAlpha(void);
+void BSP_LCD_SetAlpha(uint8_t alpha);
+uint8_t BSP_LCD_GetAlpha(void);
 void BSP_LCD_InitBackLight(uint8_t value);
 void BSP_LCD_SetBackLight(uint8_t value, uint8_t dimspeed);
 uint8_t BSP_LCD_GetBackLight(void);
@@ -100,6 +105,8 @@ uint32_t BSP_LCD_GetPrevFrameAddr(void);
 uint32_t BSP_LCD_GetColorMode(void);
 uint8_t	BSP_LCD_GetBytesPerPixel(void);
 uint32_t BSP_LCD_GetFrameTime(void);
+
+
 
 // Functions for overloading (content depends on color mode)
 extern uint32_t (*BSP_LCD_Color)(uint32_t color, uint8_t alpha); // Calculating color value and include alpha in modes with alpha channel
@@ -113,6 +120,15 @@ extern void (*BSP_LCD_FillBufBlend)(uint16_t x, uint16_t y, uint16_t width, uint
 extern void (*BSP_LCD_CopyBuf)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height);
 extern void (*BSP_LCD_CopyBufBlend)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha);
 extern void (*BSP_LCD_CopyBufJPEG)(uint16_t x_dest, uint16_t y_dest);
+
+
+// Functions for OSD menu
+void BSP_LCD_OSD_UpdatePixel(int16_t x, int16_t y, uint32_t value);
+void BSP_LCD_OSD_FillBuf(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
+void BSP_LCD_OSD_SetAlpha(uint8_t alpha);
+uint8_t BSP_LCD_OSD_GetAlpha(void);
+void BSP_LCD_OSD_Show(void);
+void BSP_LCD_OSD_Hide(void);
 
 
 #ifdef __cplusplus

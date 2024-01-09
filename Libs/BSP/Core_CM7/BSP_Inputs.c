@@ -8,12 +8,15 @@
  *
  * - 0.1b	- Development version
  * - 1.0	- Added calibration functions
+ * - 1.1	- Shortcuts for control of backlight, volume and pwr off
  *******************************************************************/
 
 #include "BSP_Inputs.h"
 
 BUF_RAM INPUTS_HandleTypeDef	BSP_hinputs = {0};
 static 	TxRxContext_TypeDef		BSP_hinputs_ctx = {0};
+__IO static uint32_t			pwr_off_counter = 0;
+__IO static uint8_t				pwr_off_lock = 1;	// To avoid shut down by prolonged push of pwr button immediately after power on
 
 
 static void _Inputs_Calibration(void) {
@@ -179,6 +182,9 @@ uint8_t BSP_Inputs_Init(void) {
 
 
 uint8_t BSP_Inputs_ParseData(void) {
+	// Button PWR - PB5
+	BSP_hinputs.buttons.btn_PWR = (BSP_STM32_GPIO_ReadPin(GPIOB, GPIO_PIN_5) == 0);
+
 	// Button A - PD4
 	BSP_hinputs.buttons.btn_A = (BSP_STM32_GPIO_ReadPin(GPIOD, GPIO_PIN_4) == 0);
 
@@ -206,11 +212,57 @@ uint8_t BSP_Inputs_ParseData(void) {
 	// Button MENU - PE3
 	BSP_hinputs.buttons.btn_MENU = (BSP_STM32_GPIO_ReadPin(GPIOE, GPIO_PIN_3) == 0);
 
-	// Button PWR - PB5
-	BSP_hinputs.buttons.btn_PWR = (BSP_STM32_GPIO_ReadPin(GPIOB, GPIO_PIN_5) == 0);
-
 	// Button JOY - PH5
 	BSP_hinputs.buttons.btn_JOY = (BSP_STM32_GPIO_ReadPin(GPIOH, GPIO_PIN_5) == 0);
+
+	// Handling control of backlight, volume and power off
+	if (BSP_hinputs.buttons.btn_PWR) {
+
+		uint32_t bklt = BSP_LCD_GetBackLight();
+		// uint32_t volume = BSP_Audio_GetVolume();
+
+		if (BSP_hinputs.buttons.btn_X_U) {
+			bklt+=5;
+			if (bklt > 100) bklt = 100;
+			BSP_LCD_SetBackLight(bklt, 100);
+			pwr_off_lock = 1;
+		}
+
+		if (BSP_hinputs.buttons.btn_X_D) {
+			bklt-=5;
+			if (bklt > 100) bklt = 0;
+			BSP_LCD_SetBackLight(bklt, 100);
+			pwr_off_lock = 1;
+		}
+
+		// if (BSP_hinputs.buttons.btn_X_R) {
+		//	volume+=10;
+		//	if (volume > 100) volume = 100;
+		//	BSP_Audio_SetVolume(volume);
+		//	pwr_off_lock = 1;
+		// }
+
+		// if (BSP_hinputs.buttons.btn_X_L) {
+		//	volume-=10;
+		//	if (volume > 100) volume = 0;
+		//	BSP_Audio_SetVolume(volume);
+		//	pwr_off_lock = 1;
+		// }
+
+		if (pwr_off_lock == 0) {
+			pwr_off_counter++;
+			if (pwr_off_counter > 400) BSP_PWR_ShutDown();	// 4 seconds delay for pwr off
+		}
+
+		BSP_hinputs.buttons.btn_X_U = 0;
+		BSP_hinputs.buttons.btn_X_D = 0;
+		BSP_hinputs.buttons.btn_X_L = 0;
+		BSP_hinputs.buttons.btn_X_R = 0;
+
+	} else {
+		pwr_off_counter = 0;
+		pwr_off_lock = 0;
+	}
 
 	// Parsing joystick XY axis
 	int16_t joy_X = 0;

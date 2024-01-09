@@ -2,7 +2,7 @@
  * MiniConsole V3 - Board Support Package - LCD
  *
  * Author: Marek Ryn
- * Version: 1.0
+ * Version: 1.1
  *
  * Changelog:
  *
@@ -10,6 +10,7 @@
  * - 0.2b 	- Added hardware JPEG decoding
  * - 0.3b	- Added ARGB1555 and ARGB4444 modes
  * - 1.0	- Major refactoring.
+ * - 1.1	- Support for OSD menu
  *******************************************************************/
 
 #include "BSP_LCD.h"
@@ -31,6 +32,7 @@ typedef struct {
 
 typedef struct {
 	uint32_t	framesize;
+	uint32_t	osdsize;
 	uint32_t	framebuffersize;
 	uint8_t		colormode;
 	uint8_t		buffermode;
@@ -54,6 +56,7 @@ typedef struct {
 	LCD_CONFIG		config;
 	LCD_LAYER		layer;
 	uint32_t		frametime;
+	uint32_t		OSDbuf;
 	uint32_t		JPEGbuf;
 } LCD_HandleTypeDef;
 
@@ -1120,7 +1123,8 @@ static void _config_triplebuf(void) {
 	BSP_hlcd.layer.Frames[0] = LCD_FRAMEBUFFER_END_ADDR - 1 * BSP_hlcd.config.framesize;
 	BSP_hlcd.layer.Frames[1] = LCD_FRAMEBUFFER_END_ADDR - 2 * BSP_hlcd.config.framesize;
 	BSP_hlcd.layer.Frames[2] = LCD_FRAMEBUFFER_END_ADDR - 3 * BSP_hlcd.config.framesize;
-	BSP_hlcd.JPEGbuf = LCD_FRAMEBUFFER_END_ADDR - (3 * BSP_hlcd.config.framesize) - LCD_JPEGBUF_SIZE;
+	BSP_hlcd.OSDbuf = LCD_FRAMEBUFFER_END_ADDR - (3 * BSP_hlcd.config.framesize) - BSP_hlcd.config.osdsize;
+	BSP_hlcd.JPEGbuf = LCD_FRAMEBUFFER_END_ADDR - (3 * BSP_hlcd.config.framesize) - BSP_hlcd.config.osdsize - LCD_JPEGBUF_SIZE;
 }
 
 
@@ -1135,7 +1139,8 @@ static void _config_doublebuf(void) {
 	BSP_hlcd.layer.Frames[0] = LCD_FRAMEBUFFER_END_ADDR - 1 * BSP_hlcd.config.framesize;
 	BSP_hlcd.layer.Frames[1] = LCD_FRAMEBUFFER_END_ADDR - 2 * BSP_hlcd.config.framesize;
 	BSP_hlcd.layer.Frames[2] = 0;
-	BSP_hlcd.JPEGbuf = LCD_FRAMEBUFFER_END_ADDR - (2 * BSP_hlcd.config.framesize) - LCD_JPEGBUF_SIZE;
+	BSP_hlcd.OSDbuf = LCD_FRAMEBUFFER_END_ADDR - (2 * BSP_hlcd.config.framesize) - BSP_hlcd.config.osdsize;
+	BSP_hlcd.JPEGbuf = LCD_FRAMEBUFFER_END_ADDR - (2 * BSP_hlcd.config.framesize) - BSP_hlcd.config.osdsize - LCD_JPEGBUF_SIZE;
 }
 
 
@@ -1388,6 +1393,30 @@ static void _L8_config_layer(uint32_t *clut) {
 
 }
 
+/******************************************************************************
+ * Config function for OSD layer
+ ******************************************************************************/
+
+static void _OSD_config_layer(void) {
+
+	// Configure Layer
+	BSP_STM32_LTDC_ConfigLayer(
+			LTDC,
+			1,
+			255,
+			0,
+			0x00000000,
+			LTDC_BLENDING_FACTOR1_PAxCA,
+			LTDC_BLENDING_FACTOR2_PAxCA,
+			BSP_hlcd.OSDbuf,
+			LCD_OSD_HEIGHT, LCD_WIDTH,
+			LTDC_PIXEL_FORMAT_ARGB4444,
+			0,
+			LCD_WIDTH,
+			0,
+			LCD_OSD_HEIGHT);
+
+}
 
 /******************************************************************************
  * Public functions
@@ -1405,6 +1434,7 @@ void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uin
 	BSP_hlcd.config.buffermode = buffer_mode;
 	BSP_hlcd.config.bgcolor = bgcolor;
 	BSP_hlcd.config.framesize = LCD_WIDTH * LCD_HEIGHT;
+	BSP_hlcd.config.osdsize = LCD_WIDTH * LCD_OSD_HEIGHT;
 
 	// Configuring color mode
 	switch (BSP_hlcd.config.colormode) {
@@ -1428,8 +1458,11 @@ void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uin
 		break;
 	}
 
+	// OSD menu always in ARGB4444 mode, therefore 16 bit / pixel
+	BSP_hlcd.config.osdsize *= 2;
+
 	// Clearing memory for frame buffer
-	memset((void *)(LCD_FRAMEBUFFER_END_ADDR - BSP_hlcd.config.framebuffersize - LCD_JPEGBUF_SIZE),0x00, (BSP_hlcd.config.framebuffersize + LCD_JPEGBUF_SIZE));
+	memset((void *)(LCD_FRAMEBUFFER_END_ADDR - BSP_hlcd.config.framebuffersize - BSP_hlcd.config.osdsize - LCD_JPEGBUF_SIZE),0x00, (BSP_hlcd.config.framebuffersize + BSP_hlcd.config.osdsize + LCD_JPEGBUF_SIZE));
 
 	// Configuring frame buffer parameters
 	switch (BSP_hlcd.config.buffermode) {
@@ -1473,6 +1506,8 @@ void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uin
 		break;
 	}
 
+	_OSD_config_layer();
+
 	// Enabling required layers
 	BSP_STM32_LTDC_EnableLayer(LTDC, 0);
 
@@ -1509,7 +1544,7 @@ uint8_t BSP_LCD_GetEditPermission(void) {
 	return (BSP_hlcd.layer.Frame_EDIT<255);
 }
 
-void BSP_LCD_SetLayerAlpha(uint8_t alpha) {
+void BSP_LCD_SetAlpha(uint8_t alpha) {
 	// Setting transparency of layer
 	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)LTDC) + 0x84U + (0x80U*(0)));
 	// Specifies the constant alpha value
@@ -1520,7 +1555,7 @@ void BSP_LCD_SetLayerAlpha(uint8_t alpha) {
 }
 
 
-uint8_t BSP_LCD_GetLayerAlpha(void) {
+uint8_t BSP_LCD_GetAlpha(void) {
 	// Returns layer's transparency
 	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)LTDC) + 0x84U + (0x80U*(0)));
 	return (uint8_t)(l->CACR & LTDC_LxCACR_CONSTA);
@@ -1592,6 +1627,60 @@ uint8_t	BSP_LCD_GetBytesPerPixel(void) {
 uint32_t BSP_LCD_GetFrameTime(void) {
 	return BSP_hlcd.frametime;
 }
+
+
+/******************************************************************************
+ * Public functions - OSD
+ ******************************************************************************/
+
+void BSP_LCD_OSD_UpdatePixel(int16_t x, int16_t y, uint32_t value) {
+	// Status: Function Completed
+	if (x >= LCD_WIDTH) return;
+	if (x < 0) return;
+	if (y >= LCD_OSD_HEIGHT) return;
+	if (y < 0) return;
+
+	uint16_t *addr = (uint16_t *)BSP_hlcd.OSDbuf + (x + y * LCD_WIDTH);
+	*addr = (uint16_t)value;
+}
+
+void BSP_LCD_OSD_FillBuf(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color) {
+
+	uint32_t dest_addr = BSP_hlcd.OSDbuf + ((x + y * LCD_WIDTH) << 1);
+
+	// DMA2D Wait
+	while (BSP_hlcd.priv.dma2d_state == LCD_DMA2D_BUSY) {};
+
+	// Starting DMA2D
+	BSP_hlcd.priv.dma2d_state = LCD_DMA2D_BUSY;
+
+	BSP_STM32_DMA2D_FillBuff(DMA2D, DMA2D_ARGB4444, width, height, offsetline, dest_addr, color);
+}
+
+void BSP_LCD_OSD_SetAlpha(uint8_t alpha) {
+	// Setting transparency of layer
+	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)LTDC) + 0x84U + (0x80U*(1)));
+	// Specifies the constant alpha value
+	l->CACR &= ~(LTDC_LxCACR_CONSTA);
+	l->CACR = (uint32_t)alpha;
+	// Set the Vertical Blanking Reload type
+	LTDC->SRCR = LTDC_SRCR_VBR;
+}
+
+uint8_t BSP_LCD_OSD_GetAlpha(void) {
+	// Returns layer's transparency
+	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)LTDC) + 0x84U + (0x80U*(1)));
+	return (uint8_t)(l->CACR & LTDC_LxCACR_CONSTA);
+}
+
+void BSP_LCD_OSD_Show(void) {
+	BSP_STM32_LTDC_EnableLayer(LTDC, 1);
+}
+
+void BSP_LCD_OSD_Hide(void) {
+	BSP_STM32_LTDC_DisableLayer(LTDC, 1);
+}
+
 
 /******************************************************************************
  * IRQ handlers

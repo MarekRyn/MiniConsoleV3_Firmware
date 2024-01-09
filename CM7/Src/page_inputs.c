@@ -72,7 +72,7 @@ uint8_t page_init_inputs(void) {
 	button00.y_pos = 350;
 	button00.width = 160;
 	button00.height = 42;
-	button00.icon = ICON_32_Tools;
+	button00.icon = (uint32_t)ICON_32_Tools;
 	button00.text = "Calibrate";
 	button00.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(10, 590, 350, 160, 42, button00_callback);

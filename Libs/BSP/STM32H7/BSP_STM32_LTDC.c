@@ -114,9 +114,6 @@ uint8_t BSP_STM32_LTDC_ConfigLayer(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t
 	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)hltdc) + 0x84U + (0x80U*(layer)));
 	uint32_t tmp;
 
-	// Disable Layer
-	// BSP_STM32_LTDC_DisableLayer(hltdc, layer);
-
 	// Configure the horizontal start and stop position
 	tmp = ((x1 + ((hltdc->BPCR & LTDC_BPCR_AHBP) >> 16U)) << 16U);
 	l->WHPCR &= ~(LTDC_LxWHPCR_WHSTPOS | LTDC_LxWHPCR_WHSPPOS);
@@ -159,9 +156,6 @@ uint8_t BSP_STM32_LTDC_ConfigLayer(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t
 	// Configure the frame buffer line number
 	l->CFBLNR  &= ~(LTDC_LxCFBLNR_CFBLNBR);
 	l->CFBLNR  = (imgheight);
-
-	// Enable Layer
-	// BSP_STM32_LTDC_EnableLayer(hltdc, layer);
 
 	return BSP_OK;
 }

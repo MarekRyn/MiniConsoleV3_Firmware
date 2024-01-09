@@ -368,6 +368,9 @@ uint8_t BSP_STM32_Init_PeriphClocks(void) {
     if (BSP_STM32_RCC_CLKConfig_USBFS()) return BSP_ERROR;
     __BSP_RCC_USB2_FS_CLK_ENABLE();
 
+    // Starting peripherals clock - CRC
+    __BSP_RCC_CRC_CLK_ENABLE();
+
 	return BSP_OK;
 }
 

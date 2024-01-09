@@ -57,8 +57,7 @@ int main(void)
 
 	BSP_BOARD_Init_CM4();
 
-	BSP_Delay(6000);
-
+	BSP_Audio_Loop();
 
     /* Loop forever */
 	for(;;);

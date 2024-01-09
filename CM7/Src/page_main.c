@@ -188,7 +188,7 @@ uint8_t page_init_main() {
 	button00.y_pos = 10;
 	button00.width = 200;
 	button00.height = 42;
-	button00.icon = ICON_32_Apps;
+	button00.icon = (uint32_t)ICON_32_Apps;
 	button00.text = "Applications";
 	button00.state = GUI_STATE_ACTIVE;
 	BSP_LCD_TP_RegisterArea(0, 10, 10, 200, 42, button00_callback);
@@ -198,7 +198,7 @@ uint8_t page_init_main() {
 	button01.y_pos = 60;
 	button01.width = 200;
 	button01.height = 42;
-	button01.icon = ICON_32_Inputs;
+	button01.icon = (uint32_t)ICON_32_Inputs;
 	button01.text = "Inputs";
 	button01.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(1, 10, 60, 200, 42, button01_callback);
@@ -208,7 +208,7 @@ uint8_t page_init_main() {
 	button02.y_pos = 110;
 	button02.width = 200;
 	button02.height = 42;
-	button02.icon = ICON_32_IMU;
+	button02.icon = (uint32_t)ICON_32_IMU;
 	button02.text = "IMU";
 	button02.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(2, 10, 110, 200, 42, button02_callback);
@@ -218,7 +218,7 @@ uint8_t page_init_main() {
 	button03.y_pos = 160;
 	button03.width = 200;
 	button03.height = 42;
-	button03.icon = ICON_32_Audio;
+	button03.icon = (uint32_t)ICON_32_Audio;
 	button03.text = "Audio";
 	button03.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(3, 10, 160, 200, 42, button03_callback);
@@ -228,7 +228,7 @@ uint8_t page_init_main() {
 	button04.y_pos = 210;
 	button04.width = 200;
 	button04.height = 42;
-	button04.icon = ICON_32_Screen;
+	button04.icon = (uint32_t)ICON_32_Screen;
 	button04.text = "Screen";
 	button04.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(4, 10, 210, 200, 42, button04_callback);
@@ -238,7 +238,7 @@ uint8_t page_init_main() {
 	button05.y_pos = 260;
 	button05.width = 200;
 	button05.height = 42;
-	button05.icon = ICON_32_BT;
+	button05.icon = (uint32_t)ICON_32_BT;
 	button05.text = "Bluetooth";
 	button05.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(5, 10, 260, 200, 42, button05_callback);
@@ -248,7 +248,7 @@ uint8_t page_init_main() {
 	button06.y_pos = 310;
 	button06.width = 200;
 	button06.height = 42;
-	button06.icon = ICON_32_DateTime;
+	button06.icon = (uint32_t)ICON_32_DateTime;
 	button06.text = "Clock";
 	button06.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(6, 10, 310, 200, 42, button06_callback);
@@ -258,7 +258,7 @@ uint8_t page_init_main() {
 	button07.y_pos = 428;
 	button07.width = 95;
 	button07.height = 42;
-	button07.icon = ICON_32_Power;
+	button07.icon = (uint32_t)ICON_32_Power;
 	button07.text = 0;
 	button07.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(7, 10, 428, 95, 42, button07_callback);
@@ -268,7 +268,7 @@ uint8_t page_init_main() {
 	button08.y_pos = 428;
 	button08.width = 95;
 	button08.height = 42;
-	button08.icon = ICON_32_Info;
+	button08.icon = (uint32_t)ICON_32_Info;
 	button08.text = 0;
 	button08.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(8, 115, 428, 95, 42, button08_callback);

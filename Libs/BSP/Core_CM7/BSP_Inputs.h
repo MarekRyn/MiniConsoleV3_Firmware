@@ -19,8 +19,9 @@ extern "C" {
 #endif
 
 #include "BSP_STM32.h"
-#include "BSP_LCD.h"
-#include "BSP_PWR.h"
+#include "BSP_LCD.h"	// For controlling brightness
+#include "BSP_PWR.h"	// For controlling power
+#include "BSP_Audio.h"	// For controlling audio volume
 
 // BSP structures - Inputs (Buttons and Joystick)
 
@@ -60,6 +61,7 @@ typedef struct _INPUTS {
 	INPUTS_JOY		joy;
 	INPUTS_BTNS		buttons;
 	uint8_t			mode;
+	uint32_t		timestamp;
 } INPUTS_HandleTypeDef;
 
 

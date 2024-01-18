@@ -28,6 +28,7 @@ extern "C" {
 #define LCD_BKL_TIM			TIM3					/* PWM Timer							*/
 #define LCD_BKL_MIN_PWM		200						/* PWM Duty for 0% backlight			*/
 #define LCD_BKL_MAX_PWM		500						/* PWM Duty for 100% backlight			*/
+#define LCD_BKL_LO_PWR		15						/* 15% for power saving mode			*/
 
 // Frame buffer address configuration
 #define LCD_FRAMEBUFFER_END_ADDR	0xC0000000 + 0x04000000		/* Frame buffer always sticks to the end of SDRAM	*/
@@ -98,7 +99,14 @@ void BSP_LCD_SetAlpha(uint8_t alpha);
 uint8_t BSP_LCD_GetAlpha(void);
 void BSP_LCD_InitBackLight(uint8_t value);
 void BSP_LCD_SetBackLight(uint8_t value, uint8_t dimspeed);
+void BSP_LCD_SaveBackLight(void);
+void BSP_LCD_LoadBackLight(void);
 uint8_t BSP_LCD_GetBackLight(void);
+void BSP_LCD_IncBackLight(uint8_t step);
+void BSP_LCD_DecBackLight(uint8_t step);
+void BSP_LCD_BackLightLo(void);
+void BSP_LCD_BacklLightOff(void);
+void BSP_LCD_BackLightOn(void);
 void BSP_LCD_DecodeJPEG(uint32_t jpeg_addr, uint32_t jpeg_size);
 uint32_t BSP_LCD_GetEditFrameAddr(void);
 uint32_t BSP_LCD_GetPrevFrameAddr(void);

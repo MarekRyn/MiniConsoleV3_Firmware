@@ -28,6 +28,7 @@ typedef struct {
 	__IO int32_t		bklt_value;
 	__IO int32_t		bklt_setting;
 	__IO int32_t		bklt_dimspeed;
+	__IO int32_t		bklt_backup;
 } LCD_PRIV;
 
 typedef struct {
@@ -1478,11 +1479,9 @@ void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uin
 	BSP_STM32_LTDC_Init(LTDC, LCD_H_SYNC, LCD_V_SYNC, LCD_ACC_H_BACK_PORCH_WIDTH, LCD_ACC_V_BACK_PORCH_HEIGHT,
 			LCD_ACC_ACTIVE_WIDTH, LCD_ACC_ACTIVE_HEIGHT, LCD_TOTAL_WIDTH, LCD_TOTAL_HEIGHT, bgcolor);
 
-	// Configuring JPEG hardware codec
-	BSP_STM32_JPEG_Init(JPEG);
-
 	// Disabling both layers
 	BSP_STM32_LTDC_DisableLayer(LTDC, 0);
+	BSP_STM32_LTDC_DisableLayer(LTDC, 1);
 
 	// Configuring LTDC Layers
 	switch (BSP_hlcd.config.colormode) {
@@ -1508,11 +1507,14 @@ void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uin
 
 	_OSD_config_layer();
 
-	// Enabling required layers
+	// Enabling required layers (OSD layer enabled manually when required)
 	BSP_STM32_LTDC_EnableLayer(LTDC, 0);
 
 	// Programming LTDC line interrupt
 	BSP_STM32_LTDC_SetLineInt(LTDC, (uint32_t)LCD_HEIGHT);
+
+	// Configuring JPEG hardware codec
+	BSP_STM32_JPEG_Init(JPEG);
 }
 
 
@@ -1584,18 +1586,64 @@ void BSP_LCD_SetBackLight(uint8_t value, uint8_t dimspeed) {
 
 	BSP_hlcd.priv.bklt_setting = (int32_t)value << 6;
 	BSP_hlcd.priv.bklt_dimspeed = (int32_t)dimspeed;
+	BSP_hlcd.priv.bklt_backup = BSP_hlcd.priv.bklt_setting;
 
 }
 
+void BSP_LCD_SaveBackLight(void) {
+	// Saves to register 10 - bits 8-15
+	uint32_t tmp = BSP_STM32_RTC_GetBackupReg(RTC, 10);
+	tmp &= 0xFFFF00FF;
+	tmp |= ((BSP_hlcd.priv.bklt_setting >> 6) << 8);
+	BSP_STM32_RTC_SetBackupReg(RTC, 10, tmp);
+}
+
+void BSP_LCD_LoadBackLight(void) {
+	// Loads from register 10 - bits 8-15
+	uint32_t tmp = (BSP_STM32_RTC_GetBackupReg(RTC, 10) & 0x0000FF00) >> 8;
+	BSP_LCD_SetBackLight((uint8_t)tmp, 100);
+}
 
 uint8_t BSP_LCD_GetBackLight(void) {
-	// Returns backlight value 0 - 100%
+	return (uint8_t)(BSP_hlcd.priv.bklt_setting >> 6);
+}
 
+void BSP_LCD_IncBackLight(uint8_t step) {
 	uint32_t val = BSP_STM32_TIM_GetChannelValue(LCD_BKL_TIM, 3);
-
 	uint32_t value = ((val - LCD_BKL_MIN_PWM) * 100) / (LCD_BKL_MAX_PWM - LCD_BKL_MIN_PWM);
+	value+=step;
+	if (value > 100) value = 100;
+	BSP_hlcd.priv.bklt_setting = (int32_t)value << 6;
+	BSP_hlcd.priv.bklt_dimspeed = 100;
+	BSP_hlcd.priv.bklt_backup = BSP_hlcd.priv.bklt_setting;
+}
 
-	return value;
+void BSP_LCD_DecBackLight(uint8_t step) {
+	uint32_t val = BSP_STM32_TIM_GetChannelValue(LCD_BKL_TIM, 3);
+	uint32_t value = ((val - LCD_BKL_MIN_PWM) * 100) / (LCD_BKL_MAX_PWM - LCD_BKL_MIN_PWM);
+	value-=step;
+	if (value > 100) value = 0;
+	BSP_hlcd.priv.bklt_setting = (int32_t)value << 6;
+	BSP_hlcd.priv.bklt_dimspeed = 100;
+	BSP_hlcd.priv.bklt_backup = BSP_hlcd.priv.bklt_setting;
+}
+
+
+void BSP_LCD_BackLightLo(void) {
+	BSP_hlcd.priv.bklt_setting = LCD_BKL_LO_PWR << 6;
+	BSP_hlcd.priv.bklt_dimspeed = 25;
+}
+
+
+void BSP_LCD_BacklLightOff(void) {
+	BSP_hlcd.priv.bklt_setting = 0;
+	BSP_hlcd.priv.bklt_dimspeed = 25;
+}
+
+
+void BSP_LCD_BackLightOn(void) {
+	BSP_hlcd.priv.bklt_setting = BSP_hlcd.priv.bklt_backup;
+	BSP_hlcd.priv.bklt_dimspeed = 25;
 }
 
 
@@ -1703,7 +1751,9 @@ void LTDC_IRQHandler(void)
 				if (BSP_hlcd.priv.bklt_value < BSP_hlcd.priv.bklt_setting) BSP_hlcd.priv.bklt_value = BSP_hlcd.priv.bklt_setting;
 			}
 
-			uint32_t val = (((uint32_t)(BSP_hlcd.priv.bklt_value >> 6) * (LCD_BKL_MAX_PWM - LCD_BKL_MIN_PWM)) / 100) + LCD_BKL_MIN_PWM;
+			uint32_t val;
+			if (BSP_hlcd.priv.bklt_value > 0) val = (((uint32_t)(BSP_hlcd.priv.bklt_value >> 6) * (LCD_BKL_MAX_PWM - LCD_BKL_MIN_PWM)) / 100) + LCD_BKL_MIN_PWM;
+				else val = 0;
 			BSP_STM32_TIM_SetChannelValue(LCD_BKL_TIM, 3, val);
 		}
 

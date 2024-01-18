@@ -14,6 +14,7 @@
 
 #include <stdint.h>
 #include "BSP_Fonts.h"
+#include "BSP_Icons.h"
 #include "graph2d.h"
 
 
@@ -68,6 +69,19 @@
 #define GUI_PROGRESSBAR_COLOR					BSP_LCD_Color(C_DARKBLUE, 255)
 #define GUI_PROGRESSBAR_RADIUS					8
 
+// Slider appearance
+#define GUI_SLIDER_BORDER_COLOR					BSP_LCD_Color(C_WHITE, 255)
+#define GUI_SLIDER_BG_COLOR						BSP_LCD_Color(C_GRAY, 150)
+#define GUI_SLIDER_HANDLE_COLOR					BSP_LCD_Color(C_LIGHTGRAY, 255)
+#define GUI_SLIDER_RADIUS						8
+
+// Spinner appearance
+#define GUI_SPINNER_BORDER_COLOR				BSP_LCD_Color(C_WHITE, 255)
+#define GUI_SPINNER_BG_COLOR					BSP_LCD_Color(C_GRAY, 150)
+#define GUI_SPINNER_TEXT_COLOR					BSP_LCD_Color(C_WHITE, 255)
+#define GUI_SPINNER_TEXT_FONT					FONT_24_verdana
+#define GUI_SPINNER_RADIUS						8
+
 // GUI structure definitions
 
 typedef struct {
@@ -113,9 +127,41 @@ typedef struct {
 } GUI_ProgressBar_TypeDef;
 
 
+typedef struct {
+	uint16_t			slide_x0;
+	uint16_t			slide_x1;
+	uint16_t			slide_x;
+	uint8_t				drag;
+} GUI_Slider_ctx;
+
+typedef struct {
+	GUI_Slider_ctx		ctx;
+	uint16_t			x_pos;
+	uint16_t			y_pos;
+	uint16_t			width;
+	uint32_t			max_value;
+	uint32_t			min_value;
+	uint32_t			step;
+} GUI_Slider_TypeDef;
+
+
+typedef struct {
+
+} GUI_Spinner_ctx;
+
+typedef struct {
+	GUI_Spinner_ctx		ctx;
+	uint16_t			x_pos;
+	uint16_t			y_pos;
+	uint16_t			width;
+} GUI_Spinner_TypeDef;
+
+
 uint8_t	GUI_Button(GUI_Button_TypeDef * btn);
 uint8_t GUI_Button_Click(GUI_Button_TypeDef * btn);
 uint8_t GUI_Panel(GUI_Panel_TypeDef * pnl);
 uint8_t GUI_ProgressBar(GUI_ProgressBar_TypeDef * pg, uint32_t value);
+uint8_t GUI_Slider(GUI_Slider_TypeDef * sl, uint32_t value);
+uint8_t GUI_Spinner(GUI_Spinner_TypeDef * sp, uint32_t value);
 
 #endif /* GUI_H_ */

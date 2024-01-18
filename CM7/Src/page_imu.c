@@ -93,24 +93,24 @@ uint8_t page_init_imu(void) {
 	BSP_LCD_TP_RegisterArea(10, 240, 30, 160, 42, button00_callback);
 
 	// Button01 - Test Acceleration
-	button01.x_pos = 420;
+	button01.x_pos = 425;
 	button01.y_pos = 30;
 	button01.width = 160;
 	button01.height = 42;
 	button01.icon = (uint32_t)NULL;
 	button01.text = "Acceleration";
 	button01.state = GUI_STATE_ENABLED;
-	BSP_LCD_TP_RegisterArea(11, 420, 30, 160, 42, button01_callback);
+	BSP_LCD_TP_RegisterArea(11, 425, 30, 160, 42, button01_callback);
 
 	// Button02 - Test Gyro
-	button02.x_pos = 600;
+	button02.x_pos = 610;
 	button02.y_pos = 30;
 	button02.width = 160;
 	button02.height = 42;
 	button02.icon = (uint32_t)NULL;
 	button02.text = "Gyro";
 	button02.state = GUI_STATE_ENABLED;
-	BSP_LCD_TP_RegisterArea(12, 600, 30, 160, 42, button02_callback);
+	BSP_LCD_TP_RegisterArea(12, 610, 30, 160, 42, button02_callback);
 
 	// Button03 - IMU Calibration
 	button03.x_pos = 590;

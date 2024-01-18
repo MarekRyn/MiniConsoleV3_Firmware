@@ -109,14 +109,27 @@ int main(void)
 			G2D_DrawIconC((uint32_t)&ICON_256_MiniConsole, 400, 350, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
 
 			BSP_LCD_FrameReady();
-			BSP_Delay(500);
+
+			BSP_Delay(200);
+
+			// Play startup sound
+			BSP_Audio_SetMasterVolume(128);
+			BSP_Audio_SetChannelVolume(0, 150);
+			BSP_Audio_LinkStartupSound(0);
+			BSP_Audio_ChannelPLay(0, 1);
 
 			// Initialize Backlight
 			BSP_LCD_InitBackLight(10);
 			BSP_LCD_SetBackLight(80, 25);
 
-			BSP_Delay(3000);
+			BSP_Delay(4000);
 
+			// Load default values
+			BSP_PWR_LoadConfig();
+			BSP_Audio_LoadMasterVolume();
+			BSP_LCD_LoadBackLight();
+
+			// TODO: Checking if menu button is pressed during start-up and selecting: bootloader or application
 			// Start Temporary section
 			// If "Menu_Button" pressed during startup than console switches into USB MSC mode (active until RESET)
 			if (BSP_hinputs.buttons.btn_MENU > 0) {
@@ -125,8 +138,6 @@ int main(void)
 			}
 			// End Temporary section
 
-
-			// TODO: Checking if menu button is pressed during start-up and selecting: bootloader or application
 			// state0 = STATE0_APPLICATION;
 			state0 = STATE0_BOOTLOADER_INIT;
 
@@ -134,15 +145,24 @@ int main(void)
 
 		case STATE0_BOOTLOADER_INIT:
 
-			BSP_Res_Init(&resctx, 0xC0000000, 10*1024*1024);
+			BSP_Res_Init(&resctx, 0xC0000000, 16*1024*1024);
 			BSP_Res_Load(&resctx, "idol.mp3", 0);
-			BSP_Res_Load(&resctx, "song02.mod",1);
+			BSP_Res_Load(&resctx, "song02.mod", 1);
+			BSP_Res_Load(&resctx, "StarWars.raw", 2);
 
 			state0 = STATE0_BOOTLOADER_MAIN;
 			state1 = STATE1_APPS;
 			G2D_DecodeJPEG((uint32_t)WP_00, sizeof(WP_00));
 			page_init_main();
 			page_init_apps();
+
+
+			//BSP_Audio_LinkSourceMP3(0, BSP_Res_GetAddr(&resctx, 0), BSP_Res_GetSize(&resctx, 0));
+			//BSP_Audio_LinkSourceMOD(0, BSP_Res_GetAddr(&resctx, 1), BSP_Res_GetSize(&resctx, 1));
+			//BSP_Audio_LinkSourceRAW(0, BSP_Res_GetAddr(&resctx, 2), BSP_Res_GetSize(&resctx, 2));
+			//BSP_Audio_SetChannelVolume(0, 100);
+			//BSP_Audio_ChannelPLay(0, 1);
+
 			break;
 
 		case STATE0_BOOTLOADER_MAIN:

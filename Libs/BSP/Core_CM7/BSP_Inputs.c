@@ -172,8 +172,8 @@ uint8_t BSP_Inputs_Init(void) {
 	BSP_Inputs_LoadCalData();
 
 	// Configuring TIM2 for parsing joystick and keyboard data
-	// Option 1: PWM Frequency = 200MHz Input clock / Prescaler (199+1) / Reload value (9999+1) = 100Hz
-	// Option 2: PWM Frequency = 240MHz Input clock / Prescaler (239+1) / Reload value (9999+1) = 100Hz
+	// Option 1: Frequency = 200MHz Input clock / Prescaler (199+1) / Reload value (9999+1) = 100Hz
+	// Option 2: Frequency = 240MHz Input clock / Prescaler (239+1) / Reload value (9999+1) = 100Hz
 
 	BSP_STM32_TIM_Init(TIM2, TIM_CLOCKDIVISION_DIV1, 239, 9999);
 	BSP_STM32_TIM_Start(TIM2);
@@ -218,36 +218,25 @@ uint8_t BSP_Inputs_ParseData(void) {
 	// Handling control of backlight, volume and power off
 	if (BSP_hinputs.buttons.btn_PWR) {
 
-		uint32_t bklt = BSP_LCD_GetBackLight();
-		// uint32_t volume = BSP_Audio_GetVolume();
-
 		if (BSP_hinputs.buttons.btn_X_U) {
-			bklt+=5;
-			if (bklt > 100) bklt = 100;
-			BSP_LCD_SetBackLight(bklt, 100);
+			BSP_LCD_IncBackLight(5);
 			pwr_off_lock = 1;
 		}
 
 		if (BSP_hinputs.buttons.btn_X_D) {
-			bklt-=5;
-			if (bklt > 100) bklt = 0;
-			BSP_LCD_SetBackLight(bklt, 100);
+			BSP_LCD_DecBackLight(5);
 			pwr_off_lock = 1;
 		}
 
-		// if (BSP_hinputs.buttons.btn_X_R) {
-		//	volume+=10;
-		//	if (volume > 100) volume = 100;
-		//	BSP_Audio_SetVolume(volume);
-		//	pwr_off_lock = 1;
-		// }
+		if (BSP_hinputs.buttons.btn_X_R) {
+			BSP_Audio_IncMasterVolume(1);
+			pwr_off_lock = 1;
+		}
 
-		// if (BSP_hinputs.buttons.btn_X_L) {
-		//	volume-=10;
-		//	if (volume > 100) volume = 0;
-		//	BSP_Audio_SetVolume(volume);
-		//	pwr_off_lock = 1;
-		// }
+		if (BSP_hinputs.buttons.btn_X_L) {
+			BSP_Audio_DecMasterVolume(1);
+			pwr_off_lock = 1;
+		}
 
 		if (pwr_off_lock == 0) {
 			pwr_off_counter++;
@@ -303,6 +292,12 @@ uint8_t BSP_Inputs_ParseData(void) {
 		_Inputs_Calibration();
 
 	}
+
+	// Timestamp update
+	if (BSP_hinputs.buttons.btn_A || BSP_hinputs.buttons.btn_B || BSP_hinputs.buttons.btn_C || BSP_hinputs.buttons.btn_D ||
+		BSP_hinputs.buttons.btn_X_U || BSP_hinputs.buttons.btn_X_D || BSP_hinputs.buttons.btn_X_L || BSP_hinputs.buttons.btn_X_R ||
+		BSP_hinputs.buttons.btn_JOY || BSP_hinputs.buttons.btn_MENU || BSP_hinputs.buttons.btn_PWR)	BSP_hinputs.timestamp = BSP_GetTick();
+
 
 	return BSP_OK;
 }

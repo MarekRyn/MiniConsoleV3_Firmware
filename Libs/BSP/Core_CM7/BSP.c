@@ -78,6 +78,9 @@ uint8_t BSP_BOARD_Init_1(void) {
 	// QSPI Initialization
 	if (BSP_QSPI_Init()) return BSP_ERROR;
 
+	// PWR Initialization
+	if (BSP_PWR_Init()) return BSP_ERROR;
+
 	// Touch Panel Initialization
 	if (BSP_LCD_TP_Init()) return BSP_ERROR;
 
@@ -94,7 +97,7 @@ uint8_t BSP_BOARD_Init_1(void) {
 	if (BSP_Serial_Init()) return BSP_ERROR;
 
 	// Audio Initialization
-	//	if (BSP_Audio_Init()) return BSP_ERROR;
+	if (BSP_Audio_Init()) return BSP_ERROR;
 
 	return BSP_OK;
 }

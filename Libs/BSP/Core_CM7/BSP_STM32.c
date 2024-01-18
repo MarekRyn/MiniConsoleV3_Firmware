@@ -327,18 +327,18 @@ uint8_t BSP_STM32_Init_PeriphClocks(void) {
     // Starting peripherals clocks - BDMA
     __BSP_RCC_BDMA_CLK_ENABLE();
 
-    // Starting peripherals clocks - ADC1
+    // Starting peripherals clocks - ADC1 - Joystick readout
     __BSP_RCC_ADC12_CLK_ENABLE();
 
-    // Starting peripherals clocks - I2C1
+    // Starting peripherals clocks - I2C1 - Touch panel
     if (BSP_STM32_RCC_CLKConfig_I2C1()) return BSP_ERROR;
     __BSP_RCC_I2C1_CLK_ENABLE();
 
-    // Starting peripherals clocks - I2C4
+    // Starting peripherals clocks - I2C4 - IMU
     if (BSP_STM32_RCC_CLKConfig_I2C4()) return BSP_ERROR;
     __BSP_RCC_I2C4_CLK_ENABLE();
 
-    // Starting peripherials clocks - I2S3 <<<<<<<<<< Started in CM4 Project
+    // Starting peripherials clocks - I2S3 <<<<<<<<<< Started in CM4 Project for audio
     //    if (BSP_STM32_RCC_CLKConfig_I2S3()) return BSP_ERROR;
     //    __BSP_RCC_I2S3_CLK_ENABLE();
 
@@ -350,17 +350,20 @@ uint8_t BSP_STM32_Init_PeriphClocks(void) {
     if (BSP_STM32_RCC_CLKConfig_SDMMC2()) return BSP_ERROR;
     __BSP_RCC_SDMMC2_CLK_ENABLE();
 
-    // Starting peripherals clocks - TIM2
+    // Starting peripherals clocks - TIM2 - Keyboard and Joystick readout
     __BSP_RCC_TIM2_CLK_ENABLE();
 
-    // Starting peripherals clocks - TIM3
+    // Starting peripherals clocks - TIM3 - PWM for LCD backlight
     __BSP_RCC_TIM3_CLK_ENABLE();
 
-    // Starting peripherals clocks - UART5
+    // Starting peripherals clocks - TIM4 - Power saving timeout
+    __BSP_RCC_TIM4_CLK_ENABLE();
+
+    // Starting peripherals clocks - UART5 - Communication with bluetooth
     if (BSP_STM32_RCC_CLKConfig_UART5()) return BSP_ERROR;
     __BSP_RCC_UART5_CLK_ENABLE();
 
-    // Starting peripherals clocks - USART2
+    // Starting peripherals clocks - USART2 - Communication with debug connection
     if (BSP_STM32_RCC_CLKConfig_USART2()) return BSP_ERROR;
     __BSP_RCC_USART2_CLK_ENABLE();
 
@@ -368,8 +371,8 @@ uint8_t BSP_STM32_Init_PeriphClocks(void) {
     if (BSP_STM32_RCC_CLKConfig_USBFS()) return BSP_ERROR;
     __BSP_RCC_USB2_FS_CLK_ENABLE();
 
-    // Starting peripherals clock - CRC
-    __BSP_RCC_CRC_CLK_ENABLE();
+    // Starting peripherals clock - CRC - not required
+    // __BSP_RCC_CRC_CLK_ENABLE();
 
 	return BSP_OK;
 }
@@ -460,6 +463,10 @@ uint8_t BSP_STM32_Init_NVIC(void) {
     //Configure NVIC for TIM2
     BSP_STM32_NVIC_SetPriority(TIM2_IRQn, pp, sp); // Timer for sampling joystick and keyboard
     BSP_STM32_NVIC_EnableIRQ(TIM2_IRQn);
+
+    //Configure NVIC for TIM4
+    BSP_STM32_NVIC_SetPriority(TIM4_IRQn, pp, sp); // Timer for PWR saving mode
+    BSP_STM32_NVIC_EnableIRQ(TIM4_IRQn);
 
     return BSP_OK;
 }

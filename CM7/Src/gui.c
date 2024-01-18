@@ -101,3 +101,41 @@ uint8_t GUI_ProgressBar(GUI_ProgressBar_TypeDef * pg, uint32_t value) {
 }
 
 
+uint8_t GUI_Slider(GUI_Slider_TypeDef * sl, uint32_t value) {
+
+	G2D_DrawFillRoundRectBlend(sl->x_pos, sl->y_pos, sl->width, 42, GUI_SLIDER_RADIUS, GUI_SLIDER_BG_COLOR);
+	G2D_DrawRoundRect(sl->x_pos, sl->y_pos, sl->width, 42, GUI_SLIDER_RADIUS, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawVLine(sl->x_pos + 42, sl->y_pos, 42, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawVLine(sl->x_pos + sl->width - 42, sl->y_pos, 42, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawIconBlendC((uint32_t)ICON_32_Left, sl->x_pos + 21, sl->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawIconBlendC((uint32_t)ICON_32_Right, sl->x_pos + sl->width - 21, sl->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
+
+	if (value < sl->min_value) value = sl->min_value;
+	if (value > sl->max_value) value = sl->max_value;
+
+	sl->ctx.slide_x0 = sl->x_pos + 44;
+	sl->ctx.slide_x1 = sl->x_pos + sl->width - 44;
+	sl->ctx.slide_x = (((sl->width - 120) * (value - sl->min_value)) / (sl->max_value - sl->min_value)) + sl->x_pos + 44;
+
+	G2D_DrawFillRoundRectBlend(sl->ctx.slide_x, sl->y_pos + 2, 32, 38, GUI_SLIDER_RADIUS, GUI_SLIDER_HANDLE_COLOR);
+	G2D_DrawRoundRect(sl->ctx.slide_x, sl->y_pos + 2, 32, 38, GUI_SLIDER_RADIUS, GUI_SLIDER_BORDER_COLOR);
+
+	return GUI_OK;
+}
+
+uint8_t GUI_Spinner(GUI_Spinner_TypeDef * sp, uint32_t value) {
+
+	G2D_DrawFillRoundRectBlend(sp->x_pos, sp->y_pos, 140, 42, GUI_SLIDER_RADIUS, GUI_SLIDER_BG_COLOR);
+	G2D_DrawRoundRect(sp->x_pos, sp->y_pos, 140, 42, GUI_SLIDER_RADIUS, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawIconBlendC((uint32_t)ICON_32_Left, sp->x_pos + 21, sp->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawIconBlendC((uint32_t)ICON_32_Right, sp->x_pos + 140 - 21, sp->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
+
+	char str[12];
+	if (value > 0) {
+		sprintf(str, "%02d", value);
+		G2D_TextBlend(sp->x_pos + 55, sp->y_pos + 6, GUI_SPINNER_TEXT_FONT, str, GUI_SPINNER_TEXT_COLOR);
+	} else G2D_TextBlend(sp->x_pos + 50, sp->y_pos + 6, GUI_SPINNER_TEXT_FONT, "Off", GUI_SPINNER_TEXT_COLOR);
+
+
+	return GUI_OK;
+}

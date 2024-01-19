@@ -2,17 +2,18 @@
  * MiniConsole V3 - Board Support Package - Serial Connection
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_Serial.h"
 
 BUF_RAM	SERIAL_HandleTypeDef	BSP_hserial = {0};
-		TxRxContext_TypeDef		BSP_hserial_ctx = {0};
+static	TxRxContext_TypeDef		BSP_hserial_ctx = {0};
 
 
 // Overriding syscall __io_putchar(int ch) for redirecting printf output to USART2

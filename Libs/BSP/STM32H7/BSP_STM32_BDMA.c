@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 BDMA
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_BDMA.h"
@@ -17,7 +18,7 @@ typedef struct
   __IO uint32_t IFCR;  // BDMA interrupt flag clear register
 } BDMA_Base_Registers;
 
-uint32_t BDMACTXvectors[8] = {0};
+static uint32_t BDMACTXvectors[8] = {0};
 
 uint8_t BSP_BDMA_Init(BDMA_Channel_TypeDef *hbdma, uint32_t dir, uint32_t pinc, uint32_t minc, uint32_t pdatalign, uint32_t mdatalign, uint32_t mode, uint32_t priority) {
 

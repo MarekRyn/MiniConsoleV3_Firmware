@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 JPEG
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_JPEG.h"
@@ -47,19 +48,6 @@ static uint8_t _JPEG_DecInit(JPEG_TypeDef * _hjpeg, uint32_t JPEG_Addr, uint32_t
 
 	return BSP_OK;
 }
-
-
-//static void _JPEG_WriteOutputData(JPEG_TypeDef * _hjpeg, uint8_t data_size) {
-//	uint8_t index;
-//	uint32_t * outputbuf = (uint32_t *)JPEGctx.OutputBufAddr;
-//
-//	for (index = 0; index < data_size; index ++) {
-//		*outputbuf = _hjpeg->DOR;
-//		outputbuf ++;
-//	}
-//
-//	JPEGctx.OutputBufAddr += (data_size << 2);
-//}
 
 
 static uint8_t _JPEG_DecProcess(JPEG_TypeDef * _hjpeg) {

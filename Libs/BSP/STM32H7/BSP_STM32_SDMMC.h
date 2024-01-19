@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 SDMMC
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef STM32H7_BSP_STM32_SDMMC_H_
@@ -15,6 +16,21 @@
 #include "BSP_Common.h"
 #include "BSP_STM32.h"
 #include "BSP_STM32_SDMMC_ll.h"
+
+typedef struct _SDMMCContext {
+	uint8_t		SDCardVersion;
+	uint8_t		SDCardType;
+	uint32_t	SDCardClass;
+	uint32_t	SDCardSpeed;
+	uint32_t	SDCardID[4];
+	uint32_t	SDCardSD[4];
+	uint32_t	SDCardRelAdd;
+	uint32_t 	SDCardBlockNbr;
+	uint32_t	SDCardBlockSize;
+	uint32_t	SDCardLogBlockNbr;
+	uint32_t	SDCardLogBlockSize;
+} SDMMCContext_TypeDef;
+
 
 #define SDMMC_BLOCKSIZE				512
 

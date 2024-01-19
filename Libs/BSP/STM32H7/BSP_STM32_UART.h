@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 USART
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef STM32H7_BSP_STM32_UART_H_
@@ -14,6 +15,8 @@
 
 #include "BSP_Common.h"
 #include "BSP_STM32.h"
+
+#define SERIAL_BUF_SIZE		256
 
 
 #define USART_CR1_FIELDS  				((uint32_t)(USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE | USART_CR1_OVER8 | USART_CR1_FIFOEN)) // UART or USART CR1 fields of parameters set by UART_SetConfig API
@@ -79,6 +82,19 @@
 #define UART_RXFIFO_THRESHOLD_7_8   	USART_CR3_RXFTCFG_2                     // RX FIFO reaches 7/8 of its depth
 #define UART_RXFIFO_THRESHOLD_8_8   	(USART_CR3_RXFTCFG_2|USART_CR3_RXFTCFG_0) // RX FIFO becomes full
 
+typedef struct _SERIAL {
+	uint8_t			data_rx[SERIAL_BUF_SIZE];
+} SERIAL_HandleTypeDef;
+
+typedef struct _UARTContext {
+	uint8_t		*pDataRX;		// 4 bytes pointer to data RX buffer
+	uint8_t		*pDataTX;
+	uint32_t	sizeTX;
+	uint32_t	sizeRX;
+	uint32_t	indexTX;
+	uint32_t	indexRX0;
+	uint32_t	indexRX1;
+} UARTContext_TypeDef;
 
 uint8_t BSP_STM32_UART_Init(USART_TypeDef *huart, uint32_t BaudRate, uint32_t WordLength, uint32_t StopBits, uint32_t Parity);
 uint8_t BSP_STM32_UART_StartListen(USART_TypeDef *huart, TxRxContext_TypeDef * ctx, uint8_t * pBuf, uint32_t bufSize);

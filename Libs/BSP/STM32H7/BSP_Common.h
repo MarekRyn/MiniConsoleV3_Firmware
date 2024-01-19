@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - Common elements
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef INC_BSP_COMMON_H_
@@ -57,15 +58,6 @@ extern "C" {
   #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */
 
-typedef enum
-{
-  HAL_OK       = 0x00,
-  HAL_ERROR    = 0x01,
-  HAL_BUSY     = 0x02,
-  HAL_TIMEOUT  = 0x03
-} HAL_StatusTypeDef;
-
-
 // Memory regions macros
 #define ITC_MRAM	__attribute__((section(".itc_mram")))
 #define DTC_MRAM	__attribute__((section(".dtc_mram")))
@@ -99,54 +91,6 @@ typedef enum
 
 // BSP structures - Data Transfer Context
 
-typedef struct _I2CContext {
-	uint8_t		*pData; // 4 bytes pointer to 8 bit data buffer
-	uint32_t	size;
-	uint32_t	index;
-	uint32_t	option;
-	uint32_t	devaddr;
-} I2CContext_TypeDef;
-
-
-typedef struct _ADCContext {
-	uint8_t		reserved;
-} ADCContext_TypeDef;
-
-
-typedef struct _SDMMCContext {
-	uint8_t		SDCardVersion;
-	uint8_t		SDCardType;
-	uint32_t	SDCardClass;
-	uint32_t	SDCardSpeed;
-	uint32_t	SDCardID[4];
-	uint32_t	SDCardSD[4];
-	uint32_t	SDCardRelAdd;
-	uint32_t 	SDCardBlockNbr;
-	uint32_t	SDCardBlockSize;
-	uint32_t	SDCardLogBlockNbr;
-	uint32_t	SDCardLogBlockSize;
-} SDMMCContext_TypeDef;
-
-
-typedef struct _I2SContext {
-	int16_t		*pData; 		// 4 bytes pointer to 16 bit data buffer
-	uint32_t	size;
-	uint32_t	index;
-	uint8_t		status;
-} I2SContext_TypeDef;
-
-
-typedef struct _UARTContext {
-	uint8_t		*pDataRX;		// 4 bytes pointer to data RX buffer
-	uint8_t		*pDataTX;
-	uint32_t	sizeTX;
-	uint32_t	sizeRX;
-	uint32_t	indexTX;
-	uint32_t	indexRX0;
-	uint32_t	indexRX1;
-} UARTContext_TypeDef;
-
-
 typedef struct _TxRxContext {
 	uint32_t	dma_mode;
 	uint32_t	dma_stream;
@@ -160,52 +104,6 @@ typedef struct _TxRxContext {
 	uint32_t	callback_TE;
 	uint8_t		ctxmem[64];
 } TxRxContext_TypeDef;
-
-
-// BSP structures - IMU IC
-
-typedef struct _IMU_DATA {
-	float		ox;		// deg/s around X axis
-	float		oy;		// deg/s around Y axis
-	float		oz;		// deg/s around Z axis
-	float		x;		// g acceleration along X axis
-	float		y;		// g acceleration along Y axis
-	float		z;		// g acceleration along Z axis
-	float		t;		// temperature in C deg
-} IMU_DATA;
-
-typedef struct _IMU_POS {
-	float		pitch;		// device angle around X axis
-	float		roll;		// device angle around Y axis
-	float		yaw;		// device angle around Z axis
-} IMU_POS;
-
-typedef struct _IMU_CAL {
-	int32_t		c_ox;
-	int32_t		c_oy;
-	int32_t		c_oz;
-	int32_t		c_x;
-	int32_t		c_y;
-	int32_t		c_z;
-	uint32_t	progress;
-	uint32_t	sampleno;
-} IMU_CAL;
-
-typedef struct _IMU {
-	uint8_t			raw_data[14];
-	IMU_CAL			cal;
-	IMU_DATA		data;
-	IMU_POS			pos;
-} IMU_HandleTypeDef;
-
-
-// BSP structures - Serial connection (USART2)
-
-#define SERIAL_BUF_SIZE		256
-
-typedef struct _SERIAL {
-	uint8_t			data_rx[SERIAL_BUF_SIZE];
-} SERIAL_HandleTypeDef;
 
 
 #endif /* INC_BSP_COMMON_H_ */

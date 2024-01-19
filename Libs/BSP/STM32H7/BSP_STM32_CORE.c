@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 CORE
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_CORE.h"
@@ -41,7 +42,7 @@ uint8_t BSP_STM32_MPU_Enable(uint32_t MPU_Control) {
 	return BSP_OK;
 }
 
-uint8_t BSP_STM32_MPU_Disable() {
+uint8_t BSP_STM32_MPU_Disable(void) {
 	// Make sure outstanding transfers are done
 	__DMB();
 	// Disable fault exceptions

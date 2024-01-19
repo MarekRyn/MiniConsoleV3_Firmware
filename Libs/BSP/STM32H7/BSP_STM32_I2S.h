@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 I2S
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef STM32H7_BSP_STM32_I2S_H_
@@ -77,6 +78,13 @@
 #define I2S_FLAG_FRE                     SPI_SR_TIFRE     // I2S Error flag  : TI mode frame format error flag
 #define I2S_FLAG_MASK                    (SPI_SR_RXP | SPI_SR_TXP | SPI_SR_DXP |SPI_SR_UDR | SPI_SR_OVR | SPI_SR_TIFRE)
 
+
+typedef struct _I2SContext {
+	int16_t		*pData; 		// 4 bytes pointer to 16 bit data buffer
+	uint32_t	size;
+	uint32_t	index;
+	uint8_t		status;
+} I2SContext_TypeDef;
 
 
 uint8_t BSP_STM32_I2S_Init(SPI_TypeDef * hi2s, TxRxContext_TypeDef * ctx, uint32_t AudioFreq);

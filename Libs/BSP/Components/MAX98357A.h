@@ -2,11 +2,12 @@
  * MiniConsole V3 - Driver - MAX98357 - I2S Audio Amplifier
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef INC_MAX98357_H_

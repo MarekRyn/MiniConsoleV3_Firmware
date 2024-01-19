@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 I2C
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef STM32H7_BSP_STM32_I2C_H_
@@ -30,6 +31,13 @@
 #define I2C_ANALOGFILTER_ENABLE         0x00000000U
 #define I2C_ANALOGFILTER_DISABLE        I2C_CR1_ANFOFF
 
+typedef struct _I2CContext {
+	uint8_t		*pData; // 4 bytes pointer to 8 bit data buffer
+	uint32_t	size;
+	uint32_t	index;
+	uint32_t	option;
+	uint32_t	devaddr;
+} I2CContext_TypeDef;
 
 uint8_t BSP_STM32_I2C_Init(I2C_TypeDef *hi2c);
 uint8_t BSP_STM32_I2C_IsDeviceReady(I2C_TypeDef *hi2c, uint32_t device_address, uint32_t maxtrials, uint32_t timeout);

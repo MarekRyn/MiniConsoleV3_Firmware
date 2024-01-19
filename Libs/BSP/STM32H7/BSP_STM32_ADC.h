@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 ADC
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef STM32H7_BSP_STM32_ADC_H_
@@ -57,7 +58,6 @@
 #define ADC_CR_BITS_PROPERTY_RS            (ADC_CR_ADCAL | ADC_CR_JADSTP | ADC_CR_ADSTP | ADC_CR_JADSTART | ADC_CR_ADSTART | ADC_CR_ADDIS | ADC_CR_ADEN) // ADC register CR bits with HW property "rs": Software can read as well as set this bit. Writing '0' has no effect on the bit value
 
 #define ADC_CHANNEL_TO_DECIMAL(__CHANNEL__)	((((__CHANNEL__) & ADC_AWD2CR_AWD2CH) == 0UL) ? (((__CHANNEL__) & ADC_CFGR_AWD1CH) >> (26UL)) : ((uint32_t)POSITION_VAL((__CHANNEL__))))
-
 
 uint8_t BSP_ADC_Init(ADC_TypeDef * hadc, uint32_t resolution, uint32_t nb_conversions);
 uint8_t BSP_ADC_ConfigChannel(ADC_TypeDef * hadc, uint32_t channel, uint32_t sequence);

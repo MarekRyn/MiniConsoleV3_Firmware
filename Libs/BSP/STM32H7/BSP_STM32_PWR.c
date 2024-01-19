@@ -7,6 +7,7 @@
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_PWR.h"

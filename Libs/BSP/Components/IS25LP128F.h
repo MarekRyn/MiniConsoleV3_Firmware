@@ -2,11 +2,12 @@
  * MiniConsole V3 - Driver - IS25LP128F - QSPI Memory
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 

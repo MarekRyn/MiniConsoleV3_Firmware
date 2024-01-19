@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 RCC
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef STM32H7_BSP_STM32_RCC_H_
@@ -295,18 +296,18 @@
 #define __BSP_RCC_CRC_CLK_ENABLE()   	do { __IO uint32_t tmpreg; SET_BIT(RCC->AHB4ENR, RCC_AHB4ENR_CRCEN); tmpreg = READ_BIT(RCC->AHB4ENR, RCC_AHB4ENR_CRCEN); UNUSED(tmpreg); } while(0)
 
 
-uint8_t BSP_STM32_RCC_CLKConfig_RTC();
-uint8_t BSP_STM32_RCC_CLKConfig_FMC();
-uint8_t BSP_STM32_RCC_CLKConfig_I2C1();
-uint8_t BSP_STM32_RCC_CLKConfig_I2C4();
-uint8_t BSP_STM32_RCC_CLKConfig_I2S3();
-uint8_t BSP_STM32_RCC_CLKConfig_QSPI();
-uint8_t BSP_STM32_RCC_CLKConfig_SDMMC2();
-uint8_t BSP_STM32_RCC_CLKConfig_UART5();
-uint8_t BSP_STM32_RCC_CLKConfig_USART2();
-uint8_t BSP_STM32_RCC_CLKConfig_USBFS();
-uint8_t BSP_STM32_RCC_CLKConfig_ADC();
-uint8_t	BSP_STM32_RCC_CLKConfig_LTDC();
+uint8_t BSP_STM32_RCC_CLKConfig_RTC(void);
+uint8_t BSP_STM32_RCC_CLKConfig_FMC(void);
+uint8_t BSP_STM32_RCC_CLKConfig_I2C1(void);
+uint8_t BSP_STM32_RCC_CLKConfig_I2C4(void);
+uint8_t BSP_STM32_RCC_CLKConfig_I2S3(void);
+uint8_t BSP_STM32_RCC_CLKConfig_QSPI(void);
+uint8_t BSP_STM32_RCC_CLKConfig_SDMMC2(void);
+uint8_t BSP_STM32_RCC_CLKConfig_UART5(void);
+uint8_t BSP_STM32_RCC_CLKConfig_USART2(void);
+uint8_t BSP_STM32_RCC_CLKConfig_USBFS(void);
+uint8_t BSP_STM32_RCC_CLKConfig_ADC(void);
+uint8_t	BSP_STM32_RCC_CLKConfig_LTDC(void);
 
 uint8_t BSP_STM32_RCC_PLLClockSource(uint32_t pllsource);
 uint8_t BSP_STM32_RCC_LSEConfigDrive(uint32_t lsedrive);

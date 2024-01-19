@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 DMA
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_DMA.h"
@@ -18,7 +19,7 @@ typedef struct {
 } DMA_Base_Registers;
 
 
-uint32_t DMACTXvectors[16] = {0};
+static uint32_t DMACTXvectors[16] = {0};
 
 
 uint8_t BSP_STM32_DMA_Init(DMA_Stream_TypeDef *hdma, uint32_t dir, uint32_t pinc, uint32_t minc, uint32_t pdatalign, uint32_t mdatalign, uint32_t mode, uint32_t priority) {

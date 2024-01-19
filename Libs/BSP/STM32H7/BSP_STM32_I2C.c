@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 I2C
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 
@@ -17,7 +18,7 @@
 * Private Functions
  *******************************************************************/
 
-uint8_t _I2C_MemReadIT(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx, uint16_t DevAddress, uint8_t MemAddress, uint8_t *pData, uint16_t Size) {
+static uint8_t _I2C_MemReadIT(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx, uint16_t DevAddress, uint8_t MemAddress, uint8_t *pData, uint16_t Size) {
 
 	#define I2C_NO_OPTION_FRAME     (0xFFFF0000U)
 
@@ -45,7 +46,7 @@ uint8_t _I2C_MemReadIT(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx, uint16_t Dev
 }
 
 
-uint8_t _I2C_MemReadDMA(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx, uint16_t DevAddress, uint8_t MemAddress, uint8_t *pData, uint16_t Size) {
+static uint8_t _I2C_MemReadDMA(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx, uint16_t DevAddress, uint8_t MemAddress, uint8_t *pData, uint16_t Size) {
 
 	#define I2C_NO_OPTION_FRAME     (0xFFFF0000U)
 
@@ -84,7 +85,7 @@ uint8_t _I2C_MemReadDMA(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx, uint16_t De
 }
 
 
-uint8_t _I2C_IRQHandler_IT(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx) {
+static uint8_t _I2C_IRQHandler_IT(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx) {
 
 	I2CContext_TypeDef * i2c_ctx = (I2CContext_TypeDef *)ctx->ctxmem;
 
@@ -145,7 +146,7 @@ uint8_t _I2C_IRQHandler_IT(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx) {
 }
 
 
-uint8_t _I2C_IRQHandler_DMA(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx) {
+static uint8_t _I2C_IRQHandler_DMA(I2C_TypeDef *hi2c, TxRxContext_TypeDef *ctx) {
 
 	I2CContext_TypeDef * i2c_ctx = (I2CContext_TypeDef *)ctx->ctxmem;
 

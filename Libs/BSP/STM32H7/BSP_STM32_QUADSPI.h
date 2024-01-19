@@ -1,12 +1,13 @@
 /*******************************************************************
- * MiniConsole V3 - Board Support Package - STM32 QUADSPI
+ * MiniConsole V3 - Board Support Package - STM32QUADSPI
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef STM32H7_BSP_STM32_QUADSPI_H_

@@ -2,11 +2,12 @@
  * MiniConsole V3 - Driver - IS42S32160 - SDRAM Memory
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef INC_IS42S32160_H_

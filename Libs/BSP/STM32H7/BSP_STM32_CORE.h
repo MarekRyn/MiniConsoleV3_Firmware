@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 CORE
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #ifndef STM32H7_BSP_STM32_CORE_H_
@@ -138,7 +139,7 @@ uint8_t BSP_STM32_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uin
 uint8_t BSP_STM32_NVIC_SetPriorityGrouping(uint32_t PriorityGroup);
 
 uint8_t BSP_STM32_MPU_Enable(uint32_t MPU_Control);
-uint8_t BSP_STM32_MPU_Disable();
+uint8_t BSP_STM32_MPU_Disable(void);
 uint8_t BSP_STM32_MPU_ConfigRegion(MPU_Region_TypeDef *MPU_Init);
 
 #endif /* STM32H7_BSP_STM32_CORE_H_ */

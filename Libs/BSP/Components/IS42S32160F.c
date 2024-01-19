@@ -2,11 +2,12 @@
  * MiniConsole V3 - Driver - IS42S32160 - SDRAM Memory
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 // Includes
@@ -16,7 +17,7 @@
 #include "math.h"
 
 // Private functions
-uint32_t limitvalue(uint32_t value, uint32_t min, uint32_t max) {
+static uint32_t limitvalue(uint32_t value, uint32_t min, uint32_t max) {
 	uint32_t val = value;
 	if (value < min) val = min;
 	if (value > max) val = max;

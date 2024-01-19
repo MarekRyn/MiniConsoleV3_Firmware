@@ -2,11 +2,12 @@
  * MiniConsole V3 - Driver - MPU6050 - Gyro & Accelerometer IC
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0 	- Initial version
  *******************************************************************/
 
 #include "MPU6050.h"
@@ -135,5 +136,8 @@ void BSP_DRV_IMU_Parse(IMU_HandleTypeDef *himu) {
 
 	float acc_yaw = 57.29577951 * atan2f(-himu->data.x, himu->data.y);
 	himu->pos.yaw = KALMAN_Update(&KALMAN_yaw, acc_yaw, himu->data.oz);
+
+	// Activity timestamp
+	if ((himu->data.ox > 2) || (himu->data.oy > 2) || (himu->data.oz > 2)) himu->timestamp = BSP_GetTick();
 
 }

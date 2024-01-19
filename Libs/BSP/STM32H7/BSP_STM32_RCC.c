@@ -2,17 +2,18 @@
  * MiniConsole V3 - Board Support Package - STM32 RCC
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_RCC.h"
 
 // Setting RTC clock source to external LSE
-uint8_t BSP_STM32_RCC_CLKConfig_RTC() {
+uint8_t BSP_STM32_RCC_CLKConfig_RTC(void) {
 
 	uint32_t tickstart;
 	uint32_t tmpreg;
@@ -51,25 +52,25 @@ uint8_t BSP_STM32_RCC_CLKConfig_RTC() {
 
 
 // Setting FMC clock source to HCLK
-uint8_t BSP_STM32_RCC_CLKConfig_FMC() {
+uint8_t BSP_STM32_RCC_CLKConfig_FMC(void) {
 	// This is default configuration. Nothing to change.
 	return BSP_OK;
 }
 
 // Setting I2C1 clock source to PCLK1
-uint8_t BSP_STM32_RCC_CLKConfig_I2C1() {
+uint8_t BSP_STM32_RCC_CLKConfig_I2C1(void) {
 	MODIFY_REG(RCC->D2CCIP2R, RCC_D2CCIP2R_I2C123SEL, RCC_I2C123CLKSOURCE_D2PCLK1);
 	return BSP_OK;
 }
 
 // Setting I2C4 clock source to PCLK1
-uint8_t BSP_STM32_RCC_CLKConfig_I2C4() {
+uint8_t BSP_STM32_RCC_CLKConfig_I2C4(void) {
 	MODIFY_REG(RCC->D3CCIPR, RCC_D3CCIPR_I2C4SEL, RCC_I2C4CLKSOURCE_D3PCLK1);
 	return BSP_OK;
 }
 
 // Setting I2S3 clock source to PLL2
-uint8_t BSP_STM32_RCC_CLKConfig_I2S3() {
+uint8_t BSP_STM32_RCC_CLKConfig_I2S3(void) {
 
 	uint32_t tickstart;
 
@@ -136,14 +137,14 @@ uint8_t BSP_STM32_RCC_CLKConfig_I2S3() {
 
 
 // Setting QSPI clock source to D1HCLK
-uint8_t BSP_STM32_RCC_CLKConfig_QSPI() {
+uint8_t BSP_STM32_RCC_CLKConfig_QSPI(void) {
 	MODIFY_REG(RCC->D1CCIPR, RCC_D1CCIPR_QSPISEL, RCC_QSPICLKSOURCE_D1HCLK);
 	return BSP_OK;
 }
 
 
 // Setting SDMMC2 clock source to PLL
-uint8_t BSP_STM32_RCC_CLKConfig_SDMMC2() {
+uint8_t BSP_STM32_RCC_CLKConfig_SDMMC2(void) {
 	RCC->PLLCFGR |= RCC_PLLCFGR_DIVQ1EN;
 	MODIFY_REG(RCC->D1CCIPR, RCC_D1CCIPR_SDMMCSEL, RCC_SDMMCCLKSOURCE_PLL);
 	return BSP_OK;
@@ -151,32 +152,32 @@ uint8_t BSP_STM32_RCC_CLKConfig_SDMMC2() {
 
 
 // Setting UART5 clock source to D2PCLK1
-uint8_t BSP_STM32_RCC_CLKConfig_UART5() {
+uint8_t BSP_STM32_RCC_CLKConfig_UART5(void) {
 	MODIFY_REG(RCC->D2CCIP2R, RCC_D2CCIP2R_USART28SEL, RCC_USART234578CLKSOURCE_D2PCLK1);
 	return BSP_OK;
 }
 
 
 // Setting UART5 clock source to D2PCLK1
-uint8_t BSP_STM32_RCC_CLKConfig_USART2() {
+uint8_t BSP_STM32_RCC_CLKConfig_USART2(void) {
 	MODIFY_REG(RCC->D2CCIP2R, RCC_D2CCIP2R_USART28SEL, RCC_USART234578CLKSOURCE_D2PCLK1);
 	return BSP_OK;
 }
 
 // Setting USBFS clock source to_HSI48
-uint8_t BSP_STM32_RCC_CLKConfig_USBFS() {
+uint8_t BSP_STM32_RCC_CLKConfig_USBFS(void) {
 	MODIFY_REG(RCC->D2CCIP2R, RCC_D2CCIP2R_USBSEL, RCC_USBCLKSOURCE_HSI48);
 	return BSP_OK;
 }
 
 // Setting ADC clock source to PLL3
-uint8_t BSP_STM32_RCC_CLKConfig_ADC() {
+uint8_t BSP_STM32_RCC_CLKConfig_ADC(void) {
 	MODIFY_REG(RCC->D3CCIPR, RCC_D3CCIPR_ADCSEL, RCC_ADCCLKSOURCE_PLL3);
 	return BSP_OK;
 }
 
 // Setting LTDC clock source to PLL3
-uint8_t	BSP_STM32_RCC_CLKConfig_LTDC() {
+uint8_t	BSP_STM32_RCC_CLKConfig_LTDC(void) {
 	// Nothing to do. PLL3 is default and only clock source for LTDC.
 	return BSP_OK;
 }

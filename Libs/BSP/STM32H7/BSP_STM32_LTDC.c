@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - STM32 LTDC
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_LTDC.h"
@@ -28,10 +29,10 @@ uint8_t BSP_STM32_LTDC_Init(LTDC_TypeDef *hltdc, uint32_t lcd_h_sync, uint32_t l
 	uint32_t tmp;
 
 	//Reseting LTDC
-//	RCC->APB3RSTR |= RCC_APB3RSTR_LTDCRST;
-//	BSP_Delay(1);
-//	RCC->APB3RSTR &= ~RCC_APB3RSTR_LTDCRST;
-//	BSP_Delay(1);
+	//	RCC->APB3RSTR |= RCC_APB3RSTR_LTDCRST;
+	//	BSP_Delay(1);
+	//	RCC->APB3RSTR &= ~RCC_APB3RSTR_LTDCRST;
+	//	BSP_Delay(1);
 
 	// Setting AXI QOS to higher priority for LTDC peripheral
 	GPV->AXI_INI6_READ_QOS = 1UL;

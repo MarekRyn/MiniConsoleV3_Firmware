@@ -2,11 +2,12 @@
  * MiniConsole V3 - Driver - MPU6050 - Gyro & Accelerometer IC
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0 	- Initial version
  *******************************************************************/
 
 #ifndef INC_MPU6050_H_
@@ -20,7 +21,7 @@ extern "C" {
 #include <math.h>
 #include "BSP_Common.h"
 #include "BSP_STM32.h"
-#include "../Libs/kalman.h"
+#include "kalman.h"
 
 
 
@@ -40,6 +41,46 @@ extern "C" {
 
 #define IMU_DATA_ADDR			0x3B					// Address of first data register
 #define IMU_DATA_LEN			0x0E					// Total data length to read
+
+
+// BSP structures - IMU IC
+
+typedef struct _IMU_DATA {
+	float		ox;		// deg/s around X axis
+	float		oy;		// deg/s around Y axis
+	float		oz;		// deg/s around Z axis
+	float		x;		// g acceleration along X axis
+	float		y;		// g acceleration along Y axis
+	float		z;		// g acceleration along Z axis
+	float		t;		// temperature in C deg
+} IMU_DATA;
+
+typedef struct _IMU_POS {
+	float		pitch;		// device angle around X axis
+	float		roll;		// device angle around Y axis
+	float		yaw;		// device angle around Z axis
+} IMU_POS;
+
+typedef struct _IMU_CAL {
+	int32_t		c_ox;
+	int32_t		c_oy;
+	int32_t		c_oz;
+	int32_t		c_x;
+	int32_t		c_y;
+	int32_t		c_z;
+	uint32_t	progress;
+	uint32_t	sampleno;
+} IMU_CAL;
+
+typedef struct _IMU {
+	uint8_t			raw_data[14];
+	IMU_CAL			cal;
+	IMU_DATA		data;
+	IMU_POS			pos;
+	uint32_t		timestamp;
+} IMU_HandleTypeDef;
+
+
 
 uint8_t	BSP_DRV_IMU_Init(IMU_HandleTypeDef *himu, I2C_TypeDef *hi2c);
 uint8_t BSP_DRV_IMU_Calibrate(IMU_HandleTypeDef *himu);

@@ -1631,19 +1631,19 @@ void BSP_LCD_DecBackLight(uint8_t step) {
 
 void BSP_LCD_BackLightLo(void) {
 	BSP_hlcd.priv.bklt_setting = LCD_BKL_LO_PWR << 6;
-	BSP_hlcd.priv.bklt_dimspeed = 25;
+	BSP_hlcd.priv.bklt_dimspeed = 64;
 }
 
 
 void BSP_LCD_BacklLightOff(void) {
 	BSP_hlcd.priv.bklt_setting = 0;
-	BSP_hlcd.priv.bklt_dimspeed = 25;
+	BSP_hlcd.priv.bklt_dimspeed = 64;
 }
 
 
 void BSP_LCD_BackLightOn(void) {
 	BSP_hlcd.priv.bklt_setting = BSP_hlcd.priv.bklt_backup;
-	BSP_hlcd.priv.bklt_dimspeed = 25;
+	BSP_hlcd.priv.bklt_dimspeed = 64;
 }
 
 

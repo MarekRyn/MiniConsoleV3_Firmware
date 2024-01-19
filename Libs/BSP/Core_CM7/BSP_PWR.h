@@ -20,6 +20,7 @@ extern "C" {
 #include "BSP_Inputs.h"
 #include "BSP_LCD_TP.h"
 #include "BSP_LCD.h"
+#include "BSP_IMU.h"
 
 #define PWR_Hold_Port	GPIOG
 #define PWR_Hold_Pin	GPIO_PIN_9

@@ -13,8 +13,7 @@
 
 static uint32_t timeout_screen_reduced = 0;
 static uint32_t timeout_screen_pwroff = 0;
-static uint8_t	flag_reduced = 0;
-static uint8_t	flag_pwroff = 0;
+static uint8_t	ps_state0, ps_state1;
 
 
 uint8_t BSP_PWR_Init(void) {
@@ -22,6 +21,8 @@ uint8_t BSP_PWR_Init(void) {
 	// Option 1: Frequency = 200MHz Input clock / Prescaler (19999+1) / Reload value (4999+1) = 2Hz
 	// Option 2: Frequency = 240MHz Input clock / Prescaler (23999+1) / Reload value (4999+1) = 2Hz
 
+	ps_state0 = 0;
+	ps_state1 = 0;
 	BSP_STM32_TIM_Init(TIM4, TIM_CLOCKDIVISION_DIV1, 23999, 4999);
 	BSP_STM32_TIM_Start(TIM4);
 }
@@ -77,15 +78,25 @@ void TIM4_IRQHandler(void) {
 		// Counting power saving timeout
 		uint32_t timestamp0 = BSP_GetTick();
 		uint32_t timestamp1 = BSP_hlcdtp.gest_data.start_t;
+		if (timestamp1 < BSP_hinputs.timestamp) timestamp1 = BSP_hinputs.timestamp;
+		if (timestamp1 < BSP_himu.timestamp) timestamp1 = BSP_himu.timestamp;
 
-		if (timestamp1 > BSP_hinputs.timestamp) timestamp1 = BSP_hinputs.timestamp;
+		ps_state0 = 0;
+		if (timeout_screen_reduced > 0) if (timestamp0 > (timestamp1 + timeout_screen_reduced)) ps_state0 = 1;
+		if (timeout_screen_pwroff > 0) if (timestamp0 > (timestamp1 + timeout_screen_pwroff)) ps_state0 = 2;
 
-		if (timeout_screen_reduced > 0) {
-			if (timestamp0 > (timestamp1 + timeout_screen_reduced)) BSP_LCD_BackLightLo(); else BSP_LCD_BackLightOn();
+		if (ps_state0 != ps_state1) switch (ps_state0) {
+		case 0:
+			BSP_LCD_BackLightOn();
+			break;
+		case 1:
+			BSP_LCD_BackLightLo();
+			break;
+		case 2:
+			BSP_LCD_BacklLightOff();
+			break;
 		}
 
-		if (timeout_screen_pwroff > 0) {
-			if (timestamp0 > (timestamp1 + timeout_screen_pwroff)) BSP_LCD_BacklLightOff(); else BSP_LCD_BackLightOn();
-		}
+		ps_state1 = ps_state0;
 	}
 }

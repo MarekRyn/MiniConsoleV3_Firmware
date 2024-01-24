@@ -21,6 +21,34 @@ extern "C" {
 #define AUDIO_CFG_CHANNELS		8
 #define AUDIO_CFG_MAXMASTERVOL	192
 
+enum AUDIO_CMD {
+	AUDIO_CMD_NONE,
+	AUDIO_CMD_LINK_SND_LOGO,
+	AUDIO_CMD_LINK_SND_TEST,
+	AUDIO_CMD_LINK_MP3,
+	AUDIO_CMD_LINK_MOD,
+	AUDIO_CMD_LINK_RAW,
+	AUDIO_CMD_PLAY,
+	AUDIO_CMD_STOP,
+	AUDIO_CMD_PAUSE
+};
+
+enum AUDIO_STATUS {
+	AUDIO_STATUS_NONE,
+	AUDIO_STATUS_READY,
+	AUDIO_STATUS_BUF_UNDERRUN,
+	AUDIO_STATUS_CH_REPEAT,
+	AUDIO_STATUS_CH_STOP
+};
+
+enum AUDIO_CH_STATE {
+	AUDIO_CH_STATE_DISABLED,
+	AUDIO_CH_STATE_PLAY,
+	AUDIO_CH_STATE_STOP,
+	AUDIO_CH_STATE_PAUSE
+};
+
+
 uint8_t BSP_Audio_LoadMasterVolume(void);
 uint8_t BSP_Audio_SaveMasterVolume(void);
 uint8_t BSP_Audio_SetMasterVolume(uint8_t volume);
@@ -43,6 +71,8 @@ uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, uint32_t addr, uint32_t size);
 uint8_t BSP_Audio_ChannelPLay(uint8_t chno, uint8_t repeat);
 uint8_t BSP_Audio_ChannelStop(uint8_t chno);
 uint8_t BPS_Audio_ChannelPause(uint8_t chno);
+uint8_t BSP_Audio_RegisterStatusCallback(uint8_t status, void* callback);
+uint32_t BSP_Audio_GetStatusParam(uint8_t index);
 
 // uint8_t BSP_Audio_LinkSourceFM(uint8_t chno, ....);
 

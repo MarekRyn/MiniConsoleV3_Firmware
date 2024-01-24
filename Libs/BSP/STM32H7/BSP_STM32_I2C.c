@@ -236,12 +236,12 @@ uint8_t BSP_STM32_I2C_Init(I2C_TypeDef *hi2c) {
 
 uint8_t BSP_STM32_I2C_IsDeviceReady(I2C_TypeDef *hi2c, uint32_t device_address, uint32_t maxtrials, uint32_t timeout) {
 
-	uint32_t tickstart;
+	uint32_t tickstart = 0;
 
 	__IO uint32_t trials = 0UL;
 
-	uint8_t tmp1;
-	uint8_t tmp2;
+	uint8_t tmp1 = 0;
+	uint8_t tmp2 = 0;
 
 	// No need to Check TC flag, with AUTOEND mode the stop is automatically generated. Wait until STOPF flag is set or a NACK flag is set.
 	tickstart = BSP_GetTick();
@@ -303,7 +303,7 @@ uint8_t BSP_STM32_I2C_IsDeviceReady(I2C_TypeDef *hi2c, uint32_t device_address, 
 uint8_t BSP_STM32_I2C_RegWrite(I2C_TypeDef *hi2c, uint16_t DevAddress, uint8_t RegAddress, uint8_t RegValue, uint32_t Timeout) {
 
 	uint32_t tickstart = BSP_GetTick();
-	uint32_t tmp;
+	uint32_t tmp = 0;
 
 	// Wait for BUSY flag to reset
 	while ((hi2c->ISR & I2C_ISR_BUSY) > 0) if ((BSP_GetTick() - tickstart) > Timeout) return BSP_ERROR;

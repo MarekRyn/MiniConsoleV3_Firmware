@@ -99,9 +99,9 @@ uint8_t	BSP_DRV_QSPI_Reset(QUADSPI_TypeDef * hqspi) {
 
 
 uint8_t BSP_DRV_QSPI_Init(QUADSPI_TypeDef * hqspi) {
-    uint8_t chip_id[2];
-    uint8_t	read_reg;
-    uint8_t	status_reg;
+    uint8_t chip_id[2] = {0};
+    uint8_t	read_reg = 0;
+    uint8_t	status_reg = 0;
     uint8_t try = 0;
 
     // For some reason memory chip is not working properly after every reset

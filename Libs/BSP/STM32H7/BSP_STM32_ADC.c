@@ -19,7 +19,7 @@
 uint8_t BSP_ADC_Init(ADC_TypeDef * hadc, uint32_t resolution, uint32_t nb_conversions) {
 
 	uint32_t t_start = BSP_GetTick();
-	uint32_t tmpCFGR;
+	uint32_t tmpCFGR = 0;
 
 	// Exiting from deep power-down
 	if (hadc->CR & ADC_CR_DEEPPWD) hadc->CR &= ~(ADC_CR_DEEPPWD);

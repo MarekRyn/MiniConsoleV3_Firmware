@@ -380,8 +380,8 @@ uint8_t BSP_STM32_Init_PeriphClocks(void) {
 
 uint8_t BSP_STM32_Init_NVIC(void) {
 
-	uint32_t pp;
-	uint32_t sp;
+	uint32_t pp = 0;
+	uint32_t sp = 0;
 
 	/************** PRIORITY 0 *************/
 	pp = 0;		sp = 0;
@@ -394,9 +394,13 @@ uint8_t BSP_STM32_Init_NVIC(void) {
     BSP_STM32_NVIC_SetPriority(DMA2D_IRQn, pp, sp);
     BSP_STM32_NVIC_EnableIRQ(DMA2D_IRQn);
 
+    // Configure NVIC for USBFS
+    BSP_STM32_NVIC_SetPriority(OTG_FS_IRQn, pp, sp);
+    BSP_STM32_NVIC_EnableIRQ(OTG_FS_IRQn);
+
     // Configuring NVIC for DMA1 - Stream 0 - for I2S3 TX
-//    BSP_NVIC_SetPriority(DMA1_Stream0_IRQn, pp, sp);
-//    BSP_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+//    BSP_STM32_NVIC_SetPriority(DMA1_Stream0_IRQn, pp, sp);
+//    BSP_STM32_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
 
     // Configuring NVIC for DMA1 - Stream 1 - for ADC1
     BSP_STM32_NVIC_SetPriority(DMA1_Stream1_IRQn, pp, sp);
@@ -410,21 +414,17 @@ uint8_t BSP_STM32_Init_NVIC(void) {
     BSP_STM32_NVIC_SetPriority(BDMA_Channel0_IRQn, pp, sp);
     BSP_STM32_NVIC_EnableIRQ(BDMA_Channel0_IRQn);
 
-    // Configure NVIC for USBFS
-    BSP_STM32_NVIC_SetPriority(OTG_FS_IRQn, pp, sp);
-    BSP_STM32_NVIC_EnableIRQ(OTG_FS_IRQn);
-
 
     /************** PRIORITY 1 *************/
 	pp = 1;		sp = 0;
 
 	// Configuring NVIC from Core CM4
-//	BSP_NVIC_SetPriority(CM4_SEV_IRQn, pp, sp);
-//	BSP_NVIC_EnableIRQ(CM4_SEV_IRQn);
+	BSP_STM32_NVIC_SetPriority(CM4_SEV_IRQn, pp, sp);
+	BSP_STM32_NVIC_EnableIRQ(CM4_SEV_IRQn);
 
     // Configuring NVIC for SDMMC2
-    // BSP_NVIC_SetPriority(SDMMC2_IRQn, pp, sp);
-    // BSP_NVIC_EnableIRQ(SDMMC2_IRQn);
+    // BSP_STM32_NVIC_SetPriority(SDMMC2_IRQn, pp, sp);
+    // BSP_STM32_NVIC_EnableIRQ(SDMMC2_IRQn);
 
 
     /************** PRIORITY 2 *************/
@@ -473,7 +473,7 @@ uint8_t BSP_STM32_Init_NVIC(void) {
 
 
 uint8_t BSP_STM32_Init_GPIO(void) {
-	uint32_t Pin;
+	uint32_t Pin = 0;
 
 	// Configuring GPIO pins - FMC
 	// PI9   ------> FMC_D30		PI10   ------> FMC_D31		PF0   ------> FMC_A0		PF1   ------> FMC_A1		PF2   ------> FMC_A2

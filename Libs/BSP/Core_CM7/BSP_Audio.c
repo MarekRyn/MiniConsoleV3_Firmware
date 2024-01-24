@@ -18,30 +18,14 @@ typedef struct {
 	uint8_t			chvolume_L[AUDIO_CFG_CHANNELS];
 	uint8_t			chvolume_R[AUDIO_CFG_CHANNELS];
 	uint32_t		command;
-	uint32_t		params[128];
+	uint32_t		status;
+	uint32_t		c_params[16];	// additional parameters for commands (written by application)
+	uint32_t		s_params[16];	// additional parameters for status (written by audio system)
 } AUDIO_REG_TypeDef;
-
-enum AUDIO_CMD {
-	AUDIO_CMD_NONE,
-	AUDIO_CMD_LINK_SND_LOGO,
-	AUDIO_CMD_LINK_SND_TEST,
-	AUDIO_CMD_LINK_MP3,
-	AUDIO_CMD_LINK_MOD,
-	AUDIO_CMD_LINK_RAW,
-	AUDIO_CMD_PLAY,
-	AUDIO_CMD_STOP,
-	AUDIO_CMD_PAUSE
-};
-
-enum AUDIO_CH_STATE {
-	AUDIO_CH_STATE_DISABLED,
-	AUDIO_CH_STATE_PLAY,
-	AUDIO_CH_STATE_STOP,
-	AUDIO_CH_STATE_PAUSE
-};
 
 // Global variables
 __IO SH0_RAM static AUDIO_REG_TypeDef		AUDIO_regs = {0};
+__IO static void* 							AUDIO_callbacks[16] = {0};
 
 
 uint8_t BSP_Audio_LoadMasterVolume(void) {
@@ -133,6 +117,11 @@ uint8_t BSP_Audio_DecChannelVolume(uint8_t chno, uint8_t delta) {
 
 
 uint8_t BSP_Audio_Init(void) {
+	// Waiting for AUDIO readiness
+	while (AUDIO_regs.status != AUDIO_STATUS_READY)	{};
+	memset((AUDIO_REG_TypeDef *)&AUDIO_regs.s_params, 0, sizeof(AUDIO_regs.s_params));
+	AUDIO_regs.status = AUDIO_STATUS_NONE;
+
 	// Set default volumes
 	for (uint8_t i = 0; i < AUDIO_CFG_CHANNELS; i++) BSP_Audio_SetChannelVolume(i, 128);
 	BSP_Audio_SetMasterVolume(100);
@@ -144,7 +133,7 @@ uint8_t BSP_Audio_LinkStartupSound(uint8_t chno) {
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_LINK_SND_LOGO;
-	AUDIO_regs.params[0] = chno;
+	AUDIO_regs.c_params[0] = chno;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
@@ -155,7 +144,7 @@ uint8_t BSP_Audio_LinkTestSound(uint8_t chno) {
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_LINK_SND_TEST;
-	AUDIO_regs.params[0] = chno;
+	AUDIO_regs.c_params[0] = chno;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
@@ -166,9 +155,9 @@ uint8_t BSP_Audio_LinkSourceMP3(uint8_t chno, uint32_t addr, uint32_t size) {
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_LINK_MP3;
-	AUDIO_regs.params[0] = chno;
-	AUDIO_regs.params[1] = addr;
-	AUDIO_regs.params[2] = size;
+	AUDIO_regs.c_params[0] = chno;
+	AUDIO_regs.c_params[1] = addr;
+	AUDIO_regs.c_params[2] = size;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
@@ -179,9 +168,9 @@ uint8_t BSP_Audio_LinkSourceMOD(uint8_t chno, uint32_t addr, uint32_t size) {
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_LINK_MOD;
-	AUDIO_regs.params[0] = chno;
-	AUDIO_regs.params[1] = addr;
-	AUDIO_regs.params[2] = size;
+	AUDIO_regs.c_params[0] = chno;
+	AUDIO_regs.c_params[1] = addr;
+	AUDIO_regs.c_params[2] = size;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
@@ -192,9 +181,9 @@ uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, uint32_t addr, uint32_t size) {
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_LINK_RAW;
-	AUDIO_regs.params[0] = chno;
-	AUDIO_regs.params[1] = addr;
-	AUDIO_regs.params[2] = size;
+	AUDIO_regs.c_params[0] = chno;
+	AUDIO_regs.c_params[1] = addr;
+	AUDIO_regs.c_params[2] = size;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
@@ -207,8 +196,8 @@ uint8_t BSP_Audio_ChannelPLay(uint8_t chno, uint8_t repeat) {
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_PLAY;
-	AUDIO_regs.params[0] = chno;
-	AUDIO_regs.params[1] = repeat;
+	AUDIO_regs.c_params[0] = chno;
+	AUDIO_regs.c_params[1] = repeat;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
@@ -219,7 +208,7 @@ uint8_t BSP_Audio_ChannelStop(uint8_t chno) {
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_STOP;
-	AUDIO_regs.params[0] = chno;
+	AUDIO_regs.c_params[0] = chno;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
@@ -230,9 +219,33 @@ uint8_t BPS_Audio_ChannelPause(uint8_t chno) {
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_PAUSE;
-	AUDIO_regs.params[0] = chno;
+	AUDIO_regs.c_params[0] = chno;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
 }
 
+
+uint8_t BSP_Audio_RegisterStatusCallback(uint8_t status, void* callback) {
+	AUDIO_callbacks[status] = callback;
+	return BSP_OK;
+}
+
+uint32_t BSP_Audio_GetStatusParam(uint8_t index) {
+	return AUDIO_regs.s_params[index];
+}
+
+
+// Interrupt handlers
+void CM4_SEV_IRQHandler(void) {
+	if (AUDIO_regs.status == AUDIO_STATUS_NONE) return;
+	if (AUDIO_regs.status == AUDIO_STATUS_READY) return;
+
+	if (AUDIO_callbacks[AUDIO_regs.status] != NULL) {
+		void (*pcallback)(void) = AUDIO_callbacks[AUDIO_regs.status];
+		pcallback();
+	}
+
+	memset((AUDIO_REG_TypeDef *)&AUDIO_regs.s_params, 0, sizeof(AUDIO_regs.s_params));
+	AUDIO_regs.status = AUDIO_STATUS_NONE;
+}

@@ -29,7 +29,7 @@ static uint8_t _RTC_ByteToBcd(uint8_t Value)
 
 static uint8_t _RTC_BcdToByte(uint8_t Value)
 {
-  uint8_t tmp;
+  uint8_t tmp = 0;
   tmp = ((Value & 0xF0U) >> 4U) * 10U;
   return (tmp + (Value & 0x0FU));
 }
@@ -65,7 +65,7 @@ static void _RTC_WriteDisable(RTC_TypeDef * hrtc) {
 
 static uint8_t _RTC_EnterInitMode(RTC_TypeDef * hrtc) {
 
-	uint32_t tickstart;
+	uint32_t tickstart = 0;
 
 	// Check if the Initialization mode is set
 	if ((hrtc->ISR & RTC_ISR_INITF) == 0U) {
@@ -179,8 +179,8 @@ uint8_t BSP_STM32_RTC_SetTime(RTC_TypeDef * hrtc, uint8_t hour, uint8_t minute, 
 uint8_t BSP_STM32_RTC_SetDate(RTC_TypeDef * hrtc, uint16_t year, uint8_t month, uint8_t day) {
 
 	uint8_t mdays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	uint8_t	weekday;
-	uint32_t tmpreg;
+	uint8_t	weekday = 0;
+	uint32_t tmpreg = 0;
 
 	// Validating year and month
 	if ((year < 2000) || (year > 2099)) return BSP_ERROR;	// STM32 calendar is designed to work properly between 2000 - 2099
@@ -234,7 +234,7 @@ uint8_t BSP_STM32_RTC_SetDate(RTC_TypeDef * hrtc, uint16_t year, uint8_t month, 
 
 uint8_t BSP_STM32_RTC_GetTime(RTC_TypeDef * hrtc, uint8_t * phour, uint8_t * pminute, uint8_t * psecond) {
 
-	uint32_t tmpreg;
+	uint32_t tmpreg = 0;
 
 	// Get the TR register
 	tmpreg = (uint32_t)(hrtc->TR & RTC_TR_RESERVED_MASK);
@@ -250,7 +250,7 @@ uint8_t BSP_STM32_RTC_GetTime(RTC_TypeDef * hrtc, uint8_t * phour, uint8_t * pmi
 
 uint8_t BSP_STM32_RTC_GetDate(RTC_TypeDef * hrtc, uint16_t * pyear, uint8_t * pmonth, uint8_t * pday, uint8_t * pweekday) {
 
-	uint32_t tmpreg;
+	uint32_t tmpreg = 0;
 
 	// Get the TD register
 	tmpreg = (uint32_t)(hrtc->DR & RTC_DR_RESERVED_MASK);

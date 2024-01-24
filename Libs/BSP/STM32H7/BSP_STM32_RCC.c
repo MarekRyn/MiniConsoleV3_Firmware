@@ -15,8 +15,8 @@
 // Setting RTC clock source to external LSE
 uint8_t BSP_STM32_RCC_CLKConfig_RTC(void) {
 
-	uint32_t tickstart;
-	uint32_t tmpreg;
+	uint32_t tickstart = 0;
+	uint32_t tmpreg = 0;
 
 	// Enable write access to Backup domain
 	SET_BIT(PWR->CR1, PWR_CR1_DBP);
@@ -72,7 +72,7 @@ uint8_t BSP_STM32_RCC_CLKConfig_I2C4(void) {
 // Setting I2S3 clock source to PLL2
 uint8_t BSP_STM32_RCC_CLKConfig_I2S3(void) {
 
-	uint32_t tickstart;
+	uint32_t tickstart = 0;
 
 	// Output Freq = ((25MHz / M) * (N + fracN/8192)) / P
 	// Setup audio frequency: ((25000000 / 5) * (151 + 2299/8192)) / 67 = 11.2896 MHz
@@ -197,7 +197,7 @@ uint8_t BSP_STM32_RCC_LSEConfigDrive(uint32_t lsedrive) {
 // Configure HSE Oscillator
 uint8_t BSP_STM32_RCC_ConfigHSE(uint32_t hsestate) {
 
-	uint32_t tickstart;
+	uint32_t tickstart = 0;
 
 	// Getting system clock source
     uint32_t temp_sysclksrc = RCC->CFGR & RCC_CFGR_SWS;
@@ -250,7 +250,7 @@ uint8_t BSP_STM32_RCC_ConfigHSE(uint32_t hsestate) {
 // Configure HSI Oscillator
 uint8_t BSP_STM32_RCC_ConfigHSI(uint32_t hsistate, uint32_t hsicalvalue) {
 
-	uint32_t tickstart;
+	uint32_t tickstart = 0;
 
     // When the HSI is used as system clock it will not be disabled
     const uint32_t temp_sysclksrc = RCC->CFGR & RCC_CFGR_SWS;
@@ -310,7 +310,7 @@ uint8_t BSP_STM32_RCC_ConfigHSI(uint32_t hsistate, uint32_t hsicalvalue) {
 
 // Configure LSE Oscillator
 uint8_t BSP_STM32_RCC_ConfigLSE(uint32_t lsestate) {
-	uint32_t tickstart;
+	uint32_t tickstart = 0;
 
 	// Enable write access to Backup domain
     PWR->CR1 |= PWR_CR1_DBP;
@@ -384,7 +384,7 @@ uint8_t BSP_STM32_RCC_ConfigHSI48(uint32_t hsi48state) {
 
 uint8_t BSP_STM32_RCC_ConfigPLL1(uint32_t pllstate, uint32_t pllsource, uint32_t pllrge, uint32_t pllvcosel, uint32_t m, uint32_t n, uint32_t p, uint32_t q, uint32_t r) {
 
-	uint32_t tickstart;
+	uint32_t tickstart = 0;
 
 	// Check if the PLL is used as system clock or not
 	if ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL1) {
@@ -458,7 +458,7 @@ uint8_t BSP_STM32_RCC_ConfigPLL1(uint32_t pllstate, uint32_t pllsource, uint32_t
 
 uint8_t BSP_STM32_RCC_ConfigPLL3(uint32_t pllrge, uint32_t pllvcosel, uint32_t m, uint32_t n, uint32_t p, uint32_t q, uint32_t r, uint32_t frac) {
 
-	uint32_t tickstart;
+	uint32_t tickstart = 0;
 
 	// Check that PLL3 OSC clock source is already set
 	if ((RCC->PLLCKSELR & RCC_PLLCKSELR_PLLSRC) == RCC_PLLSOURCE_NONE) return BSP_ERROR;
@@ -506,7 +506,7 @@ uint8_t BSP_STM32_RCC_ConfigPLL3(uint32_t pllrge, uint32_t pllvcosel, uint32_t m
 
 uint8_t BSP_STM32_RCC_ClockConfig(uint32_t clocktype, uint32_t SYSSource, uint32_t SYSDiv, uint32_t AHBDiv, uint32_t APB1Div, uint32_t APB2Div, uint32_t APB3Div, uint32_t APB4Div, uint32_t flatency) {
 
-	uint32_t tickstart;
+	uint32_t tickstart = 0;
 
 	// To correctly read data from FLASH memory, the number of wait states (LATENCY) must be correctly programmed
 	// according to the frequency of the CPU clock (HCLK) and the supply voltage of the device.
@@ -626,9 +626,14 @@ uint8_t BSP_STM32_RCC_ClockConfig(uint32_t clocktype, uint32_t SYSSource, uint32
 
 uint32_t BSP_STM32_RCC_GetSysClockFreq(void) {
 
-	uint32_t pllp, pllsource, pllm, pllfracen, hsivalue;
-    float_t fracn1, pllvco;
-    uint32_t sysclockfreq;
+	uint32_t pllp = 0;
+	uint32_t pllsource = 0;
+	uint32_t pllm = 0;
+	uint32_t pllfracen = 0;
+	uint32_t hsivalue = 0;
+    float_t fracn1 = 0;
+    float_t pllvco = 0;
+    uint32_t sysclockfreq = 0;
 
     // Get SYSCLK source
 

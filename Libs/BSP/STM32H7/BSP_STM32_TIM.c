@@ -19,7 +19,7 @@
  *******************************************************************/
 
 uint8_t BSP_STM32_TIM_Init(TIM_TypeDef *htim, uint8_t clk_division, uint16_t prescaler, uint16_t counter_limit) {
-	uint32_t tmp;
+	uint32_t tmp = 0;
 
 	if (clk_division > 3) return BSP_ERROR;
 

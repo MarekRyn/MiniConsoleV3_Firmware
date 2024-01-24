@@ -127,6 +127,8 @@ extern void (*BSP_LCD_FillBuf)(uint16_t x, uint16_t y, uint16_t width, uint16_t 
 extern void (*BSP_LCD_FillBufBlend)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
 extern void (*BSP_LCD_CopyBuf)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height);
 extern void (*BSP_LCD_CopyBufBlend)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha);
+extern void (*BSP_LCD_CacheFrame)(void);
+extern void (*BSP_LCD_RestoreFrame)(void);
 extern void (*BSP_LCD_CopyBufJPEG)(uint16_t x_dest, uint16_t y_dest);
 
 

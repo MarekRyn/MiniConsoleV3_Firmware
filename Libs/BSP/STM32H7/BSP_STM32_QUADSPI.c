@@ -42,7 +42,7 @@ typedef struct _QSPICtx {
 
 } QSPI_CTX_TypeDef;
 
-static QSPI_CTX_TypeDef qspictx;
+static QSPI_CTX_TypeDef qspictx = {0};
 
 
 static uint8_t _QSPI_WaitForFlag(QUADSPI_TypeDef * hqspi, uint32_t flag, uint32_t state, uint32_t timeout) {

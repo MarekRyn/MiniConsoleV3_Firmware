@@ -200,7 +200,7 @@ static uint8_t _SD_InitCard(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx) {
 
 	SDMMCContext_TypeDef * sdmmc_ctx = (SDMMCContext_TypeDef *)ctx->ctxmem;
 
-	SDMMC_CSD_TypeDef CSD;
+	SDMMC_CSD_TypeDef CSD = {0};
 
 	uint16_t sd_rca = 0;
 	uint32_t tickstart = BSP_GetTick();
@@ -309,7 +309,7 @@ static uint8_t _SD_SendSDStatus(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ct
 
 static uint8_t _SD_GetCardStatus(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx, SDMMC_CardStatus_TypeDef * status) {
 
-	uint32_t sd_status[16];
+	uint32_t sd_status[16] = {0};
 
 	if (_SD_SendSDStatus(hsdmmc, ctx, sd_status)) {
 		// Clear all the static flags
@@ -343,7 +343,7 @@ static uint8_t _SD_GetCardStatus(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * c
 
 
 static uint8_t _SD_FindSCR(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx, uint32_t *pSCR) {
-	SDMMC_DataInitTypeDef config;
+	SDMMC_DataInitTypeDef config = {0};
 	uint32_t tickstart = BSP_GetTick();
 	uint32_t index = 0U;
 	uint32_t tempscr[2U] = {0UL, 0UL};
@@ -439,8 +439,8 @@ uint8_t BSP_STM32_SDMMC_Init(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx) 
 	__IO SDMMCContext_TypeDef * sdmmc_ctx = (SDMMCContext_TypeDef *)ctx->ctxmem;
 
 	SDMMC_CardStatus_TypeDef cardstatus = {0};
-	uint32_t speedgrade;
-	uint32_t unitsize;
+	uint32_t speedgrade = 0;
+	uint32_t unitsize = 0;
 
 	// 1. Initialize Card parameters
 
@@ -496,9 +496,15 @@ uint8_t BSP_STM32_SDMMC_Init(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx) 
 	Init.ClockPowerSave   		= SDMMC_CLOCK_POWER_SAVE_ENABLE;
 	Init.BusWide          		= SDMMC_BUS_WIDE_4B;
 	Init.HardwareFlowControl 	= SDMMC_HARDWARE_FLOW_CONTROL_ENABLE;
-	// Calculating divider: div = 60MHz / (2 * 7.5MHz) = 4
-	// For 60MHz it will give 7.5MHz for SDCard (~3.5MB/s on 4-bit bus)
+
+	// Card frequency = 60MHz / (2 * ClockDiv)
+	// ClockDiv = 1 -> 30MHz 	= ~14.3MB/s
+	// ClockDiv = 2 -> 15MHz 	= ~7.1MB/s
+	// ClockDiv = 3 -> 10MHz 	= ~4.7MB/s
+	// ClockDiv = 4 -> 7.5MHz 	= ~3.5MB/s
+
 	Init.ClockDiv				= 4;
+	if ((sdmmc_ctx->SDCardSpeed == CARD_HIGH_SPEED) || (sdmmc_ctx->SDCardSpeed == CARD_ULTRA_HIGH_SPEED)) Init.ClockDiv = 1;
 
     if (SDMMC_Init(hsdmmc, Init)) return BSP_ERROR;
 
@@ -519,12 +525,12 @@ uint8_t BSP_STM32_SDMMC_ReadBlocks(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef *
 
 	__IO SDMMCContext_TypeDef * sdmmc_ctx = (SDMMCContext_TypeDef *)ctx->ctxmem;
 
-	SDMMC_DataInitTypeDef config;
-	uint32_t errorstate;
+	SDMMC_DataInitTypeDef config = {0};
+	uint32_t errorstate = 0;
 	uint32_t tickstart = BSP_GetTick();
-	uint32_t count;
-	uint32_t data;
-	uint32_t dataremaining;
+	uint32_t count = 0;
+	uint32_t data = 0;
+	uint32_t dataremaining = 0;
 	uint32_t add = BlockAdd;
 	uint8_t *tempbuff = pData;
 
@@ -607,11 +613,11 @@ uint8_t BSP_STM32_SDMMC_WriteBlocks(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef 
 
 	__IO SDMMCContext_TypeDef * sdmmc_ctx = (SDMMCContext_TypeDef *)ctx->ctxmem;
 
-	SDMMC_DataInitTypeDef config;
-	uint32_t errorstate;
+	SDMMC_DataInitTypeDef config = {0};
+	uint32_t errorstate = 0;
 	uint32_t tickstart = BSP_GetTick();
-	uint32_t count;
-	uint32_t data;
+	uint32_t count = 0;
+	uint32_t data = 0;
 	uint32_t dataremaining;
 	uint32_t add = BlockAdd;
 	const uint8_t *tempbuff = pData;

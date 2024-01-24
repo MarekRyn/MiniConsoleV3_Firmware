@@ -13,7 +13,8 @@
 
 static uint32_t timeout_screen_reduced = 0;
 static uint32_t timeout_screen_pwroff = 0;
-static uint8_t	ps_state0, ps_state1;
+static uint8_t	ps_state0 = 0;
+static uint8_t	ps_state1 = 0;
 
 
 uint8_t BSP_PWR_Init(void) {
@@ -25,6 +26,8 @@ uint8_t BSP_PWR_Init(void) {
 	ps_state1 = 0;
 	BSP_STM32_TIM_Init(TIM4, TIM_CLOCKDIVISION_DIV1, 23999, 4999);
 	BSP_STM32_TIM_Start(TIM4);
+
+	return BSP_OK;
 }
 
 

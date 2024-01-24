@@ -135,7 +135,7 @@ uint8_t const desc_fs_conf_cdc[] =
   // Interface number, string index, EP notification address and size, EP data address (out, in) and size.
   TUD_CDC_DESCRIPTOR(0, 5, 0x81, 8, 0x02, 0x82, 64),
 };
-static uint16_t _desc_str[32];
+static uint16_t _desc_str[32] = {0};
 
 //--------------------------------------------------------------------+
 // Device callbacks
@@ -188,7 +188,7 @@ uint8_t const * tud_descriptor_configuration_cb(uint8_t index) {
 uint16_t const* tud_descriptor_string_cb(uint8_t index, uint16_t langid) {
 	(void) langid;
 
-	uint8_t chr_count;
+	uint8_t chr_count = 0;
 
 	if (index == 0) {
 		memcpy(&_desc_str[1], string_desc_arr[0], 2);

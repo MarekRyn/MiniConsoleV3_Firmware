@@ -14,7 +14,7 @@
 
 
 uint8_t BSP_STM32_PWR_ConfigSupply(uint32_t SupplySource) {
-	uint32_t tick;
+	uint32_t tick = 0;
 
 	// Validate input parameters
 	switch (SupplySource) {

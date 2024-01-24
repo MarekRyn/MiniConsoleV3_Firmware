@@ -26,7 +26,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 
-#include "BSP_Common.h""
+#include "BSP_Common.h"
 
 typedef enum
 {

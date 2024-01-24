@@ -22,8 +22,8 @@
 uint8_t BSP_STM32_GPIO_Init(GPIO_TypeDef  *GPIOx, uint32_t Pins, uint32_t Mode, uint32_t Pull, uint32_t Speed, uint32_t Alternate) {
 
 	uint32_t position = 0x00U;
-	uint32_t iocurrent;
-	uint32_t temp;
+	uint32_t iocurrent = 0;
+	uint32_t temp = 0;
 	EXTI_Core_TypeDef *EXTI_CurrentCPU;
 
 	#if defined(DUAL_CORE) && defined(CORE_CM4)

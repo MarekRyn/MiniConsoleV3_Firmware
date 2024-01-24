@@ -15,7 +15,7 @@ uint8_t BSP_Res_Init(ResCtx_TypeDef *resctx, uint32_t resAddr, uint32_t resSize)
 	// resaddr - memory address for resource storage
 	// ressize - size of memory available for resource storage [bytes]
 
-	FRESULT res;
+	FRESULT res = {0};
 
 	// Initiating variables
 
@@ -44,8 +44,8 @@ uint8_t BSP_Res_Init(ResCtx_TypeDef *resctx, uint32_t resAddr, uint32_t resSize)
 
 uint8_t BSP_Res_Load(ResCtx_TypeDef *resctx, char *filename, uint16_t id) {
 
-	FIL	file;
-	FRESULT res;
+	FIL	file = {0};
+	FRESULT res = {0};
 
 	// Opening file
 

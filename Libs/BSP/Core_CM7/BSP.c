@@ -16,7 +16,7 @@
 #define HSEM_ID_0 (0U) // HW semaphore 0
 
 uint8_t BSP_BOARD_Init_0(void) {
-	uint32_t timeout;
+	uint32_t timeout = 0;
 
 	// Config MPU
 	BSP_STM32_MPU_Init();
@@ -69,9 +69,6 @@ uint8_t BSP_BOARD_Init_1(void) {
 	// STM32 Initialization - GPIO Pins
 	if (BSP_STM32_Init_GPIO()) return BSP_ERROR;
 
-	// STM32 Initialization - NVIC - Interrupts
-	if (BSP_STM32_Init_NVIC()) return BSP_ERROR;
-
 	// SDRAM Initialization
 	if (BSP_SDRAM_Init(120)) return BSP_ERROR;
 
@@ -80,6 +77,9 @@ uint8_t BSP_BOARD_Init_1(void) {
 
 	// PWR Initialization
 	if (BSP_PWR_Init()) return BSP_ERROR;
+
+	// STM32 Initialization - NVIC - Interrupts
+	if (BSP_STM32_Init_NVIC()) return BSP_ERROR;
 
 	// Touch Panel Initialization
 	if (BSP_LCD_TP_Init()) return BSP_ERROR;

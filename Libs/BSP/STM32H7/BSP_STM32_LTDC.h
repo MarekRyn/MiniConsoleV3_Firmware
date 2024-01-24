@@ -48,13 +48,17 @@ uint8_t BSP_STM32_LTDC_Init(LTDC_TypeDef *hltdc, uint32_t lcd_h_sync, uint32_t l
 		uint32_t lcd_acc_active_width, uint32_t lcd_acc_active_height,
 		uint32_t lcd_total_width, uint32_t lcd_total_height, uint32_t bgcolor);
 
-uint8_t BSP_STM32_LTDC_DisableLayer(LTDC_TypeDef *hltdc, uint32_t layer);
+uint8_t BSP_STM32_LTDC_Enable(LTDC_TypeDef *hltdc);
 
-uint8_t BSP_STM32_LTDC_EnableLayer(LTDC_TypeDef *hltdc, uint32_t layer);
+uint8_t BSP_STM32_LTDC_Disable(LTDC_TypeDef *hltdc);
 
 uint8_t BSP_STM32_LTDC_ConfigLayer(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t alpha, uint32_t alpha0, uint32_t bgcolor,
 		uint32_t blendingfactor1, uint32_t blendingfactor2, uint32_t fbstartaddress, uint32_t imgheight, uint32_t imgwidth,
 		uint32_t pixelformat, uint32_t x0, uint32_t x1, uint32_t y0, uint32_t y1);
+
+uint8_t BSP_STM32_LTDC_EnableLayer(LTDC_TypeDef *hltdc, uint32_t layer);
+
+uint8_t BSP_STM32_LTDC_DisableLayer(LTDC_TypeDef *hltdc, uint32_t layer);
 
 uint8_t BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t fbstartaddress);
 

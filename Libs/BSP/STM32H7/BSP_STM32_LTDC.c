@@ -26,7 +26,7 @@ uint8_t BSP_STM32_LTDC_Init(LTDC_TypeDef *hltdc, uint32_t lcd_h_sync, uint32_t l
 	// Checking if LTDC already initialized
 	if (hltdc->GCR & LTDC_GCR_LTDCEN) return BSP_OK;
 
-	uint32_t tmp;
+	uint32_t tmp = 0;
 
 	//Reseting LTDC
 	//	RCC->APB3RSTR |= RCC_APB3RSTR_LTDCRST;
@@ -35,8 +35,8 @@ uint8_t BSP_STM32_LTDC_Init(LTDC_TypeDef *hltdc, uint32_t lcd_h_sync, uint32_t l
 	//	BSP_Delay(1);
 
 	// Setting AXI QOS to higher priority for LTDC peripheral
-	GPV->AXI_INI6_READ_QOS = 1UL;
-	GPV->AXI_INI6_WRITE_QOS = 1UL;
+	//	GPV->AXI_INI6_READ_QOS = 1UL;
+	//	GPV->AXI_INI6_WRITE_QOS = 1UL;
 
 	// LTDC Init
 
@@ -71,49 +71,30 @@ uint8_t BSP_STM32_LTDC_Init(LTDC_TypeDef *hltdc, uint32_t lcd_h_sync, uint32_t l
 	// Enable the Transfer Error and FIFO underrun interrupts */
 	hltdc->IER |= LTDC_IER_TERRIE | LTDC_IER_FUIE;
 
+	return BSP_OK;
+}
+
+uint8_t BSP_STM32_LTDC_Enable(LTDC_TypeDef *hltdc) {
 	// Enable LTDC by setting LTDCEN bit
 	hltdc->GCR |= LTDC_GCR_LTDCEN;
 
 	return BSP_OK;
 }
 
-uint8_t BSP_STM32_LTDC_DisableLayer(LTDC_TypeDef *hltdc, uint32_t layer) {
-	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)hltdc) + 0x84U + (0x80U*(layer)));
-
-	// Disable Layer
-	l->CR &= ~(LTDC_LxCR_LEN | LTDC_LxCR_CLUTEN | LTDC_LxCR_COLKEN);
-	l->CKCR = 0x00000000;
-
-	// Set the Reload on Vertical Blank
-	hltdc->SRCR |= LTDC_SRCR_VBR;
-
-	// Wait for layer to disable
-	while (l->CR & LTDC_LxCR_LEN) {};
+uint8_t BSP_STM32_LTDC_Disable(LTDC_TypeDef *hltdc) {
+	// Enable LTDC by setting LTDCEN bit
+	hltdc->GCR &= ~LTDC_GCR_LTDCEN;
 
 	return BSP_OK;
 }
 
-uint8_t BSP_STM32_LTDC_EnableLayer(LTDC_TypeDef *hltdc, uint32_t layer) {
-	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)hltdc) + 0x84U + (0x80U*(layer)));
-
-	// Enable layer
-	l->CR |= LTDC_LxCR_LEN;
-
-	// Set the Reload on Vertical Blank
-	hltdc->SRCR |= LTDC_SRCR_VBR;
-
-	// Wait for layer to enable
-	while (!(l->CR & LTDC_LxCR_LEN)) {};
-
-	return BSP_OK;
-}
 
 uint8_t BSP_STM32_LTDC_ConfigLayer(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t alpha, uint32_t alpha0, uint32_t bgcolor,
 		uint32_t blendingfactor1, uint32_t blendingfactor2, uint32_t fbstartaddress, uint32_t imgheight, uint32_t imgwidth,
 		uint32_t pixelformat, uint32_t x0, uint32_t x1, uint32_t y0, uint32_t y1) {
 
 	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)hltdc) + 0x84U + (0x80U*(layer)));
-	uint32_t tmp;
+	uint32_t tmp = 0;
 
 	// Configure the horizontal start and stop position
 	tmp = ((x1 + ((hltdc->BPCR & LTDC_BPCR_AHBP) >> 16U)) << 16U);
@@ -162,6 +143,39 @@ uint8_t BSP_STM32_LTDC_ConfigLayer(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t
 }
 
 
+uint8_t BSP_STM32_LTDC_EnableLayer(LTDC_TypeDef *hltdc, uint32_t layer) {
+	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)hltdc) + 0x84U + (0x80U*(layer)));
+
+	// Enable layer
+	l->CR |= LTDC_LxCR_LEN;
+
+	// Set the Reload on Vertical Blank
+	hltdc->SRCR |= LTDC_SRCR_VBR;
+
+	// Wait for layer to enable
+	while (!(l->CR & LTDC_LxCR_LEN)) {};
+
+	return BSP_OK;
+}
+
+
+uint8_t BSP_STM32_LTDC_DisableLayer(LTDC_TypeDef *hltdc, uint32_t layer) {
+	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)hltdc) + 0x84U + (0x80U*(layer)));
+
+	// Disable Layer
+	l->CR &= ~(LTDC_LxCR_LEN | LTDC_LxCR_CLUTEN | LTDC_LxCR_COLKEN);
+	l->CKCR = 0x00000000;
+
+	// Set the Reload on Vertical Blank
+	hltdc->SRCR |= LTDC_SRCR_VBR;
+
+	// Wait for layer to disable
+	while (l->CR & LTDC_LxCR_LEN) {};
+
+	return BSP_OK;
+}
+
+
 uint8_t BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t fbstartaddress) {
 
 	// Updating Framebuffer address
@@ -178,8 +192,8 @@ uint8_t BSP_STM32_LTDC_ConfigCLUT(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t 
 
 	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)LTDC) + 0x84U + (0x80U*(layer)));
 	uint32_t *pcolorlut = clut;
-	uint32_t counter;
-	uint32_t tmp;
+	uint32_t counter = 0;
+	uint32_t tmp = 0;
 
 	// Configure CLUT
 	for (counter = 0U; (counter < 256); counter++) {

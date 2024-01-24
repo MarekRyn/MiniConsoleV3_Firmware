@@ -52,9 +52,9 @@ static uint8_t _JPEG_DecInit(JPEG_TypeDef * _hjpeg, uint32_t JPEG_Addr, uint32_t
 
 static uint8_t _JPEG_DecProcess(JPEG_TypeDef * _hjpeg) {
 
-	uint32_t yblockNb;
-	uint32_t cBblockNb;
-	uint32_t cRblockNb;
+	uint32_t yblockNb = 0;
+	uint32_t cBblockNb = 0;
+	uint32_t cRblockNb = 0;
 
 	// Header parsing completed
 	if ((_hjpeg->SR) & JPEG_FLAG_HPDF) {

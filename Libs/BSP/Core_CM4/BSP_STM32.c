@@ -131,6 +131,8 @@ uint8_t BSP_STM32_Init_PeriphClocks() {
 
 	// Starting GPIOs clocks
 	__BSP_RCC_GPIOE_CLK_ENABLE();
+	__BSP_RCC_GPIOA_CLK_ENABLE();
+	__BSP_RCC_GPIOC_CLK_ENABLE();
 
     // Starting peripherals clocks - DMA1
     __BSP_RCC_DMA1_CLK_ENABLE();
@@ -145,8 +147,8 @@ uint8_t BSP_STM32_Init_PeriphClocks() {
 
 uint8_t BSP_STM32_Init_NVIC() {
 
-	uint32_t pp;
-	uint32_t sp;
+	uint32_t pp = 0;
+	uint32_t sp = 0;
 
 	/************** PRIORITY 0 *************/
 	pp = 0;		sp = 0;
@@ -155,34 +157,34 @@ uint8_t BSP_STM32_Init_NVIC() {
     BSP_STM32_NVIC_SetPriority(DMA1_Stream0_IRQn, pp, sp);
     BSP_STM32_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
 
+    // Configuring NVIC for I2S3
+    BSP_STM32_NVIC_SetPriority(SPI3_IRQn, pp, sp);
+    BSP_STM32_NVIC_EnableIRQ(SPI3_IRQn);
+
     /************** PRIORITY 1 *************/
-	pp = 1;		sp = 1;
+	pp = 1;		sp = 0;
 
 	// Configuring NVIC from Core CM7
 	BSP_STM32_NVIC_SetPriority(CM7_SEV_IRQn, pp, sp);
 	BSP_STM32_NVIC_EnableIRQ(CM7_SEV_IRQn);
 
-    // Configuring NVIC for I2S3
-    BSP_STM32_NVIC_SetPriority(SPI3_IRQn, pp, sp);
-    BSP_STM32_NVIC_EnableIRQ(SPI3_IRQn);
-
     /************** PRIORITY 2 *************/
-    pp = 2;		sp = 2;
+    pp = 2;		sp = 0;
 
 
     /************** PRIORITY 3 *************/
-    pp = 3;		sp = 3;
+    pp = 3;		sp = 0;
 
 
     /************** PRIORITY 4 *************/
-    pp = 4;		sp = 4;
+    pp = 4;		sp = 0;
 
 
     return BSP_OK;
 }
 
 uint8_t BSP_STM32_Init_GPIO() {
-	uint32_t Pin;
+	uint32_t Pin = 0;
 
     // Configuring GPIO pins - I2S3
     // PA15 (JTDI)     ------> I2S3_WS		PC10     ------> I2S3_CK		PC12     ------> I2S3_SDO

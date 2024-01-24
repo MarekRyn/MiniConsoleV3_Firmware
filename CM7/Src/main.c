@@ -14,13 +14,12 @@
 #include "page_main.h"
 
 
-__IO uint32_t state0;
-__IO uint32_t state1;
+__IO uint32_t state0 = 0;
+__IO uint32_t state1 = 0;
 
 void Bootloader_Task(void) {
 	if (!BSP_LCD_GetEditPermission()) return;
 
-	G2D_DrawLastJPEG(0, 0); // Background
 	page_render_main();
 
 	switch (state1) {
@@ -51,6 +50,7 @@ void Bootloader_Task(void) {
 		if (ret == 200) state0 = STATE0_RESTARTING;
 		break;
 	case STATE1_INFO:
+		page_render_info();
 		break;
 
 	default:
@@ -64,8 +64,6 @@ void Bootloader_Task(void) {
 
 int main(void)
 {
-
-	ResCtx_TypeDef resctx;
 
 	// Starting up of MiniConsole;
 	state0 = (BSP_STM32_RCC_WasSystemRestareted()) ? STATE0_RESTARTED : STATE0_PWR_UP;
@@ -82,16 +80,16 @@ int main(void)
 
 		case STATE0_PWR_CONFIRMED:
 			// Initialization of board after pwr up - Stage 1
+			if (BSP_BOARD_Init_1()) {state0 = STATE0_FAULT; break; }
 			state0 = STATE0_INITIATED;
-			if (BSP_BOARD_Init_1()) state0 = STATE0_FAULT;
 			break;
 
 		case STATE0_RESTARTED:
 			// Initialization of board after restart
-			state0 = STATE0_INITIATED;
 			if (BSP_BOARD_Init_0()) { state0 = STATE0_FAULT; break; };
 			if (BSP_BOARD_Init_1()) { state0 = STATE0_FAULT; break; };
 			// TODO: Detecting if console restarted due to fault, and entering fault recovery mode
+			state0 = STATE0_INITIATED;
 			break;
 
 		case STATE0_FAULT_RECOVERY:
@@ -101,7 +99,10 @@ int main(void)
 
 		case STATE0_INITIATED:
 			// Splash screen
-			BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_TRIPLE, C_BLACK, NULL);
+
+			printf("MiniConsole Started\n");
+
+			BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_DOUBLE, C_BLACK, NULL);
 
 			while (!BSP_LCD_GetEditPermission()) {};
 			G2D_ClearFrame();
@@ -110,7 +111,7 @@ int main(void)
 
 			BSP_LCD_FrameReady();
 
-			BSP_Delay(200);
+			BSP_Delay(500);
 
 			// Play startup sound
 			BSP_Audio_SetMasterVolume(128);
@@ -122,7 +123,7 @@ int main(void)
 			BSP_LCD_InitBackLight(10);
 			BSP_LCD_SetBackLight(80, 25);
 
-			BSP_Delay(4000);
+			//BSP_Delay(4000);
 
 			// Load default values
 			BSP_PWR_LoadConfig();
@@ -145,23 +146,19 @@ int main(void)
 
 		case STATE0_BOOTLOADER_INIT:
 
-			BSP_Res_Init(&resctx, 0xC0000000, 16*1024*1024);
-			BSP_Res_Load(&resctx, "idol.mp3", 0);
-			BSP_Res_Load(&resctx, "song02.mod", 1);
-			BSP_Res_Load(&resctx, "StarWars.raw", 2);
+			BSP_Res_Init(&resctx, 0xC0000000, 48*1024*1024);
+			BSP_Res_Load(&resctx, "alex-productions-revolution.mp3", 0);
+			BSP_Res_Load(&resctx, "corporate-music-zone-rise.mp3", 1);
+			BSP_Res_Load(&resctx, "luke-bergs-agusalvarez-heaven.mp3", 2);
+			BSP_Res_Load(&resctx, "mixaund-dreamers.mp3", 3);
+			BSP_Res_Load(&resctx, "mixaund-hope.mp3", 4);
+			BSP_Res_Load(&resctx, "alex-productions-efficsounds-energetic-rock-hiking-free-music.mp3",5);
 
 			state0 = STATE0_BOOTLOADER_MAIN;
 			state1 = STATE1_APPS;
 			G2D_DecodeJPEG((uint32_t)WP_00, sizeof(WP_00));
 			page_init_main();
 			page_init_apps();
-
-
-			//BSP_Audio_LinkSourceMP3(0, BSP_Res_GetAddr(&resctx, 0), BSP_Res_GetSize(&resctx, 0));
-			//BSP_Audio_LinkSourceMOD(0, BSP_Res_GetAddr(&resctx, 1), BSP_Res_GetSize(&resctx, 1));
-			//BSP_Audio_LinkSourceRAW(0, BSP_Res_GetAddr(&resctx, 2), BSP_Res_GetSize(&resctx, 2));
-			//BSP_Audio_SetChannelVolume(0, 100);
-			//BSP_Audio_ChannelPLay(0, 1);
 
 			break;
 

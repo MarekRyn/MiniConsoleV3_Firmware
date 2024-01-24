@@ -13,7 +13,6 @@ static int16_t graph_buf[3][490] = {0};
 static uint8_t graph_flag[490] = {0};
 static uint16_t graph_i = 0;
 
-static GUI_Panel_TypeDef		panel00;
 static GUI_Button_TypeDef		button00;
 static GUI_Button_TypeDef		button01;
 static GUI_Button_TypeDef		button02;
@@ -76,12 +75,6 @@ uint8_t page_init_imu(void) {
 	imu_state = 0;
 	cal_state = 0;
 
-	// Panel00 - Main Area
-	panel00.x_pos = 220;
-	panel00.y_pos = 10;
-	panel00.width = 570;
-	panel00.height = 460;
-
 	// Button00 - Test Orientation
 	button00.x_pos = 240;
 	button00.y_pos = 30;
@@ -136,7 +129,6 @@ uint8_t page_init_imu(void) {
 
 uint8_t	page_render_imu(void) {
 
-	GUI_Panel(&panel00);
 	GUI_Button(&button00);
 	GUI_Button(&button01);
 	GUI_Button(&button02);

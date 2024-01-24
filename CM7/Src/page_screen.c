@@ -12,7 +12,6 @@ static uint32_t				default_bklight;
 static uint8_t				screen_reduced;
 static uint8_t				screen_pwroff;
 
-static GUI_Panel_TypeDef	panel00;
 static GUI_Button_TypeDef	button00;
 static GUI_Slider_TypeDef	slider00;
 static GUI_Spinner_TypeDef	spinner00;
@@ -103,12 +102,6 @@ uint8_t page_init_screen(void) {
 	screen_reduced = ((rtcreg & 0x00FF0000) >> 16);
 	screen_pwroff = ((rtcreg & 0xFF000000) >> 24);
 
-	// Panel00 - Main Area
-	panel00.x_pos = 220;
-	panel00.y_pos = 10;
-	panel00.width = 570;
-	panel00.height = 460;
-
 	// Button00 - Save as default
 	button00.x_pos = 590;
 	button00.y_pos = 140;
@@ -147,8 +140,6 @@ uint8_t	page_render_screen(void) {
 	char str[48];
 
 	current_bklight = BSP_LCD_GetBackLight();
-
-	GUI_Panel(&panel00);
 
 	G2D_TextBlend(240, 30, FONT_24_verdana, "LCD brightness", BSP_LCD_Color(C_WHITE, 255));
 	sprintf(str, "%03d%%", current_bklight);

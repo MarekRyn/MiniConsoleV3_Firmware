@@ -11,8 +11,6 @@ static uint8_t pwr_state = 0;
 static uint32_t pwr_counter = 0;
 static uint32_t pwr_timestamp;
 
-static GUI_Panel_TypeDef panel00;
-
 static GUI_Button_TypeDef button00;
 static GUI_Button_TypeDef button01;
 
@@ -61,12 +59,6 @@ uint8_t page_init_pwr(void) {
 	pwr_state = 0;
 	pwr_counter = 0;
 
-	// Panel00 - Main Area
-	panel00.x_pos = 220;
-	panel00.y_pos = 10;
-	panel00.width = 570;
-	panel00.height = 460;
-
 	// Button00 - Shut Down
 	button00.x_pos = 405;
 	button00.y_pos = 150;
@@ -92,7 +84,7 @@ uint8_t page_init_pwr(void) {
 
 
 uint8_t	page_render_pwr(void) {
-	GUI_Panel(&panel00);
+
 	GUI_Button(&button00);
 	GUI_Button(&button01);
 

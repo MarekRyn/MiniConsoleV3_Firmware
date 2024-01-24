@@ -10,13 +10,20 @@
 static uint32_t					current_volume;
 static uint32_t					default_volume;
 
-static GUI_Panel_TypeDef		panel00;
 static GUI_Button_TypeDef		button00;
 static GUI_Button_TypeDef		button01;
 static GUI_Button_TypeDef		button02;
 static GUI_Button_TypeDef		button03;
 static GUI_Slider_TypeDef		slider00;
 
+
+static void audio_callback_stop(void) {
+	if (BSP_Audio_GetStatusParam(0) == 0) {
+		button00.state = GUI_STATE_ENABLED;
+		button01.state = GUI_STATE_ENABLED;
+		button02.state = GUI_STATE_ENABLED;
+	}
+}
 
 static void button00_callback(void) {
 	if (BSP_hlcdtp.gest_data.gest != LCD_TP_GEST_CLICK_DOWN) return;
@@ -100,11 +107,7 @@ uint8_t page_init_audio(void) {
 	current_volume = BSP_Audio_GetMasterVolume();
 	default_volume = (uint8_t)((BSP_STM32_RTC_GetBackupReg(RTC, 10) & 0x000000FF) >> 0);
 
-	// Panel00 - Main Area
-	panel00.x_pos = 220;
-	panel00.y_pos = 10;
-	panel00.width = 570;
-	panel00.height = 460;
+	BSP_Audio_RegisterStatusCallback(AUDIO_STATUS_CH_STOP, audio_callback_stop);
 
 	// Button00 - Test Left Speaker
 	button00.x_pos = 240;
@@ -164,8 +167,6 @@ uint8_t	page_render_audio(void) {
 	char str[48];
 
 	current_volume = BSP_Audio_GetMasterVolume();
-
-	GUI_Panel(&panel00);
 
 	G2D_TextBlend(240, 30, FONT_24_verdana, "Audio test", BSP_LCD_Color(C_WHITE, 255));
 

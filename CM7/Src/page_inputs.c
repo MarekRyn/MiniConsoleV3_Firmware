@@ -15,8 +15,6 @@ static uint32_t	cal2_area, cal2_parea;
 static int32_t obj_x = 0;
 static int32_t obj_y = 0;
 
-static GUI_Panel_TypeDef		panel00;
-static GUI_Panel_TypeDef		panel01;
 static GUI_Button_TypeDef		button00;
 static GUI_ProgressBar_TypeDef	pbar00;
 
@@ -55,18 +53,6 @@ uint8_t page_init_inputs(void) {
 
 	cal_state = 0;
 
-	// Panel00 - Main Area
-	panel00.x_pos = 220;
-	panel00.y_pos = 10;
-	panel00.width = 570;
-	panel00.height = 460;
-
-	// Panel01 - Calibration Area
-	panel01.x_pos = 240;
-	panel01.y_pos = 330;
-	panel01.width = 530;
-	panel01.height = 120;
-
 	// Button00 - Joystick Calibration
 	button00.x_pos = 590;
 	button00.y_pos = 350;
@@ -92,8 +78,6 @@ uint8_t page_init_inputs(void) {
 uint8_t	page_render_inputs(void) {
 
 	uint32_t color;
-
-	GUI_Panel(&panel00);
 
 	G2D_DrawFillRoundRect(240, 50, 530, 250, 20, BSP_LCD_Color(C_DARKGRAY, 255));
 	G2D_DrawRoundRect(240, 50, 530, 250, 20, BSP_LCD_Color(C_WHITE, 255));
@@ -170,8 +154,6 @@ uint8_t	page_render_inputs(void) {
 	G2D_DrawFillCircle(505 + (obj_x / 10), 175 + (obj_y / 10), 5, BSP_LCD_Color(C_BLUE, 255));
 
 	// Calibration Area
-	// GUI_Panel(&panel01);
-
 	switch (cal_state) {
 	case 0:
 		G2D_TextBlend(260, 348, FONT_16_verdana, "To calibrate joystick, set it to center", BSP_LCD_Color(C_WHITE, 255));

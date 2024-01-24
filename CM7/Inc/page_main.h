@@ -17,6 +17,7 @@
 #include "page_bt.h"
 #include "page_clock.h"
 #include "page_imu.h"
+#include "page_info.h"
 #include "page_inputs.h"
 #include "page_pwr.h"
 #include "page_screen.h"

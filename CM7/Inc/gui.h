@@ -13,6 +13,7 @@
 #define GUI_H_
 
 #include <stdint.h>
+#include <stdio.h>
 #include "BSP_Fonts.h"
 #include "BSP_Icons.h"
 #include "graph2d.h"

@@ -8,6 +8,8 @@
 
 #include "page_main.h"
 
+static uint32_t	prev_state = 0xFFFFFFFF;
+
 static GUI_Button_TypeDef	button00;
 static GUI_Button_TypeDef 	button01;
 static GUI_Button_TypeDef 	button02;
@@ -17,6 +19,7 @@ static GUI_Button_TypeDef 	button05;
 static GUI_Button_TypeDef	button06;
 static GUI_Button_TypeDef	button07;
 static GUI_Button_TypeDef	button08;
+static GUI_Panel_TypeDef	panel00;
 
 static void button00_callback(void){
 	switch(BSP_hlcdtp.gest_data.gest) {
@@ -175,13 +178,19 @@ static void button08_callback(void){
 		button07.state = GUI_STATE_ENABLED;
 		button08.state = GUI_STATE_ACTIVE;
 		state1 = STATE1_INFO;
-		//page_init_info();
+		page_init_info();
 		break;
 	}
 }
 
 uint8_t page_init_main() {
 	BSP_LCD_TP_RemoveAllAreas();
+
+	// Panel00 - Main Area
+	panel00.x_pos = 220;
+	panel00.y_pos = 10;
+	panel00.width = 570;
+	panel00.height = 460;
 
 	// Button00 - Applications
 	button00.x_pos = 10;
@@ -278,15 +287,35 @@ uint8_t page_init_main() {
 
 uint8_t	page_render_main() {
 
-	GUI_Button(&button00);
-	GUI_Button(&button01);
-	GUI_Button(&button02);
-	GUI_Button(&button03);
-	GUI_Button(&button04);
-	GUI_Button(&button05);
-	GUI_Button(&button06);
-	GUI_Button(&button07);
-	GUI_Button(&button08);
+	if (prev_state == state1) {
+
+		// Restore from cache
+		BSP_LCD_RestoreFrame();
+
+	} else {
+
+		// Background
+		G2D_DrawLastJPEG(0, 0);
+
+		// Main menu
+		GUI_Button(&button00);
+		GUI_Button(&button01);
+		GUI_Button(&button02);
+		GUI_Button(&button03);
+		GUI_Button(&button04);
+		GUI_Button(&button05);
+		GUI_Button(&button06);
+		GUI_Button(&button07);
+		GUI_Button(&button08);
+
+		// Side Panel
+		GUI_Panel(&panel00);
+
+		// Caching
+		BSP_LCD_CacheFrame();
+		prev_state = state1;
+
+	}
 
 	return GUI_OK;
 }

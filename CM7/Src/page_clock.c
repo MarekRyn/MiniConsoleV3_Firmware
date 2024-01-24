@@ -13,9 +13,6 @@ static uint8_t hour, minute, second;
 static uint16_t year;
 static uint8_t	month, day, wday;
 
-static GUI_Panel_TypeDef panel00;
-static GUI_Panel_TypeDef panel01;
-
 static GUI_Button_TypeDef button00;
 static GUI_Button_TypeDef button01;
 static GUI_Button_TypeDef button02;
@@ -220,18 +217,6 @@ uint8_t page_init_clock() {
 
 	clock_state = 0;
 
-	// Panel00 - Main Area
-	panel00.x_pos = 220;
-	panel00.y_pos = 10;
-	panel00.width = 570;
-	panel00.height = 220;
-
-	// Panel01 - Main Area
-	panel01.x_pos = 220;
-	panel01.y_pos = 250;
-	panel01.width = 570;
-	panel01.height = 220;
-
 	// Button00 - Hour Inc
 	button00.x_pos = 250;
 	button00.y_pos = 40;
@@ -386,9 +371,6 @@ uint8_t	page_render_clock() {
 
 	if (clock_state != 1) BSP_STM32_RTC_GetTime(RTC, &hour, &minute, &second);
 	if (clock_state != 2) BSP_STM32_RTC_GetDate(RTC, &year, &month, &day, &wday);
-
-	GUI_Panel(&panel00);
-	GUI_Panel(&panel01);
 
 	GUI_Button(&button00);
 	GUI_Button(&button01);

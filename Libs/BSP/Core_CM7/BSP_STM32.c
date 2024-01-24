@@ -11,6 +11,7 @@
 
 #include "BSP_STM32.h"
 
+#define HSEM_ID_0 (0U) // HW semaphore 0
 
 __IO static uint32_t tickvalue = 0;
 __IO static uint32_t tickfrequency = 1;
@@ -275,6 +276,12 @@ uint8_t BSP_STM32_Init_SysClocks(void) {
 }
 
 uint8_t BSP_STM32_Init_PeriphClocks(void) {
+
+	// Starting peripherals clock - SYSCFG
+	__BSP_RCC_SYSCFG_CLK_ENABLE();
+
+	// Starting peripherals clock - HSEM
+	__BSP_RCC_HSEM_CLK_ENABLE();
 
 	// Configuring PLL3
 	BSP_STM32_RCC_ConfigPLL3(RCC_PLL3VCIRANGE_2, RCC_PLL3VCOMEDIUM, 5, 30, 2, 2, 10, 0);
@@ -716,6 +723,29 @@ uint8_t BSP_STM32_Init_GPIO(void) {
     Pin = GPIO_PIN_5;
     BSP_STM32_GPIO_Init(GPIOB, Pin, GPIO_MODE_INPUT, GPIO_NOPULL, 0, 0);
 
+	return BSP_OK;
+}
+
+uint8_t BSP_WaitForCM4StopMode(void) {
+	uint32_t timeout = 0xFFFF;
+
+	// Wait until CM4 enters STOP mode
+	while (((RCC->CR & RCC_CR_D2CKRDY) != RESET) && (timeout-- > 0));
+	if ( timeout < 0 ) return BSP_ERROR;
+
+	return BSP_OK;
+}
+
+uint8_t BSP_WakeUpCM4(void) {
+	uint32_t timeout = 0xFFFF;
+
+	// Toggle HSEM semaphore
+	BSP_STM32_HSEM_FastTake(HSEM_ID_0);
+	BSP_STM32_HSEM_FastRelease(HSEM_ID_0);
+
+	// Wait until CM4 wakes up from stop mode
+	while(((RCC->CR & RCC_CR_D2CKRDY) == RESET) && (timeout-- > 0));
+	if ( timeout == 0 ) return BSP_ERROR;
 	return BSP_OK;
 }
 

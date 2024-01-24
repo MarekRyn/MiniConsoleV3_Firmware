@@ -25,7 +25,7 @@ typedef struct {
 
 // Global variables
 __IO SH0_RAM static AUDIO_REG_TypeDef		AUDIO_regs = {0};
-__IO static void* 							AUDIO_callbacks[16] = {0};
+__IO static void* 							AUDIO_callbacks[AUDIO_STATUS_COUNT] = {0};
 
 
 uint8_t BSP_Audio_LoadMasterVolume(void) {
@@ -240,6 +240,7 @@ uint32_t BSP_Audio_GetStatusParam(uint8_t index) {
 void CM4_SEV_IRQHandler(void) {
 	if (AUDIO_regs.status == AUDIO_STATUS_NONE) return;
 	if (AUDIO_regs.status == AUDIO_STATUS_READY) return;
+	if (AUDIO_regs.status >= AUDIO_STATUS_COUNT) return;
 
 	if (AUDIO_callbacks[AUDIO_regs.status] != NULL) {
 		void (*pcallback)(void) = AUDIO_callbacks[AUDIO_regs.status];

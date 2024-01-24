@@ -44,6 +44,8 @@ uint8_t BSP_STM32_Init_PeriphClocks(void);
 uint8_t BSP_STM32_Init_NVIC(void);
 uint8_t BSP_STM32_Init_GPIO(void);
 
+uint8_t BSP_WaitForCM4StopMode(void);
+uint8_t BSP_WakeUpCM4(void);
 uint8_t BSP_TickInit(uint32_t CoreClock, uint32_t TickFreq, uint32_t TickPriority);
 void BSP_IncTick(void);
 uint32_t BSP_GetTick(void);

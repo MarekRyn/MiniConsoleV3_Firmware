@@ -15,124 +15,16 @@ __IO static uint32_t tickvalue = 0;
 __IO static uint32_t tickfrequency = 1;
 
 
-uint8_t BSP_STM32_MPU_Init() {
-	MPU_Region_TypeDef MPU_InitStruct = {0};
-
-	// Disables the MPU
-	BSP_STM32_MPU_Disable();
-
-	// 0x00: CONFIGURING MPU FOR ALL ADDRESS SPACE (4GB)
-	MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-	MPU_InitStruct.Number = MPU_REGION_NUMBER0;
-	MPU_InitStruct.BaseAddress = 0x00000000;
-	MPU_InitStruct.Size = MPU_REGION_SIZE_4GB;
-	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
-	MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
-	MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
-	MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
-	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
-	MPU_InitStruct.SubRegionDisable = 0x04; // <- Peripherals registers (0x40000000, 512MB) to be left in default configuration
-	MPU_InitStruct.AccessPermission = MPU_REGION_NO_ACCESS;
-	BSP_STM32_MPU_ConfigRegion(&MPU_InitStruct);
-
-	// 0x01: SND_FLASH MEMORY (512kB)
-	MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-	MPU_InitStruct.Number = MPU_REGION_NUMBER1;
-	MPU_InitStruct.BaseAddress = 0x08100000;
-	MPU_InitStruct.Size = MPU_REGION_SIZE_512KB;
-	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
-	MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
-	MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
-	MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
-	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-	MPU_InitStruct.SubRegionDisable = 0x00;
-	MPU_InitStruct.AccessPermission = MPU_REGION_PRIV_RW;
-	BSP_STM32_MPU_ConfigRegion(&MPU_InitStruct);
-
-	// 0x02: SND_RAM MEMORY (256kB)
-	MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-	MPU_InitStruct.Number = MPU_REGION_NUMBER2;
-	MPU_InitStruct.BaseAddress = 0x10000000;
-	MPU_InitStruct.Size = MPU_REGION_SIZE_256KB;
-	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
-	MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
-	MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
-	MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
-	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
-	MPU_InitStruct.SubRegionDisable = 0x00;
-	MPU_InitStruct.AccessPermission = MPU_REGION_PRIV_RW;
-	BSP_STM32_MPU_ConfigRegion(&MPU_InitStruct);
-
-	// 0x03: SH0_RAM MEMORY (32kB)
-	MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-	MPU_InitStruct.Number = MPU_REGION_NUMBER3;
-	MPU_InitStruct.BaseAddress = 0x10040000;
-	MPU_InitStruct.Size = MPU_REGION_SIZE_32KB;
-	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
-	MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
-	MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
-	MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
-	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
-	MPU_InitStruct.SubRegionDisable = 0x00;
-	MPU_InitStruct.AccessPermission = MPU_REGION_PRIV_RW;
-	BSP_STM32_MPU_ConfigRegion(&MPU_InitStruct);
-
-	// 0x04: SH0_RAM MEMORY (512MB)
-	MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-	MPU_InitStruct.Number = MPU_REGION_NUMBER4;
-	MPU_InitStruct.BaseAddress = 0x40000000;
-	MPU_InitStruct.Size = MPU_REGION_SIZE_512KB;
-	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
-	MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
-	MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
-	MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
-	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
-	MPU_InitStruct.SubRegionDisable = 0x00;
-	MPU_InitStruct.AccessPermission = MPU_REGION_PRIV_RW;
-	BSP_STM32_MPU_ConfigRegion(&MPU_InitStruct);
-
-	// 0x05: CONFIGURING MPU FOR APP_SDRAM + VIDEO_SDRAM (0xC0000000, 64MB) - General use memory
-	// 0x06: CONFIGURING MPU FOR VIDEO_SDRAM (0xC3000000, 16MB) - restricting access to last 16MB for Video Memory
-	MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-	MPU_InitStruct.Number = MPU_REGION_NUMBER5;
-	MPU_InitStruct.BaseAddress = 0xC0000000;
-	MPU_InitStruct.Size = MPU_REGION_SIZE_64MB;
-	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
-	MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
-	MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
-	MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
-	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
-	MPU_InitStruct.SubRegionDisable = 0x00;
-	MPU_InitStruct.AccessPermission = MPU_REGION_PRIV_RW;
-	BSP_STM32_MPU_ConfigRegion(&MPU_InitStruct);
-
-	MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-	MPU_InitStruct.Number = MPU_REGION_NUMBER6;
-	MPU_InitStruct.BaseAddress = 0xC3000000;
-	MPU_InitStruct.Size = MPU_REGION_SIZE_16MB;
-	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
-	MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
-	MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
-	MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
-	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
-	MPU_InitStruct.SubRegionDisable = 0x00;
-	MPU_InitStruct.AccessPermission = MPU_REGION_NO_ACCESS;
-	BSP_STM32_MPU_ConfigRegion(&MPU_InitStruct);
-
-	// Enables the MPU
-	BSP_STM32_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
-
-	return BSP_OK;
-
-}
-
-
 uint8_t BSP_STM32_Init_PeriphClocks() {
+
+	// Starting SYSCFG block
+	__BSP_RCC_SYSCFG_CLK_ENABLE();
 
 	// Starting GPIOs clocks
 	__BSP_RCC_GPIOE_CLK_ENABLE();
 	__BSP_RCC_GPIOA_CLK_ENABLE();
 	__BSP_RCC_GPIOC_CLK_ENABLE();
+	__BSP_RCC_I2S3_CLK_ENABLE();
 
     // Starting peripherals clocks - DMA1
     __BSP_RCC_DMA1_CLK_ENABLE();

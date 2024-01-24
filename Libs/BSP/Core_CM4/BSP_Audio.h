@@ -50,7 +50,8 @@ enum AUDIO_STATUS {
 	AUDIO_STATUS_READY,
 	AUDIO_STATUS_BUF_UNDERRUN,
 	AUDIO_STATUS_CH_REPEAT,
-	AUDIO_STATUS_CH_STOP
+	AUDIO_STATUS_CH_STOP,
+	AUDIO_STATUS_COUNT				// Not a real status, just counter how many status values are defined
 };
 
 enum AUDIO_CH_STATE {

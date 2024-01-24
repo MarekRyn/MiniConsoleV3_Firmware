@@ -13,10 +13,40 @@
 
 #include "BSP.h"
 
-uint8_t BSP_BOARD_Init_CM4() {
+#define HSEM_ID_0 (0U) // HW semaphore 0
 
-	// Config MPU
-	BSP_STM32_MPU_Init();
+
+uint8_t BSP_BOARD_Init() {
+
+	__BSP_RCC_HSEM_CLK_ENABLE();
+	// Activate HSEM notification for Cortex-M4
+	BSP_STM32_HSEM_ActivateNotification(HSEM_ID_0);
+
+	// Domain D2 goes to STOP mode (Cortex-M4 in deep-sleep)
+	BSP_STM32_PWR_ClearPendingEvent();
+	BSP_STM32_PWR_EnterSTOPMode(PWR_MAINREGULATOR_ON, PWR_STOPENTRY_WFE, PWR_D2_DOMAIN);
+
+	// Waiting for CM7 to complete initialization
+	// ...
+	// Domain D2 wakes up from STOP mode
+
+	// Clear HSEM flag
+	BSP_STM32_HSEM_ClearFlag(HSEM_ID_0);
+
+	// Configure ART Accelerator
+	__BSP_RCC_ART_CLK_ENABLE();                   // Enable the Cortex-M4 ART Clock
+	__BSP_ART_CONFIG_BASE_ADDRESS(0x08100000UL);  // Configure the Cortex-M4 ART Base address to the Flash Bank 2
+	__BSP_ART_ENABLE();                           // Enable the Cortex-M4 ART
+
+	// Set Interrupt Group Priority
+	BSP_STM32_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+
+	// Configure system clocks
+	uint32_t common_system_clock = BSP_STM32_RCC_GetSysClockFreq() >> ((D1CorePrescTable[(RCC->D1CFGR & RCC_D1CFGR_D1CPRE)>> RCC_D1CFGR_D1CPRE_Pos]) & 0x1FU);
+	SystemD2Clock = (common_system_clock >> ((D1CorePrescTable[(RCC->D1CFGR & RCC_D1CFGR_HPRE)>> RCC_D1CFGR_HPRE_Pos]) & 0x1FU));
+	SystemCoreClock = SystemD2Clock;
+
+	BSP_TickInit(SystemCoreClock, 1, TICK_INT_PRIORITY);
 
 	// STM32 Initialization - RCC
 	if (BSP_STM32_Init_PeriphClocks()) return BSP_ERROR;

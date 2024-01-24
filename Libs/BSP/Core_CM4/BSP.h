@@ -30,7 +30,7 @@ extern "C" {
 #include "BSP_Audio.h"
 
 
-uint8_t BSP_BOARD_Init_CM4();
+uint8_t BSP_BOARD_Init();
 
 
 #ifdef __cplusplus

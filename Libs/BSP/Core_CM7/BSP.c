@@ -13,10 +13,7 @@
 
 #include "BSP.h"
 
-#define HSEM_ID_0 (0U) // HW semaphore 0
-
 uint8_t BSP_BOARD_Init_0(void) {
-	uint32_t timeout = 0;
 
 	// Config MPU
 	BSP_STM32_MPU_Init();
@@ -28,23 +25,13 @@ uint8_t BSP_BOARD_Init_0(void) {
 	SCB_EnableDCache();
 
 	// Wait until CPU2 boots and enters in stop mode or timeout
-	timeout = 0xFFFF;
-	while (((RCC->CR & RCC_CR_D2CKRDY) != RESET) && (timeout-- > 0));
-	if ( timeout < 0 ) return BSP_ERROR;
+	if (BSP_WaitForCM4StopMode()) return BSP_ERROR;
 
 	// Setting NVIC grouping
 	BSP_STM32_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
 	// STM32 Initialization - System Clocks
 	if (BSP_STM32_Init_SysClocks()) return BSP_ERROR;
-
-	// When system initialization is finished, Cortex-M7 will release Cortex-M4 by means of HSEM notification
-	__BSP_RCC_HSEM_CLK_ENABLE();			// HW semaphore Clock enable
-	BSP_STM32_HSEM_FastTake(HSEM_ID_0); 	// Take HSEM
-	BSP_STM32_HSEM_FastRelease(HSEM_ID_0);	// Release HSEM in order to notify the CPU2(CM4)
-	timeout = 0xFFFF;						// Wait until CPU2 wakes up from stop mode
-	while(((RCC->CR & RCC_CR_D2CKRDY) == RESET) && (timeout-- > 0));
-	if ( timeout < 0 ) return BSP_ERROR;
 
 	// Enable SYSCFG Clock
 	__BSP_RCC_SYSCFG_CLK_ENABLE();
@@ -95,6 +82,9 @@ uint8_t BSP_BOARD_Init_1(void) {
 
 	// USART2 Initialization - communication through debug connection
 	if (BSP_Serial_Init()) return BSP_ERROR;
+
+	// Wake up core CM4 (Audio System)
+	if (BSP_WakeUpCM4()) return BSP_ERROR;
 
 	// Audio Initialization
 	if (BSP_Audio_Init()) return BSP_ERROR;

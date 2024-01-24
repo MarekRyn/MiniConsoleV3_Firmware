@@ -74,7 +74,9 @@ typedef struct {
 	uint8_t			chvolume_L[AUDIO_CFG_CHANNELS];
 	uint8_t			chvolume_R[AUDIO_CFG_CHANNELS];
 	uint32_t		command;
-	uint32_t		params[128];
+	uint32_t		status;
+	uint32_t		c_params[16];	// additional parameters for commands (written by application)
+	uint32_t		s_params[16];	// additional parameters for status (written by audio system)
 } AUDIO_REG_TypeDef;
 
 // Variables
@@ -129,6 +131,44 @@ static void _AudioCallbackTE(TxRxContext_TypeDef * ctx) {
 
 // ********** Private functions ****************
 
+static inline void _status_ready(void) {
+	// Wait until command register is ready
+	while (AUDIO_regs.status != AUDIO_STATUS_NONE) {};
+	// Setup registers
+	AUDIO_regs.status = AUDIO_STATUS_READY;
+	// Activate command by sending SEV to CM7 core;
+	__SEV();
+}
+
+static inline void _status_buf_underrun(void) {
+	// Wait until command register is ready
+	while (AUDIO_regs.status != AUDIO_STATUS_NONE) {};
+	// Setup registers
+	AUDIO_regs.status = AUDIO_STATUS_BUF_UNDERRUN;
+	// Activate command by sending SEV to CM7 core;
+	__SEV();
+}
+
+static inline void _status_ch_repeat(uint8_t chno) {
+	// Wait until command register is ready
+	while (AUDIO_regs.status != AUDIO_STATUS_NONE) {};
+	// Setup registers
+	AUDIO_regs.s_params[0] = chno;
+	AUDIO_regs.status = AUDIO_STATUS_CH_REPEAT;
+	// Activate command by sending SEV to CM7 core;
+	__SEV();
+}
+
+static inline void _status_ch_stop(uint8_t chno) {
+	// Wait until command register is ready
+	while (AUDIO_regs.status != AUDIO_STATUS_NONE) {};
+	// Setup registers
+	AUDIO_regs.s_params[0] = chno;
+	AUDIO_regs.status = AUDIO_STATUS_CH_STOP;
+	// Activate command by sending SEV to CM7 core;
+	__SEV();
+}
+
 static uint8_t _process_cmd(void) {
 	uint8_t chno, repeat;
 	uint32_t addr, size;
@@ -138,29 +178,29 @@ static uint8_t _process_cmd(void) {
 	switch (AUDIO_regs.command) {
 
 	case AUDIO_CMD_LINK_SND_LOGO:
-		chno = (uint8_t)AUDIO_regs.params[0];
+		chno = (uint8_t)AUDIO_regs.c_params[0];
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_MP3);
 		drmp3_init_memory(AUDIO_ctx.channels[chno].pctx, (void *)SND_Logo, sizeof(SND_Logo), NULL);
 		break;
 
 	case AUDIO_CMD_LINK_SND_TEST:
-		chno = (uint8_t)AUDIO_regs.params[0];
+		chno = (uint8_t)AUDIO_regs.c_params[0];
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_MP3);
 		drmp3_init_memory(AUDIO_ctx.channels[chno].pctx, (void *)SND_Test, sizeof(SND_Test), NULL);
 		break;
 
 	case AUDIO_CMD_LINK_MP3:
-		chno = (uint8_t)AUDIO_regs.params[0];
-		addr = AUDIO_regs.params[1];
-		size = AUDIO_regs.params[2];
+		chno = (uint8_t)AUDIO_regs.c_params[0];
+		addr = AUDIO_regs.c_params[1];
+		size = AUDIO_regs.c_params[2];
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_MP3);
 		drmp3_init_memory(AUDIO_ctx.channels[chno].pctx, (void *)addr, size, NULL);
 		break;
 
 	case AUDIO_CMD_LINK_MOD:
-		chno = (uint8_t)AUDIO_regs.params[0];
-		addr = AUDIO_regs.params[1];
-		size = AUDIO_regs.params[2];
+		chno = (uint8_t)AUDIO_regs.c_params[0];
+		addr = AUDIO_regs.c_params[1];
+		size = AUDIO_regs.c_params[2];
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_MOD);
 		hxcmod_init(AUDIO_ctx.channels[chno].pctx);
 		hxcmod_setcfg(AUDIO_ctx.channels[chno].pctx, 44100, 0, 0);
@@ -168,33 +208,33 @@ static uint8_t _process_cmd(void) {
 		break;
 
 	case AUDIO_CMD_LINK_RAW:
-		chno = (uint8_t)AUDIO_regs.params[0];
-		addr = AUDIO_regs.params[1];
-		size = AUDIO_regs.params[2];
+		chno = (uint8_t)AUDIO_regs.c_params[0];
+		addr = AUDIO_regs.c_params[1];
+		size = AUDIO_regs.c_params[2];
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_RAW);
 		RA_Init(AUDIO_ctx.channels[chno].pctx, (int16_t *)addr, size);
 
 	case AUDIO_CMD_PLAY:
-		chno = (uint8_t)AUDIO_regs.params[0];
-		repeat = (uint8_t)AUDIO_regs.params[1];
+		chno = (uint8_t)AUDIO_regs.c_params[0];
+		repeat = (uint8_t)AUDIO_regs.c_params[1];
 		AUDIO_ctx.channels[chno].state = AUDIO_CH_STATE_PLAY;
 		AUDIO_ctx.channels[chno].repeat = repeat;
 		break;
 
 	case AUDIO_CMD_STOP:
-		chno = (uint8_t)AUDIO_regs.params[0];
+		chno = (uint8_t)AUDIO_regs.c_params[0];
 		AUDIO_ctx.channels[chno].state = AUDIO_CH_STATE_STOP;
 		break;
 
 	case AUDIO_CMD_PAUSE:
-		chno = (uint8_t)AUDIO_regs.params[0];
+		chno = (uint8_t)AUDIO_regs.c_params[0];
 		AUDIO_ctx.channels[chno].state = AUDIO_CH_STATE_PAUSE;
 		break;
 
 	}
 
 	// Zero registers
-	memset((AUDIO_REG_TypeDef *)&AUDIO_regs.params, 0, sizeof(AUDIO_regs.params));
+	memset((AUDIO_REG_TypeDef *)&AUDIO_regs.c_params, 0, sizeof(AUDIO_regs.c_params));
 	AUDIO_regs.command = AUDIO_CMD_NONE;
 	return BSP_OK;
 }
@@ -305,10 +345,15 @@ uint8_t BSP_Audio_Init(void) {
 	AUDIO_ctx.gain_R = TAB_VOLUME[AUDIO_regs.volume_R];
 
 	AUDIO_regs.command = AUDIO_CMD_NONE;
-	memset((AUDIO_REG_TypeDef *)&AUDIO_regs.params, 0, sizeof(AUDIO_regs.params));
+	memset((AUDIO_REG_TypeDef *)&AUDIO_regs.c_params, 0, sizeof(AUDIO_regs.c_params));
+	memset((AUDIO_REG_TypeDef *)&AUDIO_regs.s_params, 0, sizeof(AUDIO_regs.s_params));
 
 	// Start DMA
 	BSP_STM32_I2S_TransmitDMA(AUDIO_CFG_I2S, (TxRxContext_TypeDef* )&BSP_hdma_ctx, (int16_t *)OutputBuf, AUDIO_CFG_BUF_SIZE);
+
+	// Reporting that AUDIO system is ready
+	AUDIO_regs.status = AUDIO_STATUS_READY;
+	__SEV();
 
 	return BSP_OK;
 }
@@ -342,7 +387,8 @@ uint8_t BSP_Audio_Loop(void) {
 				if (pmp3->memory.currentReadPos == pmp3->memory.dataSize) {
 					if (AUDIO_ctx.channels[ch].repeat != 0) drmp3_seek_to_start_of_stream(pmp3);
 					if ((AUDIO_ctx.channels[ch].repeat > 0) && (AUDIO_ctx.channels[ch].repeat < 255)) AUDIO_ctx.channels[ch].repeat--;
-					if (AUDIO_ctx.channels[ch].repeat == 0) AUDIO_ctx.channels[ch].state = AUDIO_CH_STATE_STOP;
+					if (AUDIO_ctx.channels[ch].repeat == 0) { AUDIO_ctx.channels[ch].state = AUDIO_CH_STATE_STOP; _status_ch_stop(ch); }
+						else _status_ch_repeat(ch);
 				}
 				break;
 
@@ -351,7 +397,8 @@ uint8_t BSP_Audio_Loop(void) {
 				hxcmod_fillbuffer(AUDIO_ctx.channels[ch].pctx, (int16_t *)ChannelBuf[ch], AUDIO_CFG_BUF_SIZE >> 2, NULL);
 				if ((AUDIO_ctx.channels[ch].tmp0 == (pmod->song.length - 1)) && (pmod->tablepos == 0)) {
 					if ((AUDIO_ctx.channels[ch].repeat > 0) && (AUDIO_ctx.channels[ch].repeat < 255)) AUDIO_ctx.channels[ch].repeat--;
-					if (AUDIO_ctx.channels[ch].repeat == 0) AUDIO_ctx.channels[ch].state = AUDIO_CH_STATE_STOP;
+					if (AUDIO_ctx.channels[ch].repeat == 0) { AUDIO_ctx.channels[ch].state = AUDIO_CH_STATE_STOP; _status_ch_stop(ch); }
+						else _status_ch_repeat(ch);
 				}
 				AUDIO_ctx.channels[ch].tmp0 = pmod->tablepos;
 				break;
@@ -362,7 +409,8 @@ uint8_t BSP_Audio_Loop(void) {
 				if (praw->index == praw->length) {
 					if (AUDIO_ctx.channels[ch].repeat != 0) RA_Seek(praw, 0);
 					if ((AUDIO_ctx.channels[ch].repeat > 0) && (AUDIO_ctx.channels[ch].repeat < 255)) AUDIO_ctx.channels[ch].repeat--;
-					if (AUDIO_ctx.channels[ch].repeat == 0) AUDIO_ctx.channels[ch].state = AUDIO_CH_STATE_STOP;
+					if (AUDIO_ctx.channels[ch].repeat == 0) { AUDIO_ctx.channels[ch].state = AUDIO_CH_STATE_STOP; _status_ch_stop(ch); }
+						else _status_ch_repeat(ch);
 				}
 				break;
 

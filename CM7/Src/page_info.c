@@ -7,9 +7,9 @@
 
 #include "page_info.h"
 
-static uint32_t mix = 0;
+static void * tracks[6] = {0};
 
-ResCtx_TypeDef resctx = {0};
+static uint32_t mix = 0;
 
 GUI_Slider_TypeDef 	slider00;
 GUI_Button_TypeDef	button00;
@@ -82,7 +82,7 @@ static void button00_callback(void) {
 		button00.state = GUI_STATE_ACTIVE;
 		button01.state = GUI_STATE_ENABLED;
 		button02.state = GUI_STATE_ENABLED;
-		BSP_Audio_LinkSourceMP3(0, BSP_Res_GetAddr(&resctx, 0),BSP_Res_GetSize(&resctx, 0));
+		BSP_Audio_LinkSourceMP3(0, tracks[0], BSP_Res_GetSize(tracks[0]));
 		BSP_Audio_ChannelPLay(0, 1);
 
 	} else button00.state = GUI_STATE_ENABLED;
@@ -99,7 +99,7 @@ static void button01_callback(void) {
 		button01.state = GUI_STATE_ACTIVE;
 		button02.state = GUI_STATE_ENABLED;
 
-		BSP_Audio_LinkSourceMP3(0, BSP_Res_GetAddr(&resctx, 1),BSP_Res_GetSize(&resctx, 1));
+		BSP_Audio_LinkSourceMP3(0, tracks[1], BSP_Res_GetSize(tracks[1]));
 		BSP_Audio_ChannelPLay(0, 1);
 
 	} else button01.state = GUI_STATE_ENABLED;
@@ -116,7 +116,7 @@ static void button02_callback(void) {
 		button01.state = GUI_STATE_ENABLED;
 		button02.state = GUI_STATE_ACTIVE;
 
-		BSP_Audio_LinkSourceMP3(0, BSP_Res_GetAddr(&resctx, 2),BSP_Res_GetSize(&resctx, 2));
+		BSP_Audio_LinkSourceMP3(0, tracks[2], BSP_Res_GetSize(tracks[2]));
 		BSP_Audio_ChannelPLay(0, 1);
 
 	} else button02.state = GUI_STATE_ENABLED;
@@ -133,7 +133,7 @@ static void button03_callback(void) {
 		button04.state = GUI_STATE_ENABLED;
 		button05.state = GUI_STATE_ENABLED;
 
-		BSP_Audio_LinkSourceMP3(1, BSP_Res_GetAddr(&resctx, 3),BSP_Res_GetSize(&resctx, 3));
+		BSP_Audio_LinkSourceMP3(1, tracks[3], BSP_Res_GetSize(tracks[3]));
 		BSP_Audio_ChannelPLay(1, 1);
 
 	} else button03.state = GUI_STATE_ENABLED;
@@ -150,7 +150,7 @@ static void button04_callback(void) {
 		button04.state = GUI_STATE_ACTIVE;
 		button05.state = GUI_STATE_ENABLED;
 
-		BSP_Audio_LinkSourceMP3(1, BSP_Res_GetAddr(&resctx, 4),BSP_Res_GetSize(&resctx, 4));
+		BSP_Audio_LinkSourceMP3(1, tracks[4], BSP_Res_GetSize(tracks[4]));
 		BSP_Audio_ChannelPLay(1, 1);
 
 	} else button04.state = GUI_STATE_ENABLED;
@@ -167,13 +167,22 @@ static void button05_callback(void) {
 		button04.state = GUI_STATE_ENABLED;
 		button05.state = GUI_STATE_ACTIVE;
 
-		BSP_Audio_LinkSourceMP3(1, BSP_Res_GetAddr(&resctx, 5),BSP_Res_GetSize(&resctx, 5));
+		BSP_Audio_LinkSourceMP3(1, tracks[5], BSP_Res_GetSize(tracks[5]));
 		BSP_Audio_ChannelPLay(1, 1);
 
 	} else button05.state = GUI_STATE_ENABLED;
 }
 
 
+uint8_t page_loaddata_info(void) {
+	tracks[0] = BSP_Res_Load("alex-productions-revolution.mp3");
+	tracks[1] = BSP_Res_Load("corporate-music-zone-rise.mp3");
+	tracks[2] = BSP_Res_Load("luke-bergs-agusalvarez-heaven.mp3");
+	tracks[3] = BSP_Res_Load("mixaund-dreamers.mp3");
+	tracks[4] = BSP_Res_Load("mixaund-hope.mp3");
+	tracks[5] = BSP_Res_Load("alex-productions-efficsounds-energetic-rock-hiking-free-music.mp3");
+	return BSP_OK;
+}
 
 uint8_t page_init_info(void) {
 

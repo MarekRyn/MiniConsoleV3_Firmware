@@ -11,8 +11,7 @@
 #include "BSP.h"
 #include "gui.h"
 
-extern ResCtx_TypeDef resctx;
-
+uint8_t page_loaddata_info(void);
 uint8_t page_init_info(void);
 uint8_t	page_render_info(void);
 

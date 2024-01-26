@@ -141,18 +141,14 @@ int main(void)
 
 			// state0 = STATE0_APPLICATION;
 			state0 = STATE0_BOOTLOADER_INIT;
-
 			break;
 
 		case STATE0_BOOTLOADER_INIT:
 
-			BSP_Res_Init(&resctx, 0xC0000000, 48*1024*1024);
-			BSP_Res_Load(&resctx, "alex-productions-revolution.mp3", 0);
-			BSP_Res_Load(&resctx, "corporate-music-zone-rise.mp3", 1);
-			BSP_Res_Load(&resctx, "luke-bergs-agusalvarez-heaven.mp3", 2);
-			BSP_Res_Load(&resctx, "mixaund-dreamers.mp3", 3);
-			BSP_Res_Load(&resctx, "mixaund-hope.mp3", 4);
-			BSP_Res_Load(&resctx, "alex-productions-efficsounds-energetic-rock-hiking-free-music.mp3",5);
+			BSP_FatFS_Init("0:/");
+			BSP_Res_Init((void *)0xC0000000, 48*1024*1024);
+
+			page_loaddata_info();
 
 			state0 = STATE0_BOOTLOADER_MAIN;
 			state1 = STATE1_APPS;

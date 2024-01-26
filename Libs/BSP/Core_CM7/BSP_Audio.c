@@ -98,7 +98,7 @@ uint8_t BSP_Audio_SetChannelVolumeLR(uint8_t chno, uint8_t volume_L, uint8_t vol
 }
 
 uint8_t BSP_Audio_IncChannelVolume(uint8_t chno, uint8_t delta) {
-	uint16_t volume = AUDIO_regs.chvolume_L[chno] = volume;
+	uint16_t volume = AUDIO_regs.chvolume_L[chno];
 	volume+=delta;
 	if (volume > 255) volume = 255;
 	AUDIO_regs.chvolume_L[chno] = (uint8_t)volume;
@@ -107,7 +107,7 @@ uint8_t BSP_Audio_IncChannelVolume(uint8_t chno, uint8_t delta) {
 }
 
 uint8_t BSP_Audio_DecChannelVolume(uint8_t chno, uint8_t delta) {
-	uint16_t volume = AUDIO_regs.chvolume_L[chno] = volume;
+	uint16_t volume = AUDIO_regs.chvolume_L[chno];
 	volume-=delta;
 	if (volume > 255) volume = 0;
 	AUDIO_regs.chvolume_L[chno] = (uint8_t)volume;
@@ -150,39 +150,39 @@ uint8_t BSP_Audio_LinkTestSound(uint8_t chno) {
 	return BSP_OK;
 }
 
-uint8_t BSP_Audio_LinkSourceMP3(uint8_t chno, uint32_t addr, uint32_t size) {
+uint8_t BSP_Audio_LinkSourceMP3(uint8_t chno, void * addr, uint32_t size) {
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_LINK_MP3;
 	AUDIO_regs.c_params[0] = chno;
-	AUDIO_regs.c_params[1] = addr;
+	AUDIO_regs.c_params[1] = (uint32_t)addr;
 	AUDIO_regs.c_params[2] = size;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
 }
 
-uint8_t BSP_Audio_LinkSourceMOD(uint8_t chno, uint32_t addr, uint32_t size) {
+uint8_t BSP_Audio_LinkSourceMOD(uint8_t chno, void * addr, uint32_t size) {
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_LINK_MOD;
 	AUDIO_regs.c_params[0] = chno;
-	AUDIO_regs.c_params[1] = addr;
+	AUDIO_regs.c_params[1] = (uint32_t)addr;
 	AUDIO_regs.c_params[2] = size;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
 }
 
-uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, uint32_t addr, uint32_t size) {
+uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, void * addr, uint32_t size) {
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_LINK_RAW;
 	AUDIO_regs.c_params[0] = chno;
-	AUDIO_regs.c_params[1] = addr;
+	AUDIO_regs.c_params[1] = (uint32_t)addr;
 	AUDIO_regs.c_params[2] = size;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();

@@ -175,13 +175,13 @@ uint8_t	page_render_audio(void) {
 	GUI_Button(&button02);
 
 	G2D_TextBlend(240, 150, FONT_24_verdana, "Volume level", BSP_LCD_Color(C_WHITE, 255));
-	sprintf(str, "%03d%%", (current_volume * 100) / 128);
+	sprintf(str, "%03lu%%", (current_volume * 100) / 128);
 	G2D_TextBlend(700, 150, FONT_24_verdana, str, BSP_LCD_Color(C_WHITE, 255));
 	GUI_Slider(&slider00, current_volume);
 
 	if (current_volume == default_volume) button03.state = GUI_STATE_DISABLED; else button03.state = GUI_STATE_ENABLED;
 
-	sprintf(str, "Default volume: %03d%%", (default_volume * 100) / 128);
+	sprintf(str, "Default volume: %03lu%%", (default_volume * 100) / 128);
 	G2D_TextBlend(270, 264, FONT_24_verdana, str, BSP_LCD_Color(C_WHITE, 255));
 
 	GUI_Button(&button03);

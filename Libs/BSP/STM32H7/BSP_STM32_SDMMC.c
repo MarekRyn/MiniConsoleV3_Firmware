@@ -453,6 +453,7 @@ uint8_t BSP_STM32_SDMMC_Init(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx) 
 
 	// For freq to 400kHz div = sdmmc_clk / (2 * 400000) -> For 60MHz div = 75
 	Init.ClockDiv 				= 75;
+
 	if (SDMMC_Init(hsdmmc, Init)) return BSP_ERROR;
 
 	// Set Power STate to ON

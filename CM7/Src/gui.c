@@ -132,7 +132,7 @@ uint8_t GUI_Spinner(GUI_Spinner_TypeDef * sp, uint32_t value) {
 
 	char str[12];
 	if (value > 0) {
-		sprintf(str, "%02d", value);
+		sprintf(str, "%02lu", value);
 		G2D_TextBlend(sp->x_pos + 55, sp->y_pos + 6, GUI_SPINNER_TEXT_FONT, str, GUI_SPINNER_TEXT_COLOR);
 	} else G2D_TextBlend(sp->x_pos + 50, sp->y_pos + 6, GUI_SPINNER_TEXT_FONT, "Off", GUI_SPINNER_TEXT_COLOR);
 

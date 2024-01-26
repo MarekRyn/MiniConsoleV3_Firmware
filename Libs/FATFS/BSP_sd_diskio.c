@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - FatFS I/O driver
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_sd_diskio.h"
@@ -32,9 +33,9 @@ const Diskio_drvTypeDef  SD_Driver = {
   SD_initialize,
   SD_status,
   SD_read,
-#if  FF_READONLY == 0
+#if FF_FS_READONLY == 0
   SD_write,
-#endif /* _USE_WRITE == 1 */
+#endif /* FF_FS_READONLY == 1 */
   SD_ioctl,
 };
 
@@ -68,14 +69,14 @@ DRESULT SD_read(BYTE lun, BYTE *buff, DWORD sector, UINT count) {
 }
 
 
-#if FF_READONLY == 0
+#if FF_FS_READONLY == 0
 
 DRESULT SD_write(BYTE lun, const BYTE *buff, DWORD sector, UINT count) {
 	if(BSP_SDCARD_WriteBlocks((uint8_t *)buff, (uint32_t)sector, (uint32_t)count)) return RES_ERROR;
 	return RES_OK;
 }
 
-#endif /* FF_READONLY == 0 */
+#endif /* FF_FS_READONLY == 0 */
 
 
 

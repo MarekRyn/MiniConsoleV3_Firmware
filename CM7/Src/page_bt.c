@@ -7,8 +7,6 @@
 
 #include "page_bt.h"
 
-static GUI_Panel_TypeDef	panel00;
-
 uint8_t page_init_bt(void) {
 
 	return GUI_OK;

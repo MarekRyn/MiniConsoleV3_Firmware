@@ -7,6 +7,7 @@
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0 	- Initial version
  *******************************************************************/
 
 #ifndef __BSP_fatfs_H
@@ -20,13 +21,7 @@
 #include "BSP_ff_gen_drv.h"
 #include "BSP_sd_diskio.h"
 
-
-extern uint8_t retSD;
-extern char SDPath[4];
-extern FATFS SDFatFS;
-extern FIL SDFile;
-
-void f_init(void);
+uint8_t BSP_FatFS_Init(char * homeDir);
 
 #ifdef __cplusplus
 }

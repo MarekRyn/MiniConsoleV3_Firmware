@@ -142,12 +142,12 @@ uint8_t	page_render_screen(void) {
 	current_bklight = BSP_LCD_GetBackLight();
 
 	G2D_TextBlend(240, 30, FONT_24_verdana, "LCD brightness", BSP_LCD_Color(C_WHITE, 255));
-	sprintf(str, "%03d%%", current_bklight);
+	sprintf(str, "%03lu%%", current_bklight);
 	G2D_TextBlend(700, 30, FONT_24_verdana, str, BSP_LCD_Color(C_WHITE, 255));
 
 	GUI_Slider(&slider00, current_bklight);
 
-	sprintf(str, "Default brightness: %03d%%", default_bklight);
+	sprintf(str, "Default brightness: %03lu%%", default_bklight);
 	G2D_TextBlend(260, 144, FONT_24_verdana, str, BSP_LCD_Color(C_WHITE, 255));
 
 	if (current_bklight != default_bklight) button00.state = GUI_STATE_ENABLED; else button00.state = GUI_STATE_DISABLED;

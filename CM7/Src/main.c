@@ -149,6 +149,7 @@ int main(void)
 			BSP_Res_Init((void *)0xC0000000, 48*1024*1024);
 
 			page_loaddata_info();
+			page_loaddata_apps();
 
 			state0 = STATE0_BOOTLOADER_MAIN;
 			state1 = STATE1_APPS;

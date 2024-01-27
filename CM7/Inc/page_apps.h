@@ -23,6 +23,7 @@ typedef struct {
 	char title[32];
 } APP_TypeDef;
 
+uint8_t page_loaddata_apps(void);
 uint8_t page_init_apps(void);
 uint8_t	page_render_apps(void);
 

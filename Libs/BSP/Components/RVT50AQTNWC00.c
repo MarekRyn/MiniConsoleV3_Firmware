@@ -75,34 +75,32 @@ void BSP_DRV_LCD_TP_Parse(LCD_TP_HandleTypeDef *hlcdtp) {
 
 		case 1:	// 1 finger
 
-			if (hlcdtp->touch_data[0].status == 2) {
-				if ((hlcdtp->gest_data.gest != LCD_TP_GEST_CLICK_DOWN) && (hlcdtp->gest_data.gest != LCD_TP_GEST_DRAG)) {
-					hlcdtp->gest_data.start_x = hlcdtp->touch_data[0].x;
-					hlcdtp->gest_data.start_y = hlcdtp->touch_data[0].y;
-					hlcdtp->gest_data.start_t = BSP_GetTick();
-					hlcdtp->gest_data.gest = LCD_TP_GEST_CLICK_DOWN;
+			if ((hlcdtp->gest_data.gest != LCD_TP_GEST_CLICK_DOWN) && (hlcdtp->gest_data.gest != LCD_TP_GEST_DRAG)) {
+				hlcdtp->gest_data.start_x = hlcdtp->touch_data[0].x;
+				hlcdtp->gest_data.start_y = hlcdtp->touch_data[0].y;
+				hlcdtp->gest_data.start_t = BSP_GetTick();
+				hlcdtp->gest_data.gest = LCD_TP_GEST_CLICK_DOWN;
 
-					// Checking active area;
-					hlcdtp->gest_data.area = 255;
-					for (uint8_t i=0;i<LCD_TP_AREA_NO;i++) {
-						if (hlcdtp->touch_areas[i].active == 0) continue;
-						if (hlcdtp->gest_data.start_x < hlcdtp->touch_areas[i].x) continue;
-						if (hlcdtp->gest_data.start_x > (hlcdtp->touch_areas[i].x + hlcdtp->touch_areas[i].w)) continue;
-						if (hlcdtp->gest_data.start_y < hlcdtp->touch_areas[i].y) continue;
-						if (hlcdtp->gest_data.start_y > (hlcdtp->touch_areas[i].y + hlcdtp->touch_areas[i].h)) continue;
-						hlcdtp->gest_data.area = i;
-						break;
-					}
-
-				} else {
-					hlcdtp->gest_data.stop_x = hlcdtp->touch_data[0].x;
-					hlcdtp->gest_data.stop_y = hlcdtp->touch_data[0].y;
-					hlcdtp->gest_data.stop_t = BSP_GetTick();
-					hlcdtp->gest_data.delta_x = hlcdtp->gest_data.stop_x - hlcdtp->gest_data.start_x;
-					hlcdtp->gest_data.delta_y = hlcdtp->gest_data.stop_y - hlcdtp->gest_data.start_y;
-					hlcdtp->gest_data.delta_t = hlcdtp->gest_data.stop_t - hlcdtp->gest_data.start_t;
-					hlcdtp->gest_data.gest = LCD_TP_GEST_DRAG;
+				// Checking active area;
+				hlcdtp->gest_data.area = 255;
+				for (uint8_t i=0;i<LCD_TP_AREA_NO;i++) {
+					if (hlcdtp->touch_areas[i].active == 0) continue;
+					if (hlcdtp->gest_data.start_x < hlcdtp->touch_areas[i].x) continue;
+					if (hlcdtp->gest_data.start_x > (hlcdtp->touch_areas[i].x + hlcdtp->touch_areas[i].w)) continue;
+					if (hlcdtp->gest_data.start_y < hlcdtp->touch_areas[i].y) continue;
+					if (hlcdtp->gest_data.start_y > (hlcdtp->touch_areas[i].y + hlcdtp->touch_areas[i].h)) continue;
+					hlcdtp->gest_data.area = i;
+					break;
 				}
+
+			} else {
+				hlcdtp->gest_data.stop_x = hlcdtp->touch_data[0].x;
+				hlcdtp->gest_data.stop_y = hlcdtp->touch_data[0].y;
+				hlcdtp->gest_data.stop_t = BSP_GetTick();
+				hlcdtp->gest_data.delta_x = hlcdtp->gest_data.stop_x - hlcdtp->gest_data.start_x;
+				hlcdtp->gest_data.delta_y = hlcdtp->gest_data.stop_y - hlcdtp->gest_data.start_y;
+				hlcdtp->gest_data.delta_t = hlcdtp->gest_data.stop_t - hlcdtp->gest_data.start_t;
+				hlcdtp->gest_data.gest = LCD_TP_GEST_DRAG;
 			}
 
 			break;

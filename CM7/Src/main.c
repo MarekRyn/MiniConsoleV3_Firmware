@@ -137,7 +137,7 @@ int main(void)
 				BSP_USB_Init_MSC();
 				while (1) BSP_USB_Task();
 			}
-			// End Temporary section
+    			// End Temporary section
 
 			// state0 = STATE0_APPLICATION;
 			state0 = STATE0_BOOTLOADER_INIT;

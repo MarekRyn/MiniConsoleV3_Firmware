@@ -35,6 +35,10 @@ extern "C" {
 #include "BSP_Fonts.h"
 #include "BSP_Wallpaper.h"
 
+#include "graph2d.h"
+
+
+extern void * BSP_Driver[1024];	// Vector Table for external application
 
 uint8_t BSP_BOARD_Init_0(void);
 uint8_t BSP_BOARD_Init_1(void);

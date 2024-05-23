@@ -13,6 +13,95 @@
 
 #include "BSP.h"
 
+void * BSP_Driver[1024] = {
+		/* 0000...0031 - BSP Structures */
+
+		[0] = 				&BSP_hlcdtp,
+		[1] = 				&BSP_himu,
+		[2] = 				&BSP_hinputs,
+		[3] = 				&BSP_hserial,
+		[4 ... 31] = 		NULL,
+
+		// LCD Library
+		[32] = 				BSP_LCD_Init,
+		[33] = 				BSP_LCD_FrameReady,
+		[34] = 				BSP_LCD_GetEditPermission,
+		[35 ... 127] =		NULL,
+
+
+		// G2D Library
+		[128] = 			G2D_ClearFrame,
+		[129] =				G2D_FillFrame,
+		[130] = 			G2D_CopyPrevFrame,
+		[131] =				G2D_CopyScrollPrevFrame,
+		[132] =				G2D_DrawPixel,
+		[133] = 			G2D_DrawHLine,
+		[134] =				G2D_DrawHLineBlend,
+		[135] = 			G2D_DrawVLine,
+		[136] = 			G2D_DrawVLineBlend,
+		[137] = 			G2D_DrawLine,
+		[138] = 			G2D_DrawRect,
+		[139] = 			G2D_DrawFillRect,
+		[140] =				G2D_DrawFillRectBlend,
+		[141] =				G2D_DrawCircle,
+		[142] =				G2D_DrawFillCircle,
+		[143] = 			G2D_DrawFillCircleBlend,
+		[144] = 			G2D_DrawRoundRect,
+		[145] =				G2D_DrawFillRoundRect,
+		[146] = 			G2D_DrawFillRoundRectBlend,
+		[147] =				G2D_Text,
+		[148] =				G2D_TextBlend,
+		[149] =				G2D_GetTextHeight,
+		[150] = 			G2D_DrawBitmapBlend,
+		[151] = 			G2D_DrawBitmapBlendC,
+		[152] =				G2D_DrawBitmap,
+		[153] = 			G2D_DrawBitmapRotate,
+		[154] = 			G2D_DrawBitmapRotateC,
+		[155] =				G2D_DrawIcon,
+		[156] = 			G2D_DrawIconC,
+		[157] =				G2D_DrawIconBlend,
+		[158] =				G2D_DrawIconBlendC,
+		[159] =				G2D_GetIconHeight,
+		[160] =				G2D_GetIconWidth,
+		[161] =				G2D_DrawJPEG,
+		[162] =				G2D_DrawJPEGC,
+		[163] =				G2D_DrawLastJPEG,
+		[164] =				G2D_DrawLastJPEGC,
+		[165] =				G2D_DecodeJPEG,
+		[166] =				G2D_DrawTile,
+		[167] = 			G2D_DrawTileC,
+		[168] =				G2D_DrawTileBlend,
+		[169] =				G2D_DrawTileBlendC,
+		[170 ... 255] =		NULL,
+
+		// Audio Library
+		[256] =				BSP_Audio_SetMasterVolume,
+		[257] =				BSP_Audio_GetMasterVolume,
+		[258] =				BSP_Audio_GetMasterVolumeL,
+		[259] =				BSP_Audio_GetMasterVolumeR,
+		[260] =				BSP_Audio_SetMasterVolumeLR,
+		[261] =				BSP_Audio_IncMasterVolume,
+		[262] =				BSP_Audio_DecMasterVolume,
+		[263] =				BSP_Audio_SetChannelVolume,
+		[264] =				BSP_Audio_SetChannelVolumeLR,
+		[265] =				BSP_Audio_IncChannelVolume,
+		[266] =				BSP_Audio_DecChannelVolume,
+		[267] =				BSP_Audio_Init,
+		[268] =				BSP_Audio_LinkSourceMP3,
+		[269] =				BSP_Audio_LinkSourceMOD,
+		[270] = 			BSP_Audio_LinkSourceRAW,
+		[271] = 			BSP_Audio_ChannelPLay,
+		[272] = 			BSP_Audio_ChannelStop,
+		[273] =				BSP_Audio_ChannelPause,
+		[274] =				BSP_Audio_RegisterStatusCallback,
+		[275] =				BSP_Audio_GetStatusParam,
+		[276 ... 511] = 	NULL,
+
+		// Remaining set as NULL
+		[512 ... 1023] = 	NULL
+};
+
+
 uint8_t BSP_BOARD_Init_0(void) {
 
 	// Config MPU

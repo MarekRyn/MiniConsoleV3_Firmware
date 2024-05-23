@@ -66,6 +66,19 @@ SECTIONS
     _etext = .;        /* define a global symbols at end of code */
   } >OS_FLASH
 
+  /* Used by the startup to initialize copy routine*/
+  _siitcmram = LOADADDR(.itc_mram);
+
+  /* The program routines to be located in ITCMRAM and executed from this memory */
+  .itc_mram : {
+  	. = ALIGN(4);
+  	_sitcmram = .;        /* create a global symbol at data start */
+  	*(.itc_mram)			  /* program routines to copy to ITCMRAM */
+    . = ALIGN(4);
+    _eitcmram = .;        /* define a global symbol at data end */
+  } >ITCMRAM AT> OS_FLASH 
+
+
   /* Constant data into "OS_FLASH" memory */
   .rodata :
   {

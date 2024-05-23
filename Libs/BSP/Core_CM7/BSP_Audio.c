@@ -214,7 +214,7 @@ uint8_t BSP_Audio_ChannelStop(uint8_t chno) {
 	return BSP_OK;
 }
 
-uint8_t BPS_Audio_ChannelPause(uint8_t chno) {
+uint8_t BSP_Audio_ChannelPause(uint8_t chno) {
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers

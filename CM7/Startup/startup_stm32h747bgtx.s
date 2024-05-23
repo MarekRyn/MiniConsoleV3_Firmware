@@ -63,6 +63,31 @@ Reset_Handler:
 /* Call the clock system initialization function.*/
   bl  SystemInit
 
+
+/* Copy selected program routines from flash to ITCMRAM */
+  ldr r0, =_sitcmram
+  ldr r1, =_eitcmram
+  ldr r2, =_siitcmram
+  movs r3, #0
+  b LoopCopyProgInit
+
+CopyProgInit:
+  ldr r4, [r2, r3]
+  str r4, [r0, r3]
+  adds r3, r3, #4
+
+LoopCopyProgInit:
+  adds r4, r0, r3
+  cmp r4, r1
+  bcc CopyProgInit
+
+
+
+
+
+
+
+
 /* Copy the data segment initializers from flash to SRAM */
   ldr r0, =_sdata
   ldr r1, =_edata
@@ -92,6 +117,7 @@ FillZerobss:
 LoopFillZerobss:
   cmp r2, r4
   bcc FillZerobss
+
 
 /* Call static constructors */
     bl __libc_init_array

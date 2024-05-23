@@ -31,7 +31,7 @@ static void button00_callback(void) {
 	button01.state = GUI_STATE_ENABLED;
 	button02.state = GUI_STATE_ENABLED;
 	BSP_Audio_LinkTestSound(0);
-	BSP_Audio_SetChannelVolumeLR(0, 128, 0);
+	BSP_Audio_SetChannelVolumeLR(0, 200, 0);
 	BSP_Audio_ChannelPLay(0, 1);
 }
 
@@ -41,7 +41,7 @@ static void button01_callback(void) {
 	button01.state = GUI_STATE_ACTIVE;
 	button02.state = GUI_STATE_ENABLED;
 	BSP_Audio_LinkTestSound(0);
-	BSP_Audio_SetChannelVolume(0, 128);
+	BSP_Audio_SetChannelVolume(0, 200);
 	BSP_Audio_ChannelPLay(0, 1);
 }
 
@@ -51,7 +51,7 @@ static void button02_callback(void) {
 	button01.state = GUI_STATE_ENABLED;
 	button02.state = GUI_STATE_ACTIVE;
 	BSP_Audio_LinkTestSound(0);
-	BSP_Audio_SetChannelVolumeLR(0, 0, 128);
+	BSP_Audio_SetChannelVolumeLR(0, 0, 200);
 	BSP_Audio_ChannelPLay(0, 1);
 }
 

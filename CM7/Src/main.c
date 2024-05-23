@@ -102,7 +102,11 @@ int main(void)
 
 			printf("MiniConsole Started\n");
 
-			BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_DOUBLE, C_BLACK, NULL);
+			void (* __BSP_LCD_Init)(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uint32_t *clut);
+
+			__BSP_LCD_Init = BSP_Driver[32];
+
+			__BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_DOUBLE, C_BLACK, NULL);
 
 			while (!BSP_LCD_GetEditPermission()) {};
 			G2D_ClearFrame();

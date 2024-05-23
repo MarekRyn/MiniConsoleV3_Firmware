@@ -71,7 +71,7 @@ uint8_t BSP_Audio_LinkSourceMOD(uint8_t chno, void * addr, uint32_t size);
 uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, void * addr, uint32_t size);
 uint8_t BSP_Audio_ChannelPLay(uint8_t chno, uint8_t repeat);
 uint8_t BSP_Audio_ChannelStop(uint8_t chno);
-uint8_t BPS_Audio_ChannelPause(uint8_t chno);
+uint8_t BSP_Audio_ChannelPause(uint8_t chno);
 uint8_t BSP_Audio_RegisterStatusCallback(uint8_t status, void* callback);
 uint32_t BSP_Audio_GetStatusParam(uint8_t index);
 

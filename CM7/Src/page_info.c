@@ -20,7 +20,7 @@ GUI_Button_TypeDef	button04;
 GUI_Button_TypeDef	button05;
 
 static void audio_callback_ch_stop(void) {
-	if (BSP_Audio_GetStatusParam(0) == 0) {
+	if (BSP_Audio_GetStatusParam(0) == 2) {
 		button00.state = GUI_STATE_ENABLED;
 		button01.state = GUI_STATE_ENABLED;
 		button02.state = GUI_STATE_ENABLED;
@@ -39,13 +39,13 @@ static void slider00_callback(void) {
 		if ((BSP_hlcdtp.gest_data.start_x > slider00.x_pos) && (BSP_hlcdtp.gest_data.start_x < slider00.x_pos + 42)) {
 			mix -= slider00.step;
 			if (mix > slider00.max_value) mix = 0;
-			BSP_Audio_SetChannelVolume(0, 196 - mix);
+			BSP_Audio_SetChannelVolume(2, 196 - mix);
 			BSP_Audio_SetChannelVolume(1, mix);
 		}
 		if ((BSP_hlcdtp.gest_data.start_x > (slider00.x_pos + slider00.width - 42)) && (BSP_hlcdtp.gest_data.start_x < (slider00.x_pos + slider00.width))) {
 			mix += slider00.step;
 			if (mix > slider00.max_value) mix = slider00.max_value;
-			BSP_Audio_SetChannelVolume(0, 196 - mix);
+			BSP_Audio_SetChannelVolume(2, 196 - mix);
 			BSP_Audio_SetChannelVolume(1, mix);
 		}
 		if ((BSP_hlcdtp.gest_data.start_x > (slider00.ctx.slide_x - 5)) && (BSP_hlcdtp.gest_data.start_x < (slider00.ctx.slide_x + 32 + 5))) slider00.ctx.drag = 1;
@@ -59,7 +59,7 @@ static void slider00_callback(void) {
 			if (BSP_hlcdtp.gest_data.stop_x > (slider00.ctx.slide_x1 - 32)) {mix = slider00.max_value; break;}
 			mix = ((BSP_hlcdtp.gest_data.stop_x - slider00.ctx.slide_x0) * (slider00.max_value - slider00.min_value) / (slider00.width - 120)) + slider00.min_value;
 			mix -= (mix % slider00.step);
-			BSP_Audio_SetChannelVolume(0, 196 - mix);
+			BSP_Audio_SetChannelVolume(2, 196 - mix);
 			BSP_Audio_SetChannelVolume(1, mix);
 		}
 		break;
@@ -75,15 +75,15 @@ static void slider00_callback(void) {
 static void button00_callback(void) {
 	if (BSP_hlcdtp.gest_data.gest != LCD_TP_GEST_CLICK_DOWN) return;
 
-	BSP_Audio_ChannelStop(0);
+	BSP_Audio_ChannelStop(2);
 
 	if (button00.state != GUI_STATE_ACTIVE) {
 
 		button00.state = GUI_STATE_ACTIVE;
 		button01.state = GUI_STATE_ENABLED;
 		button02.state = GUI_STATE_ENABLED;
-		BSP_Audio_LinkSourceMP3(0, tracks[0], BSP_Res_GetSize(tracks[0]));
-		BSP_Audio_ChannelPLay(0, 1);
+		BSP_Audio_LinkSourceMP3(2, tracks[0], BSP_Res_GetSize(tracks[0]));
+		BSP_Audio_ChannelPLay(2, 1);
 
 	} else button00.state = GUI_STATE_ENABLED;
 }
@@ -91,7 +91,7 @@ static void button00_callback(void) {
 static void button01_callback(void) {
 	if (BSP_hlcdtp.gest_data.gest != LCD_TP_GEST_CLICK_DOWN) return;
 
-	BSP_Audio_ChannelStop(0);
+	BSP_Audio_ChannelStop(2);
 
 	if (button01.state != GUI_STATE_ACTIVE) {
 
@@ -99,8 +99,8 @@ static void button01_callback(void) {
 		button01.state = GUI_STATE_ACTIVE;
 		button02.state = GUI_STATE_ENABLED;
 
-		BSP_Audio_LinkSourceMP3(0, tracks[1], BSP_Res_GetSize(tracks[1]));
-		BSP_Audio_ChannelPLay(0, 1);
+		BSP_Audio_LinkSourceMP3(2, tracks[1], BSP_Res_GetSize(tracks[1]));
+		BSP_Audio_ChannelPLay(2, 1);
 
 	} else button01.state = GUI_STATE_ENABLED;
 }
@@ -108,7 +108,7 @@ static void button01_callback(void) {
 static void button02_callback(void) {
 	if (BSP_hlcdtp.gest_data.gest != LCD_TP_GEST_CLICK_DOWN) return;
 
-	BSP_Audio_ChannelStop(0);
+	BSP_Audio_ChannelStop(2);
 
 	if (button02.state != GUI_STATE_ACTIVE) {
 
@@ -116,8 +116,8 @@ static void button02_callback(void) {
 		button01.state = GUI_STATE_ENABLED;
 		button02.state = GUI_STATE_ACTIVE;
 
-		BSP_Audio_LinkSourceMP3(0, tracks[2], BSP_Res_GetSize(tracks[2]));
-		BSP_Audio_ChannelPLay(0, 1);
+		BSP_Audio_LinkSourceMP3(2, tracks[2], BSP_Res_GetSize(tracks[2]));
+		BSP_Audio_ChannelPLay(2, 1);
 
 	} else button02.state = GUI_STATE_ENABLED;
 }

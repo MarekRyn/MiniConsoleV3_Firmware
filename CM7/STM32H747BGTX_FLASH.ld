@@ -28,9 +28,6 @@ MEMORY
   OS_FLASH	(rx)	: ORIGIN = 0x08000000, 	LENGTH = 512K   /* Operating system code */
   OS_RAM	(xrw)	: ORIGIN = 0x24000000, 	LENGTH = 128K   /* Operating system data */
   
-  APP_FLASH (rx)	: ORIGIN = 0x90000000, 	LENGTH = 16M    /* Application code */
-  APP_RAM	(xrw)	: ORIGIN = 0x24020000, 	LENGTH = 384K   /* Application data */
-  
   SH0_RAM	(rw)	: ORIGIN = 0x30040000, 	LENGTH = 32K    /* Shared memory for Sound System */
   SH1_RAM	(rw)	: ORIGIN = 0x38008000, 	LENGTH = 32K    /* Shared memory for application */
   
@@ -148,6 +145,19 @@ SECTIONS
     _edata = .;        /* define a global symbol at data end */
   } >OS_RAM AT> OS_FLASH
 
+
+  /* Used by the startup to initialize copy routine*/
+  _sidtcmram = LOADADDR(.dtc_mram);
+
+  /* The program data to be located in DTCMRAM and accessed from this memory */
+  .dtc_mram : {
+  	. = ALIGN(4);
+  	_sdtcmram = .;        /* create a global symbol at data start */
+  	*(.dtc_mram)			  /* program routines to copy to DTCMRAM */
+    . = ALIGN(4);
+    _edtcmram = .;        /* define a global symbol at data end */
+  } >DTCMRAM AT> OS_FLASH 
+
   /* Uninitialized data section into "OS_RAM" memory */
   . = ALIGN(4);
   .bss :
@@ -207,14 +217,6 @@ SECTIONS
   	. = ALIGN(4);
   } >BK_RAM
   
-  /* The program code and other data into "APP_FLASH" memory */
-  .qspi :
-  {
-  	. = ALIGN(4);
-  	*(.app_flash)
-  	. = ALIGN(4);
-  } >APP_FLASH
-
   /* Remove information from the compiler libraries */
   /DISCARD/ :
   {

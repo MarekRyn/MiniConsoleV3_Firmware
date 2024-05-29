@@ -112,6 +112,7 @@ uint8_t BSP_Res_Free(void * objAddr) {
 	if (*objIndex > RES_OBJECTS_COUNT) return BSP_ERROR;
 	if (ResCtx.objects[*objIndex].addr != (uint32_t)objAddr) return BSP_ERROR;
 
+	ResCtx.resFree += (ResCtx.objects[*objIndex].size + 12);
 	ResCtx.objects[*objIndex].addr = 0;
 	ResCtx.objects[*objIndex].size = 0;
 

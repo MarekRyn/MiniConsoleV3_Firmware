@@ -81,6 +81,9 @@ void G2D_DrawTileC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_w
 void G2D_DrawTileBlend(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);
 void G2D_DrawTileBlendC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);
 
+uint32_t G2D_Color(uint32_t color, uint8_t alpha); // Calculating color value and include alpha in modes with alpha channel
+uint32_t G2D_Alpha(uint32_t color, uint8_t alpha); // Updating alpha channel in pre-calculated color value
+
 #endif
 
 #endif /* INC_GRAPH2D_H_ */

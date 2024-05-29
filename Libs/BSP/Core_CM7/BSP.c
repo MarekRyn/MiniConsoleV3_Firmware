@@ -13,20 +13,38 @@
 
 #include "BSP.h"
 
-void * BSP_Driver[1024] = {
-		/* 0000...0031 - BSP Structures */
+DTC_MRAM void * BSP_Driver[1024] = {
+		// Placeholder for app init and main
+		[0] = 				NULL,
+		[1] =				NULL,
+		[2 ... 7] =			NULL,
 
-		[0] = 				&BSP_hlcdtp,
-		[1] = 				&BSP_himu,
-		[2] = 				&BSP_hinputs,
-		[3] = 				&BSP_hserial,
-		[4 ... 31] = 		NULL,
+		// BSP Structures
+		[8] = 				&BSP_hlcdtp,
+		[9] = 				&BSP_himu,
+		[10] = 				&BSP_hinputs,
+		[11 ... 15] = 		NULL,
 
-		// LCD Library
+		// System functions
+		[16] =				BSP_PWR_Restart,
+		[17] = 				BSP_PWR_ShutDown,
+		[18 ... 31] =		NULL,
+
+		// LCD and Touch Panel Library
 		[32] = 				BSP_LCD_Init,
 		[33] = 				BSP_LCD_FrameReady,
 		[34] = 				BSP_LCD_GetEditPermission,
-		[35 ... 127] =		NULL,
+		[35] =				BSP_LCD_SetBackLight,
+		[36] =				BSP_LCD_GetBackLight,
+		[37] =				BSP_LCD_BacklLightOff,
+		[38] =				BSP_LCD_BackLightOn,
+		[39] =				BSP_LCD_GetFrameTime,
+		[40 ... 64] =		NULL,
+		[64] =				BSP_LCD_TP_RegisterArea,
+		[65] =				BSP_LCD_TP_RemoveArea,
+		[66] =				BSP_LCD_TP_RemoveAreaRange,
+		[67] =				BSP_LCD_TP_RemoveAllAreas,
+		[68 ... 127] =		NULL,
 
 
 		// G2D Library
@@ -55,24 +73,27 @@ void * BSP_Driver[1024] = {
 		[150] = 			G2D_DrawBitmapBlend,
 		[151] = 			G2D_DrawBitmapBlendC,
 		[152] =				G2D_DrawBitmap,
-		[153] = 			G2D_DrawBitmapRotate,
-		[154] = 			G2D_DrawBitmapRotateC,
-		[155] =				G2D_DrawIcon,
-		[156] = 			G2D_DrawIconC,
-		[157] =				G2D_DrawIconBlend,
-		[158] =				G2D_DrawIconBlendC,
-		[159] =				G2D_GetIconHeight,
-		[160] =				G2D_GetIconWidth,
-		[161] =				G2D_DrawJPEG,
-		[162] =				G2D_DrawJPEGC,
-		[163] =				G2D_DrawLastJPEG,
-		[164] =				G2D_DrawLastJPEGC,
-		[165] =				G2D_DecodeJPEG,
-		[166] =				G2D_DrawTile,
-		[167] = 			G2D_DrawTileC,
-		[168] =				G2D_DrawTileBlend,
-		[169] =				G2D_DrawTileBlendC,
-		[170 ... 255] =		NULL,
+		[153] =				G2D_DrawBitmapC,
+		[154] = 			G2D_DrawBitmapRotate,
+		[155] = 			G2D_DrawBitmapRotateC,
+		[156] =				G2D_DrawIcon,
+		[157] = 			G2D_DrawIconC,
+		[158] =				G2D_DrawIconBlend,
+		[159] =				G2D_DrawIconBlendC,
+		[160] =				G2D_GetIconHeight,
+		[161] =				G2D_GetIconWidth,
+		[162] =				G2D_DrawJPEG,
+		[163] =				G2D_DrawJPEGC,
+		[164] =				G2D_DrawLastJPEG,
+		[165] =				G2D_DrawLastJPEGC,
+		[166] =				G2D_DecodeJPEG,
+		[167] =				G2D_DrawTile,
+		[168] = 			G2D_DrawTileC,
+		[169] =				G2D_DrawTileBlend,
+		[170] =				G2D_DrawTileBlendC,
+		[171] =				G2D_Color,
+		[172] =				G2D_Alpha,
+		[173 ... 255] =		NULL,
 
 		// Audio Library
 		[256] =				BSP_Audio_SetMasterVolume,
@@ -86,7 +107,7 @@ void * BSP_Driver[1024] = {
 		[264] =				BSP_Audio_SetChannelVolumeLR,
 		[265] =				BSP_Audio_IncChannelVolume,
 		[266] =				BSP_Audio_DecChannelVolume,
-		[267] =				BSP_Audio_Init,
+		[267] =				NULL,
 		[268] =				BSP_Audio_LinkSourceMP3,
 		[269] =				BSP_Audio_LinkSourceMOD,
 		[270] = 			BSP_Audio_LinkSourceRAW,
@@ -95,10 +116,17 @@ void * BSP_Driver[1024] = {
 		[273] =				BSP_Audio_ChannelPause,
 		[274] =				BSP_Audio_RegisterStatusCallback,
 		[275] =				BSP_Audio_GetStatusParam,
-		[276 ... 511] = 	NULL,
+		[276 ... 383] = 	NULL,
+
+		// Resources
+		[384] =				BSP_Res_Init,
+		[385] = 			BSP_Res_Alloc,
+		[386] =				BSP_Res_Free,
+		[387] = 			BSP_Res_Load,
+		[388] =				BSP_Res_GetSize,
 
 		// Remaining set as NULL
-		[512 ... 1023] = 	NULL
+		[389 ... 1023] = 	NULL
 };
 
 
@@ -148,9 +176,6 @@ uint8_t BSP_BOARD_Init_1(void) {
 	// SDRAM Initialization
 	if (BSP_SDRAM_Init(120)) return BSP_ERROR;
 
-	// QSPI Initialization
-	if (BSP_QSPI_Init()) return BSP_ERROR;
-
 	// PWR Initialization
 	if (BSP_PWR_Init()) return BSP_ERROR;
 
@@ -177,6 +202,9 @@ uint8_t BSP_BOARD_Init_1(void) {
 
 	// Audio Initialization
 	if (BSP_Audio_Init()) return BSP_ERROR;
+
+	// QSPI Initialization
+	if (BSP_QSPI_Init()) return BSP_ERROR;
 
 	return BSP_OK;
 }

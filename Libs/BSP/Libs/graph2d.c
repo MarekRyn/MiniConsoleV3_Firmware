@@ -1245,5 +1245,14 @@ void G2D_DrawTileBlendC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t t
 	G2D_DrawTileBlend(tileset_addr, tileset_cols, tile_width, tile_height, tile_col, tile_row, x, y);
 }
 
+uint32_t G2D_Color(uint32_t color, uint8_t alpha) {
+	return BSP_LCD_Color(color, alpha);
+}
+
+uint32_t G2D_Alpha(uint32_t color, uint8_t alpha) {
+	return BSP_LCD_Alpha(color, alpha);
+}
+
+
 #endif
 

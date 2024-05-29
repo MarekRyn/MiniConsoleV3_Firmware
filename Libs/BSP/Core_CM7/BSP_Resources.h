@@ -25,6 +25,7 @@ extern "C" {
 
 uint8_t BSP_Res_Init(void * resAddr, uint32_t resSize);
 void* BSP_Res_Alloc(uint32_t resSize);
+uint8_t BSP_Res_Free(void * objAddr);
 void* BSP_Res_Load(char *filename);
 uint32_t BSP_Res_GetSize(void * objAddr);
 

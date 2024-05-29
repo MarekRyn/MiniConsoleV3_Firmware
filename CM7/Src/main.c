@@ -17,6 +17,9 @@
 __IO uint32_t state0 = 0;
 __IO uint32_t state1 = 0;
 
+__IO void (*App_Init)(void) = NULL;
+__IO void (*App_Main)(void) = NULL;
+
 void Bootloader_Task(void) {
 	if (!BSP_LCD_GetEditPermission()) return;
 
@@ -64,7 +67,6 @@ void Bootloader_Task(void) {
 
 int main(void)
 {
-
 	// Starting up of MiniConsole;
 	state0 = (BSP_STM32_RCC_WasSystemRestareted()) ? STATE0_RESTARTED : STATE0_PWR_UP;
 
@@ -81,6 +83,7 @@ int main(void)
 		case STATE0_PWR_CONFIRMED:
 			// Initialization of board after pwr up - Stage 1
 			if (BSP_BOARD_Init_1()) {state0 = STATE0_FAULT; break; }
+
 			state0 = STATE0_INITIATED;
 			break;
 
@@ -98,15 +101,16 @@ int main(void)
 			break;
 
 		case STATE0_INITIATED:
-			// Splash screen
+			// state0 = STATE0_APPLICATION;
+			state0 = STATE0_APPLICATION_INIT;
 
+			// Checking if menu button is pressed during start-up and selecting: bootloader or application
+			if (BSP_hinputs.buttons.btn_MENU > 0) state0 = STATE0_BOOTLOADER_INIT;
+
+			// Splash screen
 			printf("MiniConsole Started\n");
 
-			void (* __BSP_LCD_Init)(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uint32_t *clut);
-
-			__BSP_LCD_Init = BSP_Driver[32];
-
-			__BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_DOUBLE, C_BLACK, NULL);
+			BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_DOUBLE, C_BLACK, NULL);
 
 			while (!BSP_LCD_GetEditPermission()) {};
 			G2D_ClearFrame();
@@ -127,28 +131,18 @@ int main(void)
 			BSP_LCD_InitBackLight(10);
 			BSP_LCD_SetBackLight(80, 25);
 
-			//BSP_Delay(4000);
-
 			// Load default values
 			BSP_PWR_LoadConfig();
 			BSP_Audio_LoadMasterVolume();
 			BSP_LCD_LoadBackLight();
 
-			// TODO: Checking if menu button is pressed during start-up and selecting: bootloader or application
-			// Start Temporary section
-			// If "Menu_Button" pressed during startup than console switches into USB MSC mode (active until RESET)
-			if (BSP_hinputs.buttons.btn_MENU > 0) {
-				BSP_USB_Init_MSC();
-				while (1) BSP_USB_Task();
-			}
-    			// End Temporary section
+			BSP_Delay(4000);
 
-			// state0 = STATE0_APPLICATION;
-			state0 = STATE0_BOOTLOADER_INIT;
 			break;
 
 		case STATE0_BOOTLOADER_INIT:
 
+			// Configuring resource manager
 			BSP_FatFS_Init("0:/");
 			BSP_Res_Init((void *)0xC0000000, 48*1024*1024);
 
@@ -168,10 +162,36 @@ int main(void)
 			break;
 
 		case STATE0_APPLICATION_INIT:
+
+			// Configuring resource manager
+			BSP_FatFS_Init("0:/");
+
+			// QSPI periferial entering memory mapped mode
+			BSP_QSPI_MemMappedEnable();
+
+			// Parsing application configuration section
+			uint32_t * App_Init_Addr = (uint32_t *)0x90000000;
+			uint32_t * App_Main_Addr = (uint32_t *)0x90000004;
+			BSP_Driver[0] = (void *)*App_Init_Addr;
+			App_Init = BSP_Driver[0];
+			BSP_Driver[1] = (void *)*App_Main_Addr;
+			App_Main = BSP_Driver[1];
+
+			// Initiate application
+			App_Init();
+
 			state0 = STATE0_APPLICATION_MAIN;
 			break;
 
 		case STATE0_APPLICATION_MAIN:
+
+			// Enter Application Main
+			App_Main();
+
+
+			// Infinite loop;
+			while(1) {};
+
 			break;
 
 		case STATE0_RESTARTING:

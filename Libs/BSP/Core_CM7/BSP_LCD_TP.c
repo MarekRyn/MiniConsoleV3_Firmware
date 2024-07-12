@@ -20,6 +20,12 @@ static 	uint8_t					active_flag = 0;
 uint8_t BSP_LCD_TP_Init(void) {
 	active_flag = 0;
 
+	// Clearing touch area array
+	for (uint8_t i = 0; i<LCD_TP_AREA_NO; i++) {
+		BSP_hlcdtp.touch_areas[i].active = 0;
+		BSP_hlcdtp.touch_areas[i].callback = NULL;
+	}
+
 	// Configuring I2C interface
 	if (BSP_STM32_I2C_Init(I2C1)) return BSP_ERROR;
 

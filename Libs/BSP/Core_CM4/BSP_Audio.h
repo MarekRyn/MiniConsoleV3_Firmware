@@ -42,7 +42,8 @@ enum AUDIO_CMD {
 	AUDIO_CMD_LINK_RAW,
 	AUDIO_CMD_PLAY,
 	AUDIO_CMD_STOP,
-	AUDIO_CMD_PAUSE
+	AUDIO_CMD_PAUSE,
+	AUDIO_CMD_GETCHANNEL
 };
 
 enum AUDIO_STATUS {
@@ -73,6 +74,7 @@ uint8_t	BSP_Audio_SetChannelVolume(uint8_t chno, uint8_t volume);
 uint8_t	BSP_Audio_SetMasterVolume(uint8_t volume);
 uint8_t BSP_Audio_ChannelFree(uint8_t chno);
 uint8_t BSP_Audio_ChannelLinkSource(uint8_t chno, uint32_t source);
+uint8_t BSP_Audio_GetChannel(void);
 uint8_t BSP_Audio_Init(void);
 uint8_t BSP_Audio_Loop(void);
 

@@ -1989,7 +1989,9 @@ void LTDC_IRQHandler(void)
 void DMA2D_IRQHandler(void) {
 
 	// Update state flag
-	if (BSP_STM32_DMA2D_IRQHandler(DMA2D) == BSP_OK) BSP_hlcd.priv.dma2d_state = LCD_DMA2D_READY;
+	//if (BSP_STM32_DMA2D_IRQHandler(DMA2D) == BSP_OK) BSP_hlcd.priv.dma2d_state = LCD_DMA2D_READY;
+	BSP_STM32_DMA2D_IRQHandler(DMA2D);
+	BSP_hlcd.priv.dma2d_state = LCD_DMA2D_READY;
 }
 
 

@@ -16,6 +16,9 @@
 extern "C" {
 #endif
 
+// Define version
+#define BSP_VERSION "0.1b"
+
 // Includes
 #include "BSP_STM32.h"
 #include "BSP_USB.h"
@@ -27,6 +30,7 @@ extern "C" {
 #include "BSP_QSPI.h"
 #include "BSP_Inputs.h"
 #include "BSP_Resources.h"
+#include "BSP_IntelHex.h"
 #include "BSP_Audio.h"
 #include "BSP_Serial.h"
 #include "BSP_PWR.h"

@@ -30,7 +30,8 @@ enum AUDIO_CMD {
 	AUDIO_CMD_LINK_RAW,
 	AUDIO_CMD_PLAY,
 	AUDIO_CMD_STOP,
-	AUDIO_CMD_PAUSE
+	AUDIO_CMD_PAUSE,
+	AUDIO_CMD_GETCHANNEL
 };
 
 enum AUDIO_STATUS {
@@ -72,8 +73,10 @@ uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, void * addr, uint32_t size);
 uint8_t BSP_Audio_ChannelPLay(uint8_t chno, uint8_t repeat);
 uint8_t BSP_Audio_ChannelStop(uint8_t chno);
 uint8_t BSP_Audio_ChannelPause(uint8_t chno);
+uint8_t BSP_Audio_GetFreeChannel(void);
 uint8_t BSP_Audio_RegisterStatusCallback(uint8_t status, void* callback);
 uint32_t BSP_Audio_GetStatusParam(uint8_t index);
+
 
 // uint8_t BSP_Audio_LinkSourceFM(uint8_t chno, ....);
 

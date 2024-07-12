@@ -10,11 +10,31 @@
  *******************************************************************/
 
 #include "BSP_PWR.h"
+#include "graph2d.h"
 
 static uint32_t timeout_screen_reduced = 0;
 static uint32_t timeout_screen_pwroff = 0;
 static uint8_t	ps_state0 = 0;
 static uint8_t	ps_state1 = 0;
+
+uint8_t BSP_PWR_Animation(void) {
+	uint32_t timestart = BSP_GetTick();
+	uint32_t dt = 0;
+	BSP_LCD_SetBackLight(0, 25);
+	while (dt < 240) {
+		dt = (BSP_GetTick() - timestart);
+		while (!BSP_LCD_GetEditPermission()) {};
+		G2D_CopyPrevFrame();
+		int16_t y0 = dt + 2;
+		int16_t y1 = 479 - y0;
+		G2D_DrawFillRect(0, 0, 800, y0, BSP_LCD_Color(C_BLACK, 255));
+		G2D_DrawFillRect(0, y1, 800, y1, BSP_LCD_Color(C_BLACK, 255));
+		G2D_DrawHLine(0, y0, 800, BSP_LCD_Color(C_WHITE, 255));
+		G2D_DrawHLine(0, y1, 800, BSP_LCD_Color(C_WHITE, 255));
+		BSP_LCD_FrameReady();
+	}
+	return BSP_OK;
+}
 
 
 uint8_t BSP_PWR_Init(void) {
@@ -33,6 +53,9 @@ uint8_t BSP_PWR_Init(void) {
 
 uint8_t BSP_PWR_Restart(void) {
 
+	// Power Animation
+	BSP_PWR_Animation();
+
 	NVIC_SystemReset();
 
 	while (1) {}
@@ -42,12 +65,25 @@ uint8_t BSP_PWR_Restart(void) {
 
 uint8_t BSP_PWR_ShutDown(void) {
 
+	// Power Animation
+	BSP_PWR_Animation();
+
 	// Pulling power hold pin to low state
 	BSP_STM32_GPIO_WritePin(PWR_Hold_Port, PWR_Hold_Pin, GPIO_PIN_RESET);
 
 	while (1) {}
 	return BSP_OK;
 }
+
+
+uint8_t BSP_PWR_ShutDownNoAnim(void) {
+	// Pulling power hold pin to low state
+	BSP_STM32_GPIO_WritePin(PWR_Hold_Port, PWR_Hold_Pin, GPIO_PIN_RESET);
+
+	while (1) {}
+	return BSP_OK;
+}
+
 
 uint8_t BSP_PWR_SaveConfig(uint8_t screen_reduced_timeout, uint8_t screen_pwroff_timeout) {
 

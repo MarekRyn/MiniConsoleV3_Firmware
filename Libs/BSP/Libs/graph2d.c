@@ -1253,6 +1253,21 @@ uint32_t G2D_Alpha(uint32_t color, uint8_t alpha) {
 	return BSP_LCD_Alpha(color, alpha);
 }
 
+void G2D_CopyBuf(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t width, uint16_t height) {
+	BSP_LCD_CopyBuf(src_addr, offsline_src, x_dest, y_dest, (LCD_WIDTH - width), width, height);
+}
+
+void G2D_CopyBufBlend(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t width, uint16_t height, uint8_t alpha) {
+	BSP_LCD_CopyBufBlend(src_addr, offsline_src, x_dest, y_dest, (LCD_WIDTH - width), width, height, alpha);
+}
+
+void G2D_CacheFrame(void) {
+	BSP_LCD_CacheFrame();
+}
+
+void G2D_RestoreFrame(void) {
+	BSP_LCD_RestoreFrame();
+}
 
 #endif
 

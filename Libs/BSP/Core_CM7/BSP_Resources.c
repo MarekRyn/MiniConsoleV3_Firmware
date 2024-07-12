@@ -25,7 +25,6 @@ typedef struct {
 	uint32_t			resAddr;
 	uint32_t			resSize;
 	uint32_t			resFree;
-	FATFS				fs;
 } ResCtx_TypeDef;
 
 
@@ -108,6 +107,7 @@ void* BSP_Res_Alloc(uint32_t objSize) {
 
 
 uint8_t BSP_Res_Free(void * objAddr) {
+	if (objAddr == NULL) return BSP_ERROR;
 	uint32_t * objIndex = (uint32_t *)objAddr - 2;
 	if (*objIndex > RES_OBJECTS_COUNT) return BSP_ERROR;
 	if (ResCtx.objects[*objIndex].addr != (uint32_t)objAddr) return BSP_ERROR;

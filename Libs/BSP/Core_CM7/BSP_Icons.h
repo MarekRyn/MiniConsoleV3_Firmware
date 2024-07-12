@@ -46,7 +46,7 @@ extern const uint8_t ICON_32_Right [283];
 extern const uint8_t ICON_32_Screen [187];
 extern const uint8_t ICON_32_Tools [281];
 extern const uint8_t ICON_32_Up [279];
-extern const uint8_t ICON_32_USB [221];
+extern const uint8_t ICON_32_USB [366];
 extern const uint8_t ICON_48_Apps [415];
 extern const uint8_t ICON_48_Audio [514];
 extern const uint8_t ICON_48_Battery_0 [182];
@@ -80,7 +80,7 @@ extern const uint8_t ICON_48_Right [449];
 extern const uint8_t ICON_48_Screen [273];
 extern const uint8_t ICON_48_Tools [432];
 extern const uint8_t ICON_48_Up [441];
-extern const uint8_t ICON_48_USB [329];
+extern const uint8_t ICON_48_USB [574];
 extern const uint8_t ICON_64_Apps [560];
 extern const uint8_t ICON_64_Audio [685];
 extern const uint8_t ICON_64_Battery_0 [257];
@@ -114,7 +114,7 @@ extern const uint8_t ICON_64_Right [567];
 extern const uint8_t ICON_64_Screen [371];
 extern const uint8_t ICON_64_Tools [555];
 extern const uint8_t ICON_64_Up [561];
-extern const uint8_t ICON_64_USB [503];
+extern const uint8_t ICON_64_USB [806];
 extern const uint8_t ICON_128_Apps [1153];
 extern const uint8_t ICON_128_Audio [1462];
 extern const uint8_t ICON_128_Battery_0 [631];
@@ -148,7 +148,7 @@ extern const uint8_t ICON_128_Right [1205];
 extern const uint8_t ICON_128_Screen [863];
 extern const uint8_t ICON_128_Tools [1162];
 extern const uint8_t ICON_128_Up [1223];
-extern const uint8_t ICON_128_USB [918];
+extern const uint8_t ICON_128_USB [1667];
 extern const uint8_t ICON_192_Apps [1882];
 extern const uint8_t ICON_192_Audio [2299];
 extern const uint8_t ICON_192_Battery_0 [1139];
@@ -182,8 +182,7 @@ extern const uint8_t ICON_192_Right [2063];
 extern const uint8_t ICON_192_Screen [1482];
 extern const uint8_t ICON_192_Tools [1974];
 extern const uint8_t ICON_192_Up [2053];
-extern const uint8_t ICON_192_USB [1909];
-
+extern const uint8_t ICON_192_USB [2672];
 
 
 #endif /* CORE_CM7_BSP_DATA_H_ */

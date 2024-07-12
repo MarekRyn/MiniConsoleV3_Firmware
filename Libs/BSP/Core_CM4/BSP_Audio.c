@@ -179,18 +179,21 @@ static uint8_t _process_cmd(void) {
 
 	case AUDIO_CMD_LINK_SND_LOGO:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
+		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_MP3);
 		drmp3_init_memory(AUDIO_ctx.channels[chno].pctx, (void *)SND_Logo, sizeof(SND_Logo), NULL);
 		break;
 
 	case AUDIO_CMD_LINK_SND_TEST:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
+		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_MP3);
 		drmp3_init_memory(AUDIO_ctx.channels[chno].pctx, (void *)SND_Test, sizeof(SND_Test), NULL);
 		break;
 
 	case AUDIO_CMD_LINK_MP3:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
+		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 		addr = AUDIO_regs.c_params[1];
 		size = AUDIO_regs.c_params[2];
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_MP3);
@@ -199,6 +202,7 @@ static uint8_t _process_cmd(void) {
 
 	case AUDIO_CMD_LINK_MOD:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
+		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 		addr = AUDIO_regs.c_params[1];
 		size = AUDIO_regs.c_params[2];
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_MOD);
@@ -209,13 +213,16 @@ static uint8_t _process_cmd(void) {
 
 	case AUDIO_CMD_LINK_RAW:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
+		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 		addr = AUDIO_regs.c_params[1];
 		size = AUDIO_regs.c_params[2];
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_RAW);
 		RA_Init(AUDIO_ctx.channels[chno].pctx, (int16_t *)addr, size);
+		break;
 
 	case AUDIO_CMD_PLAY:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
+		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 		repeat = (uint8_t)AUDIO_regs.c_params[1];
 		AUDIO_ctx.channels[chno].state = AUDIO_CH_STATE_PLAY;
 		AUDIO_ctx.channels[chno].repeat = repeat;
@@ -223,14 +230,20 @@ static uint8_t _process_cmd(void) {
 
 	case AUDIO_CMD_STOP:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
+		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 		AUDIO_ctx.channels[chno].state = AUDIO_CH_STATE_STOP;
 		break;
 
 	case AUDIO_CMD_PAUSE:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
+		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 		AUDIO_ctx.channels[chno].state = AUDIO_CH_STATE_PAUSE;
 		break;
 
+	case AUDIO_CMD_GETCHANNEL:
+		chno = BSP_Audio_GetChannel();
+		AUDIO_regs.s_params[0] = chno;
+		break;
 	}
 
 	// Zero registers
@@ -242,7 +255,7 @@ static uint8_t _process_cmd(void) {
 
 // ********** Public functions ****************
 uint8_t BSP_Audio_ChannelFree(uint8_t chno) {
-	if (chno > AUDIO_CFG_CHANNELS) return BSP_ERROR;
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 
 	// Free resources
 	switch (AUDIO_ctx.channels[chno].type) {
@@ -269,7 +282,7 @@ uint8_t BSP_Audio_ChannelFree(uint8_t chno) {
 }
 
 uint8_t BSP_Audio_ChannelLinkSource(uint8_t chno, uint32_t source) {
-	if (chno > AUDIO_CFG_CHANNELS) return BSP_ERROR;
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 
 	// Free previous resources
 	BSP_Audio_ChannelFree(chno);
@@ -316,6 +329,20 @@ uint8_t BSP_Audio_ChannelLinkSource(uint8_t chno, uint32_t source) {
 	}
 
 	return BSP_OK;
+}
+
+
+uint8_t BSP_Audio_GetChannel(void) {
+	// Returns number of first channel that is not playing sound at this moment
+	uint8_t ch = 0;
+	while (ch < AUDIO_CFG_CHANNELS) {
+		if (AUDIO_ctx.channels[ch].type == AUDIO_CH_SOURCE_NONE) return ch;
+		if (AUDIO_ctx.channels[ch].state == AUDIO_CH_STATE_DISABLED) return ch;
+		if (AUDIO_ctx.channels[ch].state == AUDIO_CH_STATE_STOP) return ch;
+		ch++;
+	}
+	// Returns 255 if no free channel found
+	return 255;
 }
 
 uint8_t BSP_Audio_Init(void) {

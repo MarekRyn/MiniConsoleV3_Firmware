@@ -86,18 +86,21 @@ uint8_t BSP_Audio_DecMasterVolume(uint8_t delta) {
 }
 
 uint8_t BSP_Audio_SetChannelVolume(uint8_t chno, uint8_t volume) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	AUDIO_regs.chvolume_L[chno] = volume;
 	AUDIO_regs.chvolume_R[chno] = volume;
 	return BSP_OK;
 }
 
 uint8_t BSP_Audio_SetChannelVolumeLR(uint8_t chno, uint8_t volume_L, uint8_t volume_R) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	AUDIO_regs.chvolume_L[chno] = volume_L;
 	AUDIO_regs.chvolume_R[chno] = volume_R;
 	return BSP_OK;
 }
 
 uint8_t BSP_Audio_IncChannelVolume(uint8_t chno, uint8_t delta) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	uint16_t volume = AUDIO_regs.chvolume_L[chno];
 	volume+=delta;
 	if (volume > 255) volume = 255;
@@ -107,6 +110,7 @@ uint8_t BSP_Audio_IncChannelVolume(uint8_t chno, uint8_t delta) {
 }
 
 uint8_t BSP_Audio_DecChannelVolume(uint8_t chno, uint8_t delta) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	uint16_t volume = AUDIO_regs.chvolume_L[chno];
 	volume-=delta;
 	if (volume > 255) volume = 0;
@@ -129,6 +133,7 @@ uint8_t BSP_Audio_Init(void) {
 }
 
 uint8_t BSP_Audio_LinkStartupSound(uint8_t chno) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
@@ -140,6 +145,7 @@ uint8_t BSP_Audio_LinkStartupSound(uint8_t chno) {
 }
 
 uint8_t BSP_Audio_LinkTestSound(uint8_t chno) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
@@ -151,6 +157,7 @@ uint8_t BSP_Audio_LinkTestSound(uint8_t chno) {
 }
 
 uint8_t BSP_Audio_LinkSourceMP3(uint8_t chno, void * addr, uint32_t size) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
@@ -164,6 +171,7 @@ uint8_t BSP_Audio_LinkSourceMP3(uint8_t chno, void * addr, uint32_t size) {
 }
 
 uint8_t BSP_Audio_LinkSourceMOD(uint8_t chno, void * addr, uint32_t size) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
@@ -177,6 +185,7 @@ uint8_t BSP_Audio_LinkSourceMOD(uint8_t chno, void * addr, uint32_t size) {
 }
 
 uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, void * addr, uint32_t size) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
@@ -190,6 +199,7 @@ uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, void * addr, uint32_t size) {
 }
 
 uint8_t BSP_Audio_ChannelPLay(uint8_t chno, uint8_t repeat) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	// repeat = 255 -> loop forever
 
 	// Wait until command register is ready
@@ -204,6 +214,7 @@ uint8_t BSP_Audio_ChannelPLay(uint8_t chno, uint8_t repeat) {
 }
 
 uint8_t BSP_Audio_ChannelStop(uint8_t chno) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
@@ -215,6 +226,7 @@ uint8_t BSP_Audio_ChannelStop(uint8_t chno) {
 }
 
 uint8_t BSP_Audio_ChannelPause(uint8_t chno) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
@@ -223,6 +235,20 @@ uint8_t BSP_Audio_ChannelPause(uint8_t chno) {
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	return BSP_OK;
+}
+
+
+uint8_t BSP_Audio_GetFreeChannel(void) {
+	// Wait until command register is ready
+	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
+	// Setup registers
+	AUDIO_regs.command = AUDIO_CMD_GETCHANNEL;
+	// Activate command by sending SEV to CM4 core;
+	__SEV();
+	// Wait until data processed;
+	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
+	// Return value
+	return AUDIO_regs.s_params[0];
 }
 
 

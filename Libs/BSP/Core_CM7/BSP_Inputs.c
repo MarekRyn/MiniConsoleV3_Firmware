@@ -298,6 +298,8 @@ uint8_t BSP_Inputs_ParseData(void) {
 		BSP_hinputs.buttons.btn_X_U || BSP_hinputs.buttons.btn_X_D || BSP_hinputs.buttons.btn_X_L || BSP_hinputs.buttons.btn_X_R ||
 		BSP_hinputs.buttons.btn_JOY || BSP_hinputs.buttons.btn_MENU || BSP_hinputs.buttons.btn_PWR)	BSP_hinputs.timestamp = BSP_GetTick();
 
+	if ((BSP_hinputs.joy.joy_X > 32) || (BSP_hinputs.joy.joy_X < -32) || (BSP_hinputs.joy.joy_Y > 32) || (BSP_hinputs.joy.joy_Y < -32)) BSP_hinputs.timestamp = BSP_GetTick();
+
 
 	return BSP_OK;
 }

@@ -20,6 +20,17 @@ __IO uint32_t state1 = 0;
 __IO void (*App_Init)(void) = NULL;
 __IO void (*App_Main)(void) = NULL;
 
+
+void USB_MSC_Task(void) {
+	G2D_ClearFrame();
+	G2D_DrawIconC((uint32_t)&ICON_192_USB, 400, 240, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
+	BSP_LCD_FrameReady();
+
+	BSP_USB_Init_MSC();
+	while (1) BSP_USB_Task();
+}
+
+
 void Bootloader_Task(void) {
 	if (!BSP_LCD_GetEditPermission()) return;
 
@@ -77,7 +88,7 @@ int main(void)
 			// Initialization of board after pwr up - Stage 0
 			state0 = STATE0_PWR_CONFIRMED;
 			if (BSP_BOARD_Init_0()) { state0 = STATE0_FAULT; break; };
-			if (BSP_STM32_GPIO_ReadPin(GPIOB, GPIO_PIN_5) == GPIO_PIN_SET) state0 = STATE0_PWR_DOWN;
+			if (BSP_STM32_GPIO_ReadPin(GPIOB, GPIO_PIN_5) == GPIO_PIN_SET) state0 = STATE0_PWR_DOWN_NOANIM;
 			break;
 
 		case STATE0_PWR_CONFIRMED:
@@ -104,8 +115,14 @@ int main(void)
 			// state0 = STATE0_APPLICATION;
 			state0 = STATE0_APPLICATION_INIT;
 
-			// Checking if menu button is pressed during start-up and selecting: bootloader or application
-			if (BSP_hinputs.buttons.btn_MENU > 0) state0 = STATE0_BOOTLOADER_INIT;
+			// Checking if menu button is pressed during start-up and selecting: application, bootloader or USB mass storage
+			if (BSP_hinputs.buttons.btn_MENU > 0) {
+				if (BSP_hinputs.buttons.btn_C == 0) state0 = STATE0_BOOTLOADER_INIT;
+				if (BSP_hinputs.buttons.btn_C > 0) state0 = STATE0_USB_MSC;
+			}
+
+
+			// state0 = STATE0_BOOTLOADER_INIT;
 
 			// Splash screen
 			printf("MiniConsole Started\n");
@@ -118,8 +135,6 @@ int main(void)
 			G2D_DrawIconC((uint32_t)&ICON_256_MiniConsole, 400, 350, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
 
 			BSP_LCD_FrameReady();
-
-			BSP_Delay(500);
 
 			// Play startup sound
 			BSP_Audio_SetMasterVolume(128);
@@ -136,7 +151,26 @@ int main(void)
 			BSP_Audio_LoadMasterVolume();
 			BSP_LCD_LoadBackLight();
 
-			BSP_Delay(4000);
+
+			// Display version and mode info
+
+			BSP_Delay(1000);
+
+			G2D_CopyPrevFrame();
+
+			char bspversion[20] = "Version: ";
+			strcat(bspversion,BSP_VERSION);
+
+			G2D_Text(660,440, FONT_20_verdana, bspversion, BSP_LCD_Color(C_WHITE, 255), BSP_LCD_Color(C_BLACK, 255));
+
+			if (state0 == STATE0_APPLICATION_INIT) G2D_Text(10, 440, FONT_20_verdana, "Loading application...", BSP_LCD_Color(C_WHITE, 255), BSP_LCD_Color(C_BLACK, 255));
+			if (state0 == STATE0_BOOTLOADER_INIT) G2D_Text(10, 440, FONT_20_verdana, "Entering configuration mode...", BSP_LCD_Color(C_WHITE, 255), BSP_LCD_Color(C_BLACK, 255));
+			if (state0 == STATE0_USB_MSC) G2D_Text(10, 440, FONT_20_verdana, "Entering USB Drive mode...", BSP_LCD_Color(C_WHITE, 255), BSP_LCD_Color(C_BLACK, 255));
+
+			BSP_LCD_FrameReady();
+
+			// Delay
+			BSP_Delay(3000);
 
 			break;
 
@@ -146,7 +180,6 @@ int main(void)
 			BSP_FatFS_Init("0:/");
 			BSP_Res_Init((void *)0xC0000000, 48*1024*1024);
 
-			page_loaddata_info();
 			page_loaddata_apps();
 
 			state0 = STATE0_BOOTLOADER_MAIN;
@@ -158,13 +191,28 @@ int main(void)
 			break;
 
 		case STATE0_BOOTLOADER_MAIN:
+
+//			volatile uint8_t ihexbuf[256];
+//
+//			BSP_IHex_Init("0:/Bunny/app.hex", 0x90000000, 0x91000000);
+//			while (1) {
+//				BSP_IHex_FillBuf(&ihexbuf, 256);
+//				if (BSP_IHex_IsEndOfFile()) break;
+//				if (BSP_IHex_IsEndOfBlock()) break;
+//				if (BSP_IHex_IsError()) break;
+//			}
+//
+//			BSP_IHex_DeInit();
+
 			Bootloader_Task();
 			break;
 
 		case STATE0_APPLICATION_INIT:
 
 			// Configuring resource manager
-			BSP_FatFS_Init("0:/");
+			// TODO: Selecting home directory as per loaded application
+			BSP_FatFS_Init("0:/Bunny/");
+
 
 			// QSPI periferial entering memory mapped mode
 			BSP_QSPI_MemMappedEnable();
@@ -194,6 +242,12 @@ int main(void)
 
 			break;
 
+
+		case STATE0_USB_MSC:
+			// Entering USB Drive menu
+			USB_MSC_Task();
+			break;
+
 		case STATE0_RESTARTING:
 			// Restart system
 			BSP_PWR_Restart();
@@ -202,6 +256,11 @@ int main(void)
 		case STATE0_PWR_DOWN:
 			// Shut down system
 			BSP_PWR_ShutDown();
+			break;
+
+		case STATE0_PWR_DOWN_NOANIM:
+			// Shut down system when power button was hold to short time
+			BSP_PWR_ShutDownNoAnim();
 			break;
 
 		case STATE0_FAULT:

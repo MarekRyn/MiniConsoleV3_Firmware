@@ -28,7 +28,9 @@ DTC_MRAM void * BSP_Driver[1024] = {
 		// System functions
 		[16] =				BSP_PWR_Restart,
 		[17] = 				BSP_PWR_ShutDown,
-		[18 ... 31] =		NULL,
+		[18] =				BSP_Delay,
+		[19] =				BSP_GetTick,
+		[20 ... 31] =		NULL,
 
 		// LCD and Touch Panel Library
 		[32] = 				BSP_LCD_Init,
@@ -93,7 +95,11 @@ DTC_MRAM void * BSP_Driver[1024] = {
 		[170] =				G2D_DrawTileBlendC,
 		[171] =				G2D_Color,
 		[172] =				G2D_Alpha,
-		[173 ... 255] =		NULL,
+		[173] =				G2D_CopyBuf,
+		[174] =				G2D_CopyBufBlend,
+		[175] =				G2D_CacheFrame,
+		[176] =				G2D_RestoreFrame,
+		[177 ... 255] =		NULL,
 
 		// Audio Library
 		[256] =				BSP_Audio_SetMasterVolume,
@@ -116,7 +122,8 @@ DTC_MRAM void * BSP_Driver[1024] = {
 		[273] =				BSP_Audio_ChannelPause,
 		[274] =				BSP_Audio_RegisterStatusCallback,
 		[275] =				BSP_Audio_GetStatusParam,
-		[276 ... 383] = 	NULL,
+		[276] = 			BSP_Audio_GetFreeChannel,
+		[277 ... 383] = 	NULL,
 
 		// Resources
 		[384] =				BSP_Res_Init,
@@ -182,14 +189,14 @@ uint8_t BSP_BOARD_Init_1(void) {
 	// STM32 Initialization - NVIC - Interrupts
 	if (BSP_STM32_Init_NVIC()) return BSP_ERROR;
 
-	// Touch Panel Initialization
-	if (BSP_LCD_TP_Init()) return BSP_ERROR;
-
 	// IMU Initialization
 	if (BSP_IMU_Init()) return BSP_ERROR;
 
 	// Joystick and Keyboard Initialization
 	if (BSP_Inputs_Init()) return BSP_ERROR;
+
+	// Touch Panel Initialization
+	if (BSP_LCD_TP_Init()) return BSP_ERROR;
 
 	// SDCARD Initialization
 	if (BSP_SDCARD_Init()) return BSP_ERROR;
@@ -218,15 +225,16 @@ void NMI_Handler(void) {
 }
 
 void HardFault_Handler(void) {
+	volatile uint32_t junk = 1;
 
-	while (1) {}
+	while (junk) {}
 
 }
 
 void MemManage_Handler(void) {
+	volatile uint32_t junk = 1;
 
-	while (1) {}
-
+	while (junk) {}
 }
 
 void BusFault_Handler(void) {

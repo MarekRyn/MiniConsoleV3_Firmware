@@ -20,6 +20,7 @@ FIL SDFile;
 uint8_t BSP_FatFS_Init(char * homeDir) {
 	retSD = FATFS_LinkDriver(&SD_Driver, SDPath);
 	if (f_mount(&SDFatFS, homeDir, 1)) return FR_DENIED;
+	if (f_chdir(homeDir)) return FR_DENIED;
 	return FR_OK;
 }
 

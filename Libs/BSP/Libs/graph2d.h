@@ -84,6 +84,12 @@ void G2D_DrawTileBlendC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t t
 uint32_t G2D_Color(uint32_t color, uint8_t alpha); // Calculating color value and include alpha in modes with alpha channel
 uint32_t G2D_Alpha(uint32_t color, uint8_t alpha); // Updating alpha channel in pre-calculated color value
 
+void G2D_CopyBuf(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t width, uint16_t height); // Advanced buffer copy to screen
+void G2D_CopyBufBlend(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t width, uint16_t height, uint8_t alpha); // Advanced buffer copy to screen with blending
+
+void G2D_CacheFrame(void); // Save current state of the frame to cache memory
+void G2D_RestoreFrame(void); // Restoring cached frame
+
 #endif
 
 #endif /* INC_GRAPH2D_H_ */

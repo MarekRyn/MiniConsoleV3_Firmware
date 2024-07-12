@@ -18,8 +18,10 @@ enum ENUM_State0{
 	STATE0_BOOTLOADER_MAIN,		// Bootloader menu
 	STATE0_APPLICATION_INIT,	// Entering application lodaed into QSPI flash
 	STATE0_APPLICATION_MAIN,	// Application
+	STATE0_USB_MSC,				// USB Mass Storage Mode
 	STATE0_RESTARTING,			// Restart requested
 	STATE0_PWR_DOWN,			// Power down requested
+	STATE0_PWR_DOWN_NOANIM,		// Power down without animation
 	STATE0_FAULT				// Fault
 };
 

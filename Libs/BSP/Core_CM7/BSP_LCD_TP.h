@@ -32,6 +32,8 @@ uint8_t BSP_LCD_TP_RegisterArea(uint8_t areaid, uint16_t x, uint16_t y, uint16_t
 uint8_t BSP_LCD_TP_RemoveArea(uint8_t areaid);
 uint8_t BSP_LCD_TP_RemoveAreaRange(uint8_t aid_start, uint8_t aid_stop);
 uint8_t BSP_LCD_TP_RemoveAllAreas(void);
+uint8_t	BSP_LCD_TP_Enable(void);
+uint8_t BSP_LCD_TP_Disable(void);
 
 
 #ifdef __cplusplus

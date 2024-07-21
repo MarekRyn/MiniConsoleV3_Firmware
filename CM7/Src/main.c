@@ -39,6 +39,7 @@ void Bootloader_Task(void) {
 	switch (state1) {
 	case STATE1_APPS:
 		page_render_apps();
+		FLASHER_Task();
 		break;
 	case STATE1_INPUTS:
 		page_render_inputs();
@@ -112,7 +113,6 @@ int main(void)
 			break;
 
 		case STATE0_INITIATED:
-			// state0 = STATE0_APPLICATION;
 			state0 = STATE0_APPLICATION_INIT;
 
 			// Checking if menu button is pressed during start-up and selecting: application, bootloader or USB mass storage
@@ -121,8 +121,8 @@ int main(void)
 				if (BSP_hinputs.buttons.btn_C > 0) state0 = STATE0_USB_MSC;
 			}
 
-
-			// state0 = STATE0_BOOTLOADER_INIT;
+			// For developing configuration menu
+			//state0 = STATE0_BOOTLOADER_INIT;
 
 			// Splash screen
 			printf("MiniConsole Started\n");
@@ -177,10 +177,9 @@ int main(void)
 		case STATE0_BOOTLOADER_INIT:
 
 			// Configuring resource manager
-			BSP_FatFS_Init("0:/");
+			BSP_FatFS_Init();
+			BSP_SetHomeDir("0:/");
 			BSP_Res_Init((void *)0xC0000000, 48*1024*1024);
-
-			page_loaddata_apps();
 
 			state0 = STATE0_BOOTLOADER_MAIN;
 			state1 = STATE1_APPS;
@@ -192,34 +191,23 @@ int main(void)
 
 		case STATE0_BOOTLOADER_MAIN:
 
-//			volatile uint8_t ihexbuf[256];
-//
-//			BSP_IHex_Init("0:/Bunny/app.hex", 0x90000000, 0x91000000);
-//			while (1) {
-//				BSP_IHex_FillBuf(&ihexbuf, 256);
-//				if (BSP_IHex_IsEndOfFile()) break;
-//				if (BSP_IHex_IsEndOfBlock()) break;
-//				if (BSP_IHex_IsError()) break;
-//			}
-//
-//			BSP_IHex_DeInit();
-
 			Bootloader_Task();
 			break;
 
 		case STATE0_APPLICATION_INIT:
 
-			// Configuring resource manager
-			// TODO: Selecting home directory as per loaded application
-			BSP_FatFS_Init("0:/Bunny/");
-
-
-			// QSPI periferial entering memory mapped mode
+			// QSPI peripheral entering memory mapped mode
 			BSP_QSPI_MemMappedEnable();
 
 			// Parsing application configuration section
 			uint32_t * App_Init_Addr = (uint32_t *)0x90000000;
 			uint32_t * App_Main_Addr = (uint32_t *)0x90000004;
+			char * App_Home_Dir = (char *)0x90000008;
+
+			// Configuring resource manager
+			BSP_FatFS_Init();
+			BSP_SetHomeDir(App_Home_Dir);
+
 			BSP_Driver[0] = (void *)*App_Init_Addr;
 			App_Init = BSP_Driver[0];
 			BSP_Driver[1] = (void *)*App_Main_Addr;

@@ -42,6 +42,9 @@ uint8_t BSP_LCD_TP_Init(void) {
 	// Initialization of Touch Panel
 	if (BSP_DRV_LCD_TP_Init(I2C1)) return BSP_ERROR;
 
+	// Enabling touch panel
+	BSP_hlcdtp.enabled = 1;
+
 	// Activating interrupts
 	active_flag = 1;
 
@@ -57,6 +60,9 @@ uint8_t BSP_LCD_TP_Reset(void) {
 
 	// Testing connection
 	if (BSP_STM32_I2C_IsDeviceReady(I2C1, (LCD_TP_I2C_ADDR) << 1, 4, 1000)) return BSP_ERROR;
+
+	// Enabling touch panel
+	BSP_hlcdtp.enabled = 1;
 
 	active_flag = 1;
 	return BSP_OK;
@@ -112,6 +118,18 @@ uint8_t BSP_LCD_TP_RemoveAllAreas(void) {
 	return BSP_OK;
 }
 
+uint8_t	BSP_LCD_TP_Enable(void) {
+	active_flag = 0;
+	BSP_hlcdtp.enabled = 1;
+	active_flag = 1;
+}
+
+uint8_t BSP_LCD_TP_Disable(void) {
+	active_flag = 0;
+	BSP_hlcdtp.enabled = 0;
+	active_flag = 1;
+}
+
 // ************ IRQ Handlers ***************
 
 void EXTI13_IRQHandler(void) {		// Overriding weak handler created in BSP.c
@@ -130,6 +148,7 @@ void I2C1_EV_IRQHandler(void) {
 		BSP_DRV_LCD_TP_Parse(&BSP_hlcdtp);
 
 		// Calling callback for active touch area (if defined)
+		if (!BSP_hlcdtp.enabled) return;
 		if (BSP_hlcdtp.gest_data.area >= LCD_TP_AREA_NO) return;
 		if (BSP_hlcdtp.gest_data.gest == LCD_TP_GEST_NONE) return;
 		if (BSP_hlcdtp.touch_areas[BSP_hlcdtp.gest_data.area].callback == NULL) return;

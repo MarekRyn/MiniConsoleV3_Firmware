@@ -34,6 +34,7 @@ extern "C" {
 #include "BSP_Audio.h"
 #include "BSP_Serial.h"
 #include "BSP_PWR.h"
+#include "BSP_RTC.h"
 
 #include "BSP_Icons.h"
 #include "BSP_Fonts.h"

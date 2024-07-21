@@ -21,7 +21,8 @@
 #include "BSP_ff_gen_drv.h"
 #include "BSP_sd_diskio.h"
 
-uint8_t BSP_FatFS_Init(char * homeDir);
+ uint8_t BSP_FatFS_Init(void);
+ uint8_t BSP_SetHomeDir(char * homeDir);
 
 #ifdef __cplusplus
 }

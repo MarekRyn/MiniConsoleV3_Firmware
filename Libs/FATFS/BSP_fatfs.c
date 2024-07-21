@@ -17,10 +17,24 @@ char SDPath[4];
 FATFS SDFatFS;
 FIL SDFile;
 
-uint8_t BSP_FatFS_Init(char * homeDir) {
+static uint8_t homedirflag = 0;
+
+uint8_t BSP_FatFS_Init(void) {
 	retSD = FATFS_LinkDriver(&SD_Driver, SDPath);
-	if (f_mount(&SDFatFS, homeDir, 1)) return FR_DENIED;
+	if (f_mount(&SDFatFS, "0:/", 1)) return FR_DENIED;
+	return FR_OK;
+}
+
+
+uint8_t BSP_SetHomeDir(char * homeDir) {
+	// Only one time successful update is allowed
+	// home dir must starts with "0:/"
+	if (homedirflag) return FR_DENIED;
+	if (homeDir[0] != 48) return FR_DENIED;
+	if (homeDir[1] != 58) return FR_DENIED;
+	if (homeDir[2] != 47) return FR_DENIED;
 	if (f_chdir(homeDir)) return FR_DENIED;
+	homedirflag = 1;
 	return FR_OK;
 }
 

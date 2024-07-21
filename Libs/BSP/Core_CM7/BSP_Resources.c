@@ -21,7 +21,7 @@ typedef struct {
 
 typedef struct {
 	ResObj_TypeDef		objects[RES_OBJECTS_COUNT];
-	uint32_t			resmap[RES_OBJECTS_COUNT * 2];
+	uint32_t			resmap[RES_OBJECTS_COUNT * 2 + 2];
 	uint32_t			resAddr;
 	uint32_t			resSize;
 	uint32_t			resFree;
@@ -61,39 +61,45 @@ void* BSP_Res_Alloc(uint32_t objSize) {
 	if ((objSize + 12) > ResCtx.resFree) return NULL;
 
 	uint32_t i = 0;
-	uint32_t index = 0xFFFFFFFF;
+	uint32_t rmi = 0;
+	uint32_t index = 0xFFFFFFFF; // Array index for storing new object
 	uint32_t alloc_start = 0;
 	uint32_t alloc_end = 0;
 
 	// Create memory map
+	// Adding dummy object of size 0 and start and first address
+	ResCtx.resmap[rmi++] = ResCtx.resAddr;
+	ResCtx.resmap[rmi++] = ResCtx.resAddr;
+
+	// Adding objects to memory map
 	i = 0;
 	while (i < RES_OBJECTS_COUNT) {
 		if (ResCtx.objects[i].size) {
-			ResCtx.resmap[i*2] = ResCtx.objects[i].addr;
-			ResCtx.resmap[i*2+1] = ResCtx.objects[i].addr + ResCtx.objects[i].size;
+			ResCtx.resmap[rmi++] = ResCtx.objects[i].addr - 8; // Start address
+			ResCtx.resmap[rmi++] = ResCtx.objects[i].addr + ResCtx.objects[i].size; // End address
 		} else {
-			if (index == 0xFFFFFFFF) index = i;
-			ResCtx.resmap[i*2] = 0xFFFFFFFF;
-			ResCtx.resmap[i*2+1] = 0xFFFFFFFF;
+			if (index == 0xFFFFFFFF) index = i; 	// index contains empty slot for future object
+			ResCtx.resmap[rmi++] = 0xFFFFFFFF;
+			ResCtx.resmap[rmi++] = 0xFFFFFFFF;
 		}
 		i++;
 	}
 
 	// Sorting memory map
-	qsort(ResCtx.resmap, 2 * RES_OBJECTS_COUNT, sizeof(uint32_t), _compare);
+	qsort(ResCtx.resmap, rmi, sizeof(uint32_t), _compare);
 
 	// Searching for free space
 	i = 1;
-	while (i < RES_OBJECTS_COUNT) {
+	while (i <= (RES_OBJECTS_COUNT)) {
 		alloc_start = (ResCtx.resmap[2*i-1] < 0xFFFFFFFF) ? ResCtx.resmap[2*i-1] : ResCtx.resAddr;
 		alloc_end = (ResCtx.resmap[2*i] < 0xFFFFFFFF) ? ResCtx.resmap[2*i] : (ResCtx.resAddr + ResCtx.resSize);
-		if ((alloc_end - alloc_start) >= (objSize + 8)) break;
+		if ((alloc_end - alloc_start) >= (objSize + 12)) break;
 		i++;
 	}
-	if (i == RES_OBJECTS_COUNT) return NULL;
+	if (i > RES_OBJECTS_COUNT) return NULL;
 
 	// Allocating required space
-	alloc_start = (alloc_start + 4) & 0xFFFFFFFC;
+	if (alloc_start & 0x00000003) alloc_start = (alloc_start + 4) & 0xFFFFFFFC; // Start address must be dividing by 4
 	*(uint32_t *)alloc_start = index;
 	alloc_start += 4;
 	*(uint32_t *)alloc_start = objSize;

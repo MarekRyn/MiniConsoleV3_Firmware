@@ -11,6 +11,7 @@
 #include "BSP.h"
 #include "gui.h"
 #include "common.h"
+#include "flasher.h"
 
 #include "page_apps.h"
 #include "page_audio.h"

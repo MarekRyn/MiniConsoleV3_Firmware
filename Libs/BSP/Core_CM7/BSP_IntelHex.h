@@ -18,5 +18,7 @@ uint8_t BSP_IHex_DeInit(void);
 uint8_t	BSP_IHex_IsEndOfFile(void);
 uint8_t	BSP_IHex_IsError(void);
 uint8_t	BSP_IHex_IsEndOfBlock(void);
+uint8_t BSP_IHex_GetProgress(void);
+uint32_t BSP_IHex_GetFileSize(void);
 
 #endif /* BSP_CORE_CM7_BSP_INTELHEX_H_ */

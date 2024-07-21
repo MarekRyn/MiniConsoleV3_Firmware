@@ -785,3 +785,16 @@ void BSP_Delay(uint32_t delay) {
 	while ((BSP_GetTick() - tickstart) < wait) {}
 
 }
+
+
+
+__weak void BSP_LCD_TP_INTHandler() {
+	return;
+}
+__weak void BSP_IMU_INTHandler() {
+	return;
+}
+
+__weak void BSP_BLE_INTHandler() {
+	return;
+}

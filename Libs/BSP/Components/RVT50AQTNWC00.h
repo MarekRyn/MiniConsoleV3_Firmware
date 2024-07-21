@@ -146,6 +146,7 @@ typedef struct {
 } TP_GEST;
 
 typedef struct {
+	uint8_t		enabled;
 	uint8_t		raw_data[LCD_TP_REG_TOTAL_LENGTH];
 	uint8_t		touch_count;
 	TP_DATA		touch_data[LCD_TP_DATA_NO];

@@ -30,7 +30,11 @@ DTC_MRAM void * BSP_Driver[1024] = {
 		[17] = 				BSP_PWR_ShutDown,
 		[18] =				BSP_Delay,
 		[19] =				BSP_GetTick,
-		[20 ... 31] =		NULL,
+		[20] = 				BSP_SetHomeDir,
+		[21] = 				BSP_RTC_GetDate,
+		[22] =				BSP_RTC_GetTime,
+		[23] = 				BSP_RTC_GetUnixTimestamp,
+		[24 ... 31] =		NULL,
 
 		// LCD and Touch Panel Library
 		[32] = 				BSP_LCD_Init,

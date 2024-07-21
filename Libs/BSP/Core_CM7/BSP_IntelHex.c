@@ -7,7 +7,7 @@
 
 #include "BSP_IntelHex.h"
 
-enum IH_STATUS {IH_SEEKLINE, IH_BUFSYNC0, IH_BUFSYNC1, IH_READHEADER, IH_DATA, IH_EOF, IH_EOB, IH_ADDR, IH_ENTRY, IH_CRC, IH_ERROR};
+enum IH_STATE {IH_SEEKLINE, IH_BUFSYNC0, IH_BUFSYNC1, IH_READHEADER, IH_DATA, IH_EOF, IH_EOB, IH_ADDR, IH_ENTRY, IH_CRC, IH_ERROR};
 
 typedef struct {
 	uint8_t			ByteCount;
@@ -20,7 +20,8 @@ typedef struct {
 
 typedef struct {
 	FIL						file;
-	enum IH_STATUS			status;
+	uint8_t					progress;
+	enum IH_STATE			state;
 	uint32_t				addr0;
 	uint32_t				addr0_end;
 	uint32_t				addr1;
@@ -185,7 +186,8 @@ uint8_t BSP_IHex_Init(char *filename, uint32_t addr_start, uint32_t addr_end) {
 	res = f_open(&IHexCtx.file, filename, FA_READ);
 	if (res) return BSP_ERROR;
 
-	IHexCtx.status = IH_SEEKLINE;
+	IHexCtx.progress = 0;
+	IHexCtx.state = IH_SEEKLINE;
 	IHexCtx.addr0 = addr_start;
 	IHexCtx.addr0_end = addr_end;
 	IHexCtx.addr1 = 0;
@@ -205,20 +207,20 @@ uint8_t BSP_IHex_FillBuf(void * pbuf, uint32_t bufsize) {
 	memset(pbuf, 0, bufsize);
 
 	while (1) {
-		switch (IHexCtx.status) {
+		switch (IHexCtx.state) {
 
 		case IH_SEEKLINE:
-			if (_SeekLine()) { IHexCtx.status = IH_ERROR; break; }
-			IHexCtx.status = IH_READHEADER;
+			if (_SeekLine()) { IHexCtx.state = IH_ERROR; break; }
+			IHexCtx.state = IH_READHEADER;
 			break;
 
 		case IH_READHEADER:
-			if (_ReadLineHeader()) { IHexCtx.status = IH_ERROR; break; }
-			IHexCtx.status = IH_ERROR;
-			if (IHexCtx.line.Type == 0x00)	IHexCtx.status = IH_BUFSYNC0;
-			if (IHexCtx.line.Type == 0x01)	IHexCtx.status = IH_EOF;
-			if (IHexCtx.line.Type == 0x04)	IHexCtx.status = IH_ADDR;
-			if (IHexCtx.line.Type == 0x05)	IHexCtx.status = IH_ENTRY;
+			if (_ReadLineHeader()) { IHexCtx.state = IH_ERROR; break; }
+			IHexCtx.state = IH_ERROR;
+			if (IHexCtx.line.Type == 0x00)	IHexCtx.state = IH_BUFSYNC0;
+			if (IHexCtx.line.Type == 0x01)	IHexCtx.state = IH_EOF;
+			if (IHexCtx.line.Type == 0x04)	IHexCtx.state = IH_ADDR;
+			if (IHexCtx.line.Type == 0x05)	IHexCtx.state = IH_ENTRY;
 			break;
 
 		case IH_BUFSYNC0:
@@ -233,15 +235,15 @@ uint8_t BSP_IHex_FillBuf(void * pbuf, uint32_t bufsize) {
 				IHexCtx.addr0++;
 			}
 
-			if (IHexCtx.addr0 == IHexCtx.addr0_end) { IHexCtx.status = IH_EOB; break; }
-			if (IHexCtx.addr0 >= IHexCtx.addr1) IHexCtx.status = IH_DATA;
+			if (IHexCtx.addr0 == IHexCtx.addr0_end) { IHexCtx.state = IH_EOB; break; }
+			if (IHexCtx.addr0 >= IHexCtx.addr1) IHexCtx.state = IH_DATA;
 
 			break;
 
 		case IH_DATA:
-			if (_ReadData()) { IHexCtx.status = IH_ERROR; break; }
+			if (_ReadData()) { IHexCtx.state = IH_ERROR; break; }
 			IHexCtx.i1 = 0;
-			IHexCtx.status = IH_CRC;
+			IHexCtx.state = IH_CRC;
 			break;
 
 		case IH_BUFSYNC1:
@@ -249,7 +251,7 @@ uint8_t BSP_IHex_FillBuf(void * pbuf, uint32_t bufsize) {
 				IHexCtx.i1++;
 				IHexCtx.addr1++;
 			}
-			if (IHexCtx.i1 == IHexCtx.line.ByteCount) { IHexCtx.status = IH_SEEKLINE; break; }
+			if (IHexCtx.i1 == IHexCtx.line.ByteCount) { IHexCtx.state = IH_SEEKLINE; break; }
 			if (IHexCtx.addr0 == IHexCtx.addr1) {
 				*pbuf0 = IHexCtx.line.Data[IHexCtx.i1];
 				pbuf0++;
@@ -258,41 +260,47 @@ uint8_t BSP_IHex_FillBuf(void * pbuf, uint32_t bufsize) {
 				IHexCtx.addr0++;
 				IHexCtx.addr1++;
 			}
-			if (IHexCtx.addr0 == IHexCtx.addr0_end) { IHexCtx.status = IH_EOB; break; }
+			if (IHexCtx.addr0 == IHexCtx.addr0_end) { IHexCtx.state = IH_EOB; break; }
 			break;
 
 		case IH_ADDR:
-			if (_ReadAddr()) { IHexCtx.status = IH_ERROR; break; }
-			IHexCtx.status = IH_CRC;
+			if (_ReadAddr()) { IHexCtx.state = IH_ERROR; break; }
+			IHexCtx.state = IH_CRC;
 			break;
 
 		case IH_ENTRY:
-			if (_ReadEntry()) { IHexCtx.status = IH_ERROR; break; }
-			IHexCtx.status = IH_CRC;
+			if (_ReadEntry()) { IHexCtx.state = IH_ERROR; break; }
+			IHexCtx.state = IH_CRC;
 			break;
 
 		case IH_CRC:
-			if (_ReadCRC()) { IHexCtx.status = IH_ERROR; break; }
-			IHexCtx.status = IH_SEEKLINE;
-			if (IHexCtx.line.Type == 0x00) IHexCtx.status = IH_BUFSYNC1;
-			if (IHexCtx.line.CRC8 != 0x00) IHexCtx.status = IH_ERROR;
+			if (_ReadCRC()) { IHexCtx.state = IH_ERROR; break; }
+			IHexCtx.state = IH_SEEKLINE;
+			if (IHexCtx.line.Type == 0x00) IHexCtx.state = IH_BUFSYNC1;
+			if (IHexCtx.line.CRC8 != 0x00) IHexCtx.state = IH_ERROR;
 			break;
 
 		case IH_EOF:
-			if (_ReadCRC()) { IHexCtx.status = IH_ERROR; break; }
+			if (_ReadCRC()) { IHexCtx.state = IH_ERROR; break; }
+			IHexCtx.progress = (f_tell(&IHexCtx.file) * 100) / f_size(&IHexCtx.file);
 			return BSP_OK;
 
 		case IH_EOB:
+			IHexCtx.progress = (f_tell(&IHexCtx.file) * 100) / f_size(&IHexCtx.file);
 			return BSP_OK;
 
 		case IH_ERROR:
 			return BSP_ERROR;
 		}
 
-		if (IHexCtx.i0 == bufsize) return BSP_OK;
+		if (IHexCtx.i0 == bufsize) {
+			IHexCtx.progress = (f_tell(&IHexCtx.file) * 100) / f_size(&IHexCtx.file);
+			return BSP_OK;
+		}
 
 	}
 
+	IHexCtx.progress = (f_tell(&IHexCtx.file) * 100) / f_size(&IHexCtx.file);
 	return BSP_OK;
 }
 
@@ -310,15 +318,24 @@ uint8_t BSP_IHex_DeInit(void) {
 
 
 uint8_t	BSP_IHex_IsEndOfFile(void) {
-	return (IHexCtx.status == IH_EOF);
+	return (IHexCtx.state == IH_EOF);
 }
 
 
 uint8_t	BSP_IHex_IsError(void) {
-	return (IHexCtx.status == IH_ERROR);
+	return (IHexCtx.state == IH_ERROR);
 }
 
 
 uint8_t	BSP_IHex_IsEndOfBlock(void) {
-	return (IHexCtx.status == IH_EOB);
+	return (IHexCtx.state == IH_EOB);
+}
+
+uint8_t BSP_IHex_GetProgress(void) {
+	return IHexCtx.progress;
+}
+
+uint32_t BSP_IHex_GetFileSize(void) {
+	if (IHexCtx.state == IH_ERROR) return 0;
+	return f_size(&IHexCtx.file);
 }

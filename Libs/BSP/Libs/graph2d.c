@@ -353,14 +353,14 @@ void G2D_DrawLine(int16_t X1, int16_t Y1, int16_t X2, int16_t Y2, uint32_t color
 
 
 void G2D_DrawRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
-	int16_t xx = x + width - 1;
-	int16_t yy = y + height - 1;
+	int16_t xx = x + width;
+	int16_t yy = y + height;
 	uint16_t x1 = MAX(0, x);
 	uint16_t y1 = MAX(0, y);
-	uint16_t x2 = MIN(LCD_WIDTH - 1, xx);
-	uint16_t y2 = MIN(LCD_HEIGHT - 1, yy);
-	uint16_t w = x2 - x1 + 1;
-	uint16_t h = y2 - y1 + 1;
+	uint16_t x2 = MIN(LCD_WIDTH, xx);
+	uint16_t y2 = MIN(LCD_HEIGHT, yy);
+	uint16_t w = x2 - x1;
+	uint16_t h = y2 - y1;
 
 	G2D_DrawHLine(x1, y, w, color);
 	G2D_DrawHLine(x1, yy, w, color);
@@ -372,8 +372,8 @@ void G2D_DrawRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_
 void G2D_DrawFillRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
 	uint16_t x1 = MAX(0, x);
 	uint16_t y1 = MAX(0, y);
-	uint16_t x2 = MIN(LCD_WIDTH - 1, (x + width));
-	uint16_t y2 = MIN(LCD_HEIGHT - 1, (y + height));
+	uint16_t x2 = MIN(LCD_WIDTH, (x + width));
+	uint16_t y2 = MIN(LCD_HEIGHT, (y + height));
 	uint16_t w = x2 - x1;
 	uint16_t h = y2 - y1;
 	uint16_t ol = LCD_WIDTH - w;
@@ -384,8 +384,8 @@ void G2D_DrawFillRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uin
 void G2D_DrawFillRectBlend(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
 	uint16_t x1 = MAX(0, x);
 	uint16_t y1 = MAX(0, y);
-	uint16_t x2 = MIN(LCD_WIDTH - 1, (x + width));
-	uint16_t y2 = MIN(LCD_HEIGHT - 1, (y + height));
+	uint16_t x2 = MIN(LCD_WIDTH, (x + width));
+	uint16_t y2 = MIN(LCD_HEIGHT, (y + height));
 	uint16_t w = x2 - x1;
 	uint16_t h = y2 - y1;
 	uint16_t ol = LCD_WIDTH - w;

@@ -17,6 +17,7 @@ uint8_t BSP_DRV_LCD_TP_Init(I2C_TypeDef *hi2c) {
 }
 
 void BSP_DRV_LCD_TP_Parse(LCD_TP_HandleTypeDef *hlcdtp) {
+
 	// Parsing General Data
 	hlcdtp->touch_count = hlcdtp->raw_data[2] & 0b00001111;
 
@@ -45,28 +46,28 @@ void BSP_DRV_LCD_TP_Parse(LCD_TP_HandleTypeDef *hlcdtp) {
 
 			// Gest: Swipe Left
 			if ((hlcdtp->gest_data.delta_x < -100) && (hlcdtp->gest_data.speed_x < -800)
-					&& (hlcdtp->gest_data.speed_y > -400) && (hlcdtp->gest_data.speed_y < 400)) {
+					&& (hlcdtp->gest_data.speed_y > -800) && (hlcdtp->gest_data.speed_y < 800)) {
 				hlcdtp->gest_data.gest = LCD_TP_GEST_SWIPE_LEFT;
 				break;
 			}
 
 			// Gest: Swipe Right
 			if ((hlcdtp->gest_data.delta_x > 100) && (hlcdtp->gest_data.speed_x > 800)
-					&& (hlcdtp->gest_data.speed_y > -400) && (hlcdtp->gest_data.speed_y < 400)) {
+					&& (hlcdtp->gest_data.speed_y > -800) && (hlcdtp->gest_data.speed_y < 800)) {
 				hlcdtp->gest_data.gest = LCD_TP_GEST_SWIPE_RIGHT;
 				break;
 			}
 
 			// Gest: Swipe Up
 			if ((hlcdtp->gest_data.delta_y < -100) && (hlcdtp->gest_data.speed_y < -800)
-					&& (hlcdtp->gest_data.speed_x > -400) && (hlcdtp->gest_data.speed_x < 400)) {
+					&& (hlcdtp->gest_data.speed_x > -800) && (hlcdtp->gest_data.speed_x < 800)) {
 				hlcdtp->gest_data.gest = LCD_TP_GEST_SWIPE_UP;
 				break;
 			}
 
 			// Gest: Swipe Up
 			if ((hlcdtp->gest_data.delta_y > 100) && (hlcdtp->gest_data.speed_y > 800)
-					&& (hlcdtp->gest_data.speed_x > -400) && (hlcdtp->gest_data.speed_x < 400)) {
+					&& (hlcdtp->gest_data.speed_x > -800) && (hlcdtp->gest_data.speed_x < 800)) {
 				hlcdtp->gest_data.gest = LCD_TP_GEST_SWIPE_DOWN;
 				break;
 			}

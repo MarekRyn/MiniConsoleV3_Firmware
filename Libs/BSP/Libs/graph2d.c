@@ -911,15 +911,14 @@ void G2D_DrawBitmapRotate(uint32_t sourcedata, int16_t x, int16_t y, int16_t wid
 	for (int32_t iy = y; iy < (height + y); iy++) {
 		for (int32_t ix = x; ix < (width + x); ix++) {
 
-			// By casting to uint32_t we can check if variable is within range <0,limit) with only one comparison.
-			if (((uint32_t)cxx < width) && ((uint32_t)cyy < height)) {
-				uint32_t c = _getbufpixel(sourcedata, width, cxx, cyy);
-				BSP_LCD_UpdatePixel(faddr, ix, iy, c);
-			}
 			cx += cos_a;
 			cxx = cx >> 16;
 			cy += sin_a;
 			cyy = cy >> 16;
+
+			// By casting to uint32_t we can check if variable is within range <0,limit) with only one comparison.
+			if (((uint32_t)cxx > width) || ((uint32_t)cyy > height)) continue;
+			BSP_LCD_UpdatePixel(faddr, ix, iy, _getbufpixel(sourcedata, width, cxx, cyy));
 		}
 		tcx -= sin_a;
 		tcy += cos_a;

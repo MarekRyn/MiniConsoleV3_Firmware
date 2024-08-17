@@ -30,6 +30,8 @@ typedef struct {
 	enum enum_usbmode		mode;
 	uint8_t					connected;
 	uint16_t				desc_str[32];
+
+	// HID
 	hid_keyboard_report_t	keyboard;		// Keyboard report
 	hid_keyboard_led_bm_t	k_leds;
 	uint8_t					k_flag;
@@ -39,6 +41,12 @@ typedef struct {
 	uint8_t					g_flag;
 	uint16_t				ctrl;			// Consumer Ctrl report
 	uint8_t					c_flag;
+	void *					cb_hid_leds;	// Invoked when keyboard led are changed
+
+	// CDC
+	void *					cb_cdc_rx;		// Invoked when receive completed
+	void *					cb_cdc_rxchar;	// Invoked when particular char received
+	void *					cb_cdc_tx;		// Invoked when transmit completed
 } USB_ctx_TypeDef;
 
 
@@ -52,32 +60,73 @@ static void hid_task(void);
 // BSP USB functions
 //--------------------------------------------------------------------+
 
-uint8_t BSP_USB_Init_MSC(void) {
+uint8_t BSP_USB_MSC_Init(void) {
 	usb_ctx.mode = USB_MODE_MSC;
 	BSP_STM32_PCD_EnableUSBVoltageDetector();
 	tud_init(TUD_OPT_RHPORT);
 	return BSP_OK;
 }
 
-uint8_t BSP_USB_Init_CDC(void) {
+uint8_t BSP_USB_CDC_Init(void) {
 	usb_ctx.mode = USB_MODE_CDC;
+	usb_ctx.cb_cdc_rx = NULL;
+	usb_ctx.cb_cdc_rxchar = NULL;
+	usb_ctx.cb_cdc_tx = NULL;
 	BSP_STM32_PCD_EnableUSBVoltageDetector();
 	tud_init(TUD_OPT_RHPORT);
 	return BSP_OK;
 }
 
-uint8_t BSP_USB_Init_HID(void) {
+void BSP_USB_CDC_RegCbRx(void * cb) {
+	usb_ctx.cb_cdc_rx = cb;
+}
+
+void BSP_USB_CDC_RegCbRxChar(void * cb, char ch) {
+	usb_ctx.cb_cdc_rxchar = cb;
+	tud_cdc_set_wanted_char(ch);
+}
+
+void BSP_USB_CDC_RegCbTx(void * cb) {
+	usb_ctx.cb_cdc_tx = cb;
+}
+
+uint32_t BSP_USB_CDC_DataAvailable(void) {
+	return tud_cdc_available();
+}
+
+uint32_t BSP_USB_CDC_Read(void * buf, uint32_t bufsize) {
+	return tud_cdc_read(buf, bufsize);
+}
+
+uint32_t BSP_USB_CDC_Write(void * buf, uint32_t bufsize) {
+	return tud_cdc_write(buf, bufsize);
+}
+
+uint32_t BSP_USB_CDC_WriteFlush(void) {
+	return tud_cdc_write_flush();
+}
+
+void BSP_USB_CDC_ReadFlush(void) {
+	tud_cdc_read_flush();
+}
+
+uint8_t BSP_USB_HID_Init(void) {
 	usb_ctx.mode = USB_MODE_HID;
+	usb_ctx.cb_hid_leds = NULL;
 	BSP_STM32_PCD_EnableUSBVoltageDetector();
 	tud_init(TUD_OPT_RHPORT);
 	return BSP_OK;
 }
 
+void BSP_USB_HID_RegCbLeds(void * cb) {
+	usb_ctx.cb_hid_leds = cb;
+}
 
 uint8_t BSP_USB_Disconnect(void) {
 	usb_ctx.mode = USB_MODE_NONE;
 	tud_disconnect();
 	BSP_STM32_PCD_DisableUSBVoltageDetector();
+	usb_ctx.connected = 0;
 	return BSP_OK;
 }
 
@@ -110,24 +159,63 @@ uint8_t BSP_USB_IsConnected(void) {
 
 
 void BSP_USB_HID_Mouse(uint8_t buttons, int8_t dx, int8_t dy, int8_t scrl_dx, int8_t scrl_dy) {
+
+	// Send report only when required
+	usb_ctx.m_flag = 0;
+	do {
+		if (dx) { usb_ctx.m_flag = 1; break; }
+		if (dy) { usb_ctx.m_flag = 1; break; }
+		if (buttons) { usb_ctx.m_flag = 1; break; }
+		if (scrl_dx) { usb_ctx.m_flag = 1; break; }
+		if (scrl_dy) { usb_ctx.m_flag = 1; break; }
+	} while(0);
+
+	if (!usb_ctx.m_flag) return;
+
 	usb_ctx.mouse.buttons = buttons;
 	usb_ctx.mouse.x = dx;
 	usb_ctx.mouse.y = dy;
 	usb_ctx.mouse.pan = scrl_dx;
 	usb_ctx.mouse.wheel = scrl_dy;
-	usb_ctx.m_flag = 1;
 }
 
 void BSP_USB_HID_Keyboard(uint8_t modifier, uint8_t * pkeycodes, uint8_t keycount) {
 	if (keycount > 6) keycount = 6;
+
+	// Send report only when required
+	usb_ctx.k_flag = 0;
+	if (usb_ctx.keyboard.modifier != modifier) usb_ctx.k_flag = 1;
+	if (pkeycodes)
+		for (uint8_t i = 0; i < keycount; i++) if (pkeycodes[i] != usb_ctx.keyboard.keycode[i]) { usb_ctx.k_flag = 1; break; }
+	if ((!pkeycodes) || (!keycount))
+		for (uint8_t i = 0; i < 6; i++) if (usb_ctx.keyboard.keycode[i]) { usb_ctx.k_flag = 1; break; }
+
+	if (!usb_ctx.k_flag) return;
+
 	memset(&usb_ctx.keyboard.keycode, 0, 6);
 	if ((keycount > 0) && (pkeycodes)) memcpy(&usb_ctx.keyboard.keycode, pkeycodes, keycount);
 	usb_ctx.keyboard.modifier = modifier;
 	usb_ctx.keyboard.reserved = 0;
-	usb_ctx.k_flag = 1;
 }
 
 void BSP_USB_HID_Gamepad(uint32_t buttons, uint8_t hat, int8_t x, int8_t y, int8_t z, int8_t rx, int8_t ry, int8_t rz) {
+
+	// Send report only when required
+	usb_ctx.g_flag = 0;
+
+	do {
+		if (buttons != usb_ctx.gamepad.buttons) { usb_ctx.g_flag = 1; break; }
+		if (hat != usb_ctx.gamepad.hat) { usb_ctx.g_flag = 1; break; }
+		if (x != usb_ctx.gamepad.x) { usb_ctx.g_flag = 1; break; }
+		if (y != usb_ctx.gamepad.y) { usb_ctx.g_flag = 1; break; }
+		if (z != usb_ctx.gamepad.z) { usb_ctx.g_flag = 1; break; }
+		if (rx != usb_ctx.gamepad.rx) { usb_ctx.g_flag = 1; break; }
+		if (ry != usb_ctx.gamepad.ry) { usb_ctx.g_flag = 1; break; }
+		if (rz != usb_ctx.gamepad.rz) { usb_ctx.g_flag = 1; break; }
+	} while(0);
+
+	if (!usb_ctx.g_flag) return;
+
 	usb_ctx.gamepad.buttons = buttons;
 	usb_ctx.gamepad.hat = hat;
 	usb_ctx.gamepad.x = x;
@@ -136,12 +224,14 @@ void BSP_USB_HID_Gamepad(uint32_t buttons, uint8_t hat, int8_t x, int8_t y, int8
 	usb_ctx.gamepad.rx = rx;
 	usb_ctx.gamepad.ry = ry;
 	usb_ctx.gamepad.rz = rz;
-	usb_ctx.g_flag = 1;
 }
 
 void BSP_USB_HID_Ctrl(uint16_t command) {
+
+	// Send report only when required
+	usb_ctx.c_flag = 0;
+	if (command != usb_ctx.ctrl ) usb_ctx.c_flag = 1; else return;
 	usb_ctx.ctrl = command;
-	usb_ctx.c_flag = 1;
 }
 
 
@@ -365,7 +455,6 @@ int32_t tud_msc_read10_cb(uint8_t lun, uint32_t lba, uint32_t offset, void* buff
 
 	uint32_t bn = bufsize >> 9; // Divide by 512
 
-	//if (HAL_SD_ReadBlocks(&hsd2, buffer, lba, bn, HAL_MAX_DELAY)) return -1;
 	if (BSP_SDCARD_ReadBlocks(buffer, lba, bn)) return -1;
 
 	return (int32_t) bufsize;
@@ -379,7 +468,6 @@ int32_t tud_msc_write10_cb(uint8_t lun, uint32_t lba, uint32_t offset, uint8_t* 
 
 	uint32_t bn = bufsize >> 9; // Divide by 512
 
-	//if (HAL_SD_WriteBlocks(&hsd2, buffer, lba, bn, HAL_MAX_DELAY)) return -1;
 	if (BSP_SDCARD_WriteBlocks(buffer, lba, bn)) return -1;
 
 	return (int32_t) bufsize;
@@ -492,27 +580,27 @@ static void msc_task(void) {
 // USB CDC
 //--------------------------------------------------------------------+
 
-void cdc_task(void) {
-  // connected() check for DTR bit
-  // Most but not all terminal client set this when making connection
-  // if ( tud_cdc_connected() )
-  {
-    // connected and there are data available
-    if ( tud_cdc_available() )
-    {
-      // read data
-      char buf[64];
-      uint32_t count = tud_cdc_read(buf, sizeof(buf));
-      (void) count;
+// Invoked when received new data
+void tud_cdc_rx_cb(uint8_t itf) {
+	(void) itf;
+	if (usb_ctx.cb_cdc_rx) ((void(*)())usb_ctx.cb_cdc_rx)();
+}
 
-      // Echo back
-      // Note: Skip echo by commenting out write() and write_flush()
-      // for throughput test e.g
-      //    $ dd if=/dev/zero of=/dev/ttyACM0 count=10000
-      tud_cdc_write(buf, count);
-      tud_cdc_write_flush();
-    }
-  }
+// Invoked when received `wanted_char`
+void tud_cdc_rx_wanted_cb(uint8_t itf, char wanted_char) {
+	(void) itf;
+	(void) wanted_char;
+	if (usb_ctx.cb_cdc_rxchar) ((void(*)())usb_ctx.cb_cdc_rxchar)();
+}
+
+// Invoked when a TX is complete and therefore space becomes available in TX buffer
+void tud_cdc_tx_complete_cb(uint8_t itf) {
+	(void) itf;
+	if (usb_ctx.cb_cdc_tx) ((void(*)())usb_ctx.cb_cdc_tx)();
+}
+
+static void cdc_task(void) {
+
 }
 
 
@@ -543,6 +631,8 @@ void tud_hid_set_report_cb(uint8_t instance, uint8_t report_id, hid_report_type_
 	if (report_id != REPORT_ID_KEYBOARD) return;
 	if (bufsize == 0) return;
 	usb_ctx.k_leds = buffer[0];
+	// Execute callback
+	if (usb_ctx.cb_hid_leds) ((void(*)())usb_ctx.cb_hid_leds)();
 }
 
 static void hid_task(void) {

@@ -20,29 +20,13 @@ __IO uint32_t state1 = 0;
 __IO void (*App_Init)(void) = NULL;
 __IO void (*App_Main)(void) = NULL;
 
-void USB_HID_Task(void) {
-	uint8_t keycodes[6];
-	uint16_t command = 0;
-	keycodes[0] = HID_KEY_C;
-	BSP_USB_Init_HID();
-	while (1) {
-		BSP_USB_HID_Mouse(BSP_hinputs.buttons.btn_JOY, (int8_t)(BSP_hinputs.joy.joy_X >> 3), (int8_t)(BSP_hinputs.joy.joy_Y >> 3), 0, 0);
-		BSP_USB_HID_Gamepad(0, 0, (int8_t)(BSP_hinputs.joy.joy_X >> 0), (int8_t)(BSP_hinputs.joy.joy_Y >> 0), 0, 0, 0, 0);
-		if (BSP_hinputs.buttons.btn_C) BSP_USB_HID_Keyboard(0, keycodes, 1); else BSP_USB_HID_Keyboard(0, NULL, 0);
-		command = 0;
-		if (BSP_hinputs.buttons.btn_X_U) command = HID_USAGE_CONSUMER_VOLUME_INCREMENT;
-		if (BSP_hinputs.buttons.btn_X_D) command = HID_USAGE_CONSUMER_VOLUME_DECREMENT;
-		BSP_USB_HID_Ctrl(command);
-		BSP_USB_Task();
-	}
-}
 
 void USB_MSC_Task(void) {
 	G2D_ClearFrame();
 	G2D_DrawIconC((uint32_t)&ICON_192_USB, 400, 240, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
 	BSP_LCD_FrameReady();
 
-	BSP_USB_Init_MSC();
+	BSP_USB_MSC_Init();
 	while (1) BSP_USB_Task();
 }
 
@@ -128,8 +112,7 @@ int main(void)
 			break;
 
 		case STATE0_INITIATED:
-			//state0 = STATE0_APPLICATION_INIT;
-			state0 = STATE0_USB_MSC;
+			state0 = STATE0_APPLICATION_INIT;
 
 			// Checking if menu button is pressed during start-up and selecting: application, bootloader or USB mass storage
 			if (BSP_hinputs.buttons.btn_MENU > 0) {
@@ -219,16 +202,14 @@ int main(void)
 			// Parsing application configuration section
 			uint32_t * App_Init_Addr = (uint32_t *)0x90000000;
 			uint32_t * App_Main_Addr = (uint32_t *)0x90000004;
-			char * App_Home_Dir = (char *)0x90000008;
+			App_Init = (void *)*App_Init_Addr;
+			App_Main = (void *)*App_Main_Addr;
 
 			// Configuring resource manager
+			char * App_Home_Dir = (char *)0x90000008;
 			BSP_FatFS_Init();
 			BSP_SetHomeDir(App_Home_Dir);
 
-			BSP_Driver[0] = (void *)*App_Init_Addr;
-			App_Init = BSP_Driver[0];
-			BSP_Driver[1] = (void *)*App_Main_Addr;
-			App_Main = BSP_Driver[1];
 
 			// Initiate application
 			App_Init();
@@ -251,7 +232,7 @@ int main(void)
 		case STATE0_USB_MSC:
 			// Entering USB Drive menu
 			//USB_MSC_Task();
-			USB_HID_Task();
+			USB_MSC_Task();
 			break;
 
 		case STATE0_RESTARTING:

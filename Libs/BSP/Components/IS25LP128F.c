@@ -100,13 +100,16 @@ uint8_t	BSP_DRV_QSPI_Reset(QUADSPI_TypeDef * hqspi) {
 
 uint8_t BSP_DRV_QSPI_Init(QUADSPI_TypeDef * hqspi) {
     uint8_t chip_id[2] = {0};
-    uint8_t	read_reg = 0;
+    uint8_t	reg = 0;
     uint8_t	status_reg = 0;
     uint8_t try = 0;
 
     // For some reason memory chip is not working properly after every reset
     // Therefore operation is repeated as required (but not more than 4 times)
     do {
+
+    	try++;
+		if (try >= 4) return BSP_ERROR;
 
 		// 1. Reset chip
 		if (BSP_DRV_QSPI_Reset(hqspi)) continue;
@@ -123,9 +126,6 @@ uint8_t BSP_DRV_QSPI_Init(QUADSPI_TypeDef * hqspi) {
 
 		if (chip_id[1] != QSPI_CHIP_CID) continue;
 
-    	try++;
-		if (try >= 4) return BSP_ERROR;
-
 		break;
 
     } while (1);
@@ -133,30 +133,41 @@ uint8_t BSP_DRV_QSPI_Init(QUADSPI_TypeDef * hqspi) {
 	// 3. Setup dummy cycles
     BSP_STM32_QSPI_CfgNewCommand();
     BSP_STM32_QSPI_CfgInstruction(QSPI_INSTRUCTION_1_LINE, QSPI_CMD_RDRP);
-    BSP_STM32_QSPI_CfgData(QSPI_DATA_1_LINE, &read_reg, 1);
+    BSP_STM32_QSPI_CfgData(QSPI_DATA_1_LINE, &reg, 1);
 	BSP_STM32_QSPI_CfgOptions(QSPI_DDR_MODE_DISABLE, QSPI_DDR_HHC_ANALOG_DELAY, QSPI_SIOO_INST_EVERY_CMD);
 	if (BSP_STM32_QSPI_StartReceive(hqspi)) return BSP_ERROR;
 
-    MODIFY_REG(read_reg, 0b01111000, (QSPI_CFG_DUMMY_CLKS << 3));
+    MODIFY_REG(reg, 0b01111000, (QSPI_CFG_DUMMY_CLKS << 3));
 
     if (_DRV_QSPI_WriteEnable(hqspi, QSPI_MODE_SPI)) return BSP_ERROR;
 
     BSP_STM32_QSPI_CfgNewCommand();
     BSP_STM32_QSPI_CfgInstruction(QSPI_INSTRUCTION_1_LINE, QSPI_CMD_SRPV);
-    BSP_STM32_QSPI_CfgData(QSPI_DATA_1_LINE, &read_reg, 1);
+    BSP_STM32_QSPI_CfgData(QSPI_DATA_1_LINE, &reg, 1);
 	BSP_STM32_QSPI_CfgOptions(QSPI_DDR_MODE_DISABLE, QSPI_DDR_HHC_ANALOG_DELAY, QSPI_SIOO_INST_EVERY_CMD);
 	if (BSP_STM32_QSPI_StartTransmit(hqspi)) return BSP_ERROR;
 
 	// Waiting for chip ready status
     if (_DRV_QSPI_CheckStatus(hqspi, QSPI_MODE_SPI, 0x01, 0x00)) return BSP_ERROR;
 
-	// 4. Enable 4bytes addresses (required for mem-mapped mode)
+    // 4. Setting driver output power
+    reg = QSPI_CFG_DRV_PWR;
+    BSP_STM32_QSPI_CfgNewCommand();
+    BSP_STM32_QSPI_CfgInstruction(QSPI_INSTRUCTION_1_LINE, QSPI_CMD_SERPV);
+    BSP_STM32_QSPI_CfgData(QSPI_DATA_1_LINE, &reg, 1);
+    BSP_STM32_QSPI_CfgOptions(QSPI_DDR_MODE_DISABLE, QSPI_DDR_HHC_ANALOG_DELAY, QSPI_SIOO_INST_EVERY_CMD);
+    if (BSP_STM32_QSPI_StartTransmit(hqspi)) return BSP_ERROR;
+
+	// Waiting for chip ready status
+    if (_DRV_QSPI_CheckStatus(hqspi, QSPI_MODE_SPI, 0x01, 0x00)) return BSP_ERROR;
+
+	// 5. Enable 4bytes addresses (required for mem-mapped mode)
     BSP_STM32_QSPI_CfgNewCommand();
     BSP_STM32_QSPI_CfgInstruction(QSPI_INSTRUCTION_1_LINE, QSPI_CMD_EN4B);
     BSP_STM32_QSPI_CfgOptions(QSPI_DDR_MODE_DISABLE, QSPI_DDR_HHC_ANALOG_DELAY, QSPI_SIOO_INST_EVERY_CMD);
     if (BSP_STM32_QSPI_StartTransmit(hqspi)) return BSP_ERROR;
 
-	// 5. Enable quad mode
+	// 6. Enable quad mode
     BSP_STM32_QSPI_CfgNewCommand();
     BSP_STM32_QSPI_CfgInstruction(QSPI_INSTRUCTION_1_LINE, QSPI_CMD_RDSR);
     BSP_STM32_QSPI_CfgData(QSPI_DATA_1_LINE, &status_reg, 1);
@@ -183,7 +194,7 @@ uint8_t BSP_DRV_QSPI_Init(QUADSPI_TypeDef * hqspi) {
 
     }
 
-	// 6. Enable QPI mode
+	// 7. Enable QPI mode
     BSP_STM32_QSPI_CfgNewCommand();
     BSP_STM32_QSPI_CfgInstruction(QSPI_INSTRUCTION_1_LINE, QSPI_CMD_QPIEN);
 	BSP_STM32_QSPI_CfgOptions(QSPI_DDR_MODE_DISABLE, QSPI_DDR_HHC_ANALOG_DELAY, QSPI_SIOO_INST_EVERY_CMD);

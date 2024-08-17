@@ -20,7 +20,7 @@ extern "C" {
 #include "IS25LP128F.h"
 
 #define BSP_QSPI				QUADSPI				// STM32 QSPI peripheral address
-#define BSP_QSPI_PRESCALER		2					// Clock = 240MHz / (_2_ + 1) = 80 MHz
+#define BSP_QSPI_PRESCALER		3					// Clock = 240MHz / (_3_ + 1) = 60 MHz
 #define BSP_QSPI_CLOCKMODE		QSPI_CLOCK_MODE_3	// Clock mode
 #define BSP_QSPI_MEMSIZE		23					// Memory size = 2^(_23_ + 1) = 16777216 B = 128 Mbit
 

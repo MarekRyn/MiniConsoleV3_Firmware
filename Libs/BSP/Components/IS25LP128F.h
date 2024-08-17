@@ -20,15 +20,6 @@
 #include "BSP_Common.h"
 #include "BSP_STM32.h"
 
-#define QSPI_CFG_SECTOR_SIZE	4096	// In bytes
-#define QSPI_CFG_BLOCK_SIZE		8		// In sectors
-#define QSPI_CFG_BLOCK_COUNT	512		// Number of blocks
-#define QSPI_CFG_MEM_SIZE		QSPI_CFG_SECTOR_SIZE * QSPI_CFG_BLOCK_SIZE * QSPI_CFG_BLOCK_COUNT
-#define QSPI_CFG_PAGE_SIZE		256		// Number of bytes for single page (for write operation)
-#define QSPI_CFG_ADDR_SIZE		3		// Number of address bytes
-#define QSPI_CFG_DUMMY_CLKS		8		// Number of dummy cycles
-
-
 #define QSPI_MODE_SPI			0		// 1-Line SPI Mode
 #define QSPI_MODE_QSPI			1		// 4-Line SPI Mode
 #define QSPI_MODE_QPI			2		// 4-Line QPI Mode
@@ -36,6 +27,12 @@
 #define QSPI_CHIP_CID			0x17	// Chip ID
 #define QSPI_CHIP_MID			0x9D	// Manufacturer ID
 
+#define QSPI_DRV_12_5			0b00100000	// Output driver strength 12.5%
+#define QSPI_DRV_25				0b01000000	// Output driver strength 25%
+#define QSPI_DRV_37_5			0b01100000	// Output driver strength 37.5%
+#define QSPI_DRV_50				0b11100000	// Output driver strength 50%
+#define QSPI_DRV_75				0b10100000	// Output driver strength 75%
+#define QSPI_DRV_100			0b11000000	// Output driver strength 100%
 
 #define QSPI_CMD_NORD			0x03	// Normal Read Mode (addr 3 bytes or 4 bytes)
 #define QSPI_CMD_4NORD			0x13	// Normal Read Mode (addr 4 bytes only)
@@ -142,6 +139,16 @@
 #define QSPI_CMD_GBLK			0x7E	// Set All DYB Bits (Gang sector / Block sector)
 #define QSPI_CMD_GBUN			0x98	// Clear All DYB Bits (Gang sector / Block sector)
 
+
+
+#define QSPI_CFG_SECTOR_SIZE	4096				// In bytes
+#define QSPI_CFG_BLOCK_SIZE		8					// In sectors
+#define QSPI_CFG_BLOCK_COUNT	512					// Number of blocks
+#define QSPI_CFG_MEM_SIZE		QSPI_CFG_SECTOR_SIZE * QSPI_CFG_BLOCK_SIZE * QSPI_CFG_BLOCK_COUNT
+#define QSPI_CFG_PAGE_SIZE		256					// Number of bytes for single page (for write operation)
+#define QSPI_CFG_ADDR_SIZE		3					// Number of address bytes
+#define QSPI_CFG_DUMMY_CLKS		6					// Number of dummy cycles
+#define QSPI_CFG_DRV_PWR		QSPI_DRV_50;		// 50% Output driver strength (default value)
 
 
 

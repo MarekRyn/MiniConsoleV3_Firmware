@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - Audio Libs
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- First stable release
  *******************************************************************/
 
 #ifndef BSP_AUDIO_H_
@@ -18,20 +19,24 @@ extern "C" {
 
 #include "BSP_STM32.h"
 
-#define AUDIO_CFG_CHANNELS		8
-#define AUDIO_CFG_MAXMASTERVOL	192
+#define AUDIO_CFG_CHANNELS			8
+#define AUDIO_CFG_MAXMASTERVOL		192
 
 enum AUDIO_CMD {
 	AUDIO_CMD_NONE,
 	AUDIO_CMD_LINK_SND_LOGO,
 	AUDIO_CMD_LINK_SND_TEST,
 	AUDIO_CMD_LINK_MP3,
+	AUDIO_CMD_LINK_SMP3,
 	AUDIO_CMD_LINK_MOD,
 	AUDIO_CMD_LINK_RAW,
+	AUDIO_CMD_LINK_MID,
 	AUDIO_CMD_PLAY,
 	AUDIO_CMD_STOP,
 	AUDIO_CMD_PAUSE,
-	AUDIO_CMD_GETCHANNEL
+	AUDIO_CMD_GETCHANNEL,
+	AUDIO_CMD_GETBUFADDR,
+	AUDIO_CMD_BUFUPDCMPL
 };
 
 enum AUDIO_STATUS {
@@ -68,12 +73,16 @@ uint8_t BSP_Audio_Init(void);
 uint8_t BSP_Audio_LinkStartupSound(uint8_t chno);
 uint8_t BSP_Audio_LinkTestSound(uint8_t chno);
 uint8_t BSP_Audio_LinkSourceMP3(uint8_t chno, void * addr, uint32_t size);
+uint8_t BSP_Audio_LinkSourceSMP3(uint8_t chno);
 uint8_t BSP_Audio_LinkSourceMOD(uint8_t chno, void * addr, uint32_t size);
-uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, void * addr, uint32_t size);
+uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, void * addr, uint32_t size, uint8_t chn, uint8_t bitformat, uint16_t freq);
+uint8_t BSP_Audio_LinkSourceMID(uint8_t chno, void * sfaddr, uint32_t sfsize, void * addr, uint32_t size);
 uint8_t BSP_Audio_ChannelPLay(uint8_t chno, uint8_t repeat);
 uint8_t BSP_Audio_ChannelStop(uint8_t chno);
 uint8_t BSP_Audio_ChannelPause(uint8_t chno);
 uint8_t BSP_Audio_GetFreeChannel(void);
+void * BSP_Audio_GetBufAddr(uint8_t chno);
+uint8_t BSP_Audio_BufUpdateCompleted(uint8_t chno);
 uint8_t BSP_Audio_RegisterStatusCallback(uint8_t status, void* callback);
 uint32_t BSP_Audio_GetStatusParam(uint8_t index);
 

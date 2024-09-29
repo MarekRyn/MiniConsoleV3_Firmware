@@ -7,6 +7,7 @@
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- First stable release
  *******************************************************************/
 
 #ifndef INC_BSP_H
@@ -17,7 +18,7 @@ extern "C" {
 #endif
 
 // Define version
-#define BSP_VERSION "0.1b"
+#define BSP_VERSION "1.0"
 
 // Includes
 #include "BSP_STM32.h"
@@ -35,6 +36,7 @@ extern "C" {
 #include "BSP_Serial.h"
 #include "BSP_PWR.h"
 #include "BSP_RTC.h"
+#include "BSP_Video.h"
 
 #include "BSP_Icons.h"
 #include "BSP_Fonts.h"

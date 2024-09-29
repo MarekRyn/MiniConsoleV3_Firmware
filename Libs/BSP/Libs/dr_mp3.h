@@ -2361,6 +2361,56 @@ DRMP3_API int drmp3dec_decode_frame(drmp3dec *dec, const drmp3_uint8 *mp3, int m
     return success*drmp3_hdr_frame_samples(dec->header);
 }
 
+// Added for easy decoding of streamed mp3 frames. By Marek Ryn.
+DRMP3_API int drmp3dec_decode_frame_ex(drmp3dec *dec, const drmp3_uint8 *mp3, void *pcm, drmp3dec_frame_info *info)
+{
+    int i = 0, igr, frame_size = 0, success = 1;
+    const drmp3_uint8 *hdr;
+    drmp3_bs bs_frame[1];
+    drmp3dec_scratch scratch;
+
+    frame_size = drmp3_hdr_frame_bytes(mp3, dec->free_format_bytes) + drmp3_hdr_padding(mp3);
+
+    hdr = mp3 + i;
+    DRMP3_COPY_MEMORY(dec->header, hdr, DRMP3_HDR_SIZE);
+    info->frame_bytes = i + frame_size;
+    info->channels = DRMP3_HDR_IS_MONO(hdr) ? 1 : 2;
+    info->hz = drmp3_hdr_sample_rate_hz(hdr);
+    info->layer = 4 - DRMP3_HDR_GET_LAYER(hdr);
+    info->bitrate_kbps = drmp3_hdr_bitrate_kbps(hdr);
+
+    drmp3_bs_init(bs_frame, hdr + DRMP3_HDR_SIZE, frame_size - DRMP3_HDR_SIZE);
+    if (DRMP3_HDR_IS_CRC(hdr))
+    {
+        drmp3_bs_get_bits(bs_frame, 16);
+    }
+
+    if (info->layer == 3)
+    {
+        int main_data_begin = drmp3_L3_read_side_info(bs_frame, scratch.gr_info, hdr);
+        if (main_data_begin < 0 || bs_frame->pos > bs_frame->limit)
+        {
+            drmp3dec_init(dec);
+            return 0;
+        }
+        success = drmp3_L3_restore_reservoir(dec, bs_frame, &scratch, main_data_begin);
+        if (success && pcm != NULL)
+        {
+            for (igr = 0; igr < (DRMP3_HDR_TEST_MPEG1(hdr) ? 2 : 1); igr++, pcm = DRMP3_OFFSET_PTR(pcm, sizeof(drmp3d_sample_t)*576*info->channels))
+            {
+                DRMP3_ZERO_MEMORY(scratch.grbuf[0], 576*2*sizeof(float));
+                drmp3_L3_decode(dec, &scratch, scratch.gr_info + igr*info->channels, info->channels);
+                drmp3d_synth_granule(dec->qmf_state, scratch.grbuf[0], 18, info->channels, (drmp3d_sample_t*)pcm, scratch.syn[0]);
+            }
+        }
+        drmp3_L3_save_reservoir(dec, &scratch);
+    } else {
+    	return 0;
+    }
+    return success*drmp3_hdr_frame_samples(dec->header);
+}
+
+
 DRMP3_API void drmp3dec_f32_to_s16(const float *in, drmp3_int16 *out, size_t num_samples)
 {
     size_t i = 0;

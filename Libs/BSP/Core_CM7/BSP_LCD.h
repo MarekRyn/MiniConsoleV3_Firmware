@@ -93,6 +93,7 @@ extern const uint32_t C_LUT_GRAY[256];
 
 // Functions
 void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uint32_t *clut);
+void BSP_LCD_UpdateCLUT(uint32_t *clut);
 void BSP_LCD_FrameReady(void);
 uint8_t BSP_LCD_GetEditPermission(void);
 void BSP_LCD_SetAlpha(uint8_t alpha);
@@ -107,12 +108,13 @@ void BSP_LCD_DecBackLight(uint8_t step);
 void BSP_LCD_BackLightLo(void);
 void BSP_LCD_BacklLightOff(void);
 void BSP_LCD_BackLightOn(void);
-void BSP_LCD_DecodeJPEG(uint32_t jpeg_addr, uint32_t jpeg_size);
-uint32_t BSP_LCD_GetEditFrameAddr(void);
-uint32_t BSP_LCD_GetPrevFrameAddr(void);
+void BSP_LCD_DecodeJPEG(void * jpeg_addr, uint32_t jpeg_size);
+void * BSP_LCD_GetEditFrameAddr(void);
+void * BSP_LCD_GetPrevFrameAddr(void);
 uint32_t BSP_LCD_GetColorMode(void);
 uint8_t	BSP_LCD_GetBytesPerPixel(void);
 uint32_t BSP_LCD_GetFrameTime(void);
+void BSP_LCD_SetDisplayWindow(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
 
 
 

@@ -468,7 +468,7 @@ g_pfnVectors:
  .word		0								/* 0028 */
  .word		0								/* 0029 */
  .word		0								/* 0030 */
- .word		0								/* 0031 */
+ .word		BSP_Serial_Transmit				/* 0031 */
 
 // LCD and Touch Panel Library
  .word		BSP_LCD_Init					/* 0032 */
@@ -479,9 +479,9 @@ g_pfnVectors:
  .word		BSP_LCD_BacklLightOff			/* 0037 */
  .word		BSP_LCD_BackLightOn				/* 0038 */
  .word		BSP_LCD_GetFrameTime			/* 0039 */
- .word		0								/* 0040 */
- .word		0								/* 0041 */
- .word		0								/* 0042 */
+ .word		BSP_LCD_UpdateCLUT				/* 0040 */
+ .word		BSP_LCD_GetEditFrameAddr		/* 0041 */
+ .word		BSP_LCD_SetDisplayWindow		/* 0042 */
  .word		0								/* 0043 */
  .word		0								/* 0044 */
  .word		0								/* 0045 */
@@ -507,8 +507,8 @@ g_pfnVectors:
  .word		BSP_LCD_TP_RemoveArea			/* 0065 */
  .word		BSP_LCD_TP_RemoveAreaRange		/* 0066 */
  .word		BSP_LCD_TP_RemoveAllAreas		/* 0067 */
- .word		0								/* 0068 */
- .word		0								/* 0069 */
+ .word		BSP_LCD_TP_Enable				/* 0068 */
+ .word		BSP_LCD_TP_Disable				/* 0069 */
  .word		0								/* 0070 */
  .word		0								/* 0071 */
  .word		0								/* 0072 */
@@ -535,23 +535,25 @@ g_pfnVectors:
  .word		0								/* 0093 */
  .word		0								/* 0094 */
  .word		0								/* 0095 */
- .word		0								/* 0096 */
- .word		0								/* 0097 */
- .word		0								/* 0098 */
- .word		0								/* 0099 */
- .word		0								/* 0100 */
- .word		0								/* 0101 */
- .word		0								/* 0102 */
- .word		0								/* 0103 */
- .word		0								/* 0104 */
- .word		0								/* 0105 */
- .word		0								/* 0106 */
- .word		0								/* 0107 */
- .word		0								/* 0108 */
- .word		0								/* 0109 */
- .word		0								/* 0110 */
- .word		0								/* 0111 */
- .word		0								/* 0112 */
+
+ // Video Library
+ .word		BSP_Video_Init					/* 0096 */
+ .word		BSP_Video_GetFrame				/* 0097 */
+ .word		BSP_Video_DeInit				/* 0098 */
+ .word		BSP_Video_Seek					/* 0099 */
+ .word		BSP_Video_Rev					/* 0100 */
+ .word		BSP_Video_Fwd					/* 0101 */
+ .word		BSP_Video_Play					/* 0102 */
+ .word		BSP_Video_Stop					/* 0103 */
+ .word		BSP_Video_Pause					/* 0104 */
+ .word		BSP_Video_SetVolume				/* 0105 */
+ .word		BSP_Video_DrawFrame				/* 0106 */
+ .word		BSP_Video_DrawFrameC			/* 0107 */
+ .word		BSP_Video_GetTotalFrames		/* 0108 */
+ .word		BSP_Video_GetCurrentFrame		/* 0109 */
+ .word		BSP_Video_GetWidth				/* 0110 */
+ .word		BSP_Video_GetHeight				/* 0111 */
+ .word		BSP_Video_GetFrameRate			/* 0112 */
  .word		0								/* 0113 */
  .word		0								/* 0114 */
  .word		0								/* 0115 */
@@ -710,7 +712,7 @@ g_pfnVectors:
  .word		BSP_Audio_SetChannelVolumeLR	/* 0264 */
  .word		BSP_Audio_IncChannelVolume		/* 0265 */
  .word		BSP_Audio_DecChannelVolume		/* 0266 */
- .word		0								/* 0267 */
+ .word		BSP_Audio_LinkSourceMID			/* 0267 */
  .word		BSP_Audio_LinkSourceMP3			/* 0268 */
  .word		BSP_Audio_LinkSourceMOD			/* 0269 */
  .word		BSP_Audio_LinkSourceRAW			/* 0270 */
@@ -893,30 +895,32 @@ g_pfnVectors:
  .word		0								/* 0445 */
  .word		0								/* 0446 */
  .word		0								/* 0447 */
- .word		0								/* 0448 */
- .word		0								/* 0449 */
- .word		0								/* 0450 */
- .word		0								/* 0451 */
- .word		0								/* 0452 */
- .word		0								/* 0453 */
- .word		0								/* 0454 */
- .word		0								/* 0455 */
- .word		0								/* 0456 */
- .word		0								/* 0457 */
+
+ // FATFS
+ .word		f_open							/* 0448 */
+ .word		f_close							/* 0449 */
+ .word		f_read							/* 0450 */
+ .word		f_write							/* 0451 */
+ .word		f_lseek							/* 0452 */
+ .word		f_truncate						/* 0453 */
+ .word		f_sync							/* 0454 */
+ .word		f_opendir						/* 0455 */
+ .word		f_closedir						/* 0456 */
+ .word		f_readdir						/* 0457 */
  .word		0								/* 0458 */
  .word		0								/* 0459 */
- .word		0								/* 0460 */
- .word		0								/* 0461 */
- .word		0								/* 0462 */
- .word		0								/* 0463 */
+ .word		f_mkdir							/* 0460 */
+ .word		f_unlink						/* 0461 */
+ .word		f_rename						/* 0462 */
+ .word		f_stat							/* 0463 */
  .word		0								/* 0464 */
  .word		0								/* 0465 */
- .word		0								/* 0466 */
+ .word		0		 						/* 0466 */
  .word		0								/* 0467 */
  .word		0								/* 0468 */
  .word		0								/* 0469 */
- .word		0								/* 0470 */
- .word		0								/* 0471 */
+ .word		f_getfree						/* 0470 */
+ .word		f_getlabel						/* 0471 */
  .word		0								/* 0472 */
  .word		0								/* 0473 */
  .word		0								/* 0474 */
@@ -924,10 +928,10 @@ g_pfnVectors:
  .word		0								/* 0476 */
  .word		0								/* 0477 */
  .word		0								/* 0478 */
- .word		0								/* 0479 */
- .word		0								/* 0480 */
- .word		0								/* 0481 */
- .word		0								/* 0482 */
+ .word		f_putc							/* 0479 */
+ .word		f_puts							/* 0480 */
+ .word		f_printf						/* 0481 */
+ .word		f_gets							/* 0482 */
  .word		0								/* 0483 */
  .word		0								/* 0484 */
  .word		0								/* 0485 */

@@ -56,7 +56,7 @@
 /* This option switches f_forward() function. (0:Disable or 1:Enable) */
 
 
-#define FF_USE_STRFUNC	0
+#define FF_USE_STRFUNC	1
 #define FF_PRINT_LLI	1
 #define FF_PRINT_FLOAT	1
 #define FF_STRF_ENCODE	3
@@ -263,7 +263,7 @@
 */
 
 
-#define FF_FS_LOCK		2
+#define FF_FS_LOCK		4
 /* The option FF_FS_LOCK switches file lock function to control duplicated file open
 /  and illegal operation to open objects. This option must be 0 when FF_FS_READONLY
 /  is 1.

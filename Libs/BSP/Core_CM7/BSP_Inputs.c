@@ -1,14 +1,5 @@
 /*******************************************************************
  * MiniConsole V3 - Board Support Package - Keyboard and Joystick
- *
- * Author: Marek Ryn
- * Version: 1.0
- *
- * Changelog:
- *
- * - 0.1b	- Development version
- * - 1.0	- Added calibration functions
- * - 1.1	- Shortcuts for control of backlight, volume and pwr off
  *******************************************************************/
 
 #include "BSP_Inputs.h"

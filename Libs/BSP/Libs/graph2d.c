@@ -1,17 +1,5 @@
 /*******************************************************************
  * MiniConsole V3 - Board Support Package - Graph 2D Library
- *
- * Author: Marek Ryn
- * Version: 1.0
- *
- * Changelog:
- *
- * - 0.1b	- Development version
- * - 0.2b 	- Added hardware JPEG decoding
- * - 0.3b	- Added ARGB1555 and ARGB4444 modes
- * - 0.4b   - Added RoundRect and FillRoundRect
- * 			- Added DrawIconBlend and TextBlend
- * - 1.0	- Major refactoring
  *******************************************************************/
 
 #ifdef CORE_CM7
@@ -71,7 +59,7 @@ inline static uint8_t _char(int16_t x, int16_t y, const uint8_t *font, uint8_t c
 	uint8_t m;
 	int16_t fx = 0;
 	int16_t fy = 0;
-	uint32_t offset = BSP_LCD_GetEditFrameAddr();
+	uint32_t offset = (uint32_t)BSP_LCD_GetEditFrameAddr();
 
 
 	for (uint16_t j = *adr0 + 1; j < *adr1; j++) {
@@ -123,7 +111,7 @@ inline static uint8_t _charblend( int16_t x, int16_t y, const uint8_t *font, uin
 	uint8_t m;
 	int16_t fx = 0;
 	int16_t fy = 0;
-	uint32_t offset = BSP_LCD_GetEditFrameAddr();
+	uint32_t offset = (uint32_t)BSP_LCD_GetEditFrameAddr();
 
 
 	for (uint16_t j = *adr0 + 1; j < *adr1; j++) {
@@ -200,7 +188,7 @@ void G2D_FillFrame(uint32_t color) {
 
 void G2D_CopyPrevFrame(void) {
 
-	uint32_t src_addr = BSP_LCD_GetPrevFrameAddr();
+	uint32_t src_addr = (uint32_t)BSP_LCD_GetPrevFrameAddr();
 
 	BSP_LCD_CopyBuf(src_addr, 0, 0, 0, 0, LCD_WIDTH, LCD_HEIGHT);
 }
@@ -216,7 +204,7 @@ void G2D_CopyScrollPrevFrame(int16_t dx, int16_t dy) {
 	int16_t h = y1 - y0;
 	int16_t offset = LCD_WIDTH - w;
 
-	uint32_t src_addr = BSP_LCD_GetPrevFrameAddr() + ((x0 + y0 * LCD_WIDTH) * BSP_LCD_GetBytesPerPixel());
+	uint32_t src_addr = (uint32_t)BSP_LCD_GetPrevFrameAddr() + ((x0 + y0 * LCD_WIDTH) * BSP_LCD_GetBytesPerPixel());
 
 	BSP_LCD_CopyBuf(src_addr, offset, x2, y2, offset, w, h);
 }
@@ -224,7 +212,7 @@ void G2D_CopyScrollPrevFrame(int16_t dx, int16_t dy) {
 
 void G2D_DrawPixel(int16_t x, int16_t y, uint32_t color) {
 
-	uint32_t offset = BSP_LCD_GetEditFrameAddr();
+	uint32_t offset = (uint32_t)BSP_LCD_GetEditFrameAddr();
 
 	BSP_LCD_DMA2D_Wait();
 	BSP_LCD_UpdatePixel(offset, x, y, color);
@@ -334,7 +322,7 @@ void G2D_DrawLine(int16_t X1, int16_t Y1, int16_t X2, int16_t Y2, uint32_t color
     numpixels = dy;         									/* There are more y-values than x-values */
   }
 
-  uint32_t offset = BSP_LCD_GetEditFrameAddr();
+  uint32_t offset = (uint32_t)BSP_LCD_GetEditFrameAddr();
 
   BSP_LCD_DMA2D_Wait();
 
@@ -402,7 +390,7 @@ void G2D_DrawCircle(int16_t x, int16_t y, uint16_t r, uint32_t color) {
 	curx = 0;
 	cury = r;
 
-	uint32_t offset = BSP_LCD_GetEditFrameAddr();
+	uint32_t offset = (uint32_t)BSP_LCD_GetEditFrameAddr();
 
 	BSP_LCD_DMA2D_Wait();
 
@@ -501,7 +489,7 @@ void G2D_DrawRoundRect(int16_t x, int16_t y, uint16_t width, uint16_t height, ui
 	curx = 0;
 	cury = radius;
 
-	uint32_t offset = BSP_LCD_GetEditFrameAddr();
+	uint32_t offset = (uint32_t)BSP_LCD_GetEditFrameAddr();
 	int16_t x0 = x + radius;
 	int16_t y0 = y + radius;
 	int16_t x1 = x + width - radius;
@@ -860,7 +848,7 @@ void G2D_DrawBitmapRotate(uint32_t sourcedata, int16_t x, int16_t y, int16_t wid
 	if (((y + height) < 1) || (y >= LCD_HEIGHT)) return;
 
 	// Calculating destination address
-	uint32_t faddr = BSP_LCD_GetEditFrameAddr();
+	uint32_t faddr = (uint32_t)BSP_LCD_GetEditFrameAddr();
 
 	// Setting up buffer read function
 	uint32_t (*_getbufpixel)(uint32_t offset, int16_t width, int16_t x, int16_t y);
@@ -996,7 +984,7 @@ void G2D_DrawIcon(uint32_t iconsource, int16_t x, int16_t y, uint32_t color, uin
 	}
 
 	// Calculating destination address
-	uint32_t faddr = BSP_LCD_GetEditFrameAddr();
+	uint32_t faddr = (uint32_t)BSP_LCD_GetEditFrameAddr();
 
 	// Decoding compressed icon data
 	uint8_t *pdata;
@@ -1081,7 +1069,7 @@ void G2D_DrawIconBlend(uint32_t iconsource, int16_t x, int16_t y, uint32_t color
 	}
 
 	// Calculating destination address
-	uint32_t faddr = BSP_LCD_GetEditFrameAddr();
+	uint32_t faddr = (uint32_t)BSP_LCD_GetEditFrameAddr();
 
 	// Decoding compressed icon data
 	uint8_t *pdata;
@@ -1137,14 +1125,14 @@ uint16_t G2D_GetIconWidth(uint32_t iconsource) {
 }
 
 
-void G2D_DrawJPEG(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y) {
+void G2D_DrawJPEG(void * jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y) {
 	// TODO: Checking if JPEG is within borders of screen
 
 	BSP_LCD_DecodeJPEG(jpeg_addr, jpeg_size);
 	BSP_LCD_CopyBufJPEG((uint16_t)x, (uint16_t)y);
 }
 
-void G2D_DrawJPEGC(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y) {
+void G2D_DrawJPEGC(void * jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y) {
 	// TODO: Checking if JPEG is within borders of screen
 
 	BSP_LCD_DecodeJPEG(jpeg_addr, jpeg_size);
@@ -1170,7 +1158,7 @@ void G2D_DrawLastJPEGC(int16_t x, int16_t y) {
 }
 
 
-void G2D_DecodeJPEG(uint32_t jpeg_addr, uint32_t jpeg_size) {
+void G2D_DecodeJPEG(void * jpeg_addr, uint32_t jpeg_size) {
 
 	BSP_LCD_DecodeJPEG(jpeg_addr, jpeg_size);
 

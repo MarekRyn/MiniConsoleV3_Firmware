@@ -2,12 +2,13 @@
  * MiniConsole V3 - Board Support Package - STM32
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
- *******************************************************************/
+ * - 1.0	- First stable release
+ ********************************************************************/
 
 #ifndef COMPONENTS_BSP_STM32_H_
 #define COMPONENTS_BSP_STM32_H_

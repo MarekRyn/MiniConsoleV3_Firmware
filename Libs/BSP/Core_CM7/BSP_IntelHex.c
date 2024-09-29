@@ -1,9 +1,6 @@
-/*
- * BSP_IntelHex.c
- *
- *  Created on: Jul 11, 2024
- *      Author: marek
- */
+/*******************************************************************
+ * MiniConsole V3 - Board Support Package - Intel Hex Library
+ ******************************************************************/
 
 #include "BSP_IntelHex.h"
 

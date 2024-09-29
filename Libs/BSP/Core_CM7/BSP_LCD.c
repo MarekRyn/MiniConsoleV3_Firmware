@@ -1,17 +1,5 @@
 /*******************************************************************
  * MiniConsole V3 - Board Support Package - LCD
- *
- * Author: Marek Ryn
- * Version: 1.2
- *
- * Changelog:
- *
- * - 0.1b	- Development version
- * - 0.2b 	- Added hardware JPEG decoding
- * - 0.3b	- Added ARGB1555 and ARGB4444 modes
- * - 1.0	- Major refactoring.
- * - 1.1	- Support for OSD menu
- * - 1.2	- Support for caching frame
  *******************************************************************/
 
 #include "BSP_LCD.h"
@@ -1710,6 +1698,18 @@ void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uin
 	BSP_STM32_JPEG_Init(JPEG);
 }
 
+void BSP_LCD_UpdateCLUT(uint32_t *clut) {
+	// BSP_STM32_LTDC_DisableLayer(LTDC, 0);
+	switch (BSP_hlcd.config.colormode) {
+	case LCD_COLOR_MODE_AL88:
+	case LCD_COLOR_MODE_L8:
+		BSP_STM32_LTDC_ConfigCLUT(LTDC, 0, clut);
+	default:
+		break;
+	}
+	// BSP_STM32_LTDC_EnableLayer(LTDC, 0);
+}
+
 
 void BSP_LCD_FrameReady(void) {
 	// Marking EDIT frame as READY for display
@@ -1840,21 +1840,21 @@ void BSP_LCD_BackLightOn(void) {
 }
 
 
-void BSP_LCD_DecodeJPEG(uint32_t jpeg_addr, uint32_t jpeg_size) {
+void BSP_LCD_DecodeJPEG(void * jpeg_addr, uint32_t jpeg_size) {
 	// Decode JPEG into intermediate buffer (organized in YCbCr MCU blocks)
-	BSP_STM32_JPEG_Decode(JPEG, jpeg_addr, jpeg_size, BSP_hlcd.JPEGbuf, LCD_JPEGBUF_SIZE);
+	BSP_STM32_JPEG_Decode(JPEG, jpeg_addr, jpeg_size, (void *)BSP_hlcd.JPEGbuf, LCD_JPEGBUF_SIZE);
 }
 
 
-uint32_t BSP_LCD_GetEditFrameAddr(void) {
+void * BSP_LCD_GetEditFrameAddr(void) {
 	uint8_t eframe = BSP_hlcd.layer.Frame_EDIT;
-	return BSP_hlcd.layer.Frames[eframe];
+	return (void *)BSP_hlcd.layer.Frames[eframe];
 }
 
 
-uint32_t BSP_LCD_GetPrevFrameAddr(void) {
+void * BSP_LCD_GetPrevFrameAddr(void) {
 	uint8_t pframe = BSP_hlcd.layer.Frame_PREV;
-	return BSP_hlcd.layer.Frames[pframe];
+	return (void *)BSP_hlcd.layer.Frames[pframe];
 }
 
 uint32_t BSP_LCD_GetColorMode(void) {
@@ -1867,6 +1867,18 @@ uint8_t	BSP_LCD_GetBytesPerPixel(void) {
 
 uint32_t BSP_LCD_GetFrameTime(void) {
 	return BSP_hlcd.frametime;
+}
+
+void BSP_LCD_SetDisplayWindow(uint16_t x, uint16_t y, uint16_t width, uint16_t height) {
+	// Attention! After changing display window from original size all drawing functions will stop working!
+	// User have to update frame buffers directly by his own routines
+
+	BSP_STM32_LTDC_DisableLayer(LTDC, 0);
+
+	BSP_STM32_LTDC_ConfigLayerWindow(LTDC, 0, x, (x + width), y, (y + height));
+
+	BSP_STM32_LTDC_EnableLayer(LTDC, 0);
+
 }
 
 /******************************************************************************

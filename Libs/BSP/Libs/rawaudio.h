@@ -18,9 +18,15 @@ typedef struct {
 	uint32_t	size;
 	uint32_t	length;
 	uint32_t	index;
+	uint8_t		chno;
+	uint8_t		bitformat;
+	uint32_t	freq;
+	uint32_t	inc;
+	uint32_t	flag;
 } rawaudioctx_TypeDef;
 
-uint8_t RA_Init(rawaudioctx_TypeDef * ractx, int16_t * addr, uint32_t size);
+uint8_t RA_Init(rawaudioctx_TypeDef * ractx, int16_t * addr, uint32_t size, uint8_t chno, uint8_t bitformat, uint32_t freq);
+uint8_t RA_Deinit(rawaudioctx_TypeDef * ractx);
 uint8_t RA_Seek(rawaudioctx_TypeDef * ractx, uint32_t pos);
 uint8_t RA_Read(rawaudioctx_TypeDef * ractx, uint32_t len, int16_t * dst_buf);
 

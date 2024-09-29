@@ -1,18 +1,11 @@
 /*******************************************************************
  * MiniConsole V3 - Board Support Package - Accelerometer & Gyro IC
- *
- * Author: Marek Ryn
- * Version: 0.1b
- *
- * Changelog:
- *
- * - 0.1b	- Development version
  *******************************************************************/
 
 #include "BSP_IMU.h"
 
 BUF_RAM	IMU_HandleTypeDef		BSP_himu = {0};
-		TxRxContext_TypeDef		BSP_himu_ctx = {0};
+static	TxRxContext_TypeDef		BSP_himu_ctx = {0};
 
 uint8_t BSP_IMU_LoadCalData(void) {
 	BSP_himu.cal.c_ox = BSP_STM32_RTC_GetBackupReg(RTC, 4);

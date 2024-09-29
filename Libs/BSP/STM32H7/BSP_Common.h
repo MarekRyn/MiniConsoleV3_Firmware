@@ -76,6 +76,12 @@ extern "C" {
 #define BUF_RAM		__attribute__((section(".buf_ram")))
 #define BK_RAM		__attribute__((section(".bk_ram")))
 
+// Optimization level
+#define OPT_O0		__attribute__((optimize("O0")))
+#define OPT_O1		__attribute__((optimize("O1")))
+#define OPT_O2		__attribute__((optimize("O2")))
+#define OPT_O3		__attribute__((optimize("O3")))
+
 // Define
 #define TXRX_CTX_MODE_IT	0
 #define TXRX_CTX_MODE_DMA	1

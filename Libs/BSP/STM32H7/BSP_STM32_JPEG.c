@@ -1,30 +1,22 @@
 /*******************************************************************
  * MiniConsole V3 - Board Support Package - STM32 JPEG
- *
- * Author: Marek Ryn
- * Version: 1.0
- *
- * Changelog:
- *
- * - 0.1b	- Development version
- * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_JPEG.h"
 
 static JPEGContext_TypeDef JPEGctx = {0};
 
-static uint8_t _JPEG_DecInit(JPEG_TypeDef * _hjpeg, uint32_t JPEG_Addr, uint32_t JPEG_Size, uint32_t OutputBuf_Addr, uint32_t OutputBuf_Size) {
+static uint8_t _JPEG_DecInit(JPEG_TypeDef * _hjpeg, void * JPEG_Addr, uint32_t JPEG_Size, void * OutputBuf_Addr, uint32_t OutputBuf_Size) {
 
 	// Setup context
 	JPEGctx.CSSType = 0;
 	JPEGctx.ColorSpace = 0;
 	JPEGctx.ImageHeight = 0;
 	JPEGctx.ImageWidth = 0;
-	JPEGctx.JPEGAddr = JPEG_Addr;
+	JPEGctx.JPEGAddr = (uint32_t)JPEG_Addr;
 	JPEGctx.JPEGSize = JPEG_Size;
-	JPEGctx.JPEGEnd = JPEG_Addr + JPEG_Size;
-	JPEGctx.OutputBufAddr = OutputBuf_Addr;
+	JPEGctx.JPEGEnd = (uint32_t)JPEG_Addr + JPEG_Size;
+	JPEGctx.OutputBufAddr = (uint32_t)OutputBuf_Addr;
 	JPEGctx.OutputBufSize = OutputBuf_Size;
 
 	// Set codec mode to decoding
@@ -149,7 +141,7 @@ uint8_t BSP_STM32_JPEG_Init(JPEG_TypeDef * _hjpeg) {
 	return BSP_OK;
 }
 
-uint8_t BSP_STM32_JPEG_Decode(JPEG_TypeDef * _hjpeg, uint32_t JPEG_Addr, uint32_t JPEG_Size, uint32_t OutputBuf_Addr, uint32_t OutputBuf_Size) {
+uint8_t BSP_STM32_JPEG_Decode(JPEG_TypeDef * _hjpeg, void * JPEG_Addr, uint32_t JPEG_Size, void * OutputBuf_Addr, uint32_t OutputBuf_Size) {
 	// Init decode process
 	_JPEG_DecInit(_hjpeg, JPEG_Addr, JPEG_Size, OutputBuf_Addr, OutputBuf_Size);
 

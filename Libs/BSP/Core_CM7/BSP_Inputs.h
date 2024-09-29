@@ -2,7 +2,7 @@
  * MiniConsole V3 - Board Support Package - Keyboard and Joystick
  *
  * Author: Marek Ryn
- * Version: 1.0
+ * Version: 1.1
  *
  * Changelog:
  *

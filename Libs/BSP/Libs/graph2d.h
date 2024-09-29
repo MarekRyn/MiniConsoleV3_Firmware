@@ -70,11 +70,11 @@ void G2D_DrawIconBlendC(uint32_t iconsource, int16_t x, int16_t y, uint32_t colo
 uint16_t G2D_GetIconHeight(uint32_t iconsource);
 uint16_t G2D_GetIconWidth(uint32_t iconsource);
 
-void G2D_DrawJPEG(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
-void G2D_DrawJPEGC(uint32_t jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
+void G2D_DrawJPEG(void * jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
+void G2D_DrawJPEGC(void * jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
 void G2D_DrawLastJPEG(int16_t x, int16_t y);
 void G2D_DrawLastJPEGC(int16_t x, int16_t y);
-void G2D_DecodeJPEG(uint32_t jpeg_addr, uint32_t jpeg_size);
+void G2D_DecodeJPEG(void * jpeg_addr, uint32_t jpeg_size);
 
 void G2D_DrawTile(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);
 void G2D_DrawTileC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);

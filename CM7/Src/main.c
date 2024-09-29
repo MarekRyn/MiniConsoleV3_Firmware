@@ -2,17 +2,17 @@
  * MiniConsole V3 - Firmware
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- First stable release
  *******************************************************************/
 
 #include "main.h"
 #include "common.h"
 #include "page_main.h"
-
 
 __IO uint32_t state0 = 0;
 __IO uint32_t state1 = 0;
@@ -120,11 +120,11 @@ int main(void)
 				if (BSP_hinputs.buttons.btn_C > 0) state0 = STATE0_USB_MSC;
 			}
 
-			// For developing configuration menu
-			//state0 = STATE0_BOOTLOADER_INIT;
+			// Uncomment for developing configuration menu
+			// state0 = STATE0_BOOTLOADER_INIT;
 
 			// Splash screen
-			printf("MiniConsole Started\n");
+			printf("MiniConsole started\n");
 
 			BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_DOUBLE, C_BLACK, NULL);
 
@@ -175,6 +175,8 @@ int main(void)
 
 		case STATE0_BOOTLOADER_INIT:
 
+			printf("Entering configuration mode...\n");
+
 			// Configuring resource manager
 			BSP_FatFS_Init();
 			BSP_SetHomeDir("0:/");
@@ -195,6 +197,8 @@ int main(void)
 			break;
 
 		case STATE0_APPLICATION_INIT:
+
+			printf("Loading application...\n");
 
 			// QSPI peripheral entering memory mapped mode
 			BSP_QSPI_MemMappedEnable();
@@ -230,32 +234,37 @@ int main(void)
 
 
 		case STATE0_USB_MSC:
+			printf("Entering USB drive mode...\n");
 			// Entering USB Drive menu
-			//USB_MSC_Task();
 			USB_MSC_Task();
 			break;
 
 		case STATE0_RESTARTING:
+			printf("System restarting...\n");
 			// Restart system
 			BSP_PWR_Restart();
 			break;
 
 		case STATE0_PWR_DOWN:
+			printf("System shutting down...\n");
 			// Shut down system
 			BSP_PWR_ShutDown();
 			break;
 
 		case STATE0_PWR_DOWN_NOANIM:
+			printf("System shutting down...\n");
 			// Shut down system when power button was hold to short time
 			BSP_PWR_ShutDownNoAnim();
 			break;
 
 		case STATE0_FAULT:
+			printf("System fault...\n");
 			// Handle error
 			BSP_Error_Handler();
 			break;
 
 		default:
+			printf("Unknown state...\n");
 			BSP_Error_Handler();
 			break;
 		}

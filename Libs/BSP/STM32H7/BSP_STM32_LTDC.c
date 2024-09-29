@@ -1,13 +1,5 @@
 /*******************************************************************
  * MiniConsole V3 - Board Support Package - STM32 LTDC
- *
- * Author: Marek Ryn
- * Version: 1.0
- *
- * Changelog:
- *
- * - 0.1b	- Development version
- * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_LTDC.h"
@@ -143,6 +135,25 @@ uint8_t BSP_STM32_LTDC_ConfigLayer(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t
 }
 
 
+uint8_t BSP_STM32_LTDC_ConfigLayerWindow(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t x0, uint32_t x1, uint32_t y0, uint32_t y1) {
+
+	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)hltdc) + 0x84U + (0x80U*(layer)));
+	uint32_t tmp = 0;
+
+	// Configure the horizontal start and stop position
+	tmp = ((x1 + ((hltdc->BPCR & LTDC_BPCR_AHBP) >> 16U)) << 16U);
+	l->WHPCR &= ~(LTDC_LxWHPCR_WHSTPOS | LTDC_LxWHPCR_WHSPPOS);
+	l->WHPCR = ((x0 + ((hltdc->BPCR & LTDC_BPCR_AHBP) >> 16U) + 1U) | tmp);
+
+	// Configure the vertical start and stop position
+	tmp = ((y1 + (hltdc->BPCR & LTDC_BPCR_AVBP)) << 16U);
+	l->WVPCR &= ~(LTDC_LxWVPCR_WVSTPOS | LTDC_LxWVPCR_WVSPPOS);
+	l->WVPCR  = ((y0 + (hltdc->BPCR & LTDC_BPCR_AVBP) + 1U) | tmp);
+
+	return BSP_OK;
+}
+
+
 uint8_t BSP_STM32_LTDC_EnableLayer(LTDC_TypeDef *hltdc, uint32_t layer) {
 	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)hltdc) + 0x84U + (0x80U*(layer)));
 
@@ -206,12 +217,12 @@ uint8_t BSP_STM32_LTDC_ConfigCLUT(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t 
 	hltdc->SRCR = LTDC_SRCR_IMR;
 
 	// Configure color keying
-	l->CKCR &=  ~(LTDC_LxCKCR_CKBLUE | LTDC_LxCKCR_CKGREEN | LTDC_LxCKCR_CKRED);
-	l->CKCR  = 0x00000000;
-	hltdc->SRCR = LTDC_SRCR_IMR;
+	//	l->CKCR &=  ~(LTDC_LxCKCR_CKBLUE | LTDC_LxCKCR_CKGREEN | LTDC_LxCKCR_CKRED);
+	//	l->CKCR  = 0x00000000;
+	//	hltdc->SRCR = LTDC_SRCR_IMR;
 	// Enable color keying
-	l->CR |= (uint32_t)LTDC_LxCR_COLKEN;
-	hltdc->SRCR = LTDC_SRCR_IMR;
+	//	l->CR |= (uint32_t)LTDC_LxCR_COLKEN;
+	//	hltdc->SRCR = LTDC_SRCR_IMR;
 
 	return BSP_OK;
 }

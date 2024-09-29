@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - Accelerometer & Gyro IC
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- First stable release
  *******************************************************************/
 
 #ifndef BSP_IMU_H_
@@ -20,8 +21,6 @@ extern "C" {
 #include "MPU6050.h"	// IMU IC driver - model MPU6050
 
 extern BUF_RAM	IMU_HandleTypeDef		BSP_himu;
-extern 			TxRxContext_TypeDef		BSP_himu_ctx;
-
 
 uint8_t BSP_IMU_LoadCalData(void);
 uint8_t BSP_IMU_SaveCalData(void);

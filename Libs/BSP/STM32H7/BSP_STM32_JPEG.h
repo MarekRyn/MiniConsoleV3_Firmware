@@ -49,7 +49,7 @@ typedef struct _JPEGContext {
 
 
 uint8_t BSP_STM32_JPEG_Init(JPEG_TypeDef * _hjpeg);
-uint8_t BSP_STM32_JPEG_Decode(JPEG_TypeDef * _hjpeg, uint32_t JPEG_Addr, uint32_t JPEG_Size, uint32_t OutputBuf_Addr, uint32_t OutputBuf_Size);
+uint8_t BSP_STM32_JPEG_Decode(JPEG_TypeDef * _hjpeg, void * JPEG_Addr, uint32_t JPEG_Size, void * OutputBuf_Addr, uint32_t OutputBuf_Size);
 uint32_t BSP_STM32_JPEG_GetWidth(JPEG_TypeDef * _hjpeg);
 uint32_t BSP_STM32_JPEG_GetHeight(JPEG_TypeDef * _hjpeg);
 uint32_t BSP_STM32_JPEG_GetCSS(JPEG_TypeDef * _hjpeg);

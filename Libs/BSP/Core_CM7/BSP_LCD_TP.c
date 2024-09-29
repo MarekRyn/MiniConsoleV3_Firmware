@@ -1,13 +1,5 @@
 /*******************************************************************
  * MiniConsole V3 - Board Support Package - LCD Touch Panel
- *
- * Author: Marek Ryn
- * Version: 1.0
- *
- * Changelog:
- *
- * - 0.1b	- Development version
- * - 1.0	- Added support for areas
  *******************************************************************/
 
 #include "BSP_LCD_TP.h"
@@ -122,12 +114,14 @@ uint8_t	BSP_LCD_TP_Enable(void) {
 	active_flag = 0;
 	BSP_hlcdtp.enabled = 1;
 	active_flag = 1;
+	return BSP_OK;
 }
 
 uint8_t BSP_LCD_TP_Disable(void) {
 	active_flag = 0;
 	BSP_hlcdtp.enabled = 0;
 	active_flag = 1;
+	return BSP_OK;
 }
 
 // ************ IRQ Handlers ***************

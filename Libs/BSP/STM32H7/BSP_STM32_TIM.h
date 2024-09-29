@@ -2,7 +2,7 @@
  * MiniConsole V3 - Board Support Package - STM32 TIM
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *

@@ -1,9 +1,14 @@
-/*
- * BSP_IntelHex.h
+/*******************************************************************
+ * MiniConsole V3 - Board Support Package - Intel Hex Library
  *
- *  Created on: Jul 11, 2024
- *      Author: marek
- */
+ * Author: Marek Ryn
+ * Version: 1.0
+ *
+ * Changelog:
+ *
+ * - 0.1b	- Development version
+ * - 1.0	- First stable release
+ *******************************************************************/
 
 #ifndef BSP_CORE_CM7_BSP_INTELHEX_H_
 #define BSP_CORE_CM7_BSP_INTELHEX_H_

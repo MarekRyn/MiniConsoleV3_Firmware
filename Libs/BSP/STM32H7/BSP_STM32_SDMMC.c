@@ -1,13 +1,5 @@
 /*******************************************************************
  * MiniConsole V3 - Board Support Package - STM32 SDMMC
- *
- * Author: Marek Ryn
- * Version: 1.0
- *
- * Changelog:
- *
- * - 0.1b	- Development version
- * - 1.0	- Initial version
  *******************************************************************/
 
 #include "BSP_STM32_SDMMC.h"
@@ -522,7 +514,8 @@ uint8_t BSP_STM32_SDMMC_Init(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx) 
 }
 
 
-uint8_t BSP_STM32_SDMMC_ReadBlocks(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks) {
+// GCC optimization restricted to -O2 to avoid Unaligned Memory Access Error
+OPT_O2 uint8_t BSP_STM32_SDMMC_ReadBlocks(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks) {
 
 	__IO SDMMCContext_TypeDef * sdmmc_ctx = (SDMMCContext_TypeDef *)ctx->ctxmem;
 

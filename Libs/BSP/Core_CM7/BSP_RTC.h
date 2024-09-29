@@ -7,6 +7,7 @@
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- First stable release
  *******************************************************************/
 
 #ifndef BSP_CORE_CM7_BSP_RTC_H_

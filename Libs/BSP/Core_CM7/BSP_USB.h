@@ -2,11 +2,12 @@
  * MiniConsole V3 - Board Support Package - USB interface
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
  * - 0.1b	- Development version
+ * - 1.0	- First stable release
  *******************************************************************/
 
 #ifndef BSP_USB_H_

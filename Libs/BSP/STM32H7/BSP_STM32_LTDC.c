@@ -82,7 +82,7 @@ uint8_t BSP_STM32_LTDC_Disable(LTDC_TypeDef *hltdc) {
 
 
 uint8_t BSP_STM32_LTDC_ConfigLayer(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t alpha, uint32_t alpha0, uint32_t bgcolor,
-		uint32_t blendingfactor1, uint32_t blendingfactor2, uint32_t fbstartaddress, uint32_t imgheight, uint32_t imgwidth,
+		uint32_t blendingfactor1, uint32_t blendingfactor2, void * fbstartaddress, uint32_t imgheight, uint32_t imgwidth,
 		uint32_t pixelformat, uint32_t x0, uint32_t x1, uint32_t y0, uint32_t y1) {
 
 	LTDC_Layer_TypeDef *l = (LTDC_Layer_TypeDef *)(((uint32_t)hltdc) + 0x84U + (0x80U*(layer)));
@@ -116,7 +116,7 @@ uint8_t BSP_STM32_LTDC_ConfigLayer(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t
 
 	// Configure the color frame buffer start address
 	l->CFBAR &= ~(LTDC_LxCFBAR_CFBADD);
-	l->CFBAR = fbstartaddress;
+	l->CFBAR = (uint32_t)fbstartaddress;
 
 	if (pixelformat == LTDC_PIXEL_FORMAT_ARGB8888) { tmp = 4U; }
 	else if (pixelformat == LTDC_PIXEL_FORMAT_RGB888) { tmp = 3U; }
@@ -187,12 +187,12 @@ uint8_t BSP_STM32_LTDC_DisableLayer(LTDC_TypeDef *hltdc, uint32_t layer) {
 }
 
 
-uint8_t BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t fbstartaddress) {
+uint8_t BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC_TypeDef *hltdc, uint32_t layer, void * fbstartaddress) {
 
 	// Updating Framebuffer address
 	LTDC_Layer_TypeDef *l = ((LTDC_Layer_TypeDef *)((uint32_t)(((uint32_t)LTDC) + 0x84U + (0x80U*(layer)))));
 	l->CFBAR &= ~(LTDC_LxCFBAR_CFBADD);
-	l->CFBAR = fbstartaddress;
+	l->CFBAR = (uint32_t)fbstartaddress;
 	hltdc->SRCR |= LTDC_SRCR_VBR;
 
 	return BSP_OK;

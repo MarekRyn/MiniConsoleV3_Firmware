@@ -23,7 +23,7 @@ __IO void (*App_Main)(void) = NULL;
 
 void USB_MSC_Task(void) {
 	G2D_ClearFrame();
-	G2D_DrawIconC((uint32_t)&ICON_192_USB, 400, 240, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
+	G2D_DrawIconC(ICON_192_USB, 400, 240, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
 	BSP_LCD_FrameReady();
 
 	BSP_USB_MSC_Init();
@@ -130,8 +130,8 @@ int main(void)
 
 			while (!BSP_LCD_GetEditPermission()) {};
 			G2D_ClearFrame();
-			G2D_DrawIconC((uint32_t)&ICON_192_Logo, 400, 200, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
-			G2D_DrawIconC((uint32_t)&ICON_256_MiniConsole, 400, 350, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
+			G2D_DrawIconC(ICON_192_Logo, 400, 200, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
+			G2D_DrawIconC(ICON_256_MiniConsole, 400, 350, BSP_LCD_Color(C_WHITE,  0xFF), BSP_LCD_Color(C_BLACK, 0xFF));
 
 			BSP_LCD_FrameReady();
 
@@ -184,7 +184,7 @@ int main(void)
 
 			state0 = STATE0_BOOTLOADER_MAIN;
 			state1 = STATE1_APPS;
-			G2D_DecodeJPEG((uint32_t)WP_00, sizeof(WP_00));
+			G2D_DecodeJPEG(WP_00, sizeof(WP_00));
 			page_init_main();
 			page_init_apps();
 

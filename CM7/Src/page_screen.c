@@ -107,7 +107,7 @@ uint8_t page_init_screen(void) {
 	button00.y_pos = 140;
 	button00.width = 160;
 	button00.height = 42;
-	button00.icon = (uint32_t)ICON_32_Tools;
+	button00.icon = ICON_32_Tools;
 	button00.text = "Save";
 	button00.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(10, 590, 140, 160, 42, button00_callback);

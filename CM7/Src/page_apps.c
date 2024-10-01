@@ -109,7 +109,7 @@ static void _carousel_scrol_right(Carousel_TypeDef * ctx) {
 
 
 static void _carousel_drawsegments(void * thumbnail, uint16_t x, uint16_t y, uint8_t seg_start, uint8_t seg_stop, uint8_t alpha) {
-	uint32_t src_addr = (uint32_t)thumbnail + (seg_start * CAROUSEL_SEGMENT_W) * 3;
+	uint8_t * src_addr = (uint8_t *)thumbnail + (seg_start * CAROUSEL_SEGMENT_W) * 3;
 	uint16_t width = (seg_stop - seg_start) * CAROUSEL_SEGMENT_W;
 	uint16_t height = CAROUSEL_H;
 	uint16_t offsline_src = CAROUSEL_SLIDE_W - width;
@@ -297,7 +297,7 @@ uint8_t page_init_apps(void) {
 	button00.width = 140;
 	button00.height = 42;
 	button00.text = "Install";
-	button00.icon = (uint32_t)ICON_32_Download;
+	button00.icon = ICON_32_Download;
 	button00.state = GUI_STATE_ENABLED;
 
 	pbar00.x_pos = 250;

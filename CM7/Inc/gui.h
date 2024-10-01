@@ -95,7 +95,7 @@ typedef struct {
 	uint16_t		y_pos;
 	uint16_t		width;
 	uint16_t		height;
-	uint32_t		icon;
+	const void *	icon;
 	char *			text;
 	uint8_t			state;
 } GUI_Button_TypeDef;

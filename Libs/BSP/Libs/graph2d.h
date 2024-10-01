@@ -56,36 +56,31 @@ uint16_t G2D_Text(int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t
 uint16_t G2D_TextBlend(int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color);
 uint8_t G2D_GetTextHeight(const uint8_t *font);
 
-void G2D_DrawBitmapBlend(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha);
-void G2D_DrawBitmapBlendC(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha);
-void G2D_DrawBitmap(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height);
-void G2D_DrawBitmapC(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height);
-void G2D_DrawBitmapRotate(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, float angle);
-void G2D_DrawBitmapRotateC(uint32_t sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, float angle);
+void G2D_DrawBitmapBlend(const void * sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha);
+void G2D_DrawBitmapBlendC(const void * sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, uint8_t alpha);
+void G2D_DrawBitmap(const void * sourcedata, int16_t x, int16_t y, int16_t width, int16_t height);
+void G2D_DrawBitmapC(const void * sourcedata, int16_t x, int16_t y, int16_t width, int16_t height);
+void G2D_DrawBitmapRotate(const void * sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, float angle);
+void G2D_DrawBitmapRotateC(const void * sourcedata, int16_t x, int16_t y, int16_t width, int16_t height, float angle);
 
-void G2D_DrawIcon(uint32_t iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor);
-void G2D_DrawIconC(uint32_t iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor);
-void G2D_DrawIconBlend(uint32_t iconsource, int16_t x, int16_t y, uint32_t color);
-void G2D_DrawIconBlendC(uint32_t iconsource, int16_t x, int16_t y, uint32_t color);
-uint16_t G2D_GetIconHeight(uint32_t iconsource);
-uint16_t G2D_GetIconWidth(uint32_t iconsource);
+void G2D_DrawIcon(const void * iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor);
+void G2D_DrawIconC(const void * iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor);
+void G2D_DrawIconBlend(const void * iconsource, int16_t x, int16_t y, uint32_t color);
+void G2D_DrawIconBlendC(const void * iconsource, int16_t x, int16_t y, uint32_t color);
+uint16_t G2D_GetIconHeight(const void * iconsource);
+uint16_t G2D_GetIconWidth(const void * iconsource);
 
-void G2D_DrawJPEG(void * jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
-void G2D_DrawJPEGC(void * jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
+void G2D_DrawJPEG(const void * jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
+void G2D_DrawJPEGC(const void * jpeg_addr, uint32_t jpeg_size, int16_t x, int16_t y);
 void G2D_DrawLastJPEG(int16_t x, int16_t y);
 void G2D_DrawLastJPEGC(int16_t x, int16_t y);
-void G2D_DecodeJPEG(void * jpeg_addr, uint32_t jpeg_size);
-
-void G2D_DrawTile(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);
-void G2D_DrawTileC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);
-void G2D_DrawTileBlend(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);
-void G2D_DrawTileBlendC(uint32_t tileset_addr, uint32_t tileset_cols, uint32_t tile_width, uint32_t tile_height, uint32_t tile_col, uint32_t tile_row, int16_t x, int16_t y);
+void G2D_DecodeJPEG(const void * jpeg_addr, uint32_t jpeg_size);
 
 uint32_t G2D_Color(uint32_t color, uint8_t alpha); // Calculating color value and include alpha in modes with alpha channel
 uint32_t G2D_Alpha(uint32_t color, uint8_t alpha); // Updating alpha channel in pre-calculated color value
 
-void G2D_CopyBuf(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t width, uint16_t height); // Advanced buffer copy to screen
-void G2D_CopyBufBlend(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t width, uint16_t height, uint8_t alpha); // Advanced buffer copy to screen with blending
+void G2D_CopyBuf(const void * src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t width, uint16_t height); // Advanced buffer copy to screen
+void G2D_CopyBufBlend(const void * src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t width, uint16_t height, uint8_t alpha); // Advanced buffer copy to screen with blending
 
 void G2D_CacheFrame(void); // Save current state of the frame to cache memory
 void G2D_RestoreFrame(void); // Restoring cached frame

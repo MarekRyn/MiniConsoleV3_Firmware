@@ -53,7 +53,7 @@ uint8_t BSP_STM32_LTDC_Enable(LTDC_TypeDef *hltdc);
 uint8_t BSP_STM32_LTDC_Disable(LTDC_TypeDef *hltdc);
 
 uint8_t BSP_STM32_LTDC_ConfigLayer(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t alpha, uint32_t alpha0, uint32_t bgcolor,
-		uint32_t blendingfactor1, uint32_t blendingfactor2, uint32_t fbstartaddress, uint32_t imgheight, uint32_t imgwidth,
+		uint32_t blendingfactor1, uint32_t blendingfactor2, void * fbstartaddress, uint32_t imgheight, uint32_t imgwidth,
 		uint32_t pixelformat, uint32_t x0, uint32_t x1, uint32_t y0, uint32_t y1);
 
 uint8_t BSP_STM32_LTDC_ConfigLayerWindow(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t x0, uint32_t x1, uint32_t y0, uint32_t y1);
@@ -62,7 +62,7 @@ uint8_t BSP_STM32_LTDC_EnableLayer(LTDC_TypeDef *hltdc, uint32_t layer);
 
 uint8_t BSP_STM32_LTDC_DisableLayer(LTDC_TypeDef *hltdc, uint32_t layer);
 
-uint8_t BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t fbstartaddress);
+uint8_t BSP_STM32_LTDC_UpdateFrameBufAddr(LTDC_TypeDef *hltdc, uint32_t layer, void * fbstartaddress);
 
 uint8_t BSP_STM32_LTDC_ConfigCLUT(LTDC_TypeDef *hltdc, uint32_t layer, uint32_t *clut);
 

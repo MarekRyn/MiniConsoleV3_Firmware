@@ -64,7 +64,7 @@ uint8_t page_init_pwr(void) {
 	button00.y_pos = 150;
 	button00.width = 200;
 	button00.height = 42;
-	button00.icon = (uint32_t)ICON_32_Power;
+	button00.icon = ICON_32_Power;
 	button00.text = "Shut Down";
 	button00.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(10, 405, 150, 200, 42, button00_callback);
@@ -74,7 +74,7 @@ uint8_t page_init_pwr(void) {
 	button01.y_pos = 250;
 	button01.width = 200;
 	button01.height = 42;
-	button01.icon = (uint32_t)ICON_32_Restart;
+	button01.icon = ICON_32_Restart;
 	button01.text = "Restart";
 	button01.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(11, 405, 250, 200, 42, button01_callback);

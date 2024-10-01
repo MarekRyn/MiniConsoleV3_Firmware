@@ -80,7 +80,7 @@ uint8_t page_init_imu(void) {
 	button00.y_pos = 30;
 	button00.width = 160;
 	button00.height = 42;
-	button00.icon = (uint32_t)NULL;
+	button00.icon = NULL;
 	button00.text = "Orientation";
 	button00.state = GUI_STATE_ACTIVE;
 	BSP_LCD_TP_RegisterArea(10, 240, 30, 160, 42, button00_callback);
@@ -90,7 +90,7 @@ uint8_t page_init_imu(void) {
 	button01.y_pos = 30;
 	button01.width = 160;
 	button01.height = 42;
-	button01.icon = (uint32_t)NULL;
+	button01.icon = NULL;
 	button01.text = "Acceleration";
 	button01.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(11, 425, 30, 160, 42, button01_callback);
@@ -100,7 +100,7 @@ uint8_t page_init_imu(void) {
 	button02.y_pos = 30;
 	button02.width = 160;
 	button02.height = 42;
-	button02.icon = (uint32_t)NULL;
+	button02.icon = NULL;
 	button02.text = "Gyro";
 	button02.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(12, 610, 30, 160, 42, button02_callback);
@@ -110,7 +110,7 @@ uint8_t page_init_imu(void) {
 	button03.y_pos = 350;
 	button03.width = 160;
 	button03.height = 42;
-	button03.icon = (uint32_t)ICON_32_Tools;
+	button03.icon = ICON_32_Tools;
 	button03.text = "Calibrate";
 	button03.state = GUI_STATE_ENABLED;
 	BSP_LCD_TP_RegisterArea(13, 590, 350, 160, 42, button03_callback);

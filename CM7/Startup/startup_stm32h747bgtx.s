@@ -610,17 +610,17 @@ g_pfnVectors:
  .word		G2D_DrawLastJPEG				/* 0164 */
  .word		G2D_DrawLastJPEGC				/* 0165 */
  .word		G2D_DecodeJPEG					/* 0166 */
- .word		G2D_DrawTile					/* 0167 */
- .word		G2D_DrawTileC					/* 0168 */
- .word		G2D_DrawTileBlend				/* 0169 */
- .word		G2D_DrawTileBlendC				/* 0170 */
+ .word		0								/* 0167 */
+ .word		0								/* 0168 */
+ .word		0								/* 0169 */
+ .word		0								/* 0170 */
  .word		G2D_Color						/* 0171 */
  .word		G2D_Alpha						/* 0172 */
  .word		G2D_CopyBuf						/* 0173 */
  .word		G2D_CopyBufBlend				/* 0174 */
  .word		G2D_CacheFrame					/* 0175 */
  .word		G2D_RestoreFrame				/* 0176 */
- .word		G2D_DrawTileBlend				/* 0177 */
+ .word		0								/* 0177 */
  .word		0								/* 0178 */
  .word		0								/* 0179 */
  .word		0								/* 0180 */

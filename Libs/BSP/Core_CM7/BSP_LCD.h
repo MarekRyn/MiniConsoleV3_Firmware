@@ -92,6 +92,7 @@ extern const uint32_t C_LUT_COLOR[256];
 extern const uint32_t C_LUT_GRAY[256];
 
 // Functions
+void BSP_LCD_DMA2D_Wait(void);
 void BSP_LCD_Init(uint8_t color_mode, uint8_t buffer_mode, uint32_t bgcolor, uint32_t *clut);
 void BSP_LCD_UpdateCLUT(uint32_t *clut);
 void BSP_LCD_FrameReady(void);
@@ -121,14 +122,13 @@ void BSP_LCD_SetDisplayWindow(uint16_t x, uint16_t y, uint16_t width, uint16_t h
 // Functions for overloading (content depends on color mode)
 extern uint32_t (*BSP_LCD_Color)(uint32_t color, uint8_t alpha); // Calculating color value and include alpha in modes with alpha channel
 extern uint32_t (*BSP_LCD_Alpha)(uint32_t color, uint8_t alpha); // Updating alpha channel in pre-calculated color value
-extern void (*BSP_LCD_DMA2D_Wait)(void);
-extern void (*BSP_LCD_UpdatePixel)(uint32_t offset, int16_t x, int16_t y, uint32_t value);
-extern void (*BSP_LCD_UpdatePixelBlend)(uint32_t offset, int16_t x, int16_t y, uint32_t value);
-extern uint32_t (*BSP_LCD_GetPixel)(uint32_t offset,  int16_t x, int16_t y);
+extern void (*BSP_LCD_UpdatePixel)(void * offset, int16_t x, int16_t y, uint32_t value);
+extern void (*BSP_LCD_UpdatePixelBlend)(void * offset, int16_t x, int16_t y, uint32_t value);
+extern uint32_t (*BSP_LCD_GetPixel)(void * offset,  int16_t x, int16_t y);
 extern void (*BSP_LCD_FillBuf)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
 extern void (*BSP_LCD_FillBufBlend)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
-extern void (*BSP_LCD_CopyBuf)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height);
-extern void (*BSP_LCD_CopyBufBlend)(uint32_t src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha);
+extern void (*BSP_LCD_CopyBuf)(void * src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height);
+extern void (*BSP_LCD_CopyBufBlend)(void * src_addr, uint16_t offsline_src, uint16_t x_dest, uint16_t y_dest, uint16_t offsline_dest, uint16_t width, uint16_t height, uint8_t alpha);
 extern void (*BSP_LCD_CacheFrame)(void);
 extern void (*BSP_LCD_RestoreFrame)(void);
 extern void (*BSP_LCD_CopyBufJPEG)(uint16_t x_dest, uint16_t y_dest);

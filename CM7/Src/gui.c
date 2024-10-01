@@ -107,8 +107,8 @@ uint8_t GUI_Slider(GUI_Slider_TypeDef * sl, uint32_t value) {
 	G2D_DrawRoundRect(sl->x_pos, sl->y_pos, sl->width, 42, GUI_SLIDER_RADIUS, GUI_SLIDER_BORDER_COLOR);
 	G2D_DrawVLine(sl->x_pos + 42, sl->y_pos, 42, GUI_SLIDER_BORDER_COLOR);
 	G2D_DrawVLine(sl->x_pos + sl->width - 42, sl->y_pos, 42, GUI_SLIDER_BORDER_COLOR);
-	G2D_DrawIconBlendC((uint32_t)ICON_32_Left, sl->x_pos + 21, sl->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
-	G2D_DrawIconBlendC((uint32_t)ICON_32_Right, sl->x_pos + sl->width - 21, sl->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawIconBlendC(ICON_32_Left, sl->x_pos + 21, sl->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawIconBlendC(ICON_32_Right, sl->x_pos + sl->width - 21, sl->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
 
 	if (value < sl->min_value) value = sl->min_value;
 	if (value > sl->max_value) value = sl->max_value;
@@ -127,8 +127,8 @@ uint8_t GUI_Spinner(GUI_Spinner_TypeDef * sp, uint32_t value) {
 
 	G2D_DrawFillRoundRectBlend(sp->x_pos, sp->y_pos, 140, 42, GUI_SLIDER_RADIUS, GUI_SLIDER_BG_COLOR);
 	G2D_DrawRoundRect(sp->x_pos, sp->y_pos, 140, 42, GUI_SLIDER_RADIUS, GUI_SLIDER_BORDER_COLOR);
-	G2D_DrawIconBlendC((uint32_t)ICON_32_Left, sp->x_pos + 21, sp->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
-	G2D_DrawIconBlendC((uint32_t)ICON_32_Right, sp->x_pos + 140 - 21, sp->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawIconBlendC(ICON_32_Left, sp->x_pos + 21, sp->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
+	G2D_DrawIconBlendC(ICON_32_Right, sp->x_pos + 140 - 21, sp->y_pos + 21, GUI_SLIDER_BORDER_COLOR);
 
 	char str[12];
 	if (value > 0) {

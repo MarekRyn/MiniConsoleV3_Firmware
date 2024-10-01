@@ -36,11 +36,11 @@
 #define DMA2D_CSS_422				0b01
 #define DMA2D_CSS_420				0b10
 
-uint8_t BSP_STM32_DMA2D_FillBuff(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t dest_addr, uint32_t color);
-uint8_t BSP_STM32_DMA2D_FillBuffBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t dest_addr, uint32_t color, uint8_t alpha);
-uint8_t BSP_STM32_DMA2D_CopyBuf(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, uint32_t src_addr, uint16_t dest_offsetline, uint32_t dest_addr);
-uint8_t BSP_STM32_DMA2D_CopyBufJPEG(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, uint32_t src_addr, uint16_t dest_offsetline, uint32_t dest_addr, uint32_t chroma);
-uint8_t BSP_STM32_DMA2D_CopyBufBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, uint32_t src_addr, uint16_t dest_offsetline, uint32_t dest_addr, uint8_t alpha);
+uint8_t BSP_STM32_DMA2D_FillBuff(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t offsetline, void * dest_addr, uint32_t color);
+uint8_t BSP_STM32_DMA2D_FillBuffBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t offsetline, void * dest_addr, uint32_t color, uint8_t alpha);
+uint8_t BSP_STM32_DMA2D_CopyBuf(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, void * src_addr, uint16_t dest_offsetline, void * dest_addr);
+uint8_t BSP_STM32_DMA2D_CopyBufJPEG(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, void * src_addr, uint16_t dest_offsetline, void * dest_addr, uint32_t chroma);
+uint8_t BSP_STM32_DMA2D_CopyBufBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, void * src_addr, uint16_t dest_offsetline, void * dest_addr, uint8_t alpha);
 
 uint8_t BSP_STM32_DMA2D_IRQHandler(DMA2D_TypeDef * hdma2d);
 

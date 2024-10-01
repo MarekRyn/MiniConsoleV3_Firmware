@@ -4,18 +4,18 @@
 
 #include "BSP_STM32_DMA2D.h"
 
-uint8_t BSP_STM32_DMA2D_FillBuff(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t dest_addr, uint32_t color) {
+uint8_t BSP_STM32_DMA2D_FillBuff(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t offsetline, void * dest_addr, uint32_t color) {
 
 	// Configuring DMA2D
 	MODIFY_REG(hdma2d->CR, DMA2D_CR_MODE, DMA2D_R2M);
 	MODIFY_REG(hdma2d->OPFCCR, DMA2D_OPFCCR_CM, colormode);
 	MODIFY_REG(hdma2d->OOR, DMA2D_OOR_LO, (uint32_t)offsetline);
 	MODIFY_REG(hdma2d->NLR, (DMA2D_NLR_NL | DMA2D_NLR_PL), ((uint32_t)height | ((uint32_t)width << DMA2D_NLR_PL_Pos)));
-	WRITE_REG(hdma2d->OMAR, dest_addr);
+	WRITE_REG(hdma2d->OMAR, (uint32_t)dest_addr);
 	WRITE_REG(hdma2d->OCOLR, color);
 
 	// Enable Interrupts
-	hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
+	// hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
 
 	// Enable DMA2D
 	hdma2d->CR |= DMA2D_CR_START;
@@ -24,7 +24,7 @@ uint8_t BSP_STM32_DMA2D_FillBuff(DMA2D_TypeDef * hdma2d, uint32_t colormode, uin
 }
 
 
-uint8_t BSP_STM32_DMA2D_FillBuffBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t dest_addr, uint32_t color, uint8_t alpha) {
+uint8_t BSP_STM32_DMA2D_FillBuffBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t offsetline, void * dest_addr, uint32_t color, uint8_t alpha) {
 	// Recalculating color for ARGB4444 and ARGB1555
 	switch (colormode) {
 	case DMA2D_ARGB4444:
@@ -50,12 +50,13 @@ uint8_t BSP_STM32_DMA2D_FillBuffBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode
 	MODIFY_REG(hdma2d->BGPFCCR, regMask0, regValue0);
 	WRITE_REG(hdma2d->BGOR, offsetline);
 
-	WRITE_REG(hdma2d->BGMAR, dest_addr);
+	WRITE_REG(hdma2d->BGMAR, (uint32_t)dest_addr);
 	MODIFY_REG(hdma2d->NLR, (DMA2D_NLR_NL | DMA2D_NLR_PL), (height | (width << DMA2D_NLR_PL_Pos)));
-	WRITE_REG(hdma2d->OMAR, dest_addr);
+	WRITE_REG(hdma2d->OMAR, (uint32_t)dest_addr);
 
 	// Enable Interrupts
-	hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
+	// hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
+
 	// ENable DMA2D
 	hdma2d->CR |= DMA2D_CR_START;
 
@@ -63,7 +64,7 @@ uint8_t BSP_STM32_DMA2D_FillBuffBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode
 }
 
 
-uint8_t BSP_STM32_DMA2D_CopyBuf(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, uint32_t src_addr, uint16_t dest_offsetline, uint32_t dest_addr) {
+uint8_t BSP_STM32_DMA2D_CopyBuf(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, void * src_addr, uint16_t dest_offsetline, void * dest_addr) {
 
 	// Configuring DMA2D
 	MODIFY_REG(hdma2d->CR, DMA2D_CR_MODE, DMA2D_M2M);
@@ -75,18 +76,19 @@ uint8_t BSP_STM32_DMA2D_CopyBuf(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint
 	WRITE_REG(hdma2d->FGOR, src_offsetline);
 
 	MODIFY_REG(hdma2d->NLR, (DMA2D_NLR_NL | DMA2D_NLR_PL), (height | (width << DMA2D_NLR_PL_Pos)));
-	WRITE_REG(hdma2d->OMAR, dest_addr);
-	WRITE_REG(hdma2d->FGMAR, src_addr);
+	WRITE_REG(hdma2d->OMAR, (uint32_t)dest_addr);
+	WRITE_REG(hdma2d->FGMAR, (uint32_t)src_addr);
 
 	// Enable Interrupts
-	hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
+	// hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
+
 	// ENable DMA2D
 	hdma2d->CR |= DMA2D_CR_START;
 
 	return BSP_OK;
 }
 
-uint8_t BSP_STM32_DMA2D_CopyBufJPEG(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, uint32_t src_addr, uint16_t dest_offsetline, uint32_t dest_addr, uint32_t chroma) {
+uint8_t BSP_STM32_DMA2D_CopyBufJPEG(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, void * src_addr, uint16_t dest_offsetline, void * dest_addr, uint32_t chroma) {
 
 	// Configuring DMA2D
 	MODIFY_REG(hdma2d->CR, DMA2D_CR_MODE, DMA2D_M2M_PFC);
@@ -99,18 +101,19 @@ uint8_t BSP_STM32_DMA2D_CopyBufJPEG(DMA2D_TypeDef * hdma2d, uint32_t colormode, 
 	WRITE_REG(hdma2d->FGOR, src_offsetline);
 
 	MODIFY_REG(hdma2d->NLR, (DMA2D_NLR_NL | DMA2D_NLR_PL), (height | (width << DMA2D_NLR_PL_Pos)));
-	WRITE_REG(hdma2d->OMAR, dest_addr);
-	WRITE_REG(hdma2d->FGMAR, src_addr);
+	WRITE_REG(hdma2d->OMAR, (uint32_t)dest_addr);
+	WRITE_REG(hdma2d->FGMAR, (uint32_t)src_addr);
 
 	// Enable Interrupts
-	hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
+	// hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
+
 	// ENable DMA2D
 	hdma2d->CR |= DMA2D_CR_START;
 
 	return BSP_OK;
 }
 
-uint8_t BSP_STM32_DMA2D_CopyBufBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, uint32_t src_addr, uint16_t dest_offsetline, uint32_t dest_addr, uint8_t alpha) {
+uint8_t BSP_STM32_DMA2D_CopyBufBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode, uint16_t width, uint16_t height, uint16_t src_offsetline, void * src_addr, uint16_t dest_offsetline, void * dest_addr, uint8_t alpha) {
 
 	// Configuring DMA2D
 	MODIFY_REG(hdma2d->CR, DMA2D_CR_MODE, DMA2D_M2M_BLEND);
@@ -127,13 +130,14 @@ uint8_t BSP_STM32_DMA2D_CopyBufBlend(DMA2D_TypeDef * hdma2d, uint32_t colormode,
 	MODIFY_REG(hdma2d->BGPFCCR, regMask0, regValue0);
 	WRITE_REG(hdma2d->BGOR, dest_offsetline);
 
-	WRITE_REG(hdma2d->BGMAR, dest_addr);
+	WRITE_REG(hdma2d->BGMAR, (uint32_t)dest_addr);
 	MODIFY_REG(hdma2d->NLR, (DMA2D_NLR_NL | DMA2D_NLR_PL), (height | (width << DMA2D_NLR_PL_Pos)));
-	WRITE_REG(hdma2d->OMAR, dest_addr);
-	WRITE_REG(hdma2d->FGMAR, src_addr);
+	WRITE_REG(hdma2d->OMAR, (uint32_t)dest_addr);
+	WRITE_REG(hdma2d->FGMAR, (uint32_t)src_addr);
 
 	// Enable Interrupts
-	hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
+	// hdma2d->CR |= DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE;
+
 	// ENable DMA2D
 	hdma2d->CR |= DMA2D_CR_START;
 

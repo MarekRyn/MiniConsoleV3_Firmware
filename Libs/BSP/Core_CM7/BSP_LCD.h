@@ -135,12 +135,14 @@ extern void (*BSP_LCD_CopyBufJPEG)(uint16_t x_dest, uint16_t y_dest);
 
 
 // Functions for OSD menu
+uint32_t BSP_LCD_OSD_Color(uint32_t color, uint8_t alpha);
 void BSP_LCD_OSD_UpdatePixel(int16_t x, int16_t y, uint32_t value);
 void BSP_LCD_OSD_FillBuf(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t offsetline, uint32_t color);
 void BSP_LCD_OSD_SetAlpha(uint8_t alpha);
 uint8_t BSP_LCD_OSD_GetAlpha(void);
 void BSP_LCD_OSD_Show(void);
 void BSP_LCD_OSD_Hide(void);
+void * BSP_LCD_OSD_Addr(void);
 
 
 #ifdef __cplusplus

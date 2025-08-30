@@ -30,6 +30,7 @@ enum AUDIO_CMD {
 	AUDIO_CMD_LINK_SMP3,
 	AUDIO_CMD_LINK_MOD,
 	AUDIO_CMD_LINK_RAW,
+	AUDIO_CMD_LINK_SRAW,
 	AUDIO_CMD_LINK_MID,
 	AUDIO_CMD_PLAY,
 	AUDIO_CMD_STOP,
@@ -76,12 +77,13 @@ uint8_t BSP_Audio_LinkSourceMP3(uint8_t chno, void * addr, uint32_t size);
 uint8_t BSP_Audio_LinkSourceSMP3(uint8_t chno);
 uint8_t BSP_Audio_LinkSourceMOD(uint8_t chno, void * addr, uint32_t size);
 uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, void * addr, uint32_t size, uint8_t chn, uint8_t bitformat, uint16_t freq);
+uint8_t BSP_Audio_LinkSourceSRAW(uint8_t chno, uint8_t chn, uint8_t bitformat, uint16_t freq);
 uint8_t BSP_Audio_LinkSourceMID(uint8_t chno, void * sfaddr, uint32_t sfsize, void * addr, uint32_t size);
 uint8_t BSP_Audio_ChannelPLay(uint8_t chno, uint8_t repeat);
 uint8_t BSP_Audio_ChannelStop(uint8_t chno);
 uint8_t BSP_Audio_ChannelPause(uint8_t chno);
 uint8_t BSP_Audio_GetFreeChannel(void);
-void * BSP_Audio_GetBufAddr(uint8_t chno);
+void * BSP_Audio_GetBufAddr(uint8_t chno, uint32_t size);
 uint8_t BSP_Audio_BufUpdateCompleted(uint8_t chno);
 uint8_t BSP_Audio_RegisterStatusCallback(uint8_t status, void* callback);
 uint32_t BSP_Audio_GetStatusParam(uint8_t index);

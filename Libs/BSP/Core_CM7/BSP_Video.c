@@ -495,7 +495,8 @@ uint8_t BSP_Video_GetFrame(void) {
 			// Audio Frame
 
 			// Get stream buffer address
-			void * mp3frame = BSP_Audio_GetBufAddr(vidctx.AudioChannel);
+			void * mp3frame = BSP_Audio_GetBufAddr(vidctx.AudioChannel, vidctx.FrameSize);
+			if (mp3frame == NULL) break;
 
 			// Read current frame + header of next frame
 			if ((vidctx.FrameSizePadded + 8) > vidctx.VideoBufferSize) return BSP_ERROR;

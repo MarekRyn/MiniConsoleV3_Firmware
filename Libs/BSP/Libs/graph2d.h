@@ -85,6 +85,23 @@ void G2D_CopyBufBlend(const void * src_addr, uint16_t offsline_src, uint16_t x_d
 void G2D_CacheFrame(void); // Save current state of the frame to cache memory
 void G2D_RestoreFrame(void); // Restoring cached frame
 
+
+// OSD Graphics
+void G2D_OSD_ClearFrame(void);
+void G2D_OSD_FillFrame(uint32_t color);
+void G2D_OSD_DrawPixel(int16_t x, int16_t y, uint32_t color);
+void G2D_OSD_DrawHLine(int16_t x, int16_t y, int16_t length, uint32_t color);
+void G2D_OSD_DrawVLine(int16_t x, int16_t y, int16_t length, uint32_t color) ;
+void G2D_OSD_DrawLine(int16_t X1, int16_t Y1, int16_t X2, int16_t Y2, uint32_t color);
+void G2D_OSD_DrawRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color);
+void G2D_OSD_DrawFillRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color);
+void G2D_OSD_DrawCircle(int16_t x, int16_t y, uint16_t r, uint32_t color);
+void G2D_OSD_DrawFillCircle(int16_t x, int16_t y, uint16_t r, uint32_t color);
+uint16_t G2D_OSD_Text(int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color, uint32_t bgcolor);
+void G2D_OSD_DrawIcon(const void * iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor);
+uint32_t G2D_OSD_Color(uint32_t color, uint8_t alpha);
+
+
 #endif
 
 #endif /* INC_GRAPH2D_H_ */

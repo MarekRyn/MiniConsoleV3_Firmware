@@ -1,9 +1,7 @@
 /*******************************************************************
  * MiniConsole V3 - Board Support Package - LCD
  *******************************************************************/
-
-//TODO: Condition check for update pixel to be optimized
-//TODO: Remove DMA2D state (check directly DMA2D register)
+//TODO: Remove function pointers and replace with macros
 
 
 #include "BSP_LCD.h"
@@ -51,9 +49,9 @@ typedef struct {
 	LCD_CONFIG		config;
 	LCD_LAYER		layer;
 	uint32_t		frametime;
-	void *			OSDbuf;
 	void *			JPEGbuf;
 	void *			CACHEbuf;
+	void *			OSDbuf;
 } LCD_HandleTypeDef;
 
 
@@ -106,6 +104,9 @@ inline static uint32_t _color_dist(uint32_t c1, uint32_t c2) {
  ******************************************************************************/
 
 /* ARGB8888 ------------------------------------------------------------------*/
+
+#define _ARGB8888_UPDATEPIXEL(OFFSET, X, Y, VALUE)		do {uint32_t *addr = (uint32_t *)(OFFSET) + ((X) + (Y) * LCD_WIDTH); *addr = (VALUE); } while (0);
+
 
 static uint32_t _ARGB8888_color(uint32_t color, uint8_t alpha) {
 	// Status: Function Completed
@@ -277,6 +278,9 @@ static void _ARGB8888_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
 
 /* ARGB1555 ------------------------------------------------------------------*/
 
+#define _ARGB1555_UPDATEPIXEL(OFFSET, X, Y, VALUE)		do { uint16_t *addr = (uint16_t *)(OFFSET) + ((X) + (Y) * LCD_WIDTH); *addr = (uint16_t)(VALUE); } while (0);
+
+
 static uint32_t _ARGB1555_color(uint32_t color, uint8_t alpha) {
 	// Status: Function Completed
 	uint32_t r = ((color & 0x000000FF) >> 3 ) << 0;
@@ -440,6 +444,8 @@ static void _ARGB1555_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
 
 
 /* ARGB4444 ------------------------------------------------------------------*/
+
+#define _ARGB4444_UPDATEPIXEL(OFFSET, X, Y, VALUE)		do { uint16_t *addr = (uint16_t *)(OFFSET) + ((X) + (Y) * LCD_WIDTH); *addr = (uint16_t)(VALUE); } while (0);
 
 static uint32_t _ARGB4444_color(uint32_t color, uint8_t alpha) {
 	// Status: Function Completed
@@ -622,6 +628,10 @@ static void _ARGB4444_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
 
 /* RGB888 --------------------------------------------------------------------*/
 
+#define _RGB888_UPDATEPIXEL(OFFSET, X, Y, VALUE)		do { uint8_t * pvalue = (uint8_t *)&(VALUE); uint8_t * addr = (uint8_t *)(OFFSET) + (((X) + (Y) * LCD_WIDTH) * 3); \
+															*(addr++) = *(pvalue++); *(addr++) = *(pvalue++); *(addr  ) = *(pvalue  ); } while (0);
+
+
 static uint32_t _RGB888_color(uint32_t color, uint8_t alpha) {
 	// Status: Function Completed
 	return (color & 0x00FFFFFF) | ((uint32_t)alpha << 24);
@@ -792,6 +802,8 @@ static void _RGB888_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
 
 /* AL88 ----------------------------------------------------------------------*/
 
+#define _AL88_UPDATEPIXEL(OFFSET, X, Y, VALUE)		do { uint16_t *addr = (uint16_t *)(OFFSET) + ((X) + (Y) * LCD_WIDTH); *addr = (uint16_t)(VALUE); } while (0);
+
 static uint32_t _AL88_color(uint32_t color, uint8_t alpha) {
 	// Status: Function Completed
 	uint32_t match_c = 0;
@@ -925,6 +937,8 @@ static void _AL88_copybufJPEG(uint16_t x_dest, uint16_t y_dest) {
 }
 
 /* L8 ------------------------------------------------------------------------*/
+
+#define _L8_UPDATEPIXEL(OFFSET, X, Y, VALUE)		do { uint8_t *addr = (uint8_t *)(OFFSET) + ((X) + (Y) * LCD_WIDTH); *addr = (uint8_t)(VALUE); } while (0);
 
 static uint32_t _L8_color(uint32_t color, uint8_t alpha) {
 	// Status: Function Completed
@@ -1149,9 +1163,9 @@ static void _config_triplebuf(void) {
 	BSP_hlcd.layer.Frames[0] = (uint8_t *)LCD_FRAMEBUFFER_END_ADDR - 1 * BSP_hlcd.config.framesize;
 	BSP_hlcd.layer.Frames[1] = (uint8_t *)LCD_FRAMEBUFFER_END_ADDR - 2 * BSP_hlcd.config.framesize;
 	BSP_hlcd.layer.Frames[2] = (uint8_t *)LCD_FRAMEBUFFER_END_ADDR - 3 * BSP_hlcd.config.framesize;
-	BSP_hlcd.OSDbuf = (uint8_t *)LCD_FRAMEBUFFER_END_ADDR - (3 * BSP_hlcd.config.framesize) - BSP_hlcd.config.osdsize;
-	BSP_hlcd.JPEGbuf = (uint8_t *)BSP_hlcd.OSDbuf - LCD_JPEGBUF_SIZE;
+	BSP_hlcd.JPEGbuf = (uint8_t *)LCD_FRAMEBUFFER_END_ADDR - (3 * BSP_hlcd.config.framesize) - LCD_JPEGBUF_SIZE;
 	BSP_hlcd.CACHEbuf = (uint8_t *)BSP_hlcd.JPEGbuf - BSP_hlcd.config.framesize;
+	BSP_hlcd.OSDbuf =  BSP_hlcd.CACHEbuf - BSP_hlcd.config.osdsize;
 }
 
 
@@ -1166,9 +1180,9 @@ static void _config_doublebuf(void) {
 	BSP_hlcd.layer.Frames[0] = (uint8_t *)LCD_FRAMEBUFFER_END_ADDR - 1 * BSP_hlcd.config.framesize;
 	BSP_hlcd.layer.Frames[1] = (uint8_t *)LCD_FRAMEBUFFER_END_ADDR - 2 * BSP_hlcd.config.framesize;
 	BSP_hlcd.layer.Frames[2] = 0;
-	BSP_hlcd.OSDbuf = (uint8_t *)LCD_FRAMEBUFFER_END_ADDR - (2 * BSP_hlcd.config.framesize) - BSP_hlcd.config.osdsize;
-	BSP_hlcd.JPEGbuf = (uint8_t *)BSP_hlcd.OSDbuf - LCD_JPEGBUF_SIZE;
+	BSP_hlcd.JPEGbuf = (uint8_t *)LCD_FRAMEBUFFER_END_ADDR - (2 * BSP_hlcd.config.framesize) - LCD_JPEGBUF_SIZE;
 	BSP_hlcd.CACHEbuf = (uint8_t *)BSP_hlcd.JPEGbuf - BSP_hlcd.config.framesize;
+	BSP_hlcd.OSDbuf =  BSP_hlcd.CACHEbuf - BSP_hlcd.config.osdsize;
 }
 
 
@@ -1437,13 +1451,13 @@ static void _OSD_config_layer(void) {
 	BSP_STM32_LTDC_ConfigLayer(
 			LTDC,
 			1,
-			255,
+			0,
 			0,
 			0x00000000,
 			LTDC_BLENDING_FACTOR1_PAxCA,
 			LTDC_BLENDING_FACTOR2_PAxCA,
 			BSP_hlcd.OSDbuf,
-			LCD_OSD_HEIGHT, LCD_WIDTH,
+			LCD_HEIGHT, LCD_WIDTH,
 			LTDC_PIXEL_FORMAT_ARGB4444,
 			0,
 			LCD_WIDTH,
@@ -1749,11 +1763,22 @@ void BSP_LCD_SetDisplayWindow(uint16_t x, uint16_t y, uint16_t width, uint16_t h
  * Public functions - OSD
  ******************************************************************************/
 
+uint32_t BSP_LCD_OSD_Color(uint32_t color, uint8_t alpha) {
+	// Status: Function Completed
+	uint32_t b = ((color & 0x000000FF) >> 4 ) << 0;
+	uint32_t g = ((color & 0x0000FF00) >> 12) << 4;
+	uint32_t r = ((color & 0x00FF0000) >> 20) << 8;
+	uint32_t a = ((uint32_t)alpha >> 4) << 12;
+	uint32_t c = r | g | b | a;
+	return c;
+}
+
+
 void BSP_LCD_OSD_UpdatePixel(int16_t x, int16_t y, uint32_t value) {
 	// Status: Function Completed
 	if (x >= LCD_WIDTH) return;
 	if (x < 0) return;
-	if (y >= LCD_OSD_HEIGHT) return;
+	if (y >= LCD_HEIGHT) return;
 	if (y < 0) return;
 
 	uint16_t *addr = (uint16_t *)BSP_hlcd.OSDbuf + (x + y * LCD_WIDTH);
@@ -1793,6 +1818,10 @@ void BSP_LCD_OSD_Show(void) {
 
 void BSP_LCD_OSD_Hide(void) {
 	BSP_STM32_LTDC_DisableLayer(LTDC, 1);
+}
+
+void * BSP_LCD_OSD_Addr(void) {
+	return BSP_hlcd.OSDbuf;
 }
 
 

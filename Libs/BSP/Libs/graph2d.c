@@ -87,6 +87,57 @@ inline static uint8_t _char(int16_t x, int16_t y, const uint8_t *font, uint8_t c
 }
 
 
+inline static uint8_t _osd_char(int16_t x, int16_t y, const uint8_t *font, uint8_t ch, uint32_t *text_clut) {
+	// Function rendering character on screen
+	uint16_t *adr0;								// Start address of encoded character
+	uint16_t *adr1;								// End address of encoded character
+	uint8_t swidth = *(font + 1);			   	// Width of space (empty character)
+
+	// Testing if character is outside allowable range
+	if ((ch < 33) || (ch > 126)) return swidth;
+
+	// Looking for character in index
+	uint16_t a = (ch - 33) * 2;
+	adr0 = (uint16_t*)(font + a + 2);
+	adr1 = (uint16_t*)(font + a + 4);
+
+	// Testing if character is outside defined subset
+	if (*adr0 == *adr1) return swidth;
+
+	// Reading width of given character
+	uint8_t width = *(font + *adr0);
+
+	// Decoding and drawing character
+	uint8_t m;
+	int16_t fx = 0;
+	int16_t fy = 0;
+
+
+	for (uint16_t j = *adr0 + 1; j < *adr1; j++) {
+		m = *(font + j);
+		switch (m >> 6) {
+		case 0: // 0% color
+		case 3:	// 100% color
+			for (uint8_t i = 0; i < (m & 0x3F); i++) {
+				BSP_LCD_OSD_UpdatePixel(x+fx, y+fy, text_clut[m >> 6]);
+				fx++;
+				if (fx==width) { fx = 0; fy++; }
+			}
+			break;
+		case 1: // 33% color
+		case 2: // 66% color
+			for (int8_t i = 6; i >= 0; i-=2) {
+				BSP_LCD_OSD_UpdatePixel(x+fx, y+fy, text_clut[(m >> i) & 0x03]);
+				fx++;
+				if (fx==width) { fx = 0; fy++; }
+			}
+			break;
+		}
+	}
+	return width;
+}
+
+
 inline static uint8_t _charblend( int16_t x, int16_t y, const uint8_t *font, uint8_t ch, uint32_t *text_clut) {
 	// Function rendering character on screen
 	uint16_t *adr0;								// Start address of encoded character
@@ -180,11 +231,17 @@ void G2D_ClearFrame(void) {
 	BSP_LCD_FillBuf(0, 0, LCD_WIDTH, LCD_HEIGHT, 0, 0x00000000);
 }
 
+void G2D_OSD_ClearFrame(void) {
+	BSP_LCD_OSD_FillBuf(0, 0, LCD_WIDTH, LCD_OSD_HEIGHT, 0, 0x00000000);
+}
 
 void G2D_FillFrame(uint32_t color) {
 	BSP_LCD_FillBuf(0, 0, LCD_WIDTH, LCD_HEIGHT, 0, color);
 }
 
+void G2D_OSD_FillFrame(uint32_t color) {
+	BSP_LCD_OSD_FillBuf(0, 0, LCD_WIDTH, LCD_OSD_HEIGHT, 0, color);
+}
 
 void G2D_CopyPrevFrame(void) {
 
@@ -218,6 +275,13 @@ void G2D_DrawPixel(int16_t x, int16_t y, uint32_t color) {
 	BSP_LCD_UpdatePixel(offset, x, y, color);
 }
 
+
+void G2D_OSD_DrawPixel(int16_t x, int16_t y, uint32_t color) {
+	BSP_LCD_DMA2D_Wait();
+	BSP_LCD_OSD_UpdatePixel(x, y, color);
+}
+
+
 void G2D_DrawHLine(int16_t x, int16_t y, int16_t length, uint32_t color) {
 	if (length == 0) return;
 	if (length < 0) {x -= length + 1; length = -length;}
@@ -230,6 +294,21 @@ void G2D_DrawHLine(int16_t x, int16_t y, int16_t length, uint32_t color) {
 	uint16_t l = x1 - x0;
 	uint16_t lo = LCD_WIDTH - l;
 	BSP_LCD_FillBuf(x0, y, l, 1, lo, color);
+}
+
+
+void G2D_OSD_DrawHLine(int16_t x, int16_t y, int16_t length, uint32_t color) {
+	if (length == 0) return;
+	if (length < 0) {x -= length + 1; length = -length;}
+	if (y < 1) return;
+	if (y >= LCD_HEIGHT) return;
+	if ((x + length) < 1) return;
+	if (x >= LCD_WIDTH) return;
+	uint16_t x0 = MAX(0, x);
+	uint16_t x1 = MIN(LCD_WIDTH, x + length);
+	uint16_t l = x1 - x0;
+	uint16_t lo = LCD_WIDTH - l;
+	BSP_LCD_OSD_FillBuf(x0, y, l, 1, lo, color);
 }
 
 
@@ -264,6 +343,22 @@ void G2D_DrawVLine(int16_t x, int16_t y, int16_t length, uint32_t color) {
 }
 
 
+void G2D_OSD_DrawVLine(int16_t x, int16_t y, int16_t length, uint32_t color) {
+	if (length == 0) return;
+	if (length < 0) {y -= length + 1; length = -length;}
+	if (x < 1) return;
+	if (x >= LCD_WIDTH) return;
+	if ((y + length) < 1) return;
+	if (y >= LCD_HEIGHT) return;
+	uint16_t y0 = MAX(0, y);
+	uint16_t y1 = MIN(LCD_HEIGHT, y + length);
+	uint16_t l = y1 - y0;
+	if (l == 0) return;
+	uint16_t lo = LCD_WIDTH - 1;
+	BSP_LCD_OSD_FillBuf(x, y0, 1, l, lo, color);
+}
+
+
 void G2D_DrawVLineBlend(int16_t x, int16_t y, int16_t length, uint32_t color) {
 	if (length == 0) return;
 	if (length < 0) {y -= length + 1; length = -length;}
@@ -295,6 +390,17 @@ void G2D_DrawLine(int16_t X1, int16_t Y1, int16_t X2, int16_t Y2, uint32_t color
   int16_t numpixels = 0;
   int16_t curpixel = 0;
 
+  // Special cases
+  if (Y1 == Y2) {  // Horizontal
+	  G2D_DrawHLine(X1, Y1, X2 - X1, color);
+      return;
+  }
+  if (X1 == X2) {  // Vertical
+      G2D_DrawVLine(X1, Y1, Y2 - Y1, color);
+      return;
+  }
+
+  // Bresenham's algorithm
   dx = ABS(X2 - X1);        									/* The difference between the x's */
   dy = ABS(Y2 - Y1);        									/* The difference between the y's */
   x = X1;                   									/* Start x off at the first pixel */
@@ -340,6 +446,75 @@ void G2D_DrawLine(int16_t X1, int16_t Y1, int16_t X2, int16_t Y2, uint32_t color
 }
 
 
+void G2D_OSD_DrawLine(int16_t X1, int16_t Y1, int16_t X2, int16_t Y2, uint32_t color) {
+  int16_t dx = 0;
+  int16_t dy = 0;
+  int16_t x = 0;
+  int16_t y = 0;
+  int16_t xinc1 = 0;
+  int16_t xinc2 = 0;
+  int16_t yinc1 = 0;
+  int16_t yinc2 = 0;
+  int16_t den = 0;
+  int16_t num = 0;
+  int16_t numadd = 0;
+  int16_t numpixels = 0;
+  int16_t curpixel = 0;
+
+  // Special cases
+  if (Y1 == Y2) {  // Horizontal
+	  G2D_OSD_DrawHLine(X1, Y1, X2 - X1, color);
+      return;
+  }
+  if (X1 == X2) {  // Vertical
+      G2D_OSD_DrawVLine(X1, Y1, Y2 - Y1, color);
+      return;
+  }
+
+  // Bresenham's algorithm
+  dx = ABS(X2 - X1);        									/* The difference between the x's */
+  dy = ABS(Y2 - Y1);        									/* The difference between the y's */
+  x = X1;                   									/* Start x off at the first pixel */
+  y = Y1;                  										/* Start y off at the first pixel */
+
+  if (X2 >= X1) {xinc1 = 1; xinc2 = 1;}         				/* The x-values are increasing */
+  else {xinc1 = -1; xinc2 = -1;}                				/* The x-values are decreasing */
+
+  if (Y2 >= Y1) {yinc1 = 1; yinc2 = 1;}         				/* The y-values are increasing */
+  else {yinc1 = -1; yinc2 = -1;}                  				/* The y-values are decreasing */
+
+  if (dx >= dy) {					            				/* There is at least one x-value for every y-value */
+    xinc1 = 0;              									/* Don't change the x when numerator >= denominator */
+    yinc2 = 0;              									/* Don't change the y for every iteration */
+    den = dx;
+    num = dx >> 1;
+    numadd = dy;
+    numpixels = dx;         									/* There are more x-values than y-values */
+  } else {					                    				/* There is at least one y-value for every x-value */
+    xinc2 = 0;              									/* Don't change the x for every iteration */
+    yinc1 = 0;              									/* Don't change the y when numerator >= denominator */
+    den = dy;
+    num = dy >> 1;
+    numadd = dx;
+    numpixels = dy;         									/* There are more y-values than x-values */
+  }
+
+  BSP_LCD_DMA2D_Wait();
+
+  for (curpixel = 0; curpixel <= numpixels; curpixel++) {
+	BSP_LCD_OSD_UpdatePixel(x, y, color);					   	/* Draw the current pixel */
+    num += numadd;                            					/* Increase the numerator by the top of the fraction */
+    if (num >= den) {                         					/* Check if numerator >= denominator */
+      num -= den;                             					/* Calculate the new numerator value */
+      x += xinc1;                            					/* Change the x as appropriate */
+      y += yinc1;                             					/* Change the y as appropriate */
+    }
+    x += xinc2;                               					/* Change the x as appropriate */
+    y += yinc2;                               					/* Change the y as appropriate */
+  }
+}
+
+
 void G2D_DrawRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
 	int16_t xx = x + width;
 	int16_t yy = y + height;
@@ -357,6 +532,23 @@ void G2D_DrawRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_
 }
 
 
+void G2D_OSD_DrawRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
+	int16_t xx = x + width;
+	int16_t yy = y + height;
+	uint16_t x1 = MAX(0, x);
+	uint16_t y1 = MAX(0, y);
+	uint16_t x2 = MIN(LCD_WIDTH, xx);
+	uint16_t y2 = MIN(LCD_HEIGHT, yy);
+	uint16_t w = x2 - x1;
+	uint16_t h = y2 - y1;
+
+	G2D_OSD_DrawHLine(x1, y, w, color);
+	G2D_OSD_DrawHLine(x1, yy, w, color);
+	G2D_OSD_DrawVLine(x, y1, h, color);
+	G2D_OSD_DrawVLine(xx, y1, h, color);
+}
+
+
 void G2D_DrawFillRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
 	uint16_t x1 = MAX(0, x);
 	uint16_t y1 = MAX(0, y);
@@ -368,6 +560,20 @@ void G2D_DrawFillRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uin
 
 	BSP_LCD_FillBuf(x1, y1, w, h, ol, color);
 }
+
+
+void G2D_OSD_DrawFillRect(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
+	uint16_t x1 = MAX(0, x);
+	uint16_t y1 = MAX(0, y);
+	uint16_t x2 = MIN(LCD_WIDTH, (x + width));
+	uint16_t y2 = MIN(LCD_HEIGHT, (y + height));
+	uint16_t w = x2 - x1;
+	uint16_t h = y2 - y1;
+	uint16_t ol = LCD_WIDTH - w;
+
+	BSP_LCD_OSD_FillBuf(x1, y1, w, h, ol, color);
+}
+
 
 void G2D_DrawFillRectBlend(int16_t x, int16_t y, uint16_t width, uint16_t height, uint32_t color) {
 	uint16_t x1 = MAX(0, x);
@@ -415,6 +621,38 @@ void G2D_DrawCircle(int16_t x, int16_t y, uint16_t r, uint32_t color) {
 }
 
 
+void G2D_OSD_DrawCircle(int16_t x, int16_t y, uint16_t r, uint32_t color) {
+	int32_t d;			/* Decision Variable */
+	int32_t curx;		/* Current X Value */
+	int32_t cury;		/* Current Y Value */
+
+	d = 3 - (r << 1);
+	curx = 0;
+	cury = r;
+
+	BSP_LCD_DMA2D_Wait();
+
+	while (curx <= cury) {
+		BSP_LCD_OSD_UpdatePixel((x + curx), (y - cury), color);
+		BSP_LCD_OSD_UpdatePixel((x - curx), (y - cury), color);
+		BSP_LCD_OSD_UpdatePixel((x + cury), (y - curx), color);
+		BSP_LCD_OSD_UpdatePixel((x - cury), (y - curx), color);
+		BSP_LCD_OSD_UpdatePixel((x + curx), (y + cury), color);
+		BSP_LCD_OSD_UpdatePixel((x - curx), (y + cury), color);
+		BSP_LCD_OSD_UpdatePixel((x + cury), (y + curx), color);
+		BSP_LCD_OSD_UpdatePixel((x - cury), (y + curx), color);
+
+		if (d < 0) {
+			d += (curx << 2) + 6;
+		} else {
+			d += ((curx - cury) << 2) + 10;
+			cury--;
+		}
+		curx++;
+	}
+}
+
+
 void G2D_DrawFillCircle(int16_t x, int16_t y, uint16_t r, uint32_t color) {
 	int32_t  d;    	/* Decision Variable */
 	int32_t  curx;	/* Current X Value */
@@ -433,6 +671,36 @@ void G2D_DrawFillCircle(int16_t x, int16_t y, uint16_t r, uint32_t color) {
 		if(curx > 0) {
 			G2D_DrawHLine(x - curx, y - cury, 2 * curx + 1, color);
 			G2D_DrawHLine(x - curx, y + cury, 2 * curx + 1, color);
+		}
+		if (d < 0) {
+			d += (curx << 2) + 6;
+		} else {
+			d += ((curx - cury) << 2) + 10;
+			cury--;
+		}
+		curx++;
+	}
+}
+
+
+void G2D_OSD_DrawFillCircle(int16_t x, int16_t y, uint16_t r, uint32_t color) {
+	int32_t  d;    	/* Decision Variable */
+	int32_t  curx;	/* Current X Value */
+	int32_t  cury;	/* Current Y Value */
+
+	d = 3 - (r << 1);
+	curx = 0;
+	cury = r;
+
+	while (curx <= cury) {
+		if(cury > 0) {
+			G2D_OSD_DrawHLine(x - cury, y + curx, 2 * cury + 1, color);
+			G2D_OSD_DrawHLine(x - cury, y - curx, 2 * cury + 1, color);
+		}
+
+		if(curx > 0) {
+			G2D_OSD_DrawHLine(x - curx, y - cury, 2 * curx + 1, color);
+			G2D_OSD_DrawHLine(x - curx, y + cury, 2 * curx + 1, color);
 		}
 		if (d < 0) {
 			d += (curx << 2) + 6;
@@ -704,6 +972,54 @@ uint16_t G2D_Text(int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t
 
 		// Character rendering
 		_char(x, y, font, *str, text_clut);
+
+	}
+	return x + w;
+}
+
+
+uint16_t G2D_OSD_Text(int16_t x, int16_t y, const uint8_t *font, char *str, uint32_t color, uint32_t bgcolor) {
+	// Calculating color array for anty-aliasing
+	uint32_t text_clut[4];
+	uint32_t a1, a2, r1, r2, b1, b2, g1, g2;
+
+	a1 = 0;
+	a2 = 0;
+
+	a1 = (color & 0xF000) >> 12;
+	r1 = (color & 0x0F00) >> 8;
+	g1 = (color & 0x00F0) >> 4;
+	b1 = (color & 0x000F) >> 0;
+	a2 = (bgcolor & 0XF000) >> 12;
+	r2 = (bgcolor & 0x0F00) >> 8;
+	g2 = (bgcolor & 0x00F0) >> 4;
+	b2 = (bgcolor & 0x000F) >> 0;
+
+	text_clut[0] = bgcolor;
+	text_clut[1] = (((a1 * 85 + a2 * 171) >> 8) << 12) | (((r1 * 85 + r2 * 171) >> 8) << 8) | (((g1 * 85 + g2 * 171) >> 8) << 4) | (((b1 * 85 + b2 * 171) >> 8) << 0);
+	text_clut[2] = (((a1 * 171 + a2 * 85) >> 8) << 12) | (((r1 * 171 + r2 * 85) >> 8) << 8) | (((g1 * 171 + g2 * 85) >> 8) << 4) | (((b1 * 171 + b2 * 85) >> 8) << 0);
+	text_clut[3] = color;
+
+	uint8_t h = *(font);	// Font height
+	uint8_t w = 0;			// Character width
+	uint8_t flag = 0;		// Flag -> character pointer not to beupdated in first loop
+
+	// Waiting for DMA2D to stop
+	BSP_LCD_DMA2D_Wait();
+
+	while (*str > 0) {
+		x += w;
+		if (flag) str += 1;
+		flag = 1;
+
+		// Getting character width
+		w = _charw(font, *str);
+
+		// Is character within screen area?
+		if (((x + w) < 0) || (x >= LCD_WIDTH) || ((y + h) < 0) || (y >= LCD_OSD_HEIGHT)) continue; // No rendering
+
+		// Character rendering
+		_osd_char(x, y, font, *str, text_clut);
 
 	}
 	return x + w;
@@ -1047,6 +1363,55 @@ void G2D_DrawIcon(const void * iconsource, int16_t x, int16_t y, uint32_t color,
 }
 
 
+void G2D_OSD_DrawIcon(const void * iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor) {
+	// Calculating color array for anty-aliasing
+	uint32_t icon_clut[4];
+	uint32_t a1, a2, r1, r2, b1, b2, g1, g2;
+
+	a1 = (color & 0xF000) >> 12;
+	r1 = (color & 0x0F00) >> 8;
+	g1 = (color & 0x00F0) >> 4;
+	b1 = (color & 0x000F) >> 0;
+	a2 = (bgcolor & 0XF000) >> 12;
+	r2 = (bgcolor & 0x0F00) >> 8;
+	g2 = (bgcolor & 0x00F0) >> 4;
+	b2 = (bgcolor & 0x000F) >> 0;
+
+	icon_clut[0] = bgcolor;
+	icon_clut[1] = (((a1 * 85 + a2 * 171) >> 8) << 12) | (((r1 * 85 + r2 * 171) >> 8) << 8) | (((g1 * 85 + g2 * 171) >> 8) << 4) | (((b1 * 85 + b2 * 171) >> 8) << 0);
+	icon_clut[2] = (((a1 * 171 + a2 * 85) >> 8) << 12) | (((r1 * 171 + r2 * 85) >> 8) << 8) | (((g1 * 171 + g2 * 85) >> 8) << 4) | (((b1 * 171 + b2 * 85) >> 8) << 0);
+	icon_clut[3] = color;
+
+	// Decoding compressed icon data
+	uint8_t *pdata;
+	pdata = (uint8_t *)iconsource;
+
+	uint16_t width = *(uint16_t *)(pdata++);
+	pdata++;
+	uint16_t height = *(uint16_t *)(pdata++);
+	pdata++;
+	int16_t xx = x;
+	int16_t yy = y;
+
+	// Waiting for DMA2D to stop
+	BSP_LCD_DMA2D_Wait();
+
+	while (yy < (y+height)) {
+		uint8_t j = *(pdata++);
+		uint8_t m = j >> 6;
+		uint8_t r = j & 0x3F;
+		for (uint32_t z = 0; z<r; z++) {
+			BSP_LCD_OSD_UpdatePixel(xx, yy, icon_clut[m]);
+			xx++;
+			if (xx == (x+width)) {
+				xx = x;
+				yy++;
+			}
+		}
+	}
+}
+
+
 void G2D_DrawIconC(const void * iconsource, int16_t x, int16_t y, uint32_t color, uint32_t bgcolor) {
 	// Decoding width and height
 	uint8_t *pdata;
@@ -1197,6 +1562,10 @@ void G2D_DecodeJPEG(const void * jpeg_addr, uint32_t jpeg_size) {
 
 uint32_t G2D_Color(uint32_t color, uint8_t alpha) {
 	return BSP_LCD_Color(color, alpha);
+}
+
+uint32_t G2D_OSD_Color(uint32_t color, uint8_t alpha) {
+	return BSP_LCD_OSD_Color(color, alpha);
 }
 
 uint32_t G2D_Alpha(uint32_t color, uint8_t alpha) {

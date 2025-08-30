@@ -206,6 +206,21 @@ uint8_t BSP_Audio_LinkSourceRAW(uint8_t chno, void * addr, uint32_t size, uint8_
 	return BSP_OK;
 }
 
+uint8_t BSP_Audio_LinkSourceSRAW(uint8_t chno, uint8_t chn, uint8_t bitformat, uint16_t freq) {
+	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
+	// Wait until command register is ready
+	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
+	// Setup registers
+	AUDIO_regs.command = AUDIO_CMD_LINK_SRAW;
+	AUDIO_regs.c_params[0] = chno;
+	AUDIO_regs.c_params[1] = chn;
+	AUDIO_regs.c_params[2] = bitformat;
+	AUDIO_regs.c_params[3] = freq;
+	// Activate command by sending SEV to CM4 core;
+	__SEV();
+	return BSP_OK;
+}
+
 uint8_t BSP_Audio_LinkSourceMID(uint8_t chno, void * sfaddr, uint32_t sfsize, void * addr, uint32_t size) {
 	if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 	// Wait until command register is ready
@@ -276,13 +291,14 @@ uint8_t BSP_Audio_GetFreeChannel(void) {
 	return AUDIO_regs.s_params[0];
 }
 
-void * BSP_Audio_GetBufAddr(uint8_t chno) {
+void * BSP_Audio_GetBufAddr(uint8_t chno, uint32_t size) {
 	if (chno >= AUDIO_CFG_CHANNELS) return NULL;
 	// Wait until command register is ready
 	while (AUDIO_regs.command != AUDIO_CMD_NONE) {};
 	// Setup registers
 	AUDIO_regs.command = AUDIO_CMD_GETBUFADDR;
 	AUDIO_regs.c_params[0] = chno;
+	AUDIO_regs.c_params[1] = size;
 	// Activate command by sending SEV to CM4 core;
 	__SEV();
 	// Wait until data processed;

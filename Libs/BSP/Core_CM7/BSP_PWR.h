@@ -25,6 +25,9 @@ extern "C" {
 #define PWR_Hold_Port	GPIOG
 #define PWR_Hold_Pin	GPIO_PIN_9
 
+#define PWR_Low_Port	GPIOD
+#define PWR_Low_Pin		GPIO_PIN_7
+
 uint8_t BSP_PWR_Animation(void);
 uint8_t BSP_PWR_Init(void);
 uint8_t BSP_PWR_Restart(void);
@@ -32,6 +35,7 @@ uint8_t BSP_PWR_ShutDown(void);
 uint8_t BSP_PWR_ShutDownNoAnim(void);
 uint8_t BSP_PWR_SaveConfig(uint8_t screen_reduced_timeout, uint8_t screen_pwroff_timeout);
 uint8_t BSP_PWR_LoadConfig(void);
+
 
 #ifdef __cplusplus
 }

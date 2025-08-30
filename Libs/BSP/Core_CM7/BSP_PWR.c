@@ -12,27 +12,42 @@
 #include "BSP_PWR.h"
 #include "graph2d.h"
 
+#include <stdlib.h>
+
 static uint32_t timeout_screen_reduced = 0;
 static uint32_t timeout_screen_pwroff = 0;
 static uint8_t	ps_state0 = 0;
 static uint8_t	ps_state1 = 0;
 
+
 uint8_t BSP_PWR_Animation(void) {
-	uint32_t timestart = BSP_GetTick();
-	uint32_t dt = 0;
-	BSP_LCD_SetBackLight(0, 25);
-	while (dt < 240) {
-		dt = (BSP_GetTick() - timestart);
-		while (!BSP_LCD_GetEditPermission()) {};
-		G2D_CopyPrevFrame();
-		int16_t y0 = dt + 2;
-		int16_t y1 = 479 - y0;
-		G2D_DrawFillRect(0, 0, 800, y0, BSP_LCD_Color(C_BLACK, 255));
-		G2D_DrawFillRect(0, y1, 800, y1, BSP_LCD_Color(C_BLACK, 255));
-		G2D_DrawHLine(0, y0, 800, BSP_LCD_Color(C_WHITE, 255));
-		G2D_DrawHLine(0, y1, 800, BSP_LCD_Color(C_WHITE, 255));
-		BSP_LCD_FrameReady();
+	// Disabling OSD layer
+	BSP_LCD_OSD_Hide();
+
+	// Configure OSD Layer to cover whole screen area
+	// The layer memory will excess size of initial memory designated for OSD and overflow to graph cache memory,
+	// but in this case (closing animation) it does not matter.
+	BSP_STM32_LTDC_ConfigLayerWindow(LTDC, 1, 0, LCD_WIDTH, 0, LCD_HEIGHT);
+	BSP_LCD_OSD_SetAlpha(255);
+	BSP_LCD_OSD_Show();
+
+	// Clear Layer
+	G2D_OSD_DrawFillRect(0, 0, LCD_WIDTH, LCD_HEIGHT, BSP_LCD_OSD_Color(C_BLACK, 0));
+
+	// Animation 1
+	int16_t y0 = 0;
+	int16_t y1 = LCD_HEIGHT - 1;
+	uint8_t a = 255 - 240;
+	while (y0 < 240) {
+		G2D_OSD_DrawFillRect(0, 0, LCD_WIDTH, y0, BSP_LCD_OSD_Color(C_BLACK, 255));
+		G2D_OSD_DrawFillRect(0, y1, LCD_WIDTH, LCD_HEIGHT - y1, BSP_LCD_OSD_Color(C_BLACK, 255));
+		G2D_OSD_DrawFillRect(0, y0, LCD_WIDTH, y1 - y0, BSP_LCD_OSD_Color(C_WHITE, a));
+		y0++;
+		y1--;
+		a++;
+		BSP_Delay(1);
 	}
+
 	return BSP_OK;
 }
 
@@ -104,6 +119,11 @@ uint8_t BSP_PWR_LoadConfig(void) {
 	timeout_screen_reduced = ((tmp & 0x00FF0000) >> 16) * 60 * 1000;
 	timeout_screen_pwroff = ((tmp & 0xFF000000) >> 24) * 60 * 1000;
 	return BSP_OK;
+}
+
+
+uint8_t BSP_PWR_GetBatteryState(void) {
+	return BSP_STM32_GPIO_ReadPin(PWR_Low_Port, PWR_Low_Pin);
 }
 
 

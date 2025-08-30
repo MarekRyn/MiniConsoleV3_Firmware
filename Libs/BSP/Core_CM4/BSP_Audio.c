@@ -41,9 +41,6 @@ static const uint8_t TAB_VOLUME[256] =
 	 213, 216, 218, 221, 224, 226, 229, 232, 235, 238, 241, 244, 246, 249, 252, 255
 	};
 
-static const uint32_t TAB_BITRATE[16] = {0, 32000, 40000, 48000, 56000, 64000, 80000, 96000, 112000, 128000, 160000, 192000, 224000, 256000, 320000, 0};
-
-
 // Type definitions
 typedef struct {
 	uint32_t	type;
@@ -78,7 +75,8 @@ typedef struct {
 
 
 typedef struct {
-	uint8_t * 				streambuf;	// Buffer in shared memory
+	uint8_t * 				buf;	// Buffer in shared memory
+	uint32_t				buf_size;
 	uint32_t				buf_modulo;
 	uint32_t				buf_frames;
 	uint32_t				i_uploaded;
@@ -87,20 +85,18 @@ typedef struct {
 	drmp3dec				mp3_dec;
 	uint32_t				framesize;
 	uint8_t					bufflag;
-} AUDIO_STREAM_TypeDef;
+} AUDIO_SMP3_TypeDef;
+
 
 // Variables
 __IO static						AUDIO_CTX_TypeDef		AUDIO_ctx = {0};
 __IO SH0_RAM static 			AUDIO_REG_TypeDef		AUDIO_regs = {0};
 __IO static						TxRxContext_TypeDef		BSP_hdma_ctx = {0};
 
+__IO SH0_RAM static uint8_t		StreamBuf[AUDIO_CFG_STREAMBUF_SIZE] __attribute__ ((aligned (4)));	// Stream data buffer
 __IO static int16_t 			OutputBuf[AUDIO_CFG_BUF_SIZE] __attribute__ ((aligned (4)));	// Output buffer
 __IO static int16_t				ChannelBuf[AUDIO_CFG_CHANNELS][AUDIO_CFG_BUF_SIZE >> 1] __attribute__ ((aligned (4)));	// Channel buffers
 __IO static int32_t				MixBuf[AUDIO_CFG_BUF_SIZE >> 1]; // Mixing buffer
-
-
-// Variable for simple buffer allocation
-static void * sh0_bufs[8] = {0};
 
 
 // ********** IRQ Handlers and Callbacks ****************
@@ -145,35 +141,20 @@ static void _AudioCallbackTE(TxRxContext_TypeDef * ctx) {
 
 // ********** Private functions ****************
 
-static void * _SMP3_BufAlloc(void) {
-	for (uint8_t i = 0; i < 8; i++) {
-		if (sh0_bufs[i] == NULL) if ((AUDIO_SH0_PROTECTED + AUDIO_CFG_STREAMBUF_SIZE * (i + 1)) < AUDIO_SH0_SIZE) {
-			sh0_bufs[i] = (void *)(AUDIO_SH0_PROTECTED + AUDIO_CFG_STREAMBUF_SIZE * i);
-			return sh0_bufs[i];
-		}
-	}
-	return NULL;
-}
-
-static void _SMP3_BufFree(void * addr) {
-	for (uint8_t i = 0; i < 8; i++) if (sh0_bufs[i] == addr) {
-			sh0_bufs[i] = NULL;
-			return;
-	}
-}
-
-
-static uint8_t _SMP3_Init(AUDIO_STREAM_TypeDef * ctx) {
+static uint8_t _SMP3_Init(AUDIO_SMP3_TypeDef * ctx, void * strbuf, uint32_t strbufsize) {
 	// Allocating stream buffer for mp3 frames;
-	ctx->streambuf = _SMP3_BufAlloc();
-	if (ctx->streambuf == NULL) return BSP_ERROR;
+	ctx->buf = strbuf;
+	ctx->buf_size = strbufsize;
+	if (ctx->buf == NULL) return BSP_ERROR;
+	if (ctx->buf_size == 0) return BSP_ERROR;
 
 	// Initialize offsets for uploaded and consumed data
 	ctx->i_consumed = 0;
 	ctx->i_uploaded = 0;
-	ctx->buf_modulo = AUDIO_CFG_STREAMBUF_SIZE;
+	ctx->buf_modulo = strbufsize;
 	ctx->buf_frames = 0;
 	ctx->framesize = 0;
+	ctx->bufflag = 1;
 
 	// Initialize mp3 decoder
 	memset(&ctx->mp3_info, 0 , sizeof(drmp3dec_frame_info));
@@ -184,7 +165,7 @@ static uint8_t _SMP3_Init(AUDIO_STREAM_TypeDef * ctx) {
 }
 
 
-static uint8_t _SMP3_Read(AUDIO_STREAM_TypeDef * ctx, uint32_t len, int16_t * dst_buf) {
+static uint8_t _SMP3_Read(AUDIO_SMP3_TypeDef * ctx, uint32_t len, int16_t * dst_buf) {
 	uint32_t offset_consumed;
 	uint32_t framesize;
 	uint32_t req_frames;
@@ -218,7 +199,7 @@ static uint8_t _SMP3_Read(AUDIO_STREAM_TypeDef * ctx, uint32_t len, int16_t * ds
 		// All ok - decoding frames
 		while (req_frames > 0) {
 			offset_consumed = ctx->i_consumed % ctx->buf_modulo;
-			frame = (void *)ctx->streambuf + offset_consumed + AUDIO_SH0_CM4_ADDR;
+			frame = (void *)ctx->buf + offset_consumed + AUDIO_SH0_CM4_ADDR;
 			l = drmp3dec_decode_frame_ex(&ctx->mp3_dec, frame, dst_buf, &ctx->mp3_info);
 			if (l != 1152) {
 				// Error in decoding -> Flush stream buffer
@@ -240,9 +221,7 @@ static uint8_t _SMP3_Read(AUDIO_STREAM_TypeDef * ctx, uint32_t len, int16_t * ds
 	return BSP_OK;
 }
 
-static uint8_t _SMP3_Deinit(AUDIO_STREAM_TypeDef * ctx) {
-	// Free stream buffer
-	if (ctx->streambuf) _SMP3_BufFree(ctx->streambuf);
+static uint8_t _SMP3_Deinit(AUDIO_SMP3_TypeDef * ctx) {
 	// Free ctx
 	free(ctx);
 
@@ -250,22 +229,37 @@ static uint8_t _SMP3_Deinit(AUDIO_STREAM_TypeDef * ctx) {
 }
 
 
-static void * _SMP3_GetBufAddr(AUDIO_STREAM_TypeDef * ctx) {
+static void * _SMP3_GetBufAddr(AUDIO_SMP3_TypeDef * ctx, uint32_t size) {
 
-	if (!ctx->streambuf) return NULL;
+	uint32_t buf_modulo;
+	uint32_t offset;
 
-	uint32_t offset = ctx->i_uploaded % ctx->buf_modulo;
-	return (void *)ctx->streambuf + offset + AUDIO_SH0_CM7_ADDR;
+	if (!ctx->buf) return NULL;
+	if (size == 0) return NULL;
+
+	size = (size & 0xFFFFFFFC) + 4;
+	if ((ctx->i_uploaded - ctx->i_consumed + size + size + 32) > ctx->buf_size) return NULL;
+
+	ctx->framesize = size;
+	buf_modulo = (ctx->buf_size / ctx->framesize) * ctx->framesize;
+	if (buf_modulo != ctx->buf_modulo) {
+		// Changed bitrate -> flush buffer
+		ctx->i_uploaded = 0;
+		ctx->i_consumed = 0;
+		ctx->buf_frames = 0;
+		ctx->bufflag = 1;
+		ctx->buf_modulo = buf_modulo;
+	}
+	offset = ctx->i_uploaded % ctx->buf_modulo;
+
+	return (void *)ctx->buf + offset + AUDIO_SH0_CM7_ADDR;
 
 }
 
-static uint8_t _SMP3_BufUpdateComplete(AUDIO_STREAM_TypeDef * ctx) {
+static uint8_t _SMP3_BufUpdateComplete(AUDIO_SMP3_TypeDef * ctx) {
 
-	uint32_t framesize;
-	uint32_t buf_modulo;
 	uint32_t offset_uploaded = ctx->i_uploaded % ctx->buf_modulo;
-	uint32_t offset_consumed = ctx->i_consumed % ctx->buf_modulo;
-	uint8_t * hdr = ctx->streambuf + offset_uploaded + AUDIO_SH0_CM4_ADDR;
+	uint8_t * hdr = ctx->buf + offset_uploaded + AUDIO_SH0_CM4_ADDR;
 
 	// Validating data in the buffer
 	if (hdr[0] != 0xFF) return BSP_ERROR;			// MP3 frame indicator
@@ -274,32 +268,12 @@ static uint8_t _SMP3_BufUpdateComplete(AUDIO_STREAM_TypeDef * ctx) {
 	if ((hdr[3] & 0x30) == 0x30) return BSP_ERROR; 	// Mono is not supported
 	if ((hdr[2] >> 4) == 0x0F) return BSP_ERROR; 	// Illegal bitrate
 
-	// Calculating frame size
-	framesize = (144 * (TAB_BITRATE[hdr[2] >> 4])) / 44100;
-	framesize = (framesize & 0xFFFFFFFC) + 4;
-
-	// For free bitrate we will use previous frame size
-	if (framesize == 0) framesize = ctx->framesize;
-	if (framesize > 0) ctx->framesize = framesize;
-
-	// Updating buffer modulo (including 16 bytes of safety margin)
-	buf_modulo = ((AUDIO_CFG_STREAMBUF_SIZE - 16) / framesize) * framesize;
-	if (buf_modulo != ctx->buf_modulo) {
-		ctx->i_uploaded = offset_uploaded;
-		ctx->i_consumed = offset_consumed;
-		ctx->buf_modulo = buf_modulo;
-	}
-
-	// Checking if buffer overflowed with data. If yes than override last available slot
-	if ((ctx->i_uploaded + framesize) <= ctx->i_consumed) return BSP_BUSY;
-	if ((ctx->i_uploaded + framesize) > (ctx->i_consumed + ctx->buf_modulo - framesize)) return BSP_BUSY;
-
 	// Updating stored frame count
 	ctx->buf_frames++;
 	if (ctx->buf_frames >= 6) ctx->bufflag = 0;
 
 	// Updating buffer uploaded index (head index)
-	ctx->i_uploaded += framesize;
+	ctx->i_uploaded += ctx->framesize;
 
 	return BSP_OK;
 }
@@ -377,7 +351,7 @@ static uint8_t _process_cmd(void) {
 		chno = (uint8_t)AUDIO_regs.c_params[0];
 		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_SMP3);
-		_SMP3_Init(AUDIO_ctx.channels[chno].pctx);
+		_SMP3_Init(AUDIO_ctx.channels[chno].pctx, (uint8_t *)(StreamBuf - AUDIO_SH0_CM4_ADDR), AUDIO_CFG_STREAMBUF_SIZE);
 		break;
 
 	case AUDIO_CMD_LINK_MOD:
@@ -400,7 +374,17 @@ static uint8_t _process_cmd(void) {
 		bitformat = AUDIO_regs.c_params[4];
 		freq = AUDIO_regs.c_params[5];
 		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_RAW);
-		RA_Init(AUDIO_ctx.channels[chno].pctx, (int16_t *)addr, size, chn, bitformat, freq);
+		RAW_Init(AUDIO_ctx.channels[chno].pctx, (int16_t *)addr, size, chn, bitformat, freq);
+		break;
+
+	case AUDIO_CMD_LINK_SRAW:
+		chno = (uint8_t)AUDIO_regs.c_params[0];
+		chn = AUDIO_regs.c_params[1];
+		bitformat = AUDIO_regs.c_params[2];
+		freq = AUDIO_regs.c_params[3];
+		if (chno >= AUDIO_CFG_CHANNELS) return BSP_ERROR;
+		BSP_Audio_ChannelLinkSource(chno, AUDIO_CH_SOURCE_SRAW);
+		SRAW_Init(AUDIO_ctx.channels[chno].pctx,  (uint8_t *)(StreamBuf - AUDIO_SH0_CM4_ADDR), AUDIO_CFG_STREAMBUF_SIZE, chn, bitformat, freq);
 		break;
 
 	case AUDIO_CMD_LINK_MID:
@@ -441,12 +425,32 @@ static uint8_t _process_cmd(void) {
 
 	case AUDIO_CMD_GETBUFADDR:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
-		AUDIO_regs.s_params[0] = (uint32_t)_SMP3_GetBufAddr(AUDIO_ctx.channels[chno].pctx);
+		size = (uint32_t)AUDIO_regs.c_params[1];
+		switch (AUDIO_ctx.channels[chno].type) {
+		case AUDIO_CH_SOURCE_SMP3:
+			AUDIO_regs.s_params[0] = (uint32_t)_SMP3_GetBufAddr(AUDIO_ctx.channels[chno].pctx, size);
+			break;
+		case AUDIO_CH_SOURCE_SRAW:
+			AUDIO_regs.s_params[0] = (uint32_t)SRAW_GetBufAddr(AUDIO_ctx.channels[chno].pctx, size);
+			break;
+		default:
+			AUDIO_regs.s_params[0] = (uint32_t)NULL;
+			break;
+		}
 		break;
 
 	case AUDIO_CMD_BUFUPDCMPL:
 		chno = (uint8_t)AUDIO_regs.c_params[0];
-		_SMP3_BufUpdateComplete(AUDIO_ctx.channels[chno].pctx);
+		switch (AUDIO_ctx.channels[chno].type) {
+		case AUDIO_CH_SOURCE_SMP3:
+			_SMP3_BufUpdateComplete(AUDIO_ctx.channels[chno].pctx);
+			break;
+		case AUDIO_CH_SOURCE_SRAW:
+			SRAW_BufUpdateComplete(AUDIO_ctx.channels[chno].pctx);
+			break;
+		default:
+			break;
+		}
 		break;
 	}
 
@@ -476,7 +480,10 @@ uint8_t BSP_Audio_ChannelFree(uint8_t chno) {
 		if (AUDIO_ctx.channels[chno].pctx != NULL) hxcmod_unload(AUDIO_ctx.channels[chno].pctx);
 		break;
 	case AUDIO_CH_SOURCE_RAW:
-		if (AUDIO_ctx.channels[chno].pctx != NULL) RA_Deinit(AUDIO_ctx.channels[chno].pctx);
+		if (AUDIO_ctx.channels[chno].pctx != NULL) RAW_Deinit(AUDIO_ctx.channels[chno].pctx);
+		break;
+	case AUDIO_CH_SOURCE_SRAW:
+		if (AUDIO_ctx.channels[chno].pctx != NULL) SRAW_Deinit(AUDIO_ctx.channels[chno].pctx);
 		break;
 	case AUDIO_CH_SOURCE_MID:
 		break;
@@ -512,7 +519,7 @@ uint8_t BSP_Audio_ChannelLinkSource(uint8_t chno, uint32_t source) {
 		break;
 
 	case AUDIO_CH_SOURCE_SMP3:
-		AUDIO_ctx.channels[chno].pctx = malloc(sizeof(AUDIO_STREAM_TypeDef));
+		AUDIO_ctx.channels[chno].pctx = malloc(sizeof(AUDIO_SMP3_TypeDef));
 		if (AUDIO_ctx.channels[chno].pctx == NULL) return BSP_ERROR;
 		AUDIO_ctx.channels[chno].type = AUDIO_CH_SOURCE_SMP3;
 		AUDIO_ctx.channels[chno].state = AUDIO_CH_STATE_DISABLED;
@@ -533,6 +540,15 @@ uint8_t BSP_Audio_ChannelLinkSource(uint8_t chno, uint32_t source) {
 		AUDIO_ctx.channels[chno].pctx = malloc(sizeof(rawaudioctx_TypeDef));
 		if (AUDIO_ctx.channels[chno].pctx == NULL) return BSP_ERROR;
 		AUDIO_ctx.channels[chno].type = AUDIO_CH_SOURCE_RAW;
+		AUDIO_ctx.channels[chno].state = AUDIO_CH_STATE_DISABLED;
+		AUDIO_ctx.channels[chno].gain_L = TAB_VOLUME[AUDIO_regs.chvolume_L[chno]];
+		AUDIO_ctx.channels[chno].gain_R = TAB_VOLUME[AUDIO_regs.chvolume_R[chno]];
+		break;
+
+	case AUDIO_CH_SOURCE_SRAW:
+		AUDIO_ctx.channels[chno].pctx = malloc(sizeof(srawaudioctx_TypeDef));
+		if (AUDIO_ctx.channels[chno].pctx == NULL) return BSP_ERROR;
+		AUDIO_ctx.channels[chno].type = AUDIO_CH_SOURCE_SRAW;
 		AUDIO_ctx.channels[chno].state = AUDIO_CH_STATE_DISABLED;
 		AUDIO_ctx.channels[chno].gain_L = TAB_VOLUME[AUDIO_regs.chvolume_L[chno]];
 		AUDIO_ctx.channels[chno].gain_R = TAB_VOLUME[AUDIO_regs.chvolume_R[chno]];
@@ -644,7 +660,7 @@ uint8_t BSP_Audio_Loop(void) {
 				break;
 
 			case AUDIO_CH_SOURCE_SMP3:
-				AUDIO_STREAM_TypeDef * smp3ctx = (AUDIO_STREAM_TypeDef *)AUDIO_ctx.channels[ch].pctx;
+				AUDIO_SMP3_TypeDef * smp3ctx = (AUDIO_SMP3_TypeDef *)AUDIO_ctx.channels[ch].pctx;
 				_SMP3_Read(smp3ctx, AUDIO_CFG_BUF_SIZE >> 2, (int16_t *)ChannelBuf[ch]);
 				break;
 
@@ -661,13 +677,18 @@ uint8_t BSP_Audio_Loop(void) {
 
 			case AUDIO_CH_SOURCE_RAW:
 				rawaudioctx_TypeDef * praw = (rawaudioctx_TypeDef *)AUDIO_ctx.channels[ch].pctx;
-				RA_Read(praw, AUDIO_CFG_BUF_SIZE >> 2, (int16_t *)ChannelBuf[ch]);
+				RAW_Read(praw, AUDIO_CFG_BUF_SIZE >> 2, (int16_t *)ChannelBuf[ch]);
 				if (praw->index == praw->length) {
-					if (AUDIO_ctx.channels[ch].repeat != 0) RA_Seek(praw, 0);
+					if (AUDIO_ctx.channels[ch].repeat != 0) RAW_Seek(praw, 0);
 					if ((AUDIO_ctx.channels[ch].repeat > 0) && (AUDIO_ctx.channels[ch].repeat < 255)) AUDIO_ctx.channels[ch].repeat--;
 					if (AUDIO_ctx.channels[ch].repeat == 0) { AUDIO_ctx.channels[ch].state = AUDIO_CH_STATE_STOP; _status_ch_stop(ch); }
 						else _status_ch_repeat(ch);
 				}
+				break;
+
+			case AUDIO_CH_SOURCE_SRAW:
+				srawaudioctx_TypeDef * psraw = (srawaudioctx_TypeDef *)AUDIO_ctx.channels[ch].pctx;
+				SRAW_Read(psraw, AUDIO_CFG_BUF_SIZE >> 2, (int16_t *)ChannelBuf[ch]);
 				break;
 
 			case AUDIO_CH_SOURCE_MID:

@@ -59,12 +59,6 @@ uint8_t BSP_BOARD_Init_1(void) {
 	// STM32 Initialization - NVIC - Interrupts
 	if (BSP_STM32_Init_NVIC()) return BSP_ERROR;
 
-	// IMU Initialization
-	if (BSP_IMU_Init()) return BSP_ERROR;
-
-	// Joystick and Keyboard Initialization
-	if (BSP_Inputs_Init()) return BSP_ERROR;
-
 	// Touch Panel Initialization
 	if (BSP_LCD_TP_Init()) return BSP_ERROR;
 
@@ -82,6 +76,12 @@ uint8_t BSP_BOARD_Init_1(void) {
 
 	// QSPI Initialization
 	if (BSP_QSPI_Init()) return BSP_ERROR;
+
+	// IMU Initialization
+	if (BSP_IMU_Init()) return BSP_ERROR;
+
+	// Joystick and Keyboard Initialization
+	if (BSP_Inputs_Init()) return BSP_ERROR;
 
 	return BSP_OK;
 }

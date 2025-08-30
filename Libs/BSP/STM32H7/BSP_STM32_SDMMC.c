@@ -514,8 +514,8 @@ uint8_t BSP_STM32_SDMMC_Init(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx) 
 }
 
 
-// GCC optimization restricted to -O2 to avoid Unaligned Memory Access Error
-OPT_O2 uint8_t BSP_STM32_SDMMC_ReadBlocks(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks) {
+// GCC optimization restricted to -O1 to avoid Unaligned Memory Access Error
+OPT_O1 uint8_t BSP_STM32_SDMMC_ReadBlocks(SDMMC_TypeDef * hsdmmc, TxRxContext_TypeDef * ctx, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks) {
 
 	__IO SDMMCContext_TypeDef * sdmmc_ctx = (SDMMCContext_TypeDef *)ctx->ctxmem;
 

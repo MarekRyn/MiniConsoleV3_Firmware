@@ -461,8 +461,8 @@ g_pfnVectors:
  .word		BSP_RTC_GetDate					/* 0021 */
  .word		BSP_RTC_GetTime					/* 0022 */
  .word		BSP_RTC_GetUnixTimestamp		/* 0023 */
- .word		0								/* 0024 */
- .word		0								/* 0025 */
+ .word		BSP_OSD_ShowNotification		/* 0024 */
+ .word		BSP_OSD_ShowAlert				/* 0025 */
  .word		0								/* 0026 */
  .word		0								/* 0027 */
  .word		0								/* 0028 */
@@ -733,12 +733,12 @@ g_pfnVectors:
  .word		0								/* 0285 */
  .word		0								/* 0286 */
  .word		0								/* 0287 */
- .word		0								/* 0288 */
- .word		0								/* 0289 */
+ .word		BSP_Audio_LinkSourceSMP3		/* 0288 */
+ .word		BSP_Audio_LinkSourceSRAW		/* 0289 */
  .word		0								/* 0290 */
  .word		0								/* 0291 */
- .word		0								/* 0292 */
- .word		0								/* 0293 */
+ .word		BSP_Audio_GetBufAddr			/* 0292 */
+ .word		BSP_Audio_BufUpdateCompleted	/* 0293 */
  .word		0								/* 0294 */
  .word		0								/* 0295 */
  .word		0								/* 0296 */

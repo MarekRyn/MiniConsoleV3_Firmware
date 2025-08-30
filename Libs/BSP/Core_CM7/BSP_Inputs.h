@@ -22,6 +22,7 @@ extern "C" {
 #include "BSP_LCD.h"	// For controlling brightness
 #include "BSP_PWR.h"	// For controlling power
 #include "BSP_Audio.h"	// For controlling audio volume
+#include "BSP_OSD.h"	// For controlling On Screen Menu
 
 // BSP structures - Inputs (Buttons and Joystick)
 

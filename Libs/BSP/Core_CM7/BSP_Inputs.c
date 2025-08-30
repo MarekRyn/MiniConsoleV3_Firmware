@@ -209,29 +209,39 @@ uint8_t BSP_Inputs_ParseData(void) {
 	// Handling control of backlight, volume and power off
 	if (BSP_hinputs.buttons.btn_PWR) {
 
+		pwr_off_counter++;
+
 		if (BSP_hinputs.buttons.btn_X_U) {
+			if (pwr_off_counter > 25) BSP_OSD_ShowBrightness();
 			BSP_LCD_IncBackLight(5);
 			pwr_off_lock = 1;
 		}
 
 		if (BSP_hinputs.buttons.btn_X_D) {
+			if (pwr_off_counter > 25) BSP_OSD_ShowBrightness();
 			BSP_LCD_DecBackLight(5);
 			pwr_off_lock = 1;
 		}
 
 		if (BSP_hinputs.buttons.btn_X_R) {
+			if (pwr_off_counter > 25) BSP_OSD_ShowVolume();
 			BSP_Audio_IncMasterVolume(1);
 			pwr_off_lock = 1;
 		}
 
 		if (BSP_hinputs.buttons.btn_X_L) {
+			if (pwr_off_counter > 25) BSP_OSD_ShowVolume();
 			BSP_Audio_DecMasterVolume(1);
 			pwr_off_lock = 1;
 		}
 
 		if (pwr_off_lock == 0) {
-			pwr_off_counter++;
-			if (pwr_off_counter > 400) BSP_PWR_ShutDown();	// 4 seconds delay for pwr off
+			// 4 seconds delay for pwr off
+			if (pwr_off_counter > 100) BSP_OSD_ShowPwrOff(pwr_off_counter - 100, 300);
+			if (pwr_off_counter > 400) {
+				BSP_OSD_Hide();
+				BSP_PWR_ShutDown();
+			}
 		}
 
 		BSP_hinputs.buttons.btn_X_U = 0;
@@ -240,6 +250,9 @@ uint8_t BSP_Inputs_ParseData(void) {
 		BSP_hinputs.buttons.btn_X_R = 0;
 
 	} else {
+
+		if ((pwr_off_counter > 0) && (pwr_off_counter < 25) && (pwr_off_lock == 0)) BSP_OSD_ShowInfo();
+
 		pwr_off_counter = 0;
 		pwr_off_lock = 0;
 	}
@@ -331,6 +344,7 @@ void TIM2_IRQHandler(void) {
 		TIM2->SR &= ~(TIM_SR_UIF);
 
 		BSP_Inputs_ParseData();
+		BSP_OSD_Process();
 	}
 }
 

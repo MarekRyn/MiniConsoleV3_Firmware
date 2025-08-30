@@ -2,7 +2,7 @@
  * MiniConsole V3 - Board Support Package - CM7
  *
  * Author: Marek Ryn
- * Version: 0.1b
+ * Version: 1.0
  *
  * Changelog:
  *
@@ -18,7 +18,7 @@ extern "C" {
 #endif
 
 // Define version
-#define BSP_VERSION "1.0"
+#define BSP_VERSION "1.1"
 
 // Includes
 #include "BSP_STM32.h"
@@ -41,6 +41,8 @@ extern "C" {
 #include "BSP_Icons.h"
 #include "BSP_Fonts.h"
 #include "BSP_Wallpaper.h"
+#include "BSP_OSD.h"
+
 
 #include "graph2d.h"
 

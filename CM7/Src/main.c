@@ -17,8 +17,8 @@
 __IO uint32_t state0 = 0;
 __IO uint32_t state1 = 0;
 
-__IO void (*App_Init)(void) = NULL;
-__IO void (*App_Main)(void) = NULL;
+void (*App_Init)(void) = NULL;
+void (*App_Main)(void) = NULL;
 
 
 void USB_MSC_Task(void) {
@@ -94,7 +94,7 @@ int main(void)
 		case STATE0_PWR_CONFIRMED:
 			// Initialization of board after pwr up - Stage 1
 			if (BSP_BOARD_Init_1()) {state0 = STATE0_FAULT; break; }
-
+			printf("STATE: Console powered on\n");
 			state0 = STATE0_INITIATED;
 			break;
 
@@ -102,6 +102,7 @@ int main(void)
 			// Initialization of board after restart
 			if (BSP_BOARD_Init_0()) { state0 = STATE0_FAULT; break; };
 			if (BSP_BOARD_Init_1()) { state0 = STATE0_FAULT; break; };
+			printf("STATE: Console restarted\n");
 			// TODO: Detecting if console restarted due to fault, and entering fault recovery mode
 			state0 = STATE0_INITIATED;
 			break;
@@ -124,7 +125,7 @@ int main(void)
 			// state0 = STATE0_BOOTLOADER_INIT;
 
 			// Splash screen
-			printf("MiniConsole started\n");
+			printf("STATE: Initialization completed\n");
 
 			BSP_LCD_Init(LCD_COLOR_MODE_RGB888, LCD_BUFFER_MODE_DOUBLE, C_BLACK, NULL);
 
@@ -171,11 +172,14 @@ int main(void)
 			// Delay
 			BSP_Delay(3000);
 
+			// OSD Initialization
+			BSP_OSD_Init();
+
 			break;
 
 		case STATE0_BOOTLOADER_INIT:
 
-			printf("Entering configuration mode...\n");
+			printf("STATE: Entering configuration mode\n");
 
 			// Configuring resource manager
 			BSP_FatFS_Init();
@@ -198,7 +202,7 @@ int main(void)
 
 		case STATE0_APPLICATION_INIT:
 
-			printf("Loading application...\n");
+			printf("STATE: Loading application\n");
 
 			// QSPI peripheral entering memory mapped mode
 			BSP_QSPI_MemMappedEnable();
@@ -234,37 +238,40 @@ int main(void)
 
 
 		case STATE0_USB_MSC:
-			printf("Entering USB drive mode...\n");
+			printf("STATE: Entering USB drive mode\n");
 			// Entering USB Drive menu
 			USB_MSC_Task();
 			break;
 
 		case STATE0_RESTARTING:
-			printf("System restarting...\n");
+			printf("STATE: System restarting\n");
+			BSP_Delay(100);
 			// Restart system
 			BSP_PWR_Restart();
 			break;
 
 		case STATE0_PWR_DOWN:
-			printf("System shutting down...\n");
+			printf("STATE: System shutting down\n");
+			BSP_Delay(100);
 			// Shut down system
 			BSP_PWR_ShutDown();
 			break;
 
 		case STATE0_PWR_DOWN_NOANIM:
-			printf("System shutting down...\n");
+			printf("STATE: System shutting down\n");
+			BSP_Delay(100);
 			// Shut down system when power button was hold to short time
 			BSP_PWR_ShutDownNoAnim();
 			break;
 
 		case STATE0_FAULT:
-			printf("System fault...\n");
+			printf("STATE: System fault\n");
 			// Handle error
 			BSP_Error_Handler();
 			break;
 
 		default:
-			printf("Unknown state...\n");
+			printf("STATE: Unknown error\n");
 			BSP_Error_Handler();
 			break;
 		}

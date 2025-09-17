@@ -38,6 +38,7 @@ uint8_t BSP_PWR_Animation(void) {
 	int16_t y0 = 0;
 	int16_t y1 = LCD_HEIGHT - 1;
 	uint8_t a = 255 - 240;
+	uint8_t v = BSP_Audio_GetMasterVolume();
 	while (y0 < 240) {
 		G2D_OSD_DrawFillRect(0, 0, LCD_WIDTH, y0, BSP_LCD_OSD_Color(C_BLACK, 255));
 		G2D_OSD_DrawFillRect(0, y1, LCD_WIDTH, LCD_HEIGHT - y1, BSP_LCD_OSD_Color(C_BLACK, 255));
@@ -45,6 +46,8 @@ uint8_t BSP_PWR_Animation(void) {
 		y0++;
 		y1--;
 		a++;
+		if (v > 0) v--;
+		BSP_Audio_SetMasterVolume(v);
 		BSP_Delay(1);
 	}
 

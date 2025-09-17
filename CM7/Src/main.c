@@ -143,7 +143,8 @@ int main(void)
 			BSP_Audio_ChannelPLay(0, 1);
 
 			// Initialize Backlight
-			BSP_LCD_InitBackLight(10);
+			BSP_Delay(200);
+			BSP_LCD_InitBackLight(0);
 			BSP_LCD_SetBackLight(80, 25);
 
 			// Load default values
@@ -258,14 +259,14 @@ int main(void)
 			break;
 
 		case STATE0_PWR_DOWN_NOANIM:
-			printf("STATE: System shutting down\n");
+			// printf("STATE: System shutting down\n"); << Disabled because USART is not initialized when this state is activated
 			BSP_Delay(100);
 			// Shut down system when power button was hold to short time
 			BSP_PWR_ShutDownNoAnim();
 			break;
 
 		case STATE0_FAULT:
-			printf("STATE: System fault\n");
+			// printf("STATE: System fault\n"); << Disabled because USART is not always initialized when this state is activated
 			// Handle error
 			BSP_Error_Handler();
 			break;
